@@ -67,7 +67,7 @@ REPLACE INTO cdr_stats_busy (d_total,s_total,m_total)
 		)AS MES
 ###
 
-# Cria STATS By DAY
+# Cria STATS By DAY / MONTH
 
 CREATE VIEW vw_day_stats AS 
 	SELECT DAY(date(calldate)) AS dia, MONTH(date(calldate)) AS mes, count(*) AS total 
@@ -75,7 +75,11 @@ CREATE VIEW vw_day_stats AS
 	WHERE disposition = 'ANSWERED'
 	GROUP BY dia ORDER BY dia ASC;
 
-		
+CREATE VIEW vw_month_stats AS
+SELECT MONTHNAME(date(calldate)) AS mes, count(*) AS total 
+		FROM cdr_cdr
+		WHERE disposition = 'ANSWERED'
+		GROUP BY mes ORDER BY mes ASC;		
 
 ###
 

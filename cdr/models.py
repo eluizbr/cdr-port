@@ -54,3 +54,11 @@ class VwDayStats(models.Model):
     class Meta:
         managed = False
         db_table = 'vw_day_stats'
+
+class VwMonthStats(models.Model):
+    mes = models.CharField(max_length=9, blank=True)
+    total = models.BigIntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'vw_month_stats'
