@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from .models import cdr, DispositionPercent, Stats_ANSWERED, Stats_NOANSWER, Stats_BUSY
+from .models import VwDayStats
 from django.db.models import Sum, Count, Avg, Max, Min
 
 def index(request):
@@ -11,8 +12,11 @@ def index(request):
     stats_NO = Stats_NOANSWER.objects.values_list('d_total', 's_total', 'm_total')
     stats_BU = Stats_BUSY.objects.values_list('d_total', 's_total', 'm_total')
     ultimo = cdr.objects.values_list('dst','calldate').order_by('-calldate')
+    byDay = VwDayStats.objects.values_list('dia', 'mes', 'total')
+    print byDay
     template = loader.get_template('index.html')
-    context = RequestContext(request, {'perc': perc, 'total': total, 'stats_AN':stats_AN, 'stats_NO':stats_NO, 'stats_BU':stats_BU, 'ultimo':ultimo })
+    context = RequestContext(request, {'perc': perc, 'total': total, 'stats_AN':stats_AN, 'stats_NO':stats_NO,
+								    	'stats_BU':stats_BU, 'ultimo':ultimo, 'byDay':byDay })
     return HttpResponse(template.render(context))
 
 

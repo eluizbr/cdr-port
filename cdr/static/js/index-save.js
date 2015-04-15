@@ -121,7 +121,68 @@ $(function(){
         });
     }
 
-//CALENDAR HERE
+    function initCalendar(){
+
+        var monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+        var dayNames = ["D", "S", "T", "Q", "Q", "S", "S"];
+
+        var now = new Date(),
+            month = now.getMonth() + 1,
+            year = now.getFullYear();
+
+        var events = [
+            [
+                    "2/"+month+"/"+year,
+                'The flower bed',
+                '#',
+                Sing.colors['brand-primary'],
+                'Contents here'
+            ],
+            [
+                    "5/"+month+"/"+year,
+                'Stop world water pollution',
+                '#',
+                Sing.colors['brand-warning'],
+                'Have a kick off meeting with .inc company'
+            ],
+            [
+                    "18/"+month+"/"+year,
+                'Light Blue 2.2 release',
+                '#',
+                Sing.colors['brand-success'],
+                'Some contents here'
+            ],
+            [
+                    "29/"+month+"/"+year,
+                'A link',
+                'http://www.flatlogic.com',
+                Sing.colors['brand-danger']
+            ]
+        ];
+        var $calendar = $('#events-calendar');
+        $calendar.calendar({
+            months: monthNames,
+            days: dayNames,
+            events: events,
+            popover_options:{
+                placement: 'top',
+                html: true
+            }
+        });
+        $calendar.find('.icon-arrow-left').addClass('fa fa-arrow-left');
+        $calendar.find('.icon-arrow-right').addClass('fa fa-arrow-right');
+        function restyleCalendar(){
+            $calendar.find('.event').each(function(){
+                var $this = $(this),
+                    $eventIndicator = $('<span></span>');
+                $eventIndicator.css('background-color', $this.css('background-color')).appendTo($this.find('a'));
+                $this.css('background-color', '');
+            })
+        }
+        $calendar.find('.icon-arrow-left, .icon-arrow-right').parent().on('click', restyleCalendar);
+        restyleCalendar();
+    }
 
     function initRickshaw(){
         "use strict";

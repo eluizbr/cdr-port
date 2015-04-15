@@ -750,10 +750,10 @@
             <div class="col-md-4">
                 <section class="widget">
                     <header>
-                        <h5>Calendar</h5>
+                        <h5>Ligação por data</h5>
                         <div class="widget-controls">
-                            <a href="#"><i class="glyphicon glyphicon-cog"></i></a>
-                            <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
+                            <a href=""><i class="glyphicon glyphicon-cog"></i></a>
+                            <a href="" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
                         </div>
                     </header>
                     <div class="widget-body no-padding">
@@ -819,6 +819,53 @@
 function reload_page() {
     location.reload();
 }
+</script>
+
+<script type="text/javascript">
+    
+    function initCalendar(){
+
+        var monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+        var dayNames = ["D", "S", "T", "Q", "Q", "S", "S"];
+
+        var now = new Date(),
+            month = now.getMonth() + 1,
+            year = now.getFullYear();
+
+        var events = [
+            {% for dia, mes, total in byDay %}
+            [
+                "{{dia}}/"+{{mes}}+"/"+year,
+                '{{total}} ligações nesta data',
+                Sing.colors['brand-primary'],
+            ],
+            {% endfor %}
+        ];
+        var $calendar = $('#events-calendar');
+        $calendar.calendar({
+            months: monthNames,
+            days: dayNames,
+            events: events,
+            popover_options:{
+                placement: 'top',
+                html: true
+            }
+        });
+        $calendar.find('.icon-arrow-left').addClass('fa fa-arrow-left');
+        $calendar.find('.icon-arrow-right').addClass('fa fa-arrow-right');
+        function restyleCalendar(){
+            $calendar.find('.event').each(function(){
+                var $this = $(this),
+                    $eventIndicator = $('<span></span>');
+                $eventIndicator.css('background-color', $this.css('background-color')).appendTo($this.find('a'));
+                $this.css('background-color', '');
+            })
+        }
+        $calendar.find('.icon-arrow-left, .icon-arrow-right').parent().on('click', restyleCalendar);
+        restyleCalendar();
+    }
+
 </script>
 </body>
 </html>

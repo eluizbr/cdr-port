@@ -45,3 +45,12 @@ class Stats_BUSY(models.Model):
     d_total = models.IntegerField(unique=True, blank=True, null=True)
     s_total = models.IntegerField(blank=True, null=True)
     m_total = models.IntegerField(blank=True, null=True)
+
+class VwDayStats(models.Model):
+    dia = models.IntegerField(blank=True, null=True)
+    mes = models.IntegerField(blank=True, null=True)
+    total = models.BigIntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'vw_day_stats'
