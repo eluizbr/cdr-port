@@ -1,3 +1,5 @@
+{% load humanize %}
+{% load l10n %}
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
@@ -511,7 +513,7 @@
                                 {% else %}
                                     <span class="text-center">Número não existe</span>
                                 {% endif %}
-                                <p class="description deemphasize"><strong>Total {{valor}}</strong></p>
+                                <p class="description deemphasize"><strong>Total {{valor|intcomma}}</strong></p>
                                 <div class="progress progress-sm js-progress-animate bg-white">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
                                          data-width="{{perc|floatformat:"0"}}%"
@@ -554,15 +556,15 @@
                         {% for d_total, s_total, m_total in stats_AN %}
                             <div class="stat-item">
                                 <h6 class="name">Hoje</h6>
-                                <p class="value">{{d_total}}</p>
+                                <p class="value">{{d_total|intcomma}}</p>
                             </div>
                             <div class="stat-item">
                                 <h6 class="name">Semana</h6>
-                                <p class="value">{{s_total}}</p>
+                                <p class="value">{{s_total|intcomma}}</p>
                             </div>
                             <div class="stat-item">
                                 <h6 class="name">Mês</h6>
-                                <p class="value">{{m_total}}</p>
+                                <p class="value">{{m_total|intcomma}}</p>
                         {% endfor %}
                             </div>
                         </div>
@@ -594,15 +596,15 @@
                         {% for d_total, s_total, m_total in stats_NO %}
                             <div class="stat-item">
                                 <h6 class="name">Hoje</h6>
-                                <p class="value">{{d_total}}</p>
+                                <p class="value">{{d_total|intcomma}}</p>
                             </div>
                             <div class="stat-item">
                                 <h6 class="name">Semana</h6>
-                                <p class="value">{{s_total}}</p>
+                                <p class="value">{{s_total|intcomma}}</p>
                             </div>
                             <div class="stat-item">
                                 <h6 class="name">Mês</h6>
-                                <p class="value">{{m_total}}</p>
+                                <p class="value">{{m_total|intcomma}}</p>
                         {% endfor %}
                             </div>
                         </div>
@@ -635,15 +637,15 @@
                         {% for d_total, s_total, m_total in stats_BU %}
                             <div class="stat-item">
                                 <h6 class="name">Hoje</h6>
-                                <p class="value">{{d_total}}</p>
+                                <p class="value">{{d_total|intcomma}}</p>
                             </div>
                             <div class="stat-item">
                                 <h6 class="name">Semana</h6>
-                                <p class="value">{{s_total}}</p>
+                                <p class="value">{{s_total|intcomma}}</p>
                             </div>
                             <div class="stat-item">
                                 <h6 class="name">Mês</h6>
-                                <p class="value">{{m_total}}</p>
+                                <p class="value">{{m_total|intcomma}}</p>
                         {% endfor %}
                             </div>
                         </div>
@@ -681,12 +683,14 @@
                             <tbody>
                             {% for dst, calldate in ultimo%}
                             <tr>
+                            <td>
+                                </td>
                             {%if dst|length > 10%}
                                 <td data-mask="(99) 99999-9999">{{dst}}</td>
                             {% else %}
-                                <td data-mask="(99) 9999-9999" class="text-center">{{dst}}</td>
+                                <td data-mask="(99) 9999-9999">{{dst}}</td>
                             {% endif %}
-                                <td class="text-align-right fw-semi-bold">{{calldate}}</td>
+                                <td class="text-align-right fw-semi-bold">{{calldate|naturaltime}}</td>
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -729,14 +733,9 @@
                             <tr>
                             {% for operadora, total  in operadora|slice:":7" %}
                                 <td>
-                                    <div class="checkbox">
-                                        <input id="checkbox212" type="checkbox">
-                                        <label for="checkbox212"></label>
-                                    </div>
                                 </td>
-                            
                                 <td>{{operadora}}</td>
-                                <td class="text-align-right fw-semi-bold">{{total}}</td>
+                                <td class="text-align-right fw-semi-bold">{{total|intcomma}}</td>
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -750,7 +749,7 @@
             <div class="col-md-4">
                 <section class="widget">
                     <header>
-                        <h5>Ligação por data</h5>
+                        <h5>Total de igações por data</h5>
                         <div class="widget-controls">
                             <a href=""><i class="glyphicon glyphicon-cog"></i></a>
                             <a href="" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
@@ -761,8 +760,8 @@
                         <div class="list-group fs-mini">
                         {% for mes, total in byMonth|slice:":2" %}
                             <a href="#" class="list-group-item text-ellipsis">
-                                <span class="badge bg-warning">{{total}}</span>
-                                Ligações no mês de {{mes}}
+                                <span class="badge bg-warning">{{total|intcomma}}</span>
+                                Ligações no mês de {{mes|intcomma}}
                             </a>
                         {% endfor %}
 
@@ -838,7 +837,7 @@ function reload_page() {
         var events = [
             {% for dia, mes, total in byDay %}
             [
-                "{{dia}}/"+{{mes}}+"/"+year,
+                "{{dia|date:"j"}}/"+{{mes}}+"/"+year,
                 '{{total}} ligações nesta data',
                 Sing.colors['brand-primary'],
             ],

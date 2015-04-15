@@ -79,9 +79,9 @@ REPLACE INTO cdr_stats_busy (d_total,s_total,m_total)
 # Cria STATS By DAY / MONTH
 
 CREATE VIEW vw_day_stats AS 
-	SELECT DAY(date(calldate)) AS dia, MONTH(date(calldate)) AS mes, count(*) AS total 
+	SELECT date(calldate) AS dia, MONTH(date(calldate)) AS mes, count(*) AS total 
 	FROM cdr_cdr
-	WHERE disposition = 'ANSWERED'
+	WHERE calldate BETWEEN CURDATE() - INTERVAL 6 MONTH AND CURDATE()
 	GROUP BY dia ORDER BY dia ASC;
 
 CREATE VIEW vw_month_stats AS
