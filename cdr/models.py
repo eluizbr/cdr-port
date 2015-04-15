@@ -89,3 +89,19 @@ class VwMonthStats(models.Model):
     class Meta:
         managed = False
         db_table = 'vw_month_stats'
+
+class VwLast10(models.Model):
+    dst = models.CharField(max_length=80)
+    calldate = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'vw_last_10'
+
+class VwOperadoras(models.Model):
+    operadora = models.CharField(max_length=64)
+    total = models.BigIntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'vw_operadoras'

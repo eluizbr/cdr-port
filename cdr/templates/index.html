@@ -666,7 +666,7 @@
                 <section class="widget">
                     <header>
                         <h5>
-                            Último números <span class="fw-semi-bold">chamados</span>
+                            Últimos números <span class="fw-semi-bold">ATENDIDOS</span>
                         </h5>
                         <div class="widget-controls">
                             <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
@@ -679,7 +679,7 @@
                             <thead class="no-bd">
                             </thead>
                             <tbody>
-                            {% for dst, calldate in ultimo|slice:":8" %}
+                            {% for dst, calldate in ultimo%}
                             <tr>
                             {%if dst|length > 10%}
                                 <td data-mask="(99) 99999-9999">{{dst}}</td>
@@ -703,14 +703,13 @@
                 <section class="widget">
                     <header>
                         <h5>
-                            Custo mensal por <span class="fw-semi-bold">operadora</span>
+                            Ligações por <span class="fw-semi-bold">operadora</span>
                         </h5>
                         <div class="widget-controls">
                             <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
                         </div>
                     </header>
                     <div class="widget-body">
-                        <h3>VIVO MOVEL R$ 1.200,01</h3>
                     </div>
                     <div class="widget-table-overflow">
                         <table class="table table-striped table-sm">
@@ -728,35 +727,18 @@
                             </thead>
                             <tbody>
                             <tr>
+                            {% for operadora, total  in operadora|slice:":7" %}
                                 <td>
                                     <div class="checkbox">
                                         <input id="checkbox212" type="checkbox">
                                         <label for="checkbox212"></label>
                                     </div>
                                 </td>
-                                <td>OI</td>
-                                <td class="text-align-right fw-semi-bold">R$ 346,10</td>
+                            
+                                <td>{{operadora}}</td>
+                                <td class="text-align-right fw-semi-bold">{{total}}</td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="checkbox">
-                                        <input id="checkbox214" type="checkbox">
-                                        <label for="checkbox214"></label>
-                                    </div>
-                                </td>
-                                <td>TIM</td>
-                                <td class="text-align-right fw-semi-bold">R$ 533,10</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="checkbox">
-                                        <input id="checkbox214" type="checkbox">
-                                        <label for="checkbox214"></label>
-                                    </div>
-                                </td>
-                                <td>ALGAR</td>
-                                <td class="text-align-right fw-semi-bold">R$ 33,10</td>
-                            </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
