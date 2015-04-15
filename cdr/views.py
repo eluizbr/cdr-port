@@ -11,7 +11,7 @@ def index(request):
     stats_AN = Stats_ANSWERED.objects.values_list('d_total', 's_total', 'm_total')
     stats_NO = Stats_NOANSWER.objects.values_list('d_total', 's_total', 'm_total')
     stats_BU = Stats_BUSY.objects.values_list('d_total', 's_total', 'm_total')
-    ultimo = VwLast10.objects.values_list('dst','calldate')
+    ultimo = VwLast10.objects.values_list('dst','calldate','billsec')
     byDay = VwDayStats.objects.values_list('dia', 'mes', 'total')
     byMonth = VwMonthStats.objects.values_list('mes', 'total')
     operadora = VwOperadoras.objects.values_list('operadora', 'total')

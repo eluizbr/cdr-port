@@ -93,7 +93,7 @@ SELECT MONTHNAME(date(calldate)) AS mes, count(*) AS total
 ###
 
 # Ultimos 10 numeros atendidos
-CREATE VIEW vw_last_10 AS SELECT dst, calldate 
+CREATE VIEW vw_last_10 AS SELECT dst, calldate, SEC_TO_TIME(billsec) AS billsec
 	FROM cdr_cdr
 	WHERE disposition = 'ANSWERED'
 	GROUP BY dst  ORDER BY calldate DESC  LIMIT 8;

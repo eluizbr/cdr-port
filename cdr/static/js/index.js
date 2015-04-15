@@ -23,7 +23,7 @@ $(function(){
                     }
                 },
                 defaultPlot:{
-                    size: 17,
+                    size: 10,
                     attrs : {
                         fill : Sing.colors['brand-warning'],
                         stroke : "#fff",
@@ -42,8 +42,8 @@ $(function(){
             },
               plots:{
                 'mg' : {
-                    latitude: -19.9375,
-                    longitude: -43.9265,
+                    latitude: -19.912998,
+                    longitude: -43.940933,
                     tooltip: {content : "BH"}
                 },
             }
@@ -138,7 +138,7 @@ $(function(){
 
     function pjaxPageLoad(){
         $('.widget').widgster();
-        initMap();
+     initMap();
         initCalendar();
        // initRickshaw();
         initAnimations();

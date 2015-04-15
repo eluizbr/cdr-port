@@ -681,7 +681,7 @@
                             <thead class="no-bd">
                             </thead>
                             <tbody>
-                            {% for dst, calldate in ultimo%}
+                            {% for dst, calldate, billsec in ultimo%}
                             <tr>
                             <td>
                                 </td>
@@ -690,6 +690,7 @@
                             {% else %}
                                 <td data-mask="(99) 9999-9999">{{dst}}</td>
                             {% endif %}
+                                <td >{{billsec|time:"H:i:s"}}</td>
                                 <td class="text-align-right fw-semi-bold">{{calldate|naturaltime}}</td>
                             </tr>
                             {% endfor %}

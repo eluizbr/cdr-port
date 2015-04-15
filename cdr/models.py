@@ -95,6 +95,7 @@ class VwMonthStats(models.Model):
 class VwLast10(models.Model):
     dst = models.CharField(max_length=80)
     calldate = models.DateTimeField()
+    billsec = models.IntegerField()
 
     class Meta:
         managed = False
