@@ -5,7 +5,7 @@ $(function(){
             state;
         $map.mapael({
             map:{
-                name : "usa_states",
+                name : "brazil",
                 defaultArea : {
                     attrsHover : {
                         fill : '#242424',
@@ -36,74 +36,18 @@ $(function(){
                     }
                 },
                 zoom : {
-                    enabled : true,
+                    enabled : false,
                     step : 0.75
                 }
             },
-            plots:{
-                'ny' : {
-                    latitude: 40.717079,
-                    longitude: -74.00116,
-                    tooltip: {content : "New York"}
+              plots:{
+                'mg' : {
+                    latitude: -19.9375,
+                    longitude: -43.9265,
+                    tooltip: {content : "BH"}
                 },
-                'on' : {
-                    latitude: 33.145235,
-                    longitude: -83.811834,
-                    size: 18,
-                    tooltip: {content : "Oconee National Forest"}
-                },
-                'sf' : {
-                    latitude: 37.792032,
-                    longitude: -122.394613,
-                    size: 12,
-                    tooltip: {content : "San Francisco"}
-                },
-                'la' : {
-                    latitude: 26.935080,
-                    longitude: -80.851766,
-                    size: 26,
-                    tooltip: {content : "Lake Okeechobee"}
-                },
-                'gc' : {
-                    latitude: 36.331308,
-                    longitude: -83.336050,
-                    size: 10,
-                    tooltip: {content : "Grainger County"}
-                },
-                'cc' : {
-                    latitude: 36.269356,
-                    longitude: -76.587477,
-                    size: 22,
-                    tooltip: {content : "Chowan County"}
-                },
-                'll' : {
-                    latitude: 30.700644,
-                    longitude: -95.145249,
-                    tooltip: {content : "Lake Livingston"}
-                },
-                'tc' : {
-                    latitude: 34.546708,
-                    longitude: -90.211471,
-                    size: 14,
-                    tooltip: {content : "Tunica County"}
-                },
-                'lc' : {
-                    latitude: 32.628599,
-                    longitude: -103.675115,
-                    tooltip: {content : "Lea County"}
-                },
-                'uc' : {
-                    latitude: 40.456692,
-                    longitude: -83.522688,
-                    size: 11,
-                    tooltip: {content : "Union County"}
-                },
-                'lm' : {
-                    latitude: 33.844630,
-                    longitude: -118.157483,
-                    tooltip: {content : "Lakewood Mutual"}
-                }
             }
+            
         });
 
         //ie svg height fix
@@ -129,7 +73,7 @@ $(function(){
         var seriesData = [ [], [] ];
         var random = new Rickshaw.Fixtures.RandomData(30);
 
-        for (var i = 0; i < 30; i++) {
+        for (var i = 0; i < 1; i++) {
             random.addData(seriesData);
         }
 
@@ -141,11 +85,11 @@ $(function(){
                 {
                     color: '#F7653F',
                     data: seriesData[0],
-                    name: 'Uploads'
+                    name: 'Canais SIP'
                 }, {
                     color: '#F7D9C5',
                     data: seriesData[1],
-                    name: 'Downloads'
+                    name: 'Users'
                 }
             ]
         } );
@@ -196,7 +140,7 @@ $(function(){
         $('.widget').widgster();
         initMap();
         initCalendar();
-        initRickshaw();
+       // initRickshaw();
         initAnimations();
     }
 

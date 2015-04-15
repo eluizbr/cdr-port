@@ -469,6 +469,7 @@
                     <div class="widget-body">
                         <div id="map" class="mapael">
                             <div class="stats">
+                            <br>
                                 <h5 class="text-white">Total geral</h5>
                                 <p class="h3 text-warning no-margin"><strong id="geo-locations-number">{{total}}</strong> <i class="fa fa-phone"></i></p>
                             </div>
@@ -664,27 +665,38 @@
             <div class="col-md-4">
                 <section class="widget">
                     <header>
-                        <h5><span class="label label-danger">Info</span> Últimos números</h5>
+                        <h5>
+                            Último números <span class="fw-semi-bold">chamados</span>
+                        </h5>
                         <div class="widget-controls">
-                            <a onclick="reload_page()"><i class="fa fa-refresh"></i></a>
                             <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
                         </div>
                     </header>
-                    <div class="widget-body no-padding">
-                        <div class="list-group list-group-lg">
-                            <a class="list-group-item">
-                            {% for dst, calldate in ultimo|slice:":8" %}
-                                <span class="thumb-sm pull-left mr">
-                                    <span class="circle bg-warning"><i class="fa fa-phone"></i></span>
-                                </span>
-                            
-                                <h5 data-mask="(99) 9999-9999" class="no-margin">{{dst}}</h5>
-                                <p class="help-block text-ellipsis no-margin">{{calldate}}</p>
-                            {% endfor %}
-                            </a>
-
-                        </div>
+                    <div class="widget-body">
                     </div>
+                    <div class="widget-table-overflow">
+                        <table class="table table-striped table-sm">
+                            <thead class="no-bd">
+                            </thead>
+                            <tbody>
+                            {% for dst, calldate in ultimo|slice:":8" %}
+                            <tr>
+                            {%if dst|length > 10%}
+                                <td data-mask="(99) 99999-9999">{{dst}}</td>
+                            {% else %}
+                                <td data-mask="(99) 9999-9999" class="text-center">{{dst}}</td>
+                            {% endif %}
+                                <td class="text-align-right fw-semi-bold">{{calldate}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--
+                    <div class="widget-body mt-xlg">
+                        <div id="rickshaw" class="chart-overflow-bottom"></div>
+                    </div>
+                    -->
                 </section>
             </div>
             <div class="col-md-4">
@@ -699,10 +711,6 @@
                     </header>
                     <div class="widget-body">
                         <h3>VIVO MOVEL R$ 1.200,01</h3>
-                        <p class="fs-mini text-muted mb mt-sm">
-                            Target <span class="fw-semi-bold">$820</span> day earnings
-                            is <span class="fw-semi-bold">96%</span> reached.
-                        </p>
                     </div>
                     <div class="widget-table-overflow">
                         <table class="table table-striped table-sm">
@@ -726,8 +734,8 @@
                                         <label for="checkbox212"></label>
                                     </div>
                                 </td>
-                                <td>HP Core i7</td>
-                                <td class="text-align-right fw-semi-bold">$346.1</td>
+                                <td>OI</td>
+                                <td class="text-align-right fw-semi-bold">R$ 346,10</td>
                             </tr>
                             <tr>
                                 <td>
@@ -736,8 +744,18 @@
                                         <label for="checkbox214"></label>
                                     </div>
                                 </td>
-                                <td>Air Pro</td>
-                                <td class="text-align-right fw-semi-bold">$533.1</td>
+                                <td>TIM</td>
+                                <td class="text-align-right fw-semi-bold">R$ 533,10</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="checkbox">
+                                        <input id="checkbox214" type="checkbox">
+                                        <label for="checkbox214"></label>
+                                    </div>
+                                </td>
+                                <td>ALGAR</td>
+                                <td class="text-align-right fw-semi-bold">R$ 33,10</td>
                             </tr>
                             </tbody>
                         </table>
@@ -781,6 +799,8 @@
 <!-- common libraries. required for every page-->
 <script src="{% static "vendor/jquery/dist/jquery.min.js"%}"></script>
 <script src="{% static "vendor/jquery-pjax/jquery.pjax.js"%}"></script>
+<script src="{% static "vendor/jquery/dist/jquery.mask.min.js" %}"></script>
+<script src="{% static "vendor/jquery/dist/jquery.mask.js" %}"></script>
 <script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/transition.js"%}"></script>
 <script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"%}"></script>
 <script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"%}"></script>
@@ -806,6 +826,7 @@
 <script src="{% static "vendor/raphael/raphael-min.js"%}"></script>
 <script src="{% static "vendor/jQuery-Mapael/js/jquery.mapael.js"%}"></script>
 <script src="{% static "vendor/jQuery-Mapael/js/maps/usa_states.js"%}"></script>
+<script src="{% static "vendor/jQuery-Mapael/js/maps/brazil.js"%}"></script>
 <script src="{% static "vendor/jQuery-Mapael/js/maps/world_countries.js"%}"></script>
 <script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/popover.js"%}"></script>
 <script src="{% static "vendor/bootstrap_calendar/bootstrap_calendar/js/bootstrap_calendar.min.js"%}"></script>
@@ -864,6 +885,14 @@ function reload_page() {
         $calendar.find('.icon-arrow-left, .icon-arrow-right').parent().on('click', restyleCalendar);
         restyleCalendar();
     }
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+    $('#dst').mask('(99) 9999-9999');
+});
 
 </script>
 </body>

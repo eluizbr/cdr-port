@@ -22,6 +22,33 @@ class cdr(models.Model):
     def __unicode__(self):
         return unicode(self.dst)
 
+class GeoLocal(models.Model):
+    gm_ponto = models.TextField(db_column='GM_PONTO', blank=True)  # Field name made lowercase.
+    id = models.IntegerField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    cd_geocodigo = models.CharField(db_column='CD_GEOCODIGO', max_length=20)  # Field name made lowercase.
+    tipo = models.CharField(db_column='TIPO', max_length=10, blank=True)  # Field name made lowercase.
+    cd_geocodba = models.CharField(db_column='CD_GEOCODBA', max_length=20)  # Field name made lowercase.
+    nm_bairro = models.CharField(db_column='NM_BAIRRO', max_length=60, blank=True)  # Field name made lowercase.
+    cd_geocodsd = models.CharField(db_column='CD_GEOCODSD', max_length=20)  # Field name made lowercase.
+    nm_subdistrito = models.CharField(db_column='NM_SUBDISTRITO', max_length=60)  # Field name made lowercase.
+    cd_geocodds = models.CharField(db_column='CD_GEOCODDS', max_length=20)  # Field name made lowercase.
+    nm_distrito = models.CharField(db_column='NM_DISTRITO', max_length=60)  # Field name made lowercase.
+    cd_geocodmu = models.CharField(db_column='CD_GEOCODMU', max_length=20)  # Field name made lowercase.
+    nm_municipio = models.CharField(db_column='NM_MUNICIPIO', max_length=60)  # Field name made lowercase.
+    nm_micro = models.CharField(db_column='NM_MICRO', max_length=100, blank=True)  # Field name made lowercase.
+    nm_meso = models.CharField(db_column='NM_MESO', max_length=100, blank=True)  # Field name made lowercase.
+    nm_uf = models.CharField(db_column='NM_UF', max_length=60, blank=True)  # Field name made lowercase.
+    cd_nivel = models.CharField(db_column='CD_NIVEL', max_length=1)  # Field name made lowercase.
+    cd_categoria = models.CharField(db_column='CD_CATEGORIA', max_length=5)  # Field name made lowercase.
+    nm_categoria = models.CharField(db_column='NM_CATEGORIA', max_length=50)  # Field name made lowercase.
+    nm_localidade = models.CharField(db_column='NM_LOCALIDADE', max_length=60)  # Field name made lowercase.
+    long = models.FloatField(db_column='LONG', blank=True, null=True)  # Field name made lowercase.
+    lat = models.FloatField(db_column='LAT', blank=True, null=True)  # Field name made lowercase.
+    alt = models.FloatField(db_column='ALT', blank=True, null=True)  # Field name made lowercase.
+    gm_ponto_sk = models.CharField(db_column='GM_PONTO_sk', max_length=15, blank=True)  # Field name made lowercase.
+
+    def __unicode__(self):
+        return unicode(self.nm_municipio)
 
 class DispositionPercent(models.Model):
     disposition = models.CharField(unique=True, max_length=30)
