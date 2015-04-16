@@ -39,14 +39,6 @@ def time_line(request):
     calldate = cdr.objects.all()
     disposition = VwDisposition.objects.all()
 
-    paginator = Paginator(resultado, 15)
-
-    page = request.GET.get('page', '1')
-
-    try:
-        resultado_1 = paginator.page(page)
-    except(EmptyPage, InvalidPage):
-        resultado_1 = paginator.page(paginator.num_pages)
 
     numero_f = request.GET.get('numero', "")
     src_f = request.GET.get('src', "0")
@@ -64,37 +56,25 @@ def time_line(request):
         query &=Q(calldate__range=(calldate1,calldate2))
     if disposition:
         query &=Q(disposition__icontains=disposition_f)
-    '''
-    if tronco:
-        query &=Q(src__icontains=src_f)
-    if numero:
-        query &=Q(numero__startswith=numero_f)
-    if operadora:
-        query &=Q(operadora__icontains=operadora_f)
-    if csp:
-        query &=Q(csp__icontains=csp_f)
-    if cidade:
-        query &=Q(cidade__icontains=cidade_f)
-    if estado:
-        query &=Q(estado__icontains=estado_f)
-    if disposition:
-        query &=Q(disposition__icontains=disposition_f)
-    if tipo:
-        query &=Q(tipo__icontains=tipo_f)
-    if portado:
-        query &=Q(portado__icontains=portado_f)
-    if calldate:
-
-        query &=Q(calldate__range=(calldate1,calldate2))
-    if ddd:
-        query &=Q(ddd__icontains=ddd_f)
-    '''
 
 
     results = cdr.objects.filter(query).order_by('-calldate')
 
+    paginator = Paginator(results, 25)
+    page = request.GET.get('page', '1')
+  
+    try:
+        resultado_1 = paginator.page(page)
+    except PageNotAnInteger:
+        resultado_1 = paginator.page(1)
+    except (EmptyPage):
+        resultado_1 = paginator.page(paginator.num_pages)
+
+    url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s"\
+            % (numero_f, src_f, calldate1, calldate2, disposition_f)
+
     template = loader.get_template('cdr.html')
     context = RequestContext(request, {'ultimo':ultimo, 'resultado_1':resultado_1 ,'results':results, 'src':src, 'numero':numero,
-                                        'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 'disposition':disposition, })
+                                        'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 'disposition':disposition, 'url':url })
     return HttpResponse(template.render(context))
     

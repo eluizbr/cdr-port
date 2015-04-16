@@ -964,12 +964,22 @@
                             </tr>
                             </thead>
                             <tbody>
-                        {% for i in results|slice:":10"  %}
+                        {% for i in results|slice:":50"  %}
                             <tr>
                                 <td>{{i.dst}}</td>
                                 <td>{{i.src}}</td>
                                 <td>{{i.calldate}}</td>
-                                <td>{{i.disposition}}</td>
+                                <td>
+                                    {% if i.disposition == "ANSWERED" %}
+                                        <span class="text-center">Atendida</span>
+                                    {% elif i.disposition == "NO ANSWER" %}
+                                        <span class="text-center">Não atendida</span>
+                                    {% elif i.disposition == "BUSY" %}
+                                        <span class="text-center">Ocupado</span>
+                                    {% else %}
+                                        <span class="text-center">Não existe</span>
+                                    {% endif %}
+                                </td>
                                 <td>{{i.duration}}</td>
                                 <td>{{i.billsec}}</td>
                                 <td class="width-150">
@@ -986,7 +996,7 @@
                                 <div class="col-lg-12">
                             <ul class="pagination">
                                 {% if resultado_1.has_previous %}
-                                        <li><a href="?page={{ resultado_1.previous_page_number }}">Anterior</a></li>
+                                        <li><a href="?page={{ resultado_1.previous_page_number }}&{{url}}">Anterior</a></li>
                                 {% endif %}
                                 {% for pg in resultado_1.paginator.page_range%}
                                         {% if resultado_1.number == pg %}
@@ -995,7 +1005,7 @@
                                 {% endfor %}
                                 {% if resultado_1.has_next %}
                                 <li class="active"><a>{{ resultado_1.number }} de {{ resultado_1.paginator.num_pages }}</a></li>
-                                        <li><a href="?page={{ resultado_1.next_page_number }}"> Próximo</a></li>
+                                        <li><a href="?page={{ resultado_1.next_page_number }}&{{url}}"> Próximo</a></li>
                                 {% endif %}
                             </ul>
 
