@@ -185,10 +185,17 @@ CREATE VIEW vw_last_10 AS SELECT dst, calldate
 	WHERE disposition = 'ANSWERED'
 	GROUP BY dst  ORDER BY calldate DESC  LIMIT 8;
 
-CREATE VIEW vw_prefix AS SELECT SUBSTRING(dst,1,6) AS prefixo, dst AS numero
+CREATE VIEW vw_last_10 AS SELECT numero, operadora, tipo, rn1, calldate, disposition
+	FROM vw_prefixo
+	WHERE disposition = 'ANSWERED'
+	GROUP BY numero  ORDER BY calldate DESC  LIMIT 8;
+
+
+CREATE VIEW vw_prefix AS SELECT SUBSTRING(dst,1,6) AS prefixo, dst AS numero, disposition,calldate
 	FROM cdr_cdr;
 
-CREATE VIEW vw_prefixo AS SELECT nao_portados.id, nao_portados.operadora, nao_portados.tipo, nao_portados.rn1,vw_prefix.prefixo, vw_prefix.numero
+CREATE VIEW vw_prefixo AS SELECT nao_portados.id, nao_portados.operadora, nao_portados.tipo, nao_portados.rn1,
+	vw_prefix.prefixo, vw_prefix.numero, vw_prefix.disposition, vw_prefix.calldate, vw_prefix.billsec
 	FROM nao_portados, vw_prefix
 	WHERE nao_portados.prefixo = vw_prefix.prefixo;
 	

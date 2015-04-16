@@ -23,7 +23,7 @@ $(function(){
     }
 
     function pageLoad(){
-        initGmap();
+       // initGmap();
 
         $('.event-image > a').magnificPopup({
             type: 'image'

@@ -681,14 +681,14 @@
                             <thead class="no-bd">
                             </thead>
                             <tbody>
-                            {% for dst, calldate, billsec in ultimo%}
+                            {% for numero, calldate, billsec in ultimo%}
                             <tr>
                             <td>
                                 </td>
-                            {%if dst|length > 10%}
-                                <td data-mask="(99) 99999-9999">{{dst}}</td>
+                            {%if numero|length > 10%}
+                                <td data-mask="(99) 99999-9999">{{numero}}</td>
                             {% else %}
-                                <td data-mask="(99) 9999-9999">{{dst}}</td>
+                                <td data-mask="(99) 9999-9999">{{numero}}</td>
                             {% endif %}
                                 <td >{{billsec|time:"H:i:s"}}</td>
                                 <td class="text-align-right fw-semi-bold">{{calldate|naturaltime}}</td>
@@ -873,7 +873,7 @@ function reload_page() {
 <script type="text/javascript">
 
     $(document).ready(function(){
-    $('#dst').mask('(99) 9999-9999');
+    $('#numero').mask('(99) 9999-9999');
 });
 
 </script>

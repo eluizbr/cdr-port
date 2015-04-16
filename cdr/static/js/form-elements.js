@@ -57,14 +57,15 @@ $(function(){
         $(".select2").each(function(){
             $(this).select2($(this).data());
         });
-
+    
         new Switchery(document.getElementById('checkbox-ios1'));
         new Switchery(document.getElementById('checkbox-ios2'),{color: Sing.colors['brand-primary']});
-
+    
         $('#datetimepicker1').datetimepicker({
-            format: 'MM/dd/YYYY'
+            format: 'DD/MM/YYYY'
         });
         $('#datetimepicker2').datetimepicker({
+            format: 'DD/MM/YYYY'
         });
 
         $('#colorpicker').colorpicker({color: Sing.colors['gray-light']});

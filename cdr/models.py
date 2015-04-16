@@ -93,9 +93,13 @@ class VwMonthStats(models.Model):
         db_table = 'vw_month_stats'
 
 class VwLast10(models.Model):
-    dst = models.CharField(max_length=80)
+    numero = models.CharField(max_length=80)
+    operadora = models.CharField(max_length=64)
+    tipo = models.CharField(max_length=64)
+    rn1 = models.IntegerField()
     calldate = models.DateTimeField()
-    billsec = models.IntegerField()
+    disposition = models.CharField(max_length=45)
+    billsec = models.TimeField(blank=True, null=True)
 
     class Meta:
         managed = False
