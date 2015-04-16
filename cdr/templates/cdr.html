@@ -906,11 +906,11 @@
                             </tr>
                             </thead>
                             <tbody>
-                        {% for dst, src, calldate, disposition, duration, billsec in resultado|slice:":15"  %}
+                        {% for dst, src, calldate, disposition, duration, billsec in results|slice:":15"  %}
                             <tr>
                                 <td>{{dst}}</td>
                                 <td>{{src}}</td>
-                                <td>{{calldate}}</td>
+                                <td>{{calldate|naturaltime}}</td>
                                 <td>{{disposition}}</td>
                                 <td>{{duration}}</td>
                                 <td>{{billsec}}</td>
@@ -925,6 +925,25 @@
                             </tbody>
 
                         </table>
+                        <div class="row text-center">
+                                <div class="col-lg-12">
+                            <ul class="pagination">
+                                {% if results.has_previous %}
+                                        <li><a href="?page={{ results.previous_page_number }}">Anterior</a></li>
+                                {% endif %}
+                                {% for pg in results.paginator.page_range%}
+                                        {% if results.number == pg %}
+                                        {% else %}
+                                        {% endif %}
+                                {% endfor %}
+                                {% if results.has_next %}
+                                <li class="active"><a>{{ results.number }} de {{ results.paginator.num_pages }}</a></li>
+                                        <li><a href="?page={{ results.next_page_number }}"> Próximo</a></li>
+                                {% endif %}
+                            </ul>
+
+                            </div>
+                        </div>
                             <div class="btn-toolbar mt-lg text-align-right hidden-print">
                             <button id="print" class="btn btn-inverse">
                                 <i class="fa fa-print"></i>
@@ -934,6 +953,7 @@
                         </div>
                     </div>
                 </section>
+
             </div>
         </div>
     </main>

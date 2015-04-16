@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
 from .models import cdr, DispositionPercent, Stats_ANSWERED, Stats_NOANSWER, Stats_BUSY
 from .models import VwDayStats, VwMonthStats,VwLast10, VwOperadoras
 from django.db.models import Sum, Count, Avg, Max, Min
@@ -24,6 +25,16 @@ def index(request):
 def time_line(request):
     ultimo = VwLast10.objects.values_list('numero','operadora','tipo','calldate', 'disposition' ,'billsec')
     resultado = cdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec').order_by('-calldate')
+    paginator = Paginator(resultado, 15)
+
+    page = request.GET.get('page', '1')
+
+    try:
+        results = paginator.page(page)
+    except(EmptyPage, InvalidPage):
+        results = paginator.page(paginator.num_pages)
+
+
     template = loader.get_template('cdr.html')
-    context = RequestContext(request, {'ultimo':ultimo, 'resultado':resultado })
+    context = RequestContext(request, {'ultimo':ultimo, 'results':results })
     return HttpResponse(template.render(context))
