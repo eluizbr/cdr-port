@@ -168,8 +168,45 @@ DELIMITER$$
 
 # TRIGGERS 
 
+CREATE VIEW vw_stats_answered AS 	SELECT(
+		SELECT count(src) FROM cdr_cdr
+		WHERE disposition = 'ANSWERED' AND DAY(calldate)=DAY(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		)  AS dia,
+		(
+		SELECT count(src) FROM cdr_cdr
+		WHERE disposition = 'ANSWERED' AND WEEK(calldate)=WEEK(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		) AS semana,
+		(
+		SELECT count(src)  FROM cdr_cdr
+		WHERE disposition = 'ANSWERED' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		)AS mes;
 
 
+CREATE VIEW vw_stats_noanswer AS SELECT(
+		SELECT count(src) FROM cdr_cdr
+		WHERE disposition = 'NO ANSWER' AND DAY(calldate)=DAY(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		)  AS dia,
+		(
+		SELECT count(src) FROM cdr_cdr
+		WHERE disposition = 'NO ANSWER' AND WEEK(calldate)=WEEK(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		) AS semana,
+		(
+		SELECT count(src)  FROM cdr_cdr
+		WHERE disposition = 'NO ANSWER' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		)AS mes;
+
+CREATE VIEW vw_stats_busy AS 	SELECT(
+		SELECT count(src) FROM cdr_cdr
+		WHERE disposition = 'BUSY' AND DAY(calldate)=DAY(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		)  AS dia,
+		(
+		SELECT count(src) FROM cdr_cdr
+		WHERE disposition = 'BUSY' AND WEEK(calldate)=WEEK(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		) AS semana,
+		(
+		SELECT count(src)  FROM cdr_cdr
+		WHERE disposition = 'BUSY' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		)AS mes;
 
 
 SELECT nao_portados.operadora, nao_portados.tipo 

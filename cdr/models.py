@@ -112,3 +112,32 @@ class VwOperadoras(models.Model):
     class Meta:
         managed = False
         db_table = 'vw_operadoras'
+
+class VwStatsAnswered(models.Model):
+    dia = models.BigIntegerField(blank=True, null=True)
+    semana = models.BigIntegerField(blank=True, null=True)
+    mes = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'vw_stats_answered'
+
+
+class VwStatsBusy(models.Model):
+    dia = models.BigIntegerField(blank=True, null=True)
+    semana = models.BigIntegerField(blank=True, null=True)
+    mes = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'vw_stats_busy'
+
+
+class VwStatsNoanswer(models.Model):
+    dia = models.BigIntegerField(blank=True, null=True)
+    semana = models.BigIntegerField(blank=True, null=True)
+    mes = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'vw_stats_noanswer'

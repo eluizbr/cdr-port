@@ -66,8 +66,8 @@
                     <i class="toggle fa fa-angle-down"></i>
                 </a>
                 <ul id="sidebar-dashboard" class="collapse in">
-                    <li class="active"><a href="index.html">Dashboard</a></li>
-                    <li><a href="widgets.html">Widgets</a></li>
+                    <li class="active"><a href="{% url 'index'%}">Dashboard</a></li>
+                    <li><a href="{% url 'consulta'%}">Consulta</a></li>
                 </ul>
             </li>
             <li>
@@ -180,72 +180,9 @@
                     <li><a href="time_line.html" data-no-pjax>Time Line</a></li>
                 </ul>
             </li>
-            <li>
-                <a class="collapsed" href="#sidebar-levels" data-toggle="collapse" data-parent="#sidebar">
-                    <span class="icon">
-                        <i class="fa fa-folder-open"></i>
-                    </span>
-                    Menu Levels
-                    <i class="toggle fa fa-angle-down"></i>
-                </a>
-                <ul id="sidebar-levels" class="collapse">
-                    <li><a href="#">Level 1</a></li>
-                    <li>
-                        <a class="collapsed" href="#sidebar-sub-levels" data-toggle="collapse" data-parent="#sidebar-levels">
-                            Level 2
-                            <i class="toggle fa fa-angle-down"></i>
-                        </a>
-                        <ul id="sidebar-sub-levels" class="collapse">
-                            <li><a href="#">Level 3</a></li>
-                            <li><a href="#">Level 3</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
         </ul>
-        <h5 class="sidebar-nav-title">Labels <a class="action-link" href="#"><i class="glyphicon glyphicon-plus"></i></a></h5>
         <!-- some styled links in sidebar. ready to use as links to email folders, projects, groups, etc -->
-        <ul class="sidebar-labels">
-            <li>
-                <a href="#">
-                    <!-- yep, .circle again -->
-                    <i class="fa fa-circle text-warning mr-xs"></i>
-                    <span class="label-name">My Recent</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-circle text-gray mr-xs"></i>
-                    <span class="label-name">Starred</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-circle text-danger mr-xs"></i>
-                    <span class="label-name">Background</span>
-                </a>
-            </li>
-        </ul>
-        <h5 class="sidebar-nav-title">Projects</h5>
-        <!-- A place for sidebar notifications & alerts -->
-        <div class="sidebar-alerts">
-            <div class="alert fade in">
-                <a href="#" class="close" data-dismiss="alert" aria-hidden="true">&times;</a>
-                <span class="text-white fw-semi-bold">Sales Report</span> <br>
-                <div class="progress progress-xs mt-xs mb-0">
-                    <div class="progress-bar progress-bar-gray-light" style="width: 16%"></div>
-                </div>
-                <small>Calculating x-axis bias... 65%</small>
-            </div>
-            <div class="alert fade in">
-                <a href="#" class="close" data-dismiss="alert" aria-hidden="true">&times;</a>
-                <span class="text-white fw-semi-bold">Personal Responsibility</span> <br>
-                <div class="progress progress-xs mt-xs mb-0">
-                    <div class="progress-bar progress-bar-danger" style="width: 23%"></div>
-                </div>
-                <small>Provide required notes</small>
-            </div>
-        </div>
+
     </div>
 </nav>
 <!-- This is the white navigation bar seen on the top. A bit enhanced BS navbar. See .page-controls in _base.scss. -->
@@ -553,18 +490,18 @@
                     </header>
                     <div class="widget-body">
                         <div class="stats-row">
-                        {% for d_total, s_total, m_total in stats_AN %}
+                        {% for dia, semana, mes in stats_AN %}
                             <div class="stat-item">
                                 <h6 class="name">Hoje</h6>
-                                <p class="value">{{d_total|intcomma}}</p>
+                                <p class="value">{{dia|intcomma}}</p>
                             </div>
                             <div class="stat-item">
                                 <h6 class="name">Semana</h6>
-                                <p class="value">{{s_total|intcomma}}</p>
+                                <p class="value">{{semana|intcomma}}</p>
                             </div>
                             <div class="stat-item">
                                 <h6 class="name">Mês</h6>
-                                <p class="value">{{m_total|intcomma}}</p>
+                                <p class="value">{{mes|intcomma}}</p>
                         {% endfor %}
                             </div>
                         </div>
@@ -593,18 +530,18 @@
                     </header>
                     <div class="widget-body">
                         <div class="stats-row">
-                        {% for d_total, s_total, m_total in stats_NO %}
+                        {% for dia, semana, mes in stats_NO %}
                             <div class="stat-item">
                                 <h6 class="name">Hoje</h6>
-                                <p class="value">{{d_total|intcomma}}</p>
+                                <p class="value">{{dia|intcomma}}</p>
                             </div>
                             <div class="stat-item">
                                 <h6 class="name">Semana</h6>
-                                <p class="value">{{s_total|intcomma}}</p>
+                                <p class="value">{{semana|intcomma}}</p>
                             </div>
                             <div class="stat-item">
                                 <h6 class="name">Mês</h6>
-                                <p class="value">{{m_total|intcomma}}</p>
+                                <p class="value">{{mes|intcomma}}</p>
                         {% endfor %}
                             </div>
                         </div>
@@ -634,18 +571,18 @@
                     </header>
                     <div class="widget-body">
                         <div class="stats-row">
-                        {% for d_total, s_total, m_total in stats_BU %}
+                        {% for dia, semana, mes in stats_BU %}
                             <div class="stat-item">
                                 <h6 class="name">Hoje</h6>
-                                <p class="value">{{d_total|intcomma}}</p>
+                                <p class="value">{{dia|intcomma}}</p>
                             </div>
                             <div class="stat-item">
                                 <h6 class="name">Semana</h6>
-                                <p class="value">{{s_total|intcomma}}</p>
+                                <p class="value">{{semana|intcomma}}</p>
                             </div>
                             <div class="stat-item">
                                 <h6 class="name">Mês</h6>
-                                <p class="value">{{m_total|intcomma}}</p>
+                                <p class="value">{{mes|intcomma}}</p>
                         {% endfor %}
                             </div>
                         </div>
