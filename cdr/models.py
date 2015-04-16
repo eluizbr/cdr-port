@@ -141,3 +141,14 @@ class VwStatsNoanswer(models.Model):
     class Meta:
         managed = False
         db_table = 'vw_stats_noanswer'
+
+class VwRamais(models.Model):
+    ramais = models.CharField(max_length=80)
+    total = models.BigIntegerField()
+
+    def __unicode__(self):
+        return unicode(self.ramais)
+        
+    class Meta:
+        managed = False
+        db_table = 'vw_ramais'

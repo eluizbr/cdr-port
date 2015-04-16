@@ -119,50 +119,6 @@ BEGIN
 		FROM vw_disposition
 	) total;
 
-	REPLACE INTO cdr_stats_answered (d_total,s_total,m_total)
-	SELECT(
-		SELECT count(src) FROM cdr_cdr
-		WHERE disposition = 'ANSWERED' AND DAY(calldate)=DAY(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
-		)  AS DIA,
-		(
-		SELECT count(src) FROM cdr_cdr
-		WHERE disposition = 'ANSWERED' AND WEEK(calldate)=WEEK(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
-		) AS SEMANA,
-		(
-		SELECT count(src)  FROM cdr_cdr
-		WHERE disposition = 'ANSWERED' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
-		)AS MES;
-
-
-	REPLACE INTO cdr_stats_noanswer (d_total,s_total,m_total)
-	SELECT(
-		SELECT count(src) FROM cdr_cdr
-		WHERE disposition = 'NO ANSWER' AND DAY(calldate)=DAY(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
-		)  AS DIA,
-		(
-		SELECT count(src) FROM cdr_cdr
-		WHERE disposition = 'NO ANSWER' AND WEEK(calldate)=WEEK(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
-		) AS SEMANA,
-		(
-		SELECT count(src)  FROM cdr_cdr
-		WHERE disposition = 'NO ANSWER' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
-		)AS MES;
-
-
-	REPLACE INTO cdr_stats_busy (d_total,s_total,m_total)
-	SELECT(
-		SELECT count(src) FROM cdr_cdr
-		WHERE disposition = 'BUSY' AND DAY(calldate)=DAY(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
-		)  AS DIA,
-		(
-		SELECT count(src) FROM cdr_cdr
-		WHERE disposition = 'BUSY' AND WEEK(calldate)=WEEK(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
-		) AS SEMANA,
-		(
-		SELECT count(src)  FROM cdr_cdr
-		WHERE disposition = 'BUSY' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
-		)AS MES;
-	
 END$$
 DELIMITER$$
 
@@ -170,42 +126,42 @@ DELIMITER$$
 
 CREATE VIEW vw_stats_answered AS 	SELECT(
 		SELECT count(src) FROM cdr_cdr
-		WHERE disposition = 'ANSWERED' AND DAY(calldate)=DAY(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		WHERE disposition = 'ANSWERED' AND DAY(calldate)=DAY(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		)  AS dia,
 		(
 		SELECT count(src) FROM cdr_cdr
-		WHERE disposition = 'ANSWERED' AND WEEK(calldate)=WEEK(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		WHERE disposition = 'ANSWERED' AND WEEK(calldate)=WEEK(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		) AS semana,
 		(
 		SELECT count(src)  FROM cdr_cdr
-		WHERE disposition = 'ANSWERED' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		WHERE disposition = 'ANSWERED' AND MONTH(calldate)=MONTH(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		)AS mes;
 
 
 CREATE VIEW vw_stats_noanswer AS SELECT(
 		SELECT count(src) FROM cdr_cdr
-		WHERE disposition = 'NO ANSWER' AND DAY(calldate)=DAY(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		WHERE disposition = 'NO ANSWER' AND DAY(calldate)=DAY(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		)  AS dia,
 		(
 		SELECT count(src) FROM cdr_cdr
-		WHERE disposition = 'NO ANSWER' AND WEEK(calldate)=WEEK(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		WHERE disposition = 'NO ANSWER' AND WEEK(calldate)=WEEK(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		) AS semana,
 		(
 		SELECT count(src)  FROM cdr_cdr
-		WHERE disposition = 'NO ANSWER' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		WHERE disposition = 'NO ANSWER' AND MONTH(calldate)=MONTH(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		)AS mes;
 
 CREATE VIEW vw_stats_busy AS 	SELECT(
 		SELECT count(src) FROM cdr_cdr
-		WHERE disposition = 'BUSY' AND DAY(calldate)=DAY(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		WHERE disposition = 'BUSY' AND DAY(calldate)=DAY(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		)  AS dia,
 		(
 		SELECT count(src) FROM cdr_cdr
-		WHERE disposition = 'BUSY' AND WEEK(calldate)=WEEK(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		WHERE disposition = 'BUSY' AND WEEK(calldate)=WEEK(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		) AS semana,
 		(
 		SELECT count(src)  FROM cdr_cdr
-		WHERE disposition = 'BUSY' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		WHERE disposition = 'BUSY' AND MONTH(calldate)=MONTH(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		)AS mes;
 
 
@@ -241,3 +197,11 @@ CREATE VIEW vw_operadoras AS SELECT operadora, count(operadora) AS total
 	FROM vw_prefixo
 	GROUP BY operadora ORDER BY total DESC;
 
+
+### Views para CDR
+
+CREATE VIEW vw_ramais AS SELECT id, src AS ramais, count(src) AS total FROM cdr_cdr 
+		WHERE disposition = 'ANSWERED' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		GROUP BY src ORDER BY total DESC;
+
+### FIM Views para CDR

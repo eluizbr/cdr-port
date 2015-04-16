@@ -460,7 +460,7 @@
                             </div>
                             <div class="col-sm-3 text-align-center">
                                 <span class="status rounded rounded-lg bg-body-light">
-                                    <small><span id="percent-1">{{perc|floatformat:"0"}}</span>%</small>
+                                    <small><span id="percent-1">{{perc}}</span>%</small>
                                 </span>
                             </div>
                         {% endfor %}
@@ -687,7 +687,7 @@
             <div class="col-md-4">
                 <section class="widget">
                     <header>
-                        <h5>Total de igações por data</h5>
+                        <h5>Total de ligações por data</h5>
                         <div class="widget-controls">
                             <a href=""><i class="glyphicon glyphicon-cog"></i></a>
                             <a href="" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
@@ -699,7 +699,7 @@
                         {% for mes, total in byMonth|slice:":2" %}
                             <a href="#" class="list-group-item text-ellipsis">
                                 <span class="badge bg-warning">{{total|intcomma}}</span>
-                                Ligações no mês de {{mes|intcomma}}
+                                Ligações no mês de {{mes}}
                             </a>
                         {% endfor %}
 
@@ -776,7 +776,7 @@ function reload_page() {
             {% for dia, mes, total in byDay %}
             [
                 "{{dia|date:"j"}}/"+{{mes}}+"/"+year,
-                '{{total}} ligações nesta data',
+                '{{total|intcomma}} ligações nesta data',
                 Sing.colors['brand-primary'],
             ],
             {% endfor %}

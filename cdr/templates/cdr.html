@@ -536,10 +536,10 @@
 <div class="content-wrap">
     <!-- main page content. the place to put widgets in. usually consists of .row > .col-md-* > .widget.  -->
     <main id="content" class="content" role="main">
-        <ol class="breadcrumb">
+        <!--<ol class="breadcrumb">
             <li>Você esta aqui</li>
             <li class="active">CDR</li>
-        </ol>
+        </ol>-->
         <h1 class="page-title">CDR - <span class="fw-semi-bold">Consultas</span></h1>
                 <div class="row">
         <!--
@@ -734,7 +734,210 @@
                 </section>
             </div>
         -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading collapsed">
+                            <h5 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    Expandir opções de consulta
+                                    <i class="fa fa-angle-down pull-right"></i>
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse">
+                            <div class="panel-body">
+            <div align="center" class="col-md-12">
+                <section class="widget">
+                    <div class="widget-body">
+                        <form class="form-horizontal" role="form" method="get" action="/cdr/consulta/">
+                            <fieldset>
+                                <legend><strong>Entre com um número</strong></legend>
+                                <div class="form-group">
+                                    <label for="normal-field" class="col-sm-1 control-label">Número</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                            <input type="text" name="numero" id="numero" class="form-control" placeholder="(00)0000-0000">
+                                        </div>
+                                    </div>
 
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <fieldset>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="radio">
+                                                                    <input type="radio" name="radio1" id="radio1" value="option1">
+                                                                    <label for="radio1">
+                                                                        Começa com
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="radio">
+                                                                    <input type="radio" name="radio2" id="radio2" value="option2" >
+                                                                    <label for="radio2">
+                                                                        Contém
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+
+                                </div>
+                                <legend><strong>Selecione um ramal e/ou status</strong></legend>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label" for="default-select">Ramal</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="src" id="src">
+                                            <option></option>
+                                        {% for ramais in src %}
+                                            <option>{{ramais}}</option>
+                                        {% endfor %}
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Status</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" id="default-select">
+                                            <option value=""></option>
+                                            <option value="Magellanic">Antendida</option>
+                                            <option value="Andromeda">Não Antendida</option>
+                                            <option value="Sextans">Ocupado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <legend><strong>Selecione uma data</strong></legend>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                            <div class="widget-body">
+                                                    <fieldset>
+                                                        <div class="form-group">
+                                                        <label class="col-sm-1 control-label" for="datepicker1i">De</label>
+                                                            <div id="datetimepicker1" class="input-group">
+                                                                <input name="calldate1" id="datepicker1i" type="text" class="form-control" value="{{ontem}}">
+                                                                <span class="input-group-btn">
+                                                                    <a href="#" class="btn btn-success">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                            </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                            <div class="widget-body">
+                                                    <fieldset>
+                                                        <div class="form-group">
+                                                        <label class="col-sm-1 control-label" for="datepicker2i">Até</label>
+                                                            <div id="datetimepicker2" class="input-group">
+                                                                <input name="calldate2" id="datepicker2i" type="text" class="form-control" value="{{hoje}}">
+                                                                <span class="input-group-btn">
+                                                                    <a href="#" class="btn btn-success">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                            </div>
+                                    </div>
+                                </div>
+                                <legend><strong>Portbilidade</strong></legend>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label" for="default-select">CSP</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" id="default-select">
+                                            <option value=""></option>
+                                            <option value="Magellanic">7777</option>
+                                            <option value="Andromeda">8888</option>
+                                            <option value="Sextans">9999</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Operadora</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" id="default-select">
+                                            <option value=""></option>
+                                            <option value="Magellanic">Antendida</option>
+                                            <option value="Andromeda">Não Antendida</option>
+                                            <option value="Sextans">Ocupado</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Tipo</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" id="default-select">
+                                            <option value=""></option>
+                                            <option value="Magellanic">Antendida</option>
+                                            <option value="Andromeda">Não Antendida</option>
+                                            <option value="Sextans">Ocupado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <legend><strong>Selecione um ramal e/ou status</strong></legend>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label" for="default-select">Ramal</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" id="default-select">
+                                            <option value=""></option>
+                                            <option value="Magellanic">7777</option>
+                                            <option value="Andromeda">8888</option>
+                                            <option value="Sextans">9999</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Status</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" id="default-select">
+                                            <option value=""></option>
+                                            <option value="Magellanic">Antendida</option>
+                                            <option value="Andromeda">Não Antendida</option>
+                                            <option value="Sextans">Ocupado</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-offset-4 col-sm-2">
+                                            <button type="submit" class="btn btn-primary">Pesquisar</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </section>
+            </div>
+                            </div>
+                        </div>
+                    </div>
         <div class="row">
             <div class="col-md-12">
                 <section class="widget">
@@ -761,14 +964,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                        {% for dst, src, calldate, disposition, duration, billsec in results|slice:":15"  %}
+                        {% for i in results|slice:":10"  %}
                             <tr>
-                                <td>{{dst}}</td>
-                                <td>{{src}}</td>
-                                <td>{{calldate}}</td>
-                                <td>{{disposition}}</td>
-                                <td>{{duration}}</td>
-                                <td>{{billsec}}</td>
+                                <td>{{i.dst}}</td>
+                                <td>{{i.src}}</td>
+                                <td>{{i.calldate}}</td>
+                                <td>{{i.disposition}}</td>
+                                <td>{{i.duration}}</td>
+                                <td>{{i.billsec}}</td>
                                 <td class="width-150">
                                     <div class="progress progress-sm mt-xs js-progress-animate">
                                         <div class="progress-bar progress-bar-success" data-width="29%" style="width: 0;"></div>
