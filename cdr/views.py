@@ -23,6 +23,7 @@ def index(request):
 
 def time_line(request):
     ultimo = VwLast10.objects.values_list('numero','operadora','tipo','calldate', 'disposition' ,'billsec')
+    resultado = cdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec').order_by('-calldate')
     template = loader.get_template('cdr.html')
-    context = RequestContext(request, {'ultimo':ultimo,})
+    context = RequestContext(request, {'ultimo':ultimo, 'resultado':resultado })
     return HttpResponse(template.render(context))
