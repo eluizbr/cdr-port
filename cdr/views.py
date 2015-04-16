@@ -32,11 +32,13 @@ def time_line(request):
     ontem = hora - timedelta(days=1)
     ontem = ontem.strftime("%Y-%m-%dT00:00:00")
 
+    byDay = VwDayStats.objects.values_list('dia', 'mes', 'total')
+    byMonth = VwMonthStats.objects.values_list('mes', 'total')
     ultimo = VwLast10.objects.values_list('numero','operadora','tipo','calldate', 'disposition' ,'billsec')
     resultado = cdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec').order_by('-calldate')
     src = VwRamais.objects.all()
-    numero = cdr.objects.all()
-    calldate = cdr.objects.all()
+    numero = cdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec')
+    calldate = cdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec')
     disposition = VwDisposition.objects.all()
 
 
@@ -74,7 +76,8 @@ def time_line(request):
             % (numero_f, src_f, calldate1, calldate2, disposition_f)
 
     template = loader.get_template('cdr.html')
-    context = RequestContext(request, {'ultimo':ultimo, 'resultado_1':resultado_1 ,'results':results, 'src':src, 'numero':numero,
-                                        'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 'disposition':disposition, 'url':url })
+    context = RequestContext(request, {'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'resultado_1':resultado_1 ,'results':results,
+                                        'src':src, 'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
+                                        'disposition':disposition, 'url':url, })
     return HttpResponse(template.render(context))
     
