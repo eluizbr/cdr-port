@@ -618,7 +618,7 @@
                             <thead class="no-bd">
                             </thead>
                             <tbody>
-                            {% for numero, calldate, billsec in ultimo%}
+                            {% for numero, operadora, tipo, calldate, billsec in ultimo%}
                             <tr>
                             <td>
                                 </td>
@@ -627,6 +627,8 @@
                             {% else %}
                                 <td data-mask="(99) 9999-9999">{{numero}}</td>
                             {% endif %}
+                                <td >{{operadora}}</td>
+                                <td >{{tipo}}</td>
                                 <td >{{billsec|time:"H:i:s"}}</td>
                                 <td class="text-align-right fw-semi-bold">{{calldate|naturaltime}}</td>
                             </tr>

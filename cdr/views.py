@@ -15,7 +15,7 @@ def index(request):
     stats_AN = VwStatsAnswered.objects.values_list('dia', 'semana', 'mes')
     stats_NO = VwStatsNoanswer.objects.values_list('dia', 'semana', 'mes')
     stats_BU = VwStatsBusy.objects.values_list('dia', 'semana', 'mes')
-    ultimo = VwLast10.objects.values_list('numero','calldate','billsec')
+    ultimo = VwLast10.objects.values_list('numero','operadora', 'tipo','calldate','billsec')
     byDay = VwDayStats.objects.values_list('dia', 'mes', 'total')
     byMonth = VwMonthStats.objects.values_list('mes', 'total')
     operadora = VwOperadoras.objects.values_list('operadora', 'total')
