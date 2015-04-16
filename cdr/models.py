@@ -152,3 +152,14 @@ class VwRamais(models.Model):
     class Meta:
         managed = False
         db_table = 'vw_ramais'
+
+class VwDisposition(models.Model):
+    disposition = models.CharField(max_length=45)
+    total = models.BigIntegerField(db_column='Total')  # Field name made lowercase.
+
+    def __unicode__(self):
+        return unicode(self.disposition)
+
+    class Meta:
+        managed = False
+        db_table = 'vw_disposition'

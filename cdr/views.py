@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
 from .models import cdr, DispositionPercent, Stats_ANSWERED, Stats_NOANSWER, Stats_BUSY
-from .models import VwDayStats, VwMonthStats,VwLast10, VwOperadoras, VwStatsAnswered, VwStatsBusy, VwStatsNoanswer, VwRamais
+from .models import VwDayStats, VwMonthStats,VwLast10, VwOperadoras, VwStatsAnswered, VwStatsBusy, VwStatsNoanswer, VwRamais,\
+                    VwDisposition
 from django.db.models import Sum, Count, Avg, Max, Min
 from datetime import datetime, timedelta, time
 from django.db.models import Q
@@ -36,6 +37,7 @@ def time_line(request):
     src = VwRamais.objects.all()
     numero = cdr.objects.all()
     calldate = cdr.objects.all()
+    disposition = VwDisposition.objects.all()
 
     paginator = Paginator(resultado, 15)
 
@@ -50,6 +52,7 @@ def time_line(request):
     src_f = request.GET.get('src', "0")
     calldate1 = request.GET.get('calldate1', ontem)
     calldate2 = request.GET.get('calldate2', hoje)
+    disposition_f = request.GET.get('disposition', "")
 
     query = Q()
 
@@ -59,6 +62,8 @@ def time_line(request):
         query &=Q(src__icontains=src_f)
     if calldate:
         query &=Q(calldate__range=(calldate1,calldate2))
+    if disposition:
+        query &=Q(disposition__icontains=disposition_f)
     '''
     if tronco:
         query &=Q(src__icontains=src_f)
@@ -90,6 +95,6 @@ def time_line(request):
 
     template = loader.get_template('cdr.html')
     context = RequestContext(request, {'ultimo':ultimo, 'resultado_1':resultado_1 ,'results':results, 'src':src, 'numero':numero,
-                                        'calldate':calldate, 'hoje':hoje, 'ontem':ontem, })
+                                        'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 'disposition':disposition, })
     return HttpResponse(template.render(context))
     

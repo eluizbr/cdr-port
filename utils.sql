@@ -10,7 +10,7 @@ UPDATE nao_portados  SET tipo = 'RADIO' WHERE tipo = 'RÁDIO';
 # Cria %
 
 CREATE VIEW vw_disposition AS
-		SELECT disposition, count(disposition) AS Total
+		SELECT id, disposition, count(disposition) AS Total
 		FROM cdr_cdr
 		GROUP BY disposition ORDER BY Total DESC;
 
