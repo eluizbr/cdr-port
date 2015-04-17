@@ -40,13 +40,20 @@ def time_line(request):
     numero = VwCdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec')
     calldate = VwCdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec')
     disposition = VwDisposition.objects.all()
+    pagina = 20,30,50,100
 
-
+    
     numero_f = request.GET.get('numero', "")
     src_f = request.GET.get('src', "0")
     calldate1 = request.GET.get('calldate1', ontem)
     calldate2 = request.GET.get('calldate2', hoje)
     disposition_f = request.GET.get('disposition', "")
+    paginas_f = request.GET.get('pagina', "")
+    
+    if paginas_f == '':
+        paginas_f = 15
+    else:
+        paginas_f = paginas_f
 
     query = Q()
 
@@ -62,37 +69,90 @@ def time_line(request):
 
     results = VwCdr.objects.filter(query).order_by('-calldate')
 
-    paginator = Paginator(results, 25)
-    page = request.GET.get('page', '1')
-  
-    try:
-        resultado_1 = paginator.page(page)
-    except PageNotAnInteger:
-        resultado_1 = paginator.page(1)
-    except (EmptyPage):
-        resultado_1 = paginator.page(paginator.num_pages)
-
-    url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s"\
-            % (numero_f, src_f, calldate1, calldate2, disposition_f)
+    url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s"\
+        % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f)
 
     tempo_medio = results.aggregate(Avg('billsec'))['billsec__avg']
     tempo_medio = str(timedelta(seconds=tempo_medio))[:-7]
+    tempo_maior = results.aggregate(Max('billsec'))['billsec__max']
+    tempo_menor = results.aggregate(Min('billsec'))['billsec__min']
+    print tempo_menor
     tempo = results.aggregate(Sum('billsec'))['billsec__sum']
-    #tempo = str(timedelta(seconds=tempo))
-    print tempo
+    if tempo == None:
+        tempo = 0
+    else:
+        tempo = int(tempo)
+        tempo = timedelta(seconds=tempo)
     periodo_dia_1 = calldate1[8:10]
     periodo_dia_2 = calldate2[8:10]
     periodo_mes_1 = calldate1[5:7]
     periodo_mes_2 = calldate2[5:7]
     total = results.aggregate(Count('src'))['src__count']
-   # beta = results.aggregate(Count('disposition')).filter('ANSWERED')['disposition__count']
-   # print beta
 
-    template = loader.get_template('cdr.html')
-    context = RequestContext(request, {'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'resultado_1':resultado_1 ,'results':results,
-                                        'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
-                                        'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
-                                        'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
-                                        'total':total })
-    return HttpResponse(template.render(context))
-    
+
+    ### SQL personalizado
+    from django.db import connection
+    cursor = connection.cursor()
+    atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src = %s""" % (src_f)
+    atendeu = cursor.execute(atendeu)
+    atendeu = cursor.fetchone()[0]
+
+    n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src = %s""" % (src_f)
+    n_atendeu = cursor.execute(n_atendeu)
+    n_atendeu = cursor.fetchone()[0]
+
+    ocupado = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'BUSY' AND src = %s""" % (src_f)
+    ocupado = cursor.execute(ocupado)
+    ocupado = cursor.fetchone()[0]
+
+    falhou = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'FAILED' AND src = %s""" % (src_f)
+    falhou = cursor.execute(falhou)
+    falhou = cursor.fetchone()[0]
+
+    fixo = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'FIXO' AND disposition = 'ANSWERED' AND src = %s""" % (src_f)
+    fixo = cursor.execute(fixo)
+    fixo = cursor.fetchone()[0]
+
+    movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src = %s""" % (src_f)
+    movel = cursor.execute(movel)
+    movel = cursor.fetchone()[0]
+
+    radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src = %s""" % (src_f)
+    radio = cursor.execute(radio)
+    radio = cursor.fetchone()[0]
+
+    ### FIM SQL personalizado
+
+    if results:
+        paginator = Paginator(results, int(paginas_f))
+        page = request.GET.get('page')
+      
+        try:
+            results = paginator.page(page)
+        except PageNotAnInteger:
+            results = paginator.page(1)
+        except (EmptyPage):
+            results = paginator.page(paginator.num_pages)
+
+        template = loader.get_template('cdr.html')
+        context = RequestContext(request, {'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
+                                            'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
+                                            'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
+                                            'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
+                                            'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
+                                            'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'fixo':fixo, 'movel':movel, 'radio':radio,
+                                             'pagina': pagina})
+        return HttpResponse(template.render(context))
+    else:
+            template = loader.get_template('cdr.html')
+            context = RequestContext(request, {'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
+                                            'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
+                                            'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
+                                            'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
+                                            'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
+                                            'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'fixo':fixo, 'movel':movel, 'radio':radio,
+                                            'pagina': pagina})
+            return HttpResponse(template.render(context))
+
+
+

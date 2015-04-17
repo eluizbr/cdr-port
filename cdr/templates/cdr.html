@@ -714,6 +714,19 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
+                                    <label class="col-sm-8 control-label" for="default-select">Por página</label>
+                                    <div class="col-sm-2">
+                                        <select 
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="pagina" id="pagina">
+                                            <option></option>
+                                        {% for pagina in pagina %}
+                                            <option>{{pagina}}</option>
+                                        {%endfor%}
+                                        </select>
+                                    </div>
                                         <div class="col-sm-offset-5 col-sm-12">
                                             <button type="submit" class="btn btn-primary">Pesquisar</button>
                                         </div>
@@ -827,8 +840,40 @@
                                 <p class="value">{{tempo_medio}}</p>
                             </div>
                             <div class="stat-item">
-                                <h6 class="name">Total de chamadas</h6>
-                                <p class="value">{{total}}</p>
+                                <h6 class="name">Chamda mais longa</h6>
+                                <p class="value">{{tempo_maior}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Chamda mais curta</h6>
+                                <p class="value">{{tempo_menor}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Fixo</h6>
+                                <p class="value">{{fixo|intcomma}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Movel</h6>
+                                <p class="value">{{movel|intcomma}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Radio</h6>
+                                <p class="value">{{radio|intcomma}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Atendidas</h6>
+                                <p class="value">{{atendeu|intcomma}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Não atendidas</h6>
+                                <p class="value">{{n_atendeu|intcomma}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Ocupadas</h6>
+                                <p class="value">{{ocupado|intcomma}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Número não existe</h6>
+                                <p class="value">{{falhou|intcomma}}</p>
                             </div>
                             <div class="btn-toolbar mt-lg text-align-right hidden-print">
                             <button id="print" class="btn btn-inverse">
@@ -850,17 +895,17 @@
                         <div class="row text-center">
                                 <div class="col-lg-12">
                             <ul class="pagination">
-                                {% if resultado_1.has_previous %}
-                                        <li><a href="?page={{ resultado_1.previous_page_number }}&{{url}}">Anterior</a></li>
+                                {% if results.has_previous %}
+                                        <li><a href="?page={{ results.previous_page_number }}&{{url}}">Anterior</a></li>
                                 {% endif %}
-                                {% for pg in resultado_1.paginator.page_range%}
-                                        {% if resultado_1.number == pg %}
+                                {% for pg in results.paginator.page_range%}
+                                        {% if results.number == pg %}
                                         {% else %}
                                         {% endif %}
                                 {% endfor %}
-                                {% if resultado_1.has_next %}
-                                <li class="active"><a>{{ resultado_1.number }} de {{ resultado_1.paginator.num_pages }}</a></li>
-                                        <li><a href="?page={{ resultado_1.next_page_number }}&{{url}}"> Próximo</a></li>
+                                {% if results.has_next %}
+                                <li class="active"><a>{{ results.number }} de {{ results.paginator.num_pages }}</a></li>
+                                        <li><a href="?page={{ results.next_page_number }}&{{url}}"> Próximo</a></li>
                                 {% endif %}
                             </ul>
 
