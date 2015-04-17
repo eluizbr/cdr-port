@@ -75,9 +75,23 @@ def time_line(request):
     url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s"\
             % (numero_f, src_f, calldate1, calldate2, disposition_f)
 
+    tempo_medio = results.aggregate(Avg('billsec'))['billsec__avg']
+    tempo_medio = str(timedelta(seconds=tempo_medio))[:-7]
+    tempo = results.aggregate(Sum('billsec'))['billsec__sum']
+    tempo = str(timedelta(seconds=tempo))
+    periodo_dia_1 = calldate1[8:10]
+    periodo_dia_2 = calldate2[8:10]
+    periodo_mes_1 = calldate1[5:7]
+    periodo_mes_2 = calldate2[5:7]
+    total = results.aggregate(Count('src'))['src__count']
+   # beta = results.aggregate(Count('disposition')).filter('ANSWERED')['disposition__count']
+   # print beta
+
     template = loader.get_template('cdr.html')
     context = RequestContext(request, {'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'resultado_1':resultado_1 ,'results':results,
-                                        'src':src, 'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
-                                        'disposition':disposition, 'url':url, })
+                                        'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
+                                        'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
+                                        'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
+                                        'total':total })
     return HttpResponse(template.render(context))
     

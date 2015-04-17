@@ -205,3 +205,22 @@ CREATE VIEW vw_ramais AS SELECT id, src AS ramais, count(src) AS total FROM cdr_
 		GROUP BY src ORDER BY total DESC;
 
 ### FIM Views para CDR
+
+### Gera difernca entre meses
+
+SELECT
+  @total1:= COUNT( IF( MONTH( calldate ) = MONTH( CURDATE() ), 1, NULL ) ) AS atual,
+  @total2:= COUNT( IF( MONTH( calldate ) = MONTH( CURRENT_DATE - INTERVAL 1 MONTH ), 1, NULL ) ) AS anterior,
+  ( @total1 - @total2 ) / @total1 * 100 AS percentual
+FROM cdr_cdr
+WHERE
+  disposition = 'ANSWERED'
+  AND (
+    MONTH( calldate ) = MONTH( CURDATE() )
+    OR
+    MONTH( calldate ) = MONTH( CURRENT_DATE - INTERVAL 1 MONTH )
+  )
+
+ ### FIM Gera difernca entre meses
+
+ 

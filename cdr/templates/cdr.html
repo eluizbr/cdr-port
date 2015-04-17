@@ -637,7 +637,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label" for="default-select">Ramal</label>
                                     <div class="col-sm-2">
-                                        <select
+                                        <select multiple
+
                                                 data-width="auto"
                                                 data-minimum-results-for-search="10"
                                                 tabindex="-1"
@@ -829,16 +830,73 @@
                                 </td>
                                 <td>{{i.duration}}</td>
                                 <td>{{i.billsec}}</td>
-                                <td class="width-150">
+                                <td class="width-25">
+
+                                {% if i.disposition == "ANSWERED" %}
                                     <div class="progress progress-sm mt-xs js-progress-animate">
-                                        <div class="progress-bar progress-bar-success" data-width="29%" style="width: 0;"></div>
+                                        <div class="progress-bar progress-bar-success" data-width="100%" style="width: 0;"></div>
                                     </div>
+                                {% elif i.disposition == "NO ANSWER" %}
+                                    <div class="progress progress-sm mt-xs js-progress-animate">
+                                        <div class="progress-bar" data-width="100%" style="width: 0;"></div>
+                                    </div>
+                                {% elif i.disposition == "BUSY" %}
+                                    <div class="progress progress-sm mt-xs js-progress-animate">
+                                        <div class="progress-bar progress-bar-warning" data-width="100%" style="width: 0;"></div>
+                                    </div>
+                                {% else %}
+                                    <div class="progress progress-sm mt-xs js-progress-animate">
+                                        <div class="progress-bar progress-bar-danger" data-width="100%" style="width: 0;"></div>
+                                    </div>
+                                {% endif %}   
+ 
+
                                 </td>
                             </tr>
                         {% endfor %}
                             </tbody>
 
                         </table>
+
+            <div class="col-md-5">
+                <section class="widget">
+                    <!-- .widget>header is generally a place for widget title and widget controls. see .widget in _base.scss -->
+                    <header>
+                        <h5>
+                            ESTATISTICAS - RAMAL: {{src_f}}
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+                        <div class="stats-row">
+                            <div class="stat-item">
+                                <h6 class="name">Periodo</h6>
+                                <p class="value">{{periodo_dia_1}}/{{periodo_mes_1}} à {{periodo_dia_2}}/{{periodo_mes_2}} </p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Tempo total</h6>
+                                <p class="value">{{tempo}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Tempo medio por cahamda</h6>
+                                <p class="value">{{tempo_medio}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Total de chamadas</h6>
+                                <p class="value">{{total}}</p>
+                            </div>
+                        </div>
+                        <div class="progress progress-xs">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="30"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                            </div>
+                        </div>
+                        <p>
+                            <small><span class="circle bg-warning"><i class="glyphicon glyphicon-chevron-up"></i></span></small>
+                            <span class="fw-semi-bold">17% Alta</span>
+                            no último mês</p>
+                    </div>
+                </section>
+
                         <div class="row text-center">
                                 <div class="col-lg-12">
                             <ul class="pagination">
@@ -858,6 +916,9 @@
 
                             </div>
                         </div>
+
+            </div>
+
                             <div class="btn-toolbar mt-lg text-align-right hidden-print">
                             <button id="print" class="btn btn-inverse">
                                 <i class="fa fa-print"></i>

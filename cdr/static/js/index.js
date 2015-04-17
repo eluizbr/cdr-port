@@ -23,7 +23,7 @@ $(function(){
                     }
                 },
                 defaultPlot:{
-                    size: 10,
+                    size: 35,
                     attrs : {
                         fill : Sing.colors['brand-warning'],
                         stroke : "#fff",
@@ -41,9 +41,9 @@ $(function(){
                 }
             },
               plots:{
-                'mg' : {
-                    latitude: -19.912998,
-                    longitude: -43.940933,
+                'MG' : {
+                latitude :-15.781682, 
+                longitude :-47.924195,
                     tooltip: {content : "BH"}
                 },
             }
