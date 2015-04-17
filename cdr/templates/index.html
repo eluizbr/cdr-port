@@ -502,8 +502,6 @@
 <!-- common libraries. required for every page-->
 <script src="{% static "vendor/jquery/dist/jquery.min.js"%}"></script>
 <script src="{% static "vendor/jquery-pjax/jquery.pjax.js"%}"></script>
-<script src="{% static "vendor/jquery/dist/jquery.mask.min.js" %}"></script>
-<script src="{% static "vendor/jquery/dist/jquery.mask.js" %}"></script>
 <script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/transition.js"%}"></script>
 <script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"%}"></script>
 <script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"%}"></script>
@@ -515,6 +513,8 @@
 <script src="{% static "vendor/pace.js/pace.min.js"%}"></script>
 <script src="{% static "vendor/jquery-touchswipe/jquery.touchSwipe.js"%}"></script>
 <script src="{% static "vendor/jquery-touchswipe/jquery.touchSwipe.js"%}"></script>
+<script src="{% static "vendor/jquery/dist/jquery.mask.min.js" %}"></script>
+<script src="{% static "vendor/jquery/dist/jquery.mask.js" %}"></script>
 
 <!-- common app js -->
 <script src="{% static "js/settings.js"%}"></script>
@@ -588,14 +588,6 @@ function reload_page() {
         $calendar.find('.icon-arrow-left, .icon-arrow-right').parent().on('click', restyleCalendar);
         restyleCalendar();
     }
-
-</script>
-
-<script type="text/javascript">
-
-    $(document).ready(function(){
-    $('#numero').mask('(99) 9999-9999');
-});
 
 </script>
 </body>

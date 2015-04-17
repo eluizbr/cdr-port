@@ -592,7 +592,7 @@
                         </div>
                         <div id="collapseOne" class="panel-collapse collapse">
                             <div class="panel-body">
-            <div align="center" class="col-md-14">
+            <div align="center" class="col-md-12">
                 <section class="widget">
                     <div class="widget-body">
                         <form class="form-horizontal" role="form" method="get" action="/cdr/consulta/">
@@ -606,6 +606,7 @@
                                             <input type="text" name="numero" id="numero" class="form-control" placeholder="(00)0000-0000">
                                         </div>
                                     </div>
+
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <fieldset>
@@ -661,19 +662,6 @@
                                         {% endfor %}
                                         </select>
                                     </div>
-                                    <label class="col-sm-1 control-label" for="default-select">Tipo</label>
-                                    <div class="col-sm-2">
-                                        <select
-                                                data-width="auto"
-                                                data-minimum-results-for-search="10"
-                                                tabindex="-1"
-                                                class="select2 form-control" id="default-select">
-                                            <option value=""></option>
-                                            <option value="Magellanic">Fixo</option>
-                                            <option value="Andromeda">Movel</option>
-                                            <option value="Sextans">Radio</option>
-                                        </select>
-                                    </div>
                                 </div>
                                 <legend><strong>Selecione uma data</strong></legend>
                                 <div class="row">
@@ -712,9 +700,79 @@
                                             </div>
                                     </div>
                                 </div>
+                                <legend><strong>Portbilidade</strong></legend>
                                 <div class="form-group">
+                                    <label class="col-sm-1 control-label" for="default-select">CSP</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" id="default-select">
+                                            <option value=""></option>
+                                            <option value="Magellanic">7777</option>
+                                            <option value="Andromeda">8888</option>
+                                            <option value="Sextans">9999</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Operadora</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" id="default-select">
+                                            <option value=""></option>
+                                            <option value="Magellanic">Antendida</option>
+                                            <option value="Andromeda">Não Antendida</option>
+                                            <option value="Sextans">Ocupado</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Tipo</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" id="default-select">
+                                            <option value=""></option>
+                                            <option value="Magellanic">Antendida</option>
+                                            <option value="Andromeda">Não Antendida</option>
+                                            <option value="Sextans">Ocupado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <legend><strong>Selecione um ramal e/ou status</strong></legend>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label" for="default-select">Ramal</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" id="default-select">
+                                            <option value=""></option>
+                                            <option value="Magellanic">7777</option>
+                                            <option value="Andromeda">8888</option>
+                                            <option value="Sextans">9999</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Status</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" id="default-select">
+                                            <option value=""></option>
+                                            <option value="Magellanic">Antendida</option>
+                                            <option value="Andromeda">Não Antendida</option>
+                                            <option value="Sextans">Ocupado</option>
+                                        </select>
+                                    </div>
+
                                     <div class="row">
-                                        <div class="col-sm-offset-5 col-sm-12">
+                                        <div class="col-sm-offset-4 col-sm-2">
                                             <button type="submit" class="btn btn-primary">Pesquisar</button>
                                         </div>
                                     </div>
@@ -741,26 +799,18 @@
                             <thead>
                             <tr>
                                 <th>Número</th>
-                                <th>Operadora</th>
-                                <th>Tipo</th>
                                 <th>Ramal</th>
                                 <th>Data</th>
                                 <th>Status</th>
                                 <th>Duração</th>
-                                <th>Conversação</th>
-                               <!-- <th></th> -->
+                                <th>Billing</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                         {% for i in results|slice:":50"  %}
                             <tr>
-                                    {%if i.dst|length > 10%}
-                                        <td data-mask="(99) 99999-9999">{{i.dst}}</td>
-                                    {% else %}
-                                        <td data-mask="(99) 9999-9999">{{i.dst}}</td>
-                                    {% endif %}
-                                <td>{{i.operadora}}</td>
-                                <td>{{i.tipo}}</td>
+                                <td>{{i.dst}}</td>
                                 <td>{{i.src}}</td>
                                 <td>{{i.calldate}}</td>
                                 <td>
@@ -774,9 +824,9 @@
                                         <span class="text-center">Não existe</span>
                                     {% endif %}
                                 </td>
-                                <td>{{i.duration|time:"H:i:s"}}</td>
-                                <td>{{i.billsec|time:"H:i:s"}}</td>
-                               <!-- <td class="width-25">
+                                <td>{{i.duration}}</td>
+                                <td>{{i.billsec}}</td>
+                                <td class="width-25">
 
                                 {% if i.disposition == "ANSWERED" %}
                                     <div class="progress progress-sm mt-xs js-progress-animate">
@@ -797,7 +847,7 @@
                                 {% endif %}   
  
 
-                                </td>-->
+                                </td>
                             </tr>
                         {% endfor %}
                             </tbody>
@@ -910,8 +960,6 @@
 <script src="{% static "vendor/markdown/lib/markdown.js"%}"></script>
 <script src="{% static "vendor/bootstrap-markdown/js/bootstrap-markdown.js"%}"></script>
 <script src="{% static "vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"%}"></script>
-<script src="{% static "vendor/jquery/dist/jquery.mask.min.js" %}"></script>
-<script src="{% static "vendor/jquery/dist/jquery.mask.js" %}"></script>
 
 <!-- common app js -->
 <script src="{% static "js/settings.js"%}"></script>

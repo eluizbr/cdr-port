@@ -4,7 +4,7 @@ from django.template import RequestContext, loader
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
 from .models import cdr, DispositionPercent, Stats_ANSWERED, Stats_NOANSWER, Stats_BUSY
 from .models import VwDayStats, VwMonthStats,VwLast10, VwOperadoras, VwStatsAnswered, VwStatsBusy, VwStatsNoanswer, VwRamais,\
-                    VwDisposition
+                    VwDisposition, VwCdr
 from django.db.models import Sum, Count, Avg, Max, Min
 from datetime import datetime, timedelta, time
 from django.db.models import Q
@@ -35,10 +35,10 @@ def time_line(request):
     byDay = VwDayStats.objects.values_list('dia', 'mes', 'total')
     byMonth = VwMonthStats.objects.values_list('mes', 'total')
     ultimo = VwLast10.objects.values_list('numero','operadora','tipo','calldate', 'disposition' ,'billsec')
-    resultado = cdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec').order_by('-calldate')
+    resultado = VwCdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec').order_by('-calldate')
     src = VwRamais.objects.all()
-    numero = cdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec')
-    calldate = cdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec')
+    numero = VwCdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec')
+    calldate = VwCdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec')
     disposition = VwDisposition.objects.all()
 
 
@@ -60,7 +60,7 @@ def time_line(request):
         query &=Q(disposition__icontains=disposition_f)
 
 
-    results = cdr.objects.filter(query).order_by('-calldate')
+    results = VwCdr.objects.filter(query).order_by('-calldate')
 
     paginator = Paginator(results, 25)
     page = request.GET.get('page', '1')
@@ -78,7 +78,8 @@ def time_line(request):
     tempo_medio = results.aggregate(Avg('billsec'))['billsec__avg']
     tempo_medio = str(timedelta(seconds=tempo_medio))[:-7]
     tempo = results.aggregate(Sum('billsec'))['billsec__sum']
-    tempo = str(timedelta(seconds=tempo))
+    #tempo = str(timedelta(seconds=tempo))
+    print tempo
     periodo_dia_1 = calldate1[8:10]
     periodo_dia_2 = calldate2[8:10]
     periodo_mes_1 = calldate1[5:7]

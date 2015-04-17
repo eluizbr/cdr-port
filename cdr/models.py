@@ -163,3 +163,19 @@ class VwDisposition(models.Model):
     class Meta:
         managed = False
         db_table = 'vw_disposition'
+
+class VwCdr(models.Model):
+    dst = models.CharField(max_length=80)
+    src = models.CharField(max_length=80)
+    operadora = models.CharField(max_length=64)
+    tipo = models.CharField(max_length=64)
+    calldate = models.DateTimeField()
+    disposition = models.CharField(max_length=45)
+    duration = models.TimeField(blank=True, null=True)
+    billsec = models.TimeField(blank=True, null=True)
+
+    def __unicode__(self):
+        return unicode(self.numero)
+    class Meta:
+        managed = False
+        db_table = 'vw_cdr'
