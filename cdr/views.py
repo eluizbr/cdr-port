@@ -102,124 +102,137 @@ def time_line(request):
     cursor = connection.cursor()
     
     if operadora_f == '':
+        print 1
 
-
-        atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND tipo='%s'""" % (src_f, tipo_f)
+        atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
+        print atendeu
         atendeu = cursor.execute(atendeu)
         atendeu = cursor.fetchone()[0]
+        print atendeu
 
-        n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src=%s AND tipo='%s'""" % (src_f, tipo_f)
+        n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
         n_atendeu = cursor.execute(n_atendeu)
         n_atendeu = cursor.fetchone()[0]
 
-        ocupado = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'BUSY' AND src=%s AND tipo='%s'""" % (src_f, tipo_f)
+        ocupado = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'BUSY' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
         ocupado = cursor.execute(ocupado)
         ocupado = cursor.fetchone()[0]
 
-        falhou = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'FAILED' AND src=%s AND tipo='%s'""" % (src_f, tipo_f)
+        falhou = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'FAILED' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
         falhou = cursor.execute(falhou)
         falhou = cursor.fetchone()[0]
 
-        fixo = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'FIXO' AND disposition = 'ANSWERED' AND src=%s AND tipo='%s'""" % (src_f, tipo_f)
+        fixo = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
+        print fixo
         fixo = cursor.execute(fixo)
         fixo = cursor.fetchone()[0]
-
-        movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src=%s AND tipo='%s'""" % (src_f, tipo_f)
+        print fixo
+        movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
         movel = cursor.execute(movel)
         movel = cursor.fetchone()[0]
+        print movel
 
-        radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src=%s AND tipo='%s'""" % (src_f, tipo_f)
+        radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
+        print radio
         radio = cursor.execute(radio)
         radio = cursor.fetchone()[0]
+        print radio
 
     elif tipo_f == '':
-
-        atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND operadora ='%s'""" % (src_f, operadora_f)
+        print 2
+        atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND operadora ='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, calldate1, calldate2)
+        print atendeu
         atendeu = cursor.execute(atendeu)
         atendeu = cursor.fetchone()[0]
 
-        n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src=%s AND operadora ='%s'""" % (src_f, operadora_f)
+        n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src=%s AND operadora ='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, calldate1, calldate2)
         n_atendeu = cursor.execute(n_atendeu)
         n_atendeu = cursor.fetchone()[0]
 
-        ocupado = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'BUSY' AND src=%s AND operadora ='%s'""" % (src_f, operadora_f)
+        ocupado = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'BUSY' AND src=%s AND operadora ='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, calldate1, calldate2)
         ocupado = cursor.execute(ocupado)
         ocupado = cursor.fetchone()[0]
 
-        falhou = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'FAILED' AND src=%s AND operadora ='%s'""" % (src_f, operadora_f)
+        falhou = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'FAILED' AND src=%s AND operadora ='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, calldate1, calldate2)
         falhou = cursor.execute(falhou)
         falhou = cursor.fetchone()[0]
 
-        fixo = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'FIXO' AND disposition = 'ANSWERED' AND src=%s AND operadora ='%s'""" % (src_f, operadora_f)
+        fixo = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND operadora ='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, calldate1, calldate2)
+        print fixo
         fixo = cursor.execute(fixo)
         fixo = cursor.fetchone()[0]
 
-        movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src=%s AND operadora ='%s'""" % (src_f, operadora_f)
+        movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src=%s AND operadora ='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, calldate1, calldate2)
         movel = cursor.execute(movel)
         movel = cursor.fetchone()[0]
+        print movel
 
-        radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src=%s AND operadora ='%s'""" % (src_f, operadora_f)
+        radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src=%s AND operadora ='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, calldate1, calldate2)
         radio = cursor.execute(radio)
         radio = cursor.fetchone()[0]
 
 
     elif operadora_f == '' and tipo_f == '':
-
-        atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src==%s""" % (src_f)
+        print 3
+        atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src==%s AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, calldate1, calldate2)
+        print atendeu
         atendeu = cursor.execute(atendeu)
         atendeu = cursor.fetchone()[0]
 
-        n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src==%s""" % (src_f)
+        n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src==%s AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, calldate1, calldate2)
         n_atendeu = cursor.execute(n_atendeu)
         n_atendeu = cursor.fetchone()[0]
 
-        ocupado = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'BUSY' AND src==%s""" % (src_f)
+        ocupado = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'BUSY' AND src==%s AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, calldate1, calldate2)
         ocupado = cursor.execute(ocupado)
         ocupado = cursor.fetchone()[0]
 
-        falhou = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'FAILED' AND src==%s""" % (src_f)
+        falhou = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'FAILED' AND src==%s AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, calldate1, calldate2)
         falhou = cursor.execute(falhou)
         falhou = cursor.fetchone()[0]
 
-        fixo = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'FIXO' AND disposition = 'ANSWERED' AND src==%s""" % (src_f)
+        fixo = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src==%s AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, calldate1, calldate2)
+        print fixo
         fixo = cursor.execute(fixo)
         fixo = cursor.fetchone()[0]
 
-        movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src==%s""" % (src_f)
+        movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src==%s AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, calldate1, calldate2)
         movel = cursor.execute(movel)
         movel = cursor.fetchone()[0]
 
-        radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src==%s""" % (src_f)
+        radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src==%s AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, calldate1, calldate2)
         radio = cursor.execute(radio)
         radio = cursor.fetchone()[0]
 
     else:
-
-        atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src==%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
+        print 4
+        atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src==%s AND operadora ='%s' AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, tipo_f, calldate1, calldate2)
+        print atendeu
         atendeu = cursor.execute(atendeu)
         atendeu = cursor.fetchone()[0]
 
-        n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src==%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
+        n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src==%s AND operadora ='%s' AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, tipo_f, calldate1, calldate2)
         n_atendeu = cursor.execute(n_atendeu)
         n_atendeu = cursor.fetchone()[0]
 
-        ocupado = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'BUSY' AND src==%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
+        ocupado = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'BUSY' AND src==%s AND operadora ='%s' AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, tipo_f, calldate1, calldate2)
         ocupado = cursor.execute(ocupado)
         ocupado = cursor.fetchone()[0]
 
-        falhou = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'FAILED' AND src==%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
+        falhou = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'FAILED' AND src==%s AND operadora ='%s' AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, tipo_f, calldate1, calldate2)
         falhou = cursor.execute(falhou)
         falhou = cursor.fetchone()[0]
 
-        fixo = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'FIXO' AND disposition = 'ANSWERED' AND src==%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
+        fixo = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src==%s AND operadora ='%s' AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, tipo_f, calldate1, calldate2)
+        print fixo
         fixo = cursor.execute(fixo)
         fixo = cursor.fetchone()[0]
 
-        movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src==%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
+        movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src==%s AND operadora ='%s' AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, tipo_f, calldate1, calldate2)
         movel = cursor.execute(movel)
         movel = cursor.fetchone()[0]
 
-        radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src==%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
+        radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src==%s AND operadora ='%s' AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, tipo_f, calldate1, calldate2)
         radio = cursor.execute(radio)
         radio = cursor.fetchone()[0]
 
