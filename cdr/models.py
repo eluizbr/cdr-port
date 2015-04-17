@@ -109,6 +109,9 @@ class VwOperadoras(models.Model):
     operadora = models.CharField(max_length=64)
     total = models.BigIntegerField()
 
+    def __unicode__(self):
+        return unicode(self.operadora)
+        
     class Meta:
         managed = False
         db_table = 'vw_operadoras'

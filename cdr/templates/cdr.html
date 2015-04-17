@@ -649,7 +649,7 @@
                                         </select>
                                     </div>
                                     <label class="col-sm-1 control-label" for="default-select">Status</label>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
                                         <select
                                                 data-width="auto"
                                                 data-minimum-results-for-search="10"
@@ -662,16 +662,29 @@
                                         </select>
                                     </div>
                                     <label class="col-sm-1 control-label" for="default-select">Tipo</label>
+                                    <div class="col-sm-1">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="tipo" id="tipo">
+                                            <option value=""></option>
+                                            <option>Fixo</option>
+                                            <option>Movel</option>
+                                            <option>Radio</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Operadora</label>
                                     <div class="col-sm-2">
                                         <select
                                                 data-width="auto"
                                                 data-minimum-results-for-search="10"
                                                 tabindex="-1"
-                                                class="select2 form-control" id="default-select">
+                                                class="select2 form-control" name="operadora" id="operadora">
                                             <option value=""></option>
-                                            <option value="Magellanic">Fixo</option>
-                                            <option value="Andromeda">Movel</option>
-                                            <option value="Sextans">Radio</option>
+                                        {% for operadora in operadora %}
+                                            <option>{{operadora}}</option>
+                                        {% endfor %}
                                         </select>
                                     </div>
                                 </div>

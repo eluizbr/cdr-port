@@ -40,6 +40,8 @@ def time_line(request):
     numero = VwCdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec')
     calldate = VwCdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec')
     disposition = VwDisposition.objects.all()
+    tipo = VwCdr.objects.values_list('tipo')
+    operadora = VwOperadoras.objects.all()
     pagina = 20,30,50,100
 
     
@@ -49,7 +51,10 @@ def time_line(request):
     calldate2 = request.GET.get('calldate2', hoje)
     disposition_f = request.GET.get('disposition', "")
     paginas_f = request.GET.get('pagina', "")
-    
+    tipo_f = request.GET.get('tipo', "")
+    operadora_f = request.GET.get('operadora', "")
+
+    print src_f
     if paginas_f == '':
         paginas_f = 15
     else:
@@ -65,12 +70,16 @@ def time_line(request):
         query &=Q(calldate__range=(calldate1,calldate2))
     if disposition:
         query &=Q(disposition__icontains=disposition_f)
+    if tipo:
+        query &=Q(tipo__icontains=tipo_f)
+    if operadora:
+        query &=Q(operadora__icontains=operadora_f)
 
 
     results = VwCdr.objects.filter(query).order_by('-calldate')
 
-    url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s"\
-        % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f)
+    url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&tipo=%s&operadora=%s"\
+        % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, tipo_f, operadora_f)
 
     tempo_medio = results.aggregate(Avg('billsec'))['billsec__avg']
     tempo_medio = str(timedelta(seconds=tempo_medio))[:-7]
@@ -89,35 +98,35 @@ def time_line(request):
     periodo_mes_2 = calldate2[5:7]
     total = results.aggregate(Count('src'))['src__count']
 
-
     ### SQL personalizado
     from django.db import connection
     cursor = connection.cursor()
-    atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src = %s""" % (src_f)
+    atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src =%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
+    print atendeu
     atendeu = cursor.execute(atendeu)
     atendeu = cursor.fetchone()[0]
 
-    n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src = %s""" % (src_f)
+    n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src =%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
     n_atendeu = cursor.execute(n_atendeu)
     n_atendeu = cursor.fetchone()[0]
 
-    ocupado = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'BUSY' AND src = %s""" % (src_f)
+    ocupado = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'BUSY' AND src =%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
     ocupado = cursor.execute(ocupado)
     ocupado = cursor.fetchone()[0]
 
-    falhou = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'FAILED' AND src = %s""" % (src_f)
+    falhou = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'FAILED' AND src =%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
     falhou = cursor.execute(falhou)
     falhou = cursor.fetchone()[0]
 
-    fixo = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'FIXO' AND disposition = 'ANSWERED' AND src = %s""" % (src_f)
+    fixo = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'FIXO' AND disposition = 'ANSWERED' AND src =%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
     fixo = cursor.execute(fixo)
     fixo = cursor.fetchone()[0]
 
-    movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src = %s""" % (src_f)
+    movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src =%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
     movel = cursor.execute(movel)
     movel = cursor.fetchone()[0]
 
-    radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src = %s""" % (src_f)
+    radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src =%s AND operadora ='%s' AND tipo='%s'""" % (src_f, operadora_f, tipo_f)
     radio = cursor.execute(radio)
     radio = cursor.fetchone()[0]
 
@@ -141,7 +150,7 @@ def time_line(request):
                                             'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                             'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
                                             'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'fixo':fixo, 'movel':movel, 'radio':radio,
-                                             'pagina': pagina})
+                                             'pagina': pagina, 'operadora': operadora,})
         return HttpResponse(template.render(context))
     else:
             template = loader.get_template('cdr.html')
@@ -151,7 +160,7 @@ def time_line(request):
                                             'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                             'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
                                             'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'fixo':fixo, 'movel':movel, 'radio':radio,
-                                            'pagina': pagina})
+                                            'pagina': pagina, 'operadora': operadora,})
             return HttpResponse(template.render(context))
 
 
