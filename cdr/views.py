@@ -81,7 +81,12 @@ def time_line(request):
         % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, tipo_f, operadora_f)
 
     tempo_medio = results.aggregate(Avg('billsec'))['billsec__avg']
-    tempo_medio = str(timedelta(seconds=tempo_medio))[:-7]
+    print tempo_medio
+    if tempo_medio == None:
+        tempo_medio = 0
+    else:
+        #tempo_medio = int(tempo_medio)
+        tempo_medio = tempo_medio = str(timedelta(seconds=tempo_medio))[:-7]
     tempo_maior = results.aggregate(Max('billsec'))['billsec__max']
     tempo_menor = results.aggregate(Min('billsec'))['billsec__min']
     print tempo_menor
