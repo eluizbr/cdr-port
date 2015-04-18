@@ -200,7 +200,7 @@ CREATE VIEW vw_cdr AS
 	FROM vw_prefixo;
 	
 		
-CREATE VIEW vw_operadoras AS SELECT operadora, count(operadora) AS total 
+CREATE VIEW vw_operadoras AS SELECT id, operadora, count(operadora) AS total 
 	FROM vw_prefixo
 	GROUP BY operadora ORDER BY total DESC;
 
@@ -231,3 +231,11 @@ WHERE
  ### FIM Gera difernca entre meses
 
 
+SELECT id, src, MIN(billsec) AS min, MAX(billsec) AS max, COUNT(src) AS chamdas, SEC_TO_TIME(SUM(billsec)) As tempo_total, 
+	SEC_TO_TIME(AVG(billsec)) As tempo_medio
+	FROM vw_cdr
+	WHERE disposition = 'ANSWERED' AND calldate BETWEEN ('2015-04-16T00:00:00') AND ('2015-04-17T23:59:59')
+	GROUP BY src ORDER BY min;
+	
+
+	

@@ -387,200 +387,15 @@
             <li>Você esta aqui</li>
             <li class="active">CDR</li>
         </ol>-->
-        <h1 class="page-title">CDR - <span class="fw-semi-bold">Consultas</span></h1>
+        {% if total == 0 %}
+            <h1 class="page-title">CDR - <span class="fw-semi-bold">Pesquisa sem resultados</span></h1>
+        {% else %}
+            <h1 class="page-title">CDR - <span class="fw-semi-bold">Total</span> <span class="fw-semi-bold"> consultado {{total|intcomma}}</span></h1>
+
+            
+        {% endif %}
+        
                 <div class="row">
-        <!--
-            <div align="center" class="col-md-10">
-                <section class="widget">
-                    <div class="widget-body">
-                        <form class="form-horizontal" role="form">
-                            <fieldset>
-                                <legend><strong>Entre com um número</strong></legend>
-                                <div class="form-group">
-                                    <label for="normal-field" class="col-sm-1 control-label">Número</label>
-                                    <div class="col-sm-2">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                            <input type="text" id="normal-field" class="form-control" placeholder="(00)0000-0000">
-                                        </div>
-                                    </div>
-
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <fieldset>
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
-                                                                <div class="radio">
-                                                                    <input type="radio" name="radio1" id="radio1" value="option1">
-                                                                    <label for="radio1">
-                                                                        Começa com
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="radio">
-                                                                    <input type="radio" name="radio2" id="radio2" value="option2" >
-                                                                    <label for="radio2">
-                                                                        Contém
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-
-                                </div>
-                                <legend><strong>Selecione um ramal e/ou status</strong></legend>
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label" for="default-select">Ramal</label>
-                                    <div class="col-sm-2">
-                                        <select
-                                                data-width="auto"
-                                                data-minimum-results-for-search="10"
-                                                tabindex="-1"
-                                                class="select2 form-control" id="default-select">
-                                            <option value=""></option>
-                                            <option value="Magellanic">7777</option>
-                                            <option value="Andromeda">8888</option>
-                                            <option value="Sextans">9999</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-1 control-label" for="default-select">Status</label>
-                                    <div class="col-sm-2">
-                                        <select
-                                                data-width="auto"
-                                                data-minimum-results-for-search="10"
-                                                tabindex="-1"
-                                                class="select2 form-control" id="default-select">
-                                            <option value=""></option>
-                                            <option value="Magellanic">Antendida</option>
-                                            <option value="Andromeda">Não Antendida</option>
-                                            <option value="Sextans">Ocupado</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <legend><strong>Selecione uma data</strong></legend>
-                                <div class="row">
-                                    <div class="col-sm-5">
-                                            <div class="widget-body">
-                                                    <fieldset>
-                                                        <div class="form-group">
-                                                        <label class="col-sm-1 control-label" for="datepicker1i">De</label>
-                                                            <div id="datetimepicker1" class="input-group">
-                                                                <input id="datepicker1i" type="text" class="form-control">
-                                                                <span class="input-group-btn">
-                                                                    <a href="#" class="btn btn-success">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </a>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
-                                            </div>
-                                    </div>
-                                    <div class="col-sm-5">
-                                            <div class="widget-body">
-                                                    <fieldset>
-                                                        <div class="form-group">
-                                                        <label class="col-sm-1 control-label" for="datepicker2i">Até</label>
-                                                            <div id="datetimepicker2" class="input-group">
-                                                                <input id="datepicker2i" type="text" class="form-control">
-                                                                <span class="input-group-btn">
-                                                                    <a href="#" class="btn btn-success">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </a>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
-                                            </div>
-                                    </div>
-                                </div>
-                                <legend><strong>Portbilidade</strong></legend>
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label" for="default-select">CSP</label>
-                                    <div class="col-sm-2">
-                                        <select
-                                                data-width="auto"
-                                                data-minimum-results-for-search="10"
-                                                tabindex="-1"
-                                                class="select2 form-control" id="default-select">
-                                            <option value=""></option>
-                                            <option value="Magellanic">7777</option>
-                                            <option value="Andromeda">8888</option>
-                                            <option value="Sextans">9999</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-1 control-label" for="default-select">Operadora</label>
-                                    <div class="col-sm-2">
-                                        <select
-                                                data-width="auto"
-                                                data-minimum-results-for-search="10"
-                                                tabindex="-1"
-                                                class="select2 form-control" id="default-select">
-                                            <option value=""></option>
-                                            <option value="Magellanic">Antendida</option>
-                                            <option value="Andromeda">Não Antendida</option>
-                                            <option value="Sextans">Ocupado</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-1 control-label" for="default-select">Tipo</label>
-                                    <div class="col-sm-2">
-                                        <select
-                                                data-width="auto"
-                                                data-minimum-results-for-search="10"
-                                                tabindex="-1"
-                                                class="select2 form-control" id="default-select">
-                                            <option value=""></option>
-                                            <option value="Magellanic">Antendida</option>
-                                            <option value="Andromeda">Não Antendida</option>
-                                            <option value="Sextans">Ocupado</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <legend><strong>Selecione um ramal e/ou status</strong></legend>
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label" for="default-select">Ramal</label>
-                                    <div class="col-sm-2">
-                                        <select
-                                                data-width="auto"
-                                                data-minimum-results-for-search="10"
-                                                tabindex="-1"
-                                                class="select2 form-control" id="default-select">
-                                            <option value=""></option>
-                                            <option value="Magellanic">7777</option>
-                                            <option value="Andromeda">8888</option>
-                                            <option value="Sextans">9999</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-1 control-label" for="default-select">Status</label>
-                                    <div class="col-sm-2">
-                                        <select
-                                                data-width="auto"
-                                                data-minimum-results-for-search="10"
-                                                tabindex="-1"
-                                                class="select2 form-control" id="default-select">
-                                            <option value=""></option>
-                                            <option value="Magellanic">Antendida</option>
-                                            <option value="Andromeda">Não Antendida</option>
-                                            <option value="Sextans">Ocupado</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-sm-offset-4 col-sm-2">
-                                            <button type="submit" class="btn btn-primary">Pesquisar</button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </section>
-            </div>
-        -->
                     <div class="panel panel-default">
                         <div class="panel-heading collapsed">
                             <h5 class="panel-title">
@@ -655,10 +470,11 @@
                                                 data-minimum-results-for-search="10"
                                                 tabindex="-1"
                                                 class="select2 form-control" name="disposition" id="disposition">
-                                            <option></option>
-                                        {% for disposition in disposition %}
-                                            <option>{{disposition}}</option>
-                                        {% endfor %}
+                                            <option value="">Tudo</option>
+                                            <option value="ANSWERED">Atendida</option>
+                                            <option value="NO ANSWER">Não atendida</option>
+                                            <option value="BUSY">Ocupado</option>
+                                            <option value="FAILED">Número não existe</option>
                                         </select>
                                     </div>
                                     <label class="col-sm-1 control-label" for="default-select">Tipo</label>
@@ -668,7 +484,7 @@
                                                 data-minimum-results-for-search="10"
                                                 tabindex="-1"
                                                 class="select2 form-control" name="tipo" id="tipo">
-                                            <option value=""></option>
+                                            <option></option>
                                             <option>Fixo</option>
                                             <option>Movel</option>
                                             <option>Radio</option>
@@ -681,7 +497,7 @@
                                                 data-minimum-results-for-search="10"
                                                 tabindex="-1"
                                                 class="select2 form-control" name="operadora" id="operadora">
-                                            <option value=""></option>
+                                            <option value="">Qualquer</option>
                                         {% for operadora in operadora %}
                                             <option>{{operadora}}</option>
                                         {% endfor %}

@@ -75,7 +75,6 @@ def time_line(request):
         query &=Q(operadora__icontains=operadora_f)
 
 
-
     results = VwCdr.objects.filter(query).order_by('-calldate')
     url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&tipo=%s&operadora=%s"\
         % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, tipo_f, operadora_f)
@@ -113,8 +112,10 @@ def time_line(request):
         print 1
 
         atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
+        print atendeu
         atendeu = cursor.execute(atendeu)
         atendeu = cursor.fetchone()[0]
+        print atendeu
 
         n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
         n_atendeu = cursor.execute(n_atendeu)
@@ -129,20 +130,25 @@ def time_line(request):
         falhou = cursor.fetchone()[0]
 
         fixo = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
+        print fixo
         fixo = cursor.execute(fixo)
         fixo = cursor.fetchone()[0]
-
+        print fixo
         movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
         movel = cursor.execute(movel)
         movel = cursor.fetchone()[0]
+        print movel
 
         radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
+        print radio
         radio = cursor.execute(radio)
         radio = cursor.fetchone()[0]
+        print radio
 
     elif tipo_f == '':
         print 2
         atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND operadora ='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, calldate1, calldate2)
+        print atendeu
         atendeu = cursor.execute(atendeu)
         atendeu = cursor.fetchone()[0]
 
@@ -159,12 +165,14 @@ def time_line(request):
         falhou = cursor.fetchone()[0]
 
         fixo = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND operadora ='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, calldate1, calldate2)
+        print fixo
         fixo = cursor.execute(fixo)
         fixo = cursor.fetchone()[0]
 
         movel = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'MOVEL' AND disposition = 'ANSWERED' AND src=%s AND operadora ='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, calldate1, calldate2)
         movel = cursor.execute(movel)
         movel = cursor.fetchone()[0]
+        print movel
 
         radio = """SELECT Count(disposition) FROM vw_cdr WHERE tipo = 'RADIO' AND disposition = 'ANSWERED' AND src=%s AND operadora ='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, calldate1, calldate2)
         radio = cursor.execute(radio)
@@ -174,6 +182,7 @@ def time_line(request):
     elif operadora_f == '' and tipo_f == '':
         print 3
         atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, calldate1, calldate2)
+        print atendeu
         atendeu = cursor.execute(atendeu)
         atendeu = cursor.fetchone()[0]
 
@@ -190,6 +199,7 @@ def time_line(request):
         falhou = cursor.fetchone()[0]
 
         fixo = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, calldate1, calldate2)
+        print fixo
         fixo = cursor.execute(fixo)
         fixo = cursor.fetchone()[0]
 
@@ -204,6 +214,7 @@ def time_line(request):
     elif src_f == 98339 and tipo_f == '':
         print 33
         atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, calldate1, calldate2)
+        print atendeu
         atendeu = cursor.execute(atendeu)
         atendeu = cursor.fetchone()[0]
 
@@ -220,6 +231,7 @@ def time_line(request):
         falhou = cursor.fetchone()[0]
 
         fixo = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, calldate1, calldate2)
+        print fixo
         fixo = cursor.execute(fixo)
         fixo = cursor.fetchone()[0]
 
@@ -234,6 +246,7 @@ def time_line(request):
     else:
         print 4
         atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND operadora ='%s' AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, tipo_f, calldate1, calldate2)
+        print atendeu
         atendeu = cursor.execute(atendeu)
         atendeu = cursor.fetchone()[0]
 
@@ -250,6 +263,7 @@ def time_line(request):
         falhou = cursor.fetchone()[0]
 
         fixo = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND operadora ='%s' AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, operadora_f, tipo_f, calldate1, calldate2)
+        print fixo
         fixo = cursor.execute(fixo)
         fixo = cursor.fetchone()[0]
 
@@ -281,7 +295,7 @@ def time_line(request):
                                             'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                             'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
                                             'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'fixo':fixo, 'movel':movel, 'radio':radio,
-                                             'pagina': pagina, 'operadora': operadora, 'total':total})
+                                             'pagina': pagina, 'operadora': operadora,})
         return HttpResponse(template.render(context))
     else:
             template = loader.get_template('cdr.html')

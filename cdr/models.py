@@ -178,7 +178,7 @@ class VwCdr(models.Model):
     billsec = models.TimeField(blank=True, null=True)
 
     def __unicode__(self):
-        return unicode(self.numero)
+        return unicode(self.dst)
     class Meta:
         managed = False
         db_table = 'vw_cdr'
