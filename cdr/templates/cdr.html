@@ -390,17 +390,14 @@
         {% if total == 0 %}
             <h1 class="page-title">CDR - <span class="fw-semi-bold">Pesquisa sem resultados</span></h1>
         {% else %}
-            <h1 class="page-title">CDR - <span class="fw-semi-bold">Total</span> <span class="fw-semi-bold"> consultado {{total|intcomma}}</span></h1>
-
-            
-        {% endif %}
+            <h1 class="page-title">CDR - <span class="fw-semi-bold">Total</span> <span class="fw-semi-bold"> consultado {{total|intcomma}}</span></h1>           {% endif %}
         
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-heading collapsed">
                             <h5 class="panel-title">
                                 <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                    Expandir opções de consulta
+                                    <strong>Expandir opções de consulta</strong>
                                     <i class="fa fa-angle-down pull-right"></i>
                                 </a>
                             </h5>
@@ -649,6 +646,33 @@
             <div class="col-md-14">
                 <section class="widget">
                     <!-- .widget>header is generally a place for widget title and widget controls. see .widget in _base.scss -->
+                {% if src_f == '0' %}
+
+                    <header class="alert alert-danger alert-sm">
+                        <h5>
+                            <strong>Selecione um ramal para gerar estatisticas.</strong>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+                        <div class="stats-row">
+                            <div class="btn-toolbar mt-lg text-align-right hidden-print">
+                            <button id="print" class="btn btn-inverse">
+                                <i class="fa fa-print"></i>
+                                &nbsp;&nbsp;
+                                Imprimir
+                            </button>
+                            </div>
+                        </div>
+
+                        <div class="progress progress-xs">
+                            <div class="progress-bar progress-bar-gray" role="progressbar" aria-valuenow="30"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                            </div>
+                        </div>
+                    </div>
+
+                {% else %}
+
                     <header>
                         <h5>
                             ESTATISTICAS - RAMAL: {{src_f}}
@@ -719,6 +743,9 @@
                             </div>
                         </div>
                     </div>
+                    
+                {% endif %}
+
                 </section>
 
                         <div class="row text-center">
@@ -740,7 +767,6 @@
 
                             </div>
                         </div>
-
             </div>
                     </div>
                 </section>
