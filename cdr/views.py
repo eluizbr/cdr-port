@@ -83,15 +83,12 @@ def time_line(request):
     tempo_medio = results.aggregate(Avg('billsec'))['billsec__avg']
     if tempo_medio == None:
         tempo_medio = '00:00:00'
-        print tempo_medio
     else:
         tempo_medio = int(tempo_medio)
         tempo_medio = timedelta(seconds=tempo_medio)
-        print tempo_medio
 
     tempo_maior = results.aggregate(Max('billsec'))['billsec__max']
     tempo_menor = results.aggregate(Min('billsec'))['billsec__min']
-    print tempo_menor
     tempo = results.aggregate(Sum('billsec'))['billsec__sum']
     if tempo == None:
         tempo = '00:00:00'
