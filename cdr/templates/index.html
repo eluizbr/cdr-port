@@ -49,7 +49,7 @@
                 </a>
                 <ul id="sidebar-dashboard" class="collapse in">
                     <li class="active"><a href="{% url 'index'%}">Dashboard</a></li>
-                    <li><a href="{% url 'consulta'%}">Consulta</a></li>
+                    <li><a href="{% url 'consulta'%}">CDR</a></li>
                 </ul>
             </li>
         </ul>
@@ -538,57 +538,7 @@
 <!-- page specific js -->
 <script src="{% static "js/index.js"%}"></script>
 
-<script>
-function reload_page() {
-    location.reload();
-}
-</script>
+{% include "include.html" %}
 
-<script type="text/javascript">
-    
-    function initCalendar(){
-
-        var monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-
-        var dayNames = ["D", "S", "T", "Q", "Q", "S", "S"];
-
-        var now = new Date(),
-            month = now.getMonth() + 1,
-            year = now.getFullYear();
-
-        var events = [
-            {% for dia, mes, total in byDay %}
-            [
-                "{{dia|date:"j"}}/"+{{mes}}+"/"+year,
-                '{{total|intcomma}} ligações nesta data',
-                Sing.colors['brand-primary'],
-            ],
-            {% endfor %}
-        ];
-        var $calendar = $('#events-calendar');
-        $calendar.calendar({
-            months: monthNames,
-            days: dayNames,
-            events: events,
-            popover_options:{
-                placement: 'top',
-                html: true
-            }
-        });
-        $calendar.find('.icon-arrow-left').addClass('fa fa-arrow-left');
-        $calendar.find('.icon-arrow-right').addClass('fa fa-arrow-right');
-        function restyleCalendar(){
-            $calendar.find('.event').each(function(){
-                var $this = $(this),
-                    $eventIndicator = $('<span></span>');
-                $eventIndicator.css('background-color', $this.css('background-color')).appendTo($this.find('a'));
-                $this.css('background-color', '');
-            })
-        }
-        $calendar.find('.icon-arrow-left, .icon-arrow-right').parent().on('click', restyleCalendar);
-        restyleCalendar();
-    }
-
-</script>
 </body>
 </html>

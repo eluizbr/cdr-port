@@ -42,11 +42,11 @@ def time_line(request):
     disposition = VwDisposition.objects.all()
     tipo = VwCdr.objects.values_list('tipo')
     operadora = VwOperadoras.objects.all()
-    pagina = 20,30,50,100
+    pagina = 20,30,50,100,200
 
     
     numero_f = request.GET.get('numero', "")
-    src_f = str(request.GET.get('src', "0"))
+    src_f = request.GET.get('src', "0")
     calldate1 = request.GET.get('calldate1', ontem)
     calldate2 = request.GET.get('calldate2', hoje)
     disposition_f = request.GET.get('disposition', "")

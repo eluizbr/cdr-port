@@ -238,4 +238,10 @@ SELECT id, src, MIN(billsec) AS min, MAX(billsec) AS max, COUNT(src) AS chamdas,
 	GROUP BY src ORDER BY min;
 	
 
+ 
+SELECT
+@prefixo:= (SELECT SUBSTRING(dst,1,6) FROM cdr_cdr LIMIT 1) AS prefixo,
+@ddd:= (SELECT SUBSTRING(prefixo,1,2) FROM nao_portados WHERE prefixo = @prefixo) AS ddd,
+@cidade:= (SELECT  concat(NomedaLocalidade) FROM Anatel where concat(Codigo_Nacional,'',Prefixo)  = @prefixo LIMIT 1) As cidade,
+@estado:= (SELECT state.letter FROM state INNER JOIN city ON (city.id_state = state.id) AND (city.iso_ddd = @ddd)  WHERE cidade = @cidade) AS estado;
 	

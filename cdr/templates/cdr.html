@@ -49,7 +49,7 @@
                 </a>
                 <ul id="sidebar-dashboard" class="collapse in">
                     <li class="active"><a href="{% url 'index'%}">Dashboard</a></li>
-                    <li><a href="{% url 'consulta'%}">Consulta</a></li>
+                    <li><a href="{% url 'consulta'%}">CDR</a></li>
                 </ul>
             </li>
         </ul>
@@ -66,8 +66,8 @@
                     <i class="toggle fa fa-angle-down"></i>
                 </a>
                 <ul id="sidebar-forms" class="collapse">
-                    <li><a href="form_elements.html">Resumo</a></li>
-                    <li><a href="form_validation.html">Consultas</a></li>
+                    <li><a href="#">Resumo</a></li>
+                    <li><a href="#">Consultas</a></li>
                 </ul>
             </li>
             <li>
@@ -79,11 +79,11 @@
                     <i class="toggle fa fa-angle-down"></i>
                 </a>
                 <ul id="sidebar-ui" class="collapse">
-                    <li><a href="ui_components.html">Ramais</a></li>
-                    <li><a href="ui_notifications.html">Extensões</a></li>
-                    <li><a href="ui_icons.html">Troncos</a></li>
-                    <li><a href="ui_buttons.html">URA</a></li>
-                    <li><a href="ui_tabs_accordion.html">Filas</a></li>
+                    <li><a href="#">Ramais</a></li>
+                    <li><a href="#">Extensões</a></li>
+                    <li><a href="#">Troncos</a></li>
+                    <li><a href="#">URA</a></li>
+                    <li><a href="#">Filas</a></li>
                 </ul>
             </li>
         </ul>
@@ -646,7 +646,14 @@
             <div class="col-md-14">
                 <section class="widget">
                     <!-- .widget>header is generally a place for widget title and widget controls. see .widget in _base.scss -->
-                {% if src_f == '0' %}
+                {% if src_f == '0' and total == 0 %}
+                    <header class="alert alert-info alert-sm">
+                        <h5>
+                            <strong>Nenhuma informação encontrada.</strong>
+                        </h5>
+                    </header>
+
+                {% elif src_f == '0' %}
 
                     <header class="alert alert-danger alert-sm">
                         <h5>
@@ -675,7 +682,7 @@
 
                     <header>
                         <h5>
-                            ESTATISTICAS - RAMAL: {{src_f}}
+                            ESTATISTICAS - RAMAL: <strong>{{src_f}}</strong>
                         </h5>
                     </header>
                     <div class="widget-body">
@@ -824,51 +831,6 @@
 <script src="{% static "js/form-elements.js"%}"></script>
 <script src="{% static "js/invoice.js"%}"></script>
 
-<script type="text/javascript">
-    
-    function initCalendar(){
-
-        var monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-
-        var dayNames = ["D", "S", "T", "Q", "Q", "S", "S"];
-
-        var now = new Date(),
-            month = now.getMonth() + 1,
-            year = now.getFullYear();
-
-        var events = [
-            {% for dia, mes, total in byDay %}
-            [
-                "{{dia|date:"j"}}/"+{{mes}}+"/"+year,
-                '{{total|intcomma}} ligações nesta data',
-                Sing.colors['brand-primary'],
-            ],
-            {% endfor %}
-        ];
-        var $calendar = $('#events-calendar');
-        $calendar.calendar({
-            months: monthNames,
-            days: dayNames,
-            events: events,
-            popover_options:{
-                placement: 'top',
-                html: true
-            }
-        });
-        $calendar.find('.icon-arrow-left').addClass('fa fa-arrow-left');
-        $calendar.find('.icon-arrow-right').addClass('fa fa-arrow-right');
-        function restyleCalendar(){
-            $calendar.find('.event').each(function(){
-                var $this = $(this),
-                    $eventIndicator = $('<span></span>');
-                $eventIndicator.css('background-color', $this.css('background-color')).appendTo($this.find('a'));
-                $this.css('background-color', '');
-            })
-        }
-        $calendar.find('.icon-arrow-left, .icon-arrow-right').parent().on('click', restyleCalendar);
-        restyleCalendar();
-    }
-
-</script>
+{% include "include.html" %}
 </body>
 </html>
