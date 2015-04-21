@@ -356,22 +356,6 @@ ORDER BY dst LIMIT 50;
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-CREATE TABLE `cdrport` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `calldate` datetime DEFAULT NULL,
-  `src` int(20) DEFAULT NULL,
-  `dst` bigint(20) DEFAULT NULL,
-  `duration` time DEFAULT NULL,
-  `billsec` time DEFAULT NULL,
-  `disposition` varchar(20) DEFAULT NULL,
-  `ddd` int(2) DEFAULT NULL,
-  `prefixo` int(8) DEFAULT NULL,
-  `cidade` varchar(50) DEFAULT NULL,
-  `estado` varchar(2) DEFAULT NULL,
-  `tipo` varchar(6) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 
 	SELECT nao_portados.id, nao_portados.operadora, nao_portados.tipo, nao_portados.rn1,
 	vw_prefix.ddd, vw_prefix.prefixo, vw_prefix.numero, vw_prefix.src, vw_prefix.disposition, vw_prefix.calldate, vw_prefix.duration, 
@@ -382,22 +366,11 @@ CREATE TABLE `cdrport` (
 	AND vw_prefix.prefixo = 373274 
 	LIMIT 10;
 
-CREATE VIEW vw_cdr_new AS 	SELECT nao_portados.id, nao_portados.operadora, nao_portados.tipo, nao_portados.rn1, prefixo.cidade, prefixo.estado,
-			vw_prefix.ddd, vw_prefix.prefixo, vw_prefix.numero, vw_prefix.src, vw_prefix.disposition, vw_prefix.calldate, 
-			vw_prefix.duration, vw_prefix.billsec
-		FROM nao_portados, vw_prefix, prefixo
-		WHERE nao_portados.prefixo = vw_prefix.prefixo;
 
-SELECT prefixo.id, prefixo.operadora, prefixo.tipo, prefixo.rn1, prefixo.cidade, prefixo.estado,
-			vw_prefix.ddd, vw_prefix.prefixo, vw_prefix.numero, vw_prefix.src, vw_prefix.disposition, vw_prefix.calldate, 
-			vw_prefix.duration, vw_prefix.billsec
-		FROM prefixo, vw_prefix
-		WHERE prefixo.prefixo = vw_prefix.prefixo;
-
-	CREATE VIEW vw_cdr AS SELECT cdr_cdr.id,calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,prefixo.ddd,
-		prefixo.prefixo,prefixo.cidade,prefixo.estado,prefixo.operadora,prefixo.tipo, prefixo.rn1, portado 
+	CREATE VIEW vw_cdr AS SELECT cdr_cdr.id,calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,cdr_prefixo.ddd,
+		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo, cdr_prefixo.rn1, portado 
 	FROM cdr_cdr,prefixo
-	WHERE cdr_cdr.prefix = prefixo.prefixo ;
+	WHERE cdr_cdr.prefix = cdr_prefixo.prefixo ;
 	
 
 CREATE VIEW vw_prefix AS 
@@ -530,10 +503,10 @@ UPDATE cdr_cdr
 
 ###
 
-INSERT INTO cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora,tipo)
-SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,prefixo.ddd,prefixo.prefixo,prefixo.cidade,prefixo.estado,prefixo.operadora,prefixo.tipo  
-	FROM cdr_cdr,prefixo
-	WHERE cdr_cdr.prefix = prefixo.prefixo ;
+INSERT INTO cdr_cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora,tipo)
+SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,cdr_prefixo.ddd,cdr_prefixo.cdr_prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo  
+	FROM cdr_cdr,cdr_prefixo
+	WHERE cdr_cdr.prefix = cdr_prefixo.cdr_prefixo ;
 
 INSERT INTO cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora,tipo)
 SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,prefixo.ddd,prefixo.prefixo,prefixo.cidade,prefixo.estado,prefixo.operadora,prefixo.tipo  

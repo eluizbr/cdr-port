@@ -9,14 +9,10 @@ class Info(models.Model):
     frequencia = models.CharField(max_length=20, blank=True)
     data_ativacao = models.DateTimeField(blank=True, null=True)
     data_expira = models.DateTimeField(blank=True, null=True)
-    ativo = models.IntegerField(blank=True, null=True)
+    ativo = models.IntegerField(null=True, default='1')
 
     def __unicode__(self):
         return unicode(self.uuid)
-
-    class Meta:
-        managed = False
-        db_table = 'info'
 
 class cdr(models.Model):
     calldate = models.DateTimeField()
@@ -35,54 +31,67 @@ class cdr(models.Model):
     accountcode = models.CharField(max_length=20)
     uniqueid = models.CharField(max_length=32)
     userfield = models.CharField(max_length=255)
-    prefix = models.CharField(max_length=80, blank=True)
-    portado = models.CharField(max_length=3, blank=True)
+    prefix = models.CharField(max_length=80, blank=True, null=True)
+    portado = models.CharField(max_length=3, null=True,  default='Nao')
     
     def __unicode__(self):
         return unicode(self.dst)
 
 class Cdrport(models.Model):
-    operadora = models.CharField(max_length=35, blank=True)
-    tipo = models.CharField(max_length=10, blank=True)
-    rn1 = models.IntegerField(blank=True, null=True)
-    cidade = models.CharField(max_length=50, blank=True)
-    estado = models.CharField(max_length=2, blank=True)
-    ddd = models.IntegerField(blank=True, null=True)
-    prefixo = models.IntegerField(blank=True, null=True)
-    numero = models.BigIntegerField(blank=True, null=True)
-    src = models.BigIntegerField(blank=True, null=True)
-    disposition = models.CharField(max_length=20, blank=True)
     calldate = models.DateTimeField(blank=True, null=True)
+    src = models.BigIntegerField(blank=True, null=True)
+    dst = models.BigIntegerField(blank=True, null=True)
     duration = models.TimeField(blank=True, null=True)
     billsec = models.TimeField(blank=True, null=True)
+    disposition = models.CharField(max_length=20, blank=True)
+    ddd = models.IntegerField(blank=True, null=True)
+    prefixo = models.IntegerField(blank=True, null=True)
+    cidade = models.CharField(max_length=50, blank=True)
+    estado = models.CharField(max_length=2, blank=True)
+    operadora = models.CharField(max_length=50, blank=True)
+    tipo = models.CharField(max_length=6, blank=True)
 
     def __unicode__(self):
         return unicode(self.numero)
 
+class Prefixo(models.Model):
+    ddd = models.IntegerField(blank=True, null=True)
+    prefixo = models.IntegerField(unique=True, blank=True, null=True)
+    inicial = models.IntegerField(blank=True, null=True)
+    final = models.IntegerField(blank=True, null=True)
+    cidade = models.CharField(max_length=100, blank=True)
+    estado = models.CharField(max_length=2, blank=True)
+    operadora = models.CharField(max_length=30, blank=True)
+    tipo = models.CharField(max_length=5, blank=True)
+    rn1 = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return unicode(self.ddd)
+
 class GeoLocal(models.Model):
-    gm_ponto = models.TextField(db_column='GM_PONTO', blank=True)  # Field name made lowercase.
-    id = models.IntegerField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    cd_geocodigo = models.CharField(db_column='CD_GEOCODIGO', max_length=20)  # Field name made lowercase.
-    tipo = models.CharField(db_column='TIPO', max_length=10, blank=True)  # Field name made lowercase.
-    cd_geocodba = models.CharField(db_column='CD_GEOCODBA', max_length=20)  # Field name made lowercase.
-    nm_bairro = models.CharField(db_column='NM_BAIRRO', max_length=60, blank=True)  # Field name made lowercase.
-    cd_geocodsd = models.CharField(db_column='CD_GEOCODSD', max_length=20)  # Field name made lowercase.
-    nm_subdistrito = models.CharField(db_column='NM_SUBDISTRITO', max_length=60)  # Field name made lowercase.
-    cd_geocodds = models.CharField(db_column='CD_GEOCODDS', max_length=20)  # Field name made lowercase.
-    nm_distrito = models.CharField(db_column='NM_DISTRITO', max_length=60)  # Field name made lowercase.
-    cd_geocodmu = models.CharField(db_column='CD_GEOCODMU', max_length=20)  # Field name made lowercase.
-    nm_municipio = models.CharField(db_column='NM_MUNICIPIO', max_length=60)  # Field name made lowercase.
-    nm_micro = models.CharField(db_column='NM_MICRO', max_length=100, blank=True)  # Field name made lowercase.
-    nm_meso = models.CharField(db_column='NM_MESO', max_length=100, blank=True)  # Field name made lowercase.
-    nm_uf = models.CharField(db_column='NM_UF', max_length=60, blank=True)  # Field name made lowercase.
-    cd_nivel = models.CharField(db_column='CD_NIVEL', max_length=1)  # Field name made lowercase.
-    cd_categoria = models.CharField(db_column='CD_CATEGORIA', max_length=5)  # Field name made lowercase.
-    nm_categoria = models.CharField(db_column='NM_CATEGORIA', max_length=50)  # Field name made lowercase.
-    nm_localidade = models.CharField(db_column='NM_LOCALIDADE', max_length=60)  # Field name made lowercase.
-    long = models.FloatField(db_column='LONG', blank=True, null=True)  # Field name made lowercase.
-    lat = models.FloatField(db_column='LAT', blank=True, null=True)  # Field name made lowercase.
-    alt = models.FloatField(db_column='ALT', blank=True, null=True)  # Field name made lowercase.
-    gm_ponto_sk = models.CharField(db_column='GM_PONTO_sk', max_length=15, blank=True)  # Field name made lowercase.
+    gm_ponto = models.TextField(blank=True)
+    id = models.IntegerField(primary_key=True)
+    cd_geocodigo = models.CharField(max_length=20)
+    tipo = models.CharField(max_length=10, blank=True)
+    cd_geocodba = models.CharField(max_length=20)
+    nm_bairro = models.CharField(max_length=60, blank=True)
+    cd_geocodsd = models.CharField(max_length=20)
+    nm_subdistrito = models.CharField(max_length=60)
+    cd_geocodds = models.CharField(max_length=20)
+    nm_distrito = models.CharField(max_length=60)
+    cd_geocodmu = models.CharField(max_length=20)
+    nm_municipio = models.CharField(max_length=60)
+    nm_micro = models.CharField(max_length=100, blank=True)
+    nm_meso = models.CharField(max_length=100, blank=True)
+    nm_uf = models.CharField(max_length=60, blank=True)
+    cd_nivel = models.CharField(max_length=1)
+    cd_categoria = models.CharField(max_length=5)
+    nm_categoria = models.CharField(max_length=50)
+    nm_localidade = models.CharField(max_length=60)
+    long = models.FloatField(blank=True, null=True)
+    lat = models.FloatField(blank=True, null=True)
+    alt = models.FloatField(blank=True, null=True)
+    gm_ponto_sk = models.CharField(max_length=15, blank=True)
 
     def __unicode__(self):
         return unicode(self.nm_municipio)
@@ -197,7 +206,7 @@ class VwRamais(models.Model):
 
 class VwDisposition(models.Model):
     disposition = models.CharField(max_length=45)
-    total = models.BigIntegerField(db_column='Total')  # Field name made lowercase.
+    total = models.BigIntegerField()
 
     def __unicode__(self):
         return unicode(self.disposition)
