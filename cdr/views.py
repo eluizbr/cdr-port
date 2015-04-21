@@ -15,13 +15,16 @@ def index(request):
     stats_AN = VwStatsAnswered.objects.values_list('dia', 'semana', 'mes')
     stats_NO = VwStatsNoanswer.objects.values_list('dia', 'semana', 'mes')
     stats_BU = VwStatsBusy.objects.values_list('dia', 'semana', 'mes')
-    ultimo = VwLast10.objects.values_list('dst','cidade', 'estado','operadora', 'tipo','calldate')
+    ultimo = VwLast10.objects.values_list('dst','operadora', 'tipo','calldate','cidade', 'estado', 'portado')
     byDay = VwDayStats.objects.values_list('dia', 'mes', 'total')
     byMonth = VwMonthStats.objects.values_list('mes', 'total')
     operadora = VwOperadoras.objects.values_list('operadora', 'total')
+    cidade = VwCidades.objects.values_list('cidade').count()
+    portados_s = cdr.objects.filter(portado='Sim').count()
+    portados_n = cdr.objects.filter(portado='Nao').count()
     template = loader.get_template('index.html')
-    context = RequestContext(request, {'perc': perc, 'total': total, 'stats_AN':stats_AN, 'stats_NO':stats_NO,
-								    	'stats_BU':stats_BU, 'ultimo':ultimo, 'byDay':byDay, 'byMonth':byMonth, 'operadora':operadora })
+    context = RequestContext(request, {'perc': perc, 'total': total, 'stats_AN':stats_AN, 'stats_NO':stats_NO,'cidade':cidade,'portados_s':portados_s,
+								    	'portados_n':portados_n,'stats_BU':stats_BU, 'ultimo':ultimo, 'byDay':byDay, 'byMonth':byMonth, 'operadora':operadora })
     return HttpResponse(template.render(context))
 
 
@@ -118,8 +121,10 @@ def time_line(request):
         print 1
 
         atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
+        print atendeu
         atendeu = cursor.execute(atendeu)
         atendeu = cursor.fetchone()[0]
+        print atendeu
 
         n_atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'NO ANSWER' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
         n_atendeu = cursor.execute(n_atendeu)

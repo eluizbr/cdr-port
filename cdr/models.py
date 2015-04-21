@@ -6,7 +6,7 @@ class cdr(models.Model):
     calldate = models.DateTimeField()
     clid = models.CharField(max_length=80)
     src = models.CharField(max_length=80)
-    dst = models.CharField(max_length=80, db_index=True)
+    dst = models.CharField(max_length=80)
     dcontext = models.CharField(max_length=80)
     channel = models.CharField(max_length=80)
     dstchannel = models.CharField(max_length=80)
@@ -19,6 +19,8 @@ class cdr(models.Model):
     accountcode = models.CharField(max_length=20)
     uniqueid = models.CharField(max_length=32)
     userfield = models.CharField(max_length=255)
+    prefix = models.CharField(max_length=80, blank=True)
+    portado = models.CharField(max_length=3, blank=True)
     
     def __unicode__(self):
         return unicode(self.dst)
@@ -120,6 +122,7 @@ class VwLast10(models.Model):
     disposition = models.CharField(max_length=45)
     cidade = models.CharField(max_length=100, blank=True)
     estado = models.CharField(max_length=2, blank=True)
+    portado = models.CharField(max_length=3, blank=True)
 
     class Meta:
         managed = False
@@ -222,6 +225,7 @@ class VwCdr(models.Model):
     estado = models.CharField(max_length=2, blank=True)
     operadora = models.CharField(max_length=30, blank=True)
     tipo = models.CharField(max_length=5, blank=True)
+    rn1 = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
         return unicode(self.dst)

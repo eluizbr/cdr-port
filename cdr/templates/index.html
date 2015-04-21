@@ -175,7 +175,7 @@
                             <div class="stats">
                             <br>
                                 <h5 class="text-white">Total geral</h5>
-                                <p class="h3 text-warning no-margin"><strong id="geo-locations-number">{{total}}</strong> <i class="fa fa-phone"></i></p>
+                                <p class="h3 text-warning no-margin"><strong id="geo-locations-number">{{total|intcomma}}</strong> <i class="fa fa-phone"></i></p>
                             </div>
                             <div class="map">
                                 <span>Alternative content for the map</span>
@@ -198,10 +198,15 @@
                         </div>
                     </header>
                     <div class="widget-body">
-                        <p>Status: <strong>Live</strong></p>
+                        <p>Status: <strong>Ativo</strong></p>
                         <p>
                             <span class="circle bg-warning"><i class="fa fa-map-marker"></i></span>
-                            2759 Cidades
+                            {% if cidade > 1 %}
+                                {{cidade|intcomma}} cidades 
+                            {% else %}
+                                {{cidade|intcomma}} cidade
+                            {% endif %}
+                            
                         </p>
                         <div class="row progress-stats">
                         {% for disposition, valor, perc in perc %}
@@ -248,10 +253,14 @@
                         {% endfor %}
                         </div>
                         <h5 class="fw-semi-bold mt">Portabilidade</h5>
-                        <p>Status: <strong>Ativa</strong></p>
+                        <p>Status: <strong>Desativada</strong></p>
                         <p>
                             <span class="circle bg-warning"><i class="fa fa-retweet"></i></span>
-                            391 números portados
+                            {{portados_s|intcomma}} números portados
+                        </p>
+                        <p>
+                            <span class="circle bg-warning"><i class="fa fa-phone"></i></span>
+                            {{portados_n|intcomma}} números não portados
                         </p>
                     </div>
                 </section>
@@ -400,7 +409,7 @@
                             <thead class="no-bd">
                             </thead>
                             <tbody>
-                            {% for dst, cidade,estado, operadora, tipo, calldate, billsec in ultimo%}
+                            {% for dst,operadora, tipo,calldate,cidade, estado, portado in ultimo%}
                             <tr>
                             <td>
                                 </td>
@@ -412,6 +421,13 @@
                                 <td >{{cidade|title}}</td>
                                 <td >{{estado}}</td>
                                 <td >{{operadora}}</td>
+                                <td >
+                            {% if portado == "Sim"   %}
+                                <span class="glyphicon glyphicon-retweet" style="color: #44AD41"></span>
+                                    {% else %}
+                                <span class="glyphicon glyphicon-remove" style="color: #DE2121"></span>
+                            {% endif %}
+                                </td>
                                 <td >{{tipo}}</td>
                                 <td >{{billsec|time:"H:i:s"}}</td>
                                 <td class="text-align-right fw-semi-bold">{{calldate|naturaltime}}</td>

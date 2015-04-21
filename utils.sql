@@ -211,19 +211,10 @@ CREATE VIEW vw_prefixo AS
 	WHERE nao_portados.prefixo = vw_prefix.prefixo;
 
 
-CREATE VIEW vw_cdr AS 
-	SELECT id, numero AS dst, src, operadora, tipo, calldate, disposition, duration, billsec
-	FROM vw_prefixo;
-
-CREATE VIEW vw_cdr_new AS; 
-	SELECT nao_portados.id, nao_portados.operadora, nao_portados.tipo,  
-	vw_prefix.numero AS dst, vw_prefix.src, vw_prefix.calldate,vw_prefix.disposition, vw_prefix.duration, vw_prefix.billsec, 
-		vw_prefix.ddd, vw_prefix.prefixo, prefixo.cidade, prefixo.estado
-	FROM nao_portados, vw_prefix, prefixo
-	WHERE nao_portados.prefixo = vw_prefix.prefixo 
-	AND prefixo.prefixo = vw_prefix.prefixo
-	LIMIT 20;
-
+CREATE VIEW vw_cdr AS SELECT cdr_cdr.id,calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,prefixo.ddd,
+		prefixo.prefixo,prefixo.cidade,prefixo.estado,prefixo.operadora,prefixo.tipo, prefixo.rn1, portado 
+	FROM cdr_cdr,prefixo
+	WHERE cdr_cdr.prefix = prefixo.prefixo ;
 		
 CREATE VIEW vw_operadoras AS SELECT id, operadora, count(operadora) AS total 
 	FROM vw_prefixo
@@ -403,8 +394,8 @@ SELECT prefixo.id, prefixo.operadora, prefixo.tipo, prefixo.rn1, prefixo.cidade,
 		FROM prefixo, vw_prefix
 		WHERE prefixo.prefixo = vw_prefix.prefixo;
 
-CREATE VIEW vw_cdr AS SELECT cdr_cdr.id,calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,prefixo.ddd,
-		prefixo.prefixo,prefixo.cidade,prefixo.estado,prefixo.operadora,prefixo.tipo, prefixo.rn1 
+	CREATE VIEW vw_cdr AS SELECT cdr_cdr.id,calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,prefixo.ddd,
+		prefixo.prefixo,prefixo.cidade,prefixo.estado,prefixo.operadora,prefixo.tipo, prefixo.rn1, portado 
 	FROM cdr_cdr,prefixo
 	WHERE cdr_cdr.prefix = prefixo.prefixo ;
 	
@@ -524,6 +515,19 @@ DO BEGIN
 
 END $$
 DELIMITER ;
+###
+
+### UODATE portados
+
+UPDATE cdr_cdr
+	INNER JOIN portados
+		ON cdr_cdr.dst = portados.numero
+	SET portado = 
+		CASE
+			WHEN cdr_cdr.dst = portados.numero
+				THEN 'Sim'
+		END;
+
 ###
 
 INSERT INTO cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora,tipo)
