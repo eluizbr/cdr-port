@@ -43,7 +43,7 @@ print mac
 frequencia = commands.getoutput('dmidecode -s  processor-frequency')
 print frequencia
 
-SQL_INSERE = ("INSERT INTO info" 
+SQL_INSERE = ("INSERT INTO cdr_info" 
             "(uuid, system_numer, system_name, mac, frequencia, data_ativacao, data_expira)" 
             "VALUES  (%s, %s, %s, %s, %s, %s)")
 DADOS = (uuid, system_number, system_name, mac, frequencia, hoje, proximo_mes)

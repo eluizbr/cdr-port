@@ -211,7 +211,15 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle dropdown-toggle-notifications" id="notifications-dropdown-toggle" data-toggle="dropdown">
                         &nbsp;
-                        CDR <strong>port</strong>&nbsp;
+                        CDR-port <strong>        
+                    {% if info == "1"  %}
+                        Free</strong>
+                    {% elif info == "2"   %}
+                        Professional</strong>
+                    {% elif info == "3"   %}
+                        Premium</strong>
+                    {% endif %}   
+                        </strong>&nbsp;
                     <div class="dropdown-menu animated fadeInUp" id="notifications-dropdown-menu">
                         <section class="panel notifications">
                             <!-- notification list with .thin-scroll which styles scrollbar for webkit -->
