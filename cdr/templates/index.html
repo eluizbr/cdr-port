@@ -54,39 +54,109 @@
             </li>
         </ul>
         <!-- every .sidebar-nav may have a title -->
-        <h5 class="sidebar-nav-title">Premium <a class="action-link" href="#"><i class="glyphicon glyphicon-usd"></i></a></h5>
-        <ul class="sidebar-nav">
-            <li>
-                <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a class="collapsed" href="#sidebar-forms" data-toggle="collapse" data-parent="#sidebar">
-                    <span class="icon">
-                        <i class="glyphicon glyphicon-retweet"></i>
-                    </span>
-                    Portabilidade
-                    <i class="toggle fa fa-angle-down"></i>
-                </a>
-                <ul id="sidebar-forms" class="collapse">
-                    <li><a href="form_elements.html">Resumo</a></li>
-                    <li><a href="form_validation.html">Consultas</a></li>
-                </ul>
-            </li>
-            <li>
-                <a class="collapsed" href="#sidebar-ui" data-toggle="collapse" data-parent="#sidebar">
-                    <span class="icon">
-                        <i class="glyphicon glyphicon-th-list"></i>
-                    </span>
-                    PABX
-                    <i class="toggle fa fa-angle-down"></i>
-                </a>
-                <ul id="sidebar-ui" class="collapse">
-                    <li><a href="ui_components.html">Ramais</a></li>
-                    <li><a href="ui_notifications.html">Extensões</a></li>
-                    <li><a href="ui_icons.html">Troncos</a></li>
-                    <li><a href="ui_buttons.html">URA</a></li>
-                    <li><a href="ui_tabs_accordion.html">Filas</a></li>
-                </ul>
-            </li>
-        </ul>
+        {% if info == "1"  %}
+        <h5 class="sidebar-nav-title">Premium<a class="action-link" href="#"><i class="glyphicon glyphicon-usd"></i></a></h5>
+            <ul class="sidebar-nav">
+                <li>
+                    <!-- an example of nested submenu. basic bootstrap collapse component -->
+                    <a class="collapsed" href="#sidebar-forms" data-toggle="collapse" data-parent="#sidebar">
+                        <span class="icon">
+                            <i class="glyphicon glyphicon-retweet"></i>
+                        </span>
+                        Portabilidade
+                        <i class="toggle fa fa-angle-down"></i>
+                    </a>
+                    <ul id="sidebar-forms" class="collapse">
+                        <li><a href="{% url 'error'%}">Resumo</a></li>
+                        <li><a href="{% url 'error'%}">errors</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="collapsed" href="#sidebar-ui" data-toggle="collapse" data-parent="#sidebar">
+                        <span class="icon">
+                            <i class="glyphicon glyphicon-th-list"></i>
+                        </span>
+                        PABX
+                        <i class="toggle fa fa-angle-down"></i>
+                    </a>
+                    <ul id="sidebar-ui" class="collapse">
+                        <li><a href="{% url 'error'%}">Ramais</a></li>
+                        <li><a href="{% url 'error'%}">Extensões</a></li>
+                        <li><a href="{% url 'error'%}">Troncos</a></li>
+                        <li><a href="{% url 'error'%}">URA</a></li>
+                        <li><a href="{% url 'error'%}">Filas</a></li>
+                    </ul>
+                </li>       
+            </ul>
+        {% elif info == "2" %}
+        <h5 class="sidebar-nav-title">Premium<a class="action-link" href="#"><i class="glyphicon glyphicon-usd"></i></a></h5>
+            <ul class="sidebar-nav">
+                <li>
+                    <!-- an example of nested submenu. basic bootstrap collapse component -->
+                    <a class="collapsed" href="#sidebar-forms" data-toggle="collapse" data-parent="#sidebar">
+                        <span class="icon">
+                            <i class="glyphicon glyphicon-retweet"></i>
+                        </span>
+                        Portabilidade
+                        <i class="toggle fa fa-angle-down"></i>
+                    </a>
+                    <ul id="sidebar-forms" class="collapse">
+                        <li><a href="form_elements.html">Resumo</a></li>
+                        <li><a href="form_validation.html">Consultas</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="collapsed" href="#sidebar-ui" data-toggle="collapse" data-parent="#sidebar">
+                        <span class="icon">
+                            <i class="glyphicon glyphicon-th-list"></i>
+                        </span>
+                        PABX
+                        <i class="toggle fa fa-angle-down"></i>
+                    </a>
+                    <ul id="sidebar-ui" class="collapse">
+                        <li><a href="ui_components.html">Ramais</a></li>
+                        <li><a href="ui_notifications.html">Extensões</a></li>
+                        <li><a href="ui_icons.html">Troncos</a></li>
+                        <li><a href="ui_buttons.html">URA</a></li>
+                        <li><a href="ui_tabs_accordion.html">Filas</a></li>
+                    </ul>
+                </li>       
+            </ul>            
+        {% elif info == "3" %}  
+        <h5 class="sidebar-nav-title">Premium<a class="action-link" href="#"><i class="glyphicon glyphicon-usd"></i></a></h5>         
+            <ul class="sidebar-nav">
+                <li>
+                    <!-- an example of nested submenu. basic bootstrap collapse component -->
+                    <a class="collapsed" href="#sidebar-forms" data-toggle="collapse" data-parent="#sidebar">
+                        <span class="icon">
+                            <i class="glyphicon glyphicon-retweet"></i>
+                        </span>
+                        Portabilidade
+                        <i class="toggle fa fa-angle-down"></i>
+                    </a>
+                    <ul id="sidebar-forms" class="collapse">
+                        <li><a href="form_elements.html">Resumo</a></li>
+                        <li><a href="form_validation.html">Consultas</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="collapsed" href="#sidebar-ui" data-toggle="collapse" data-parent="#sidebar">
+                        <span class="icon">
+                            <i class="glyphicon glyphicon-th-list"></i>
+                        </span>
+                        PABX
+                        <i class="toggle fa fa-angle-down"></i>
+                    </a>
+                    <ul id="sidebar-ui" class="collapse">
+                        <li><a href="ui_components.html">Ramais</a></li>
+                        <li><a href="ui_notifications.html">Extensões</a></li>
+                        <li><a href="ui_icons.html">Troncos</a></li>
+                        <li><a href="ui_buttons.html">URA</a></li>
+                        <li><a href="ui_tabs_accordion.html">Filas</a></li>
+                    </ul>
+                </li>       
+            </ul>
+        {% endif %}  
         <!-- some styled links in sidebar. ready to use as links to email folders, projects, groups, etc -->
 
     </div>
@@ -198,7 +268,13 @@
                         </div>
                     </header>
                     <div class="widget-body">
-                        <p>Status: <strong>Ativo</strong></p>
+                    {% if info == "1"  %}
+                        <p>Versão: <strong>Free</strong></p>
+                    {% elif info == "2"   %}
+                        <p>Versão: <strong>Professional</strong></p>
+                    {% elif info == "3"   %}
+                        <p>Versão: <strong>Premium</strong></p>
+                    {% endif %}
                         <p>
                             <span class="circle bg-warning"><i class="fa fa-map-marker"></i></span>
                             {% if cidade > 1 %}
@@ -253,7 +329,13 @@
                         {% endfor %}
                         </div>
                         <h5 class="fw-semi-bold mt">Portabilidade</h5>
-                        <p>Status: <strong>Desativada</strong></p>
+                            {% if info == "1"  %}
+                                <p>Status: <strong>Desativada</strong></p>
+                            {% elif info == "2"   %}
+                                <p>Status: <strong>Ativada</strong></p>
+                            {% elif info == "3"   %}
+                                <p>Status: <strong>Ativada</strong></p>
+                            {% endif %}
                         <p>
                             <span class="circle bg-warning"><i class="fa fa-retweet"></i></span>
                             {{portados_s|intcomma}} números portados

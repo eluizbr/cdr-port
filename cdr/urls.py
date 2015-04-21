@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
     url(r'^consulta/$', views.time_line, name='consulta'),
     url(r'^registro/$', views.registro, name='registro'),
+    url(r'^error/$', views.error, name='error'),
 )

@@ -9,6 +9,7 @@ class Info(models.Model):
     frequencia = models.CharField(max_length=20, blank=True)
     data_ativacao = models.DateTimeField(blank=True, null=True)
     data_expira = models.DateTimeField(blank=True, null=True)
+    ativo = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
         return unicode(self.uuid)

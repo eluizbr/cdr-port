@@ -9,9 +9,16 @@ from django.db.models import Sum, Count, Avg, Max, Min
 from datetime import datetime, timedelta, time
 from django.db.models import Q
 
+
+def error(request):
+    info = Info.objects.values('uuid', 'system_number','system_name', 'mac','frequencia', 'data_ativacao', 'data_expira', 'ativo')
+    template = loader.get_template('error.html')
+    context = RequestContext(request, {'info': info})
+    return HttpResponse(template.render(context))
+
+
 def registro(request):
-    info = Info.objects.values('uuid', 'system_number','system_name', 'mac','frequencia')
-    print info
+    info = Info.objects.values('uuid', 'system_number','system_name', 'mac','frequencia', 'data_ativacao', 'data_expira', 'ativo')
     template = loader.get_template('registro.html')
     context = RequestContext(request, {'info': info})
     return HttpResponse(template.render(context))
@@ -19,6 +26,8 @@ def registro(request):
 
 
 def index(request):
+    info = Info.objects.values_list('ativo')
+    info = str(info)[2]
     perc = DispositionPercent.objects.values_list('disposition', 'valor', 'perc')
     total = DispositionPercent.objects.aggregate(Sum('valor'))['valor__sum']
     stats_AN = VwStatsAnswered.objects.values_list('dia', 'semana', 'mes')
@@ -32,12 +41,15 @@ def index(request):
     portados_s = cdr.objects.filter(portado='Sim').count()
     portados_n = cdr.objects.filter(portado='Nao').count()
     template = loader.get_template('index.html')
-    context = RequestContext(request, {'perc': perc, 'total': total, 'stats_AN':stats_AN, 'stats_NO':stats_NO,'cidade':cidade,'portados_s':portados_s,
+    context = RequestContext(request, { 'info':info, 'perc': perc, 'total': total, 'stats_AN':stats_AN, 'stats_NO':stats_NO,'cidade':cidade,'portados_s':portados_s,
 								    	'portados_n':portados_n,'stats_BU':stats_BU, 'ultimo':ultimo, 'byDay':byDay, 'byMonth':byMonth, 'operadora':operadora })
     return HttpResponse(template.render(context))
 
 
 def time_line(request):
+
+    info = Info.objects.values_list('ativo')
+    info = str(info)[2]
     
     hora = datetime.now()
     hoje = hora.strftime("%Y-%m-%dT23:59:59") 
@@ -112,7 +124,6 @@ def time_line(request):
     tempo = results.aggregate(Sum('billsec'))['billsec__sum']
     if tempo == None:
         tempo = '00:00:00'
-        print tempo_medio
     else:
         tempo = int(tempo)
         tempo = timedelta(seconds=tempo)
@@ -294,7 +305,7 @@ def time_line(request):
             results = paginator.page(paginator.num_pages)
 
         template = loader.get_template('cdr.html')
-        context = RequestContext(request, {'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
+        context = RequestContext(request, { 'info':info, 'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
                                             'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
                                             'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                             'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
@@ -304,7 +315,7 @@ def time_line(request):
         return HttpResponse(template.render(context))
     else:
             template = loader.get_template('cdr.html')
-            context = RequestContext(request, {'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
+            context = RequestContext(request, { 'info':info, 'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
                                             'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
                                             'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                             'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
