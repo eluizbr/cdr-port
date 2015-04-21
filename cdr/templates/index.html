@@ -400,15 +400,17 @@
                             <thead class="no-bd">
                             </thead>
                             <tbody>
-                            {% for numero, operadora, tipo, calldate, billsec in ultimo%}
+                            {% for dst, cidade,estado, operadora, tipo, calldate, billsec in ultimo%}
                             <tr>
                             <td>
                                 </td>
-                            {%if numero|length > 10%}
-                                <td data-mask="(99) 99999-9999">{{numero}}</td>
+                            {%if dst|length > 10%}
+                                <td data-mask="(99) 99999-9999">{{dst}}</td>
                             {% else %}
-                                <td data-mask="(99) 9999-9999">{{numero}}</td>
+                                <td data-mask="(99) 9999-9999">{{dst}}</td>
                             {% endif %}
+                                <td >{{cidade|title}}</td>
+                                <td >{{estado}}</td>
                                 <td >{{operadora}}</td>
                                 <td >{{tipo}}</td>
                                 <td >{{billsec|time:"H:i:s"}}</td>

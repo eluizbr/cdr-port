@@ -501,6 +501,36 @@
                                         </select>
                                     </div>
                                 </div>
+                                <legend><strong>Selecione uma localidade</strong></legend>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label" for="default-select">Cidade</label>
+                                    <div class="col-sm-2">
+                                        <select multiple
+
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="cidade" id="cidade">
+                                            <option></option>
+                                        {% for cidade in cidade %}
+                                            <option>{{cidade|title}}</option>
+                                        {% endfor %}
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Estado</label>
+                                    <div class="col-sm-1">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="estado" id="estado">
+                                            <option value=""></option>
+                                        {% for estado in estado %}
+                                            <option>{{estado}}</option>
+                                        {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
                                 <legend><strong>Selecione uma data</strong></legend>
                                 <div class="row">
                                     <div class="col-sm-5">
@@ -580,6 +610,8 @@
                             <thead>
                             <tr>
                                 <th>Número</th>
+                                <th>Cidade</th>
+                                <th>Estado</th>
                                 <th>Operadora</th>
                                 <th>Tipo</th>
                                 <th>Ramal</th>
@@ -598,6 +630,8 @@
                                     {% else %}
                                         <td data-mask="(99) 9999-9999">{{i.dst}}</td>
                                     {% endif %}
+                                <td>{{i.cidade}}</td>
+                                <td>{{i.estado}}</td>
                                 <td>{{i.operadora}}</td>
                                 <td>{{i.tipo}}</td>
                                 <td>{{i.src}}</td>

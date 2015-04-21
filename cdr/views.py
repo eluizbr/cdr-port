@@ -4,7 +4,7 @@ from django.template import RequestContext, loader
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
 from .models import cdr, DispositionPercent, Stats_ANSWERED, Stats_NOANSWER, Stats_BUSY
 from .models import VwDayStats, VwMonthStats,VwLast10, VwOperadoras, VwStatsAnswered, VwStatsBusy, VwStatsNoanswer, VwRamais,\
-                    VwDisposition, VwCdr
+                    VwDisposition, VwCdr, VwCidades, VwEstados
 from django.db.models import Sum, Count, Avg, Max, Min
 from datetime import datetime, timedelta, time
 from django.db.models import Q
@@ -15,7 +15,7 @@ def index(request):
     stats_AN = VwStatsAnswered.objects.values_list('dia', 'semana', 'mes')
     stats_NO = VwStatsNoanswer.objects.values_list('dia', 'semana', 'mes')
     stats_BU = VwStatsBusy.objects.values_list('dia', 'semana', 'mes')
-    ultimo = VwLast10.objects.values_list('numero','operadora', 'tipo','calldate','billsec')
+    ultimo = VwLast10.objects.values_list('dst','cidade', 'estado','operadora', 'tipo','calldate')
     byDay = VwDayStats.objects.values_list('dia', 'mes', 'total')
     byMonth = VwMonthStats.objects.values_list('mes', 'total')
     operadora = VwOperadoras.objects.values_list('operadora', 'total')
@@ -34,7 +34,7 @@ def time_line(request):
 
     byDay = VwDayStats.objects.values_list('dia', 'mes', 'total')
     byMonth = VwMonthStats.objects.values_list('mes', 'total')
-    ultimo = VwLast10.objects.values_list('numero','operadora','tipo','calldate', 'disposition' ,'billsec')
+    ultimo = VwLast10.objects.values_list('dst','operadora', 'tipo','calldate','cidade', 'estado')
     resultado = VwCdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec').order_by('-calldate')
     src = VwRamais.objects.all()
     numero = VwCdr.objects.values_list('dst', 'src', 'calldate', 'disposition', 'duration', 'billsec')
@@ -42,6 +42,8 @@ def time_line(request):
     disposition = VwDisposition.objects.all()
     tipo = VwCdr.objects.values_list('tipo')
     operadora = VwOperadoras.objects.all()
+    cidade = VwCidades.objects.all()
+    estado = VwEstados.objects.all()
     pagina = 20,30,50,100,200
 
     
@@ -53,6 +55,8 @@ def time_line(request):
     paginas_f = request.GET.get('pagina', "")
     tipo_f = request.GET.get('tipo', "")
     operadora_f = request.GET.get('operadora', "")
+    cidade_f = request.GET.get('cidade', "")
+    estado_f = request.GET.get('estado', "")
 
     if paginas_f == '':
         paginas_f = 15
@@ -73,12 +77,16 @@ def time_line(request):
         query &=Q(tipo__icontains=tipo_f)
     if operadora:
         query &=Q(operadora__icontains=operadora_f)
+    if cidade:
+        query &=Q(cidade__icontains=cidade_f)
+    if estado:
+        query &=Q(estado__icontains=estado_f)
 
 
 
     results = VwCdr.objects.filter(query).order_by('-calldate')
-    url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&tipo=%s&operadora=%s"\
-        % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, tipo_f, operadora_f)
+    url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&tipo=%s&operadora=%s&cidade=%s&estado=%s"\
+        % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, tipo_f, operadora_f, cidade_f, estado_f)
 
     tempo_medio = results.aggregate(Avg('billsec'))['billsec__avg']
     if tempo_medio == None:
@@ -278,7 +286,7 @@ def time_line(request):
                                             'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                             'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
                                             'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'fixo':fixo, 'movel':movel, 'radio':radio,
-                                             'pagina': pagina, 'operadora': operadora, 'total':total})
+                                             'pagina': pagina, 'operadora': operadora, 'cidade':cidade, 'estado':estado , 'total':total})
         return HttpResponse(template.render(context))
     else:
             template = loader.get_template('cdr.html')
@@ -288,7 +296,7 @@ def time_line(request):
                                             'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                             'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
                                             'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'fixo':fixo, 'movel':movel, 'radio':radio,
-                                            'pagina': pagina, 'operadora': operadora,})
+                                            'pagina': pagina, 'operadora': operadora,'cidade':cidade, 'estado':estado})
             return HttpResponse(template.render(context))
 
 

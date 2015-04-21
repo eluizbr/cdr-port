@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
 class cdr(models.Model):
@@ -21,6 +22,24 @@ class cdr(models.Model):
     
     def __unicode__(self):
         return unicode(self.dst)
+
+class Cdrport(models.Model):
+    operadora = models.CharField(max_length=35, blank=True)
+    tipo = models.CharField(max_length=10, blank=True)
+    rn1 = models.IntegerField(blank=True, null=True)
+    cidade = models.CharField(max_length=50, blank=True)
+    estado = models.CharField(max_length=2, blank=True)
+    ddd = models.IntegerField(blank=True, null=True)
+    prefixo = models.IntegerField(blank=True, null=True)
+    numero = models.BigIntegerField(blank=True, null=True)
+    src = models.BigIntegerField(blank=True, null=True)
+    disposition = models.CharField(max_length=20, blank=True)
+    calldate = models.DateTimeField(blank=True, null=True)
+    duration = models.TimeField(blank=True, null=True)
+    billsec = models.TimeField(blank=True, null=True)
+
+    def __unicode__(self):
+        return unicode(self.numero)
 
 class GeoLocal(models.Model):
     gm_ponto = models.TextField(db_column='GM_PONTO', blank=True)  # Field name made lowercase.
@@ -93,13 +112,14 @@ class VwMonthStats(models.Model):
         db_table = 'vw_month_stats'
 
 class VwLast10(models.Model):
-    numero = models.CharField(max_length=80)
-    operadora = models.CharField(max_length=64)
-    tipo = models.CharField(max_length=64)
-    rn1 = models.IntegerField()
+    dst = models.CharField(max_length=80)
+    operadora = models.CharField(max_length=30, blank=True)
+    tipo = models.CharField(max_length=5, blank=True)
+    rn1 = models.IntegerField(blank=True, null=True)
     calldate = models.DateTimeField()
     disposition = models.CharField(max_length=45)
-    billsec = models.TimeField(blank=True, null=True)
+    cidade = models.CharField(max_length=100, blank=True)
+    estado = models.CharField(max_length=2, blank=True)
 
     class Meta:
         managed = False
@@ -167,15 +187,41 @@ class VwDisposition(models.Model):
         managed = False
         db_table = 'vw_disposition'
 
+class VwCidades(models.Model):
+    cidade = models.CharField(max_length=100, blank=True)
+    total = models.BigIntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'vw_cidades'
+
+    def __unicode__(self):
+        return unicode(self.cidade)
+
+class VwEstados(models.Model):
+    estado = models.CharField(max_length=2, blank=True)
+    total = models.BigIntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'vw_estados'
+    
+    def __unicode__(self):
+        return unicode(self.estado)
+
 class VwCdr(models.Model):
-    dst = models.CharField(max_length=80)
-    src = models.CharField(max_length=80)
-    operadora = models.CharField(max_length=64)
-    tipo = models.CharField(max_length=64)
     calldate = models.DateTimeField()
-    disposition = models.CharField(max_length=45)
+    src = models.CharField(max_length=80)
+    dst = models.CharField(max_length=80)
     duration = models.TimeField(blank=True, null=True)
     billsec = models.TimeField(blank=True, null=True)
+    disposition = models.CharField(max_length=45)
+    ddd = models.IntegerField(blank=True, null=True)
+    prefixo = models.IntegerField(blank=True, null=True)
+    cidade = models.CharField(max_length=100, blank=True)
+    estado = models.CharField(max_length=2, blank=True)
+    operadora = models.CharField(max_length=30, blank=True)
+    tipo = models.CharField(max_length=5, blank=True)
 
     def __unicode__(self):
         return unicode(self.dst)
