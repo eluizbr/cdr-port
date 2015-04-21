@@ -217,7 +217,7 @@ CREATE VIEW vw_cdr AS SELECT cdr_cdr.id,calldate,src,dst,SEC_TO_TIME(duration) A
 	WHERE cdr_cdr.prefix = prefixo.prefixo ;
 		
 CREATE VIEW vw_operadoras AS SELECT id, operadora, count(operadora) AS total 
-	FROM vw_prefixo
+	FROM vw_cdr
 	GROUP BY operadora ORDER BY total DESC;
 
 

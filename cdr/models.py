@@ -1,6 +1,21 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+class Info(models.Model):
+    uuid = models.CharField(max_length=100, blank=True)
+    system_number = models.CharField(max_length=100, blank=True)
+    system_name = models.CharField(max_length=100, blank=True)
+    mac = models.CharField(max_length=20, blank=True)
+    frequencia = models.CharField(max_length=20, blank=True)
+    data_ativacao = models.DateTimeField(blank=True, null=True)
+    data_expira = models.DateTimeField(blank=True, null=True)
+
+    def __unicode__(self):
+        return unicode(self.uuid)
+
+    class Meta:
+        managed = False
+        db_table = 'info'
 
 class cdr(models.Model):
     calldate = models.DateTimeField()
@@ -226,6 +241,7 @@ class VwCdr(models.Model):
     operadora = models.CharField(max_length=30, blank=True)
     tipo = models.CharField(max_length=5, blank=True)
     rn1 = models.IntegerField(blank=True, null=True)
+    portado = models.CharField(max_length=3, blank=True)
 
     def __unicode__(self):
         return unicode(self.dst)

@@ -2,12 +2,21 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
-from .models import cdr, DispositionPercent, Stats_ANSWERED, Stats_NOANSWER, Stats_BUSY
+from .models import cdr, DispositionPercent, Stats_ANSWERED, Stats_NOANSWER, Stats_BUSY, Info
 from .models import VwDayStats, VwMonthStats,VwLast10, VwOperadoras, VwStatsAnswered, VwStatsBusy, VwStatsNoanswer, VwRamais,\
                     VwDisposition, VwCdr, VwCidades, VwEstados
 from django.db.models import Sum, Count, Avg, Max, Min
 from datetime import datetime, timedelta, time
 from django.db.models import Q
+
+def registro(request):
+    info = Info.objects.values('uuid', 'system_number','system_name', 'mac','frequencia')
+    print info
+    template = loader.get_template('registro.html')
+    context = RequestContext(request, {'info': info})
+    return HttpResponse(template.render(context))
+
+
 
 def index(request):
     perc = DispositionPercent.objects.values_list('disposition', 'valor', 'perc')
