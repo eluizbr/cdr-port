@@ -54,7 +54,7 @@ def time_line(request):
     
     hora = datetime.now()
     hoje = hora.strftime("%Y-%m-%dT23:59:59") 
-    ontem = hora - timedelta(days=1)
+    ontem = hora - timedelta(days=5)
     ontem = ontem.strftime("%Y-%m-%dT00:00:00")
 
     byDay = VwDayStats.objects.values_list('dia', 'mes', 'total')
@@ -69,6 +69,7 @@ def time_line(request):
     operadora = VwOperadoras.objects.all()
     cidade = VwCidades.objects.all()
     estado = VwEstados.objects.all()
+    portado = VwCdr.objects.values_list('portado')
     pagina = 20,30,50,100,200
 
     
@@ -82,41 +83,62 @@ def time_line(request):
     operadora_f = request.GET.get('operadora', "")
     cidade_f = request.GET.get('cidade', "")
     estado_f = request.GET.get('estado', "")
+    portado_f = request.GET.get('portado', "")
 
     if paginas_f == '':
         paginas_f = 15
     else:
         paginas_f = paginas_f
 
-    query = Q()
+    if info == "1":
+        query = Q()
 
-    if numero:
-        query &=Q(dst__startswith=numero_f)
-    if src:
-        query &=Q(src__icontains=src_f)
-    if calldate:
-        query &=Q(calldate__range=(calldate1,calldate2))
-    if disposition:
-        query &=Q(disposition__icontains=disposition_f)
-    if tipo:
-        query &=Q(tipo__icontains=tipo_f)
-    if operadora:
-        query &=Q(operadora__icontains=operadora_f)
-    if cidade:
-        query &=Q(cidade__icontains=cidade_f)
-    if estado:
-        query &=Q(estado__icontains=estado_f)
+        if numero:
+            query &=Q(dst__startswith=numero_f)
+        if src:
+            query &=Q(src__icontains=src_f)
+        if calldate:
+            query &=Q(calldate__range=(calldate1,calldate2))
+        if disposition:
+            query &=Q(disposition__icontains=disposition_f)
+        if cidade:
+            query &=Q(cidade__icontains=cidade_f)
+        if estado:
+            query &=Q(estado__icontains=estado_f)
+
+    else:
+
+        query = Q()
+
+        if numero:
+            query &=Q(dst__startswith=numero_f)
+        if src:
+            query &=Q(src__icontains=src_f)
+        if calldate:
+            query &=Q(calldate__range=(calldate1,calldate2))
+        if disposition:
+            query &=Q(disposition__icontains=disposition_f)
+        if tipo:
+            query &=Q(tipo__icontains=tipo_f)
+        if operadora:
+            query &=Q(operadora__icontains=operadora_f)
+        if cidade:
+            query &=Q(cidade__icontains=cidade_f)
+        if estado:
+            query &=Q(estado__icontains=estado_f)
+        if portado:
+            query &=Q(portado__icontains=portado_f)
 
 
 
     results = VwCdr.objects.filter(query).order_by('-calldate')
-    print info
+
     if info == "1":
         url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&cidade=%s&estado=%s"\
             % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, cidade_f, estado_f)
     else:
-        url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&tipo=%s&operadora=%s&cidade=%s&estado=%s"\
-    % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, tipo_f, operadora_f, cidade_f, estado_f)
+        url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&tipo=%s&operadora=%s&cidade=%s&estado=%s&portado=%s"\
+    % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, tipo_f, operadora_f, cidade_f, estado_f, portado_f)
 
     tempo_medio = results.aggregate(Avg('billsec'))['billsec__avg']
     if tempo_medio == None:
@@ -144,7 +166,6 @@ def time_line(request):
     cursor = connection.cursor()
     
     if operadora_f == '':
-        print 1
 
         atendeu = """SELECT Count(disposition) FROM vw_cdr WHERE disposition = 'ANSWERED' AND src=%s AND tipo='%s' AND calldate BETWEEN ('%s') AND ('%s')""" % (src_f, tipo_f, calldate1, calldate2)
         print atendeu

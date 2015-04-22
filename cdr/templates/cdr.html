@@ -261,6 +261,7 @@
                         </div>
                         <div id="collapseOne" class="panel-collapse collapse">
                             <div class="panel-body">
+                        {% if info == "1" %}
             <div align="center" class="col-md-14">
                 <section class="widget">
                     <div class="widget-body">
@@ -331,32 +332,7 @@
                                             <option value="FAILED">Número não existe</option>
                                         </select>
                                     </div>
-                                    <label class="col-sm-1 control-label" for="default-select">Tipo</label>
-                                    <div class="col-sm-1">
-                                        <select
-                                                data-width="auto"
-                                                data-minimum-results-for-search="10"
-                                                tabindex="-1"
-                                                class="select2 form-control" name="tipo" id="tipo">
-                                            <option></option>
-                                            <option>Fixo</option>
-                                            <option>Movel</option>
-                                            <option>Radio</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-1 control-label" for="default-select">Operadora</label>
-                                    <div class="col-sm-2">
-                                        <select
-                                                data-width="auto"
-                                                data-minimum-results-for-search="10"
-                                                tabindex="-1"
-                                                class="select2 form-control" name="operadora" id="operadora">
-                                            <option value="">Qualquer</option>
-                                        {% for operadora in operadora %}
-                                            <option>{{operadora}}</option>
-                                        {% endfor %}
-                                        </select>
-                                    </div>
+
                                 </div>
                                 <legend><strong>Selecione uma localidade</strong></legend>
                                 <div class="form-group">
@@ -450,6 +426,214 @@
                     </div>
                 </section>
             </div>
+                        {% elif info == "2" or info == "3" %}
+
+            <div align="center" class="col-md-14">
+                <section class="widget">
+                    <div class="widget-body">
+                        <form class="form-horizontal" role="form" method="get" action="/cdr/consulta/">
+                            <fieldset>
+                                <legend><strong>Entre com um número</strong></legend>
+                                <div class="form-group">
+                                    <label for="normal-field" class="col-sm-1 control-label">Número</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                            <input type="text" name="numero" id="numero" class="form-control" placeholder="(00)0000-0000">
+                                        </div>
+                                    </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <fieldset>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="radio">
+                                                                    <input type="radio" name="radio1" id="radio1" value="option1">
+                                                                    <label for="radio1">
+                                                                        Começa com
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="radio">
+                                                                    <input type="radio" name="radio2" id="radio2" value="option2" >
+                                                                    <label for="radio2">
+                                                                        Contém
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+
+                                </div>
+                                <legend><strong>Selecione um ramal e/ou status</strong></legend>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label" for="default-select">Ramal</label>
+                                    <div class="col-sm-2">
+                                        <select multiple
+
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="src" id="src">
+                                            <option></option>
+                                        {% for ramais in src %}
+                                            <option>{{ramais}}</option>
+                                        {% endfor %}
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Status</label>
+                                    <div class="col-sm-1">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="disposition" id="disposition">
+                                            <option value="">Tudo</option>
+                                            <option value="ANSWERED">Atendida</option>
+                                            <option value="NO ANSWER">Não atendida</option>
+                                            <option value="BUSY">Ocupado</option>
+                                            <option value="FAILED">Número não existe</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <legend><strong>Selecione uma localidade</strong></legend>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label" for="default-select">Cidade</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="cidade" id="cidade">
+                                            <option value=""></option>
+                                        {% for cidade in cidade %}
+                                            <option>{{cidade|title}}</option>
+                                        {% endfor %}
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Estado</label>
+                                    <div class="col-sm-1">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="estado" id="estado">
+                                            <option value=""></option>
+                                        {% for estado in estado %}
+                                            <option>{{estado}}</option>
+                                        {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <legend><strong>Portabilidade</strong></legend>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label" for="default-select">Operadora</label>
+                                    <div class="col-sm-2">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="operadora" id="operadora">
+                                            <option value="">Qualquer</option>
+                                        {% for operadora in operadora %}
+                                            <option>{{operadora}}</option>
+                                        {% endfor %}
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Portado</label>
+                                    <div class="col-sm-1">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="portado" id="portado">
+                                            <option value=""></option>
+                                            <option value="Sim">Sim</option>
+                                            <option value="Nao">Não</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Tipo</label>
+                                    <div class="col-sm-1">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="tipo" id="tipo">
+                                            <option></option>
+                                            <option>Fixo</option>
+                                            <option>Movel</option>
+                                            <option>Radio</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <legend><strong>Selecione uma data</strong></legend>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                            <div class="widget-body">
+                                                    <fieldset>
+                                                        <div class="form-group">
+                                                        <label class="col-sm-1 control-label" for="datepicker1i">De</label>
+                                                            <div id="datetimepicker1" class="input-group">
+                                                                <input name="calldate1" id="datepicker1i" type="text" class="form-control" value="{{ontem}}">
+                                                                <span class="input-group-btn">
+                                                                    <a href="#" class="btn btn-success">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                            </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                            <div class="widget-body">
+                                                    <fieldset>
+                                                        <div class="form-group">
+                                                        <label class="col-sm-1 control-label" for="datepicker2i">Até</label>
+                                                            <div id="datetimepicker2" class="input-group">
+                                                                <input name="calldate2" id="datepicker2i" type="text" class="form-control" value="{{hoje}}">
+                                                                <span class="input-group-btn">
+                                                                    <a href="#" class="btn btn-success">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                    <label class="col-sm-8 control-label" for="default-select">Por página</label>
+                                    <div class="col-sm-2">
+                                        <select 
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="pagina" id="pagina">
+                                            <option></option>
+                                        {% for pagina in pagina %}
+                                            <option>{{pagina}}</option>
+                                        {%endfor%}
+                                        </select>
+                                    </div>
+                                        <div class="col-sm-offset-5 col-sm-12">
+                                            <button type="submit" class="btn btn-primary">Pesquisar</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </section>
+            </div>
+                            
+                        {% endif %}
                             </div>
                         </div>
                     </div>
@@ -481,11 +665,13 @@
                         {% for i in results|slice:":50"  %}
                             <tr>
                                 <td>{{i.src}}</td>
-                                    {%if i.dst|length > 10%}
+
+                                    {% if i.dst|length > 10 %}
                                         <td data-mask="(99) 99999-9999">{{i.dst}}</td>
                                     {% else %}
                                         <td data-mask="(99) 9999-9999">{{i.dst}}</td>
                                     {% endif %}
+
                                 <td>{{i.cidade|title}}</td>
                                 <td>{{i.estado}}</td>
                                 <td>{{i.calldate}}</td>
