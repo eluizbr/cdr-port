@@ -109,8 +109,13 @@ def time_line(request):
 
 
     results = VwCdr.objects.filter(query).order_by('-calldate')
-    url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&tipo=%s&operadora=%s&cidade=%s&estado=%s"\
-        % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, tipo_f, operadora_f, cidade_f, estado_f)
+    print info
+    if info == "1":
+        url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&cidade=%s&estado=%s"\
+            % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, cidade_f, estado_f)
+    else:
+        url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&tipo=%s&operadora=%s&cidade=%s&estado=%s"\
+    % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, tipo_f, operadora_f, cidade_f, estado_f)
 
     tempo_medio = results.aggregate(Avg('billsec'))['billsec__avg']
     if tempo_medio == None:
