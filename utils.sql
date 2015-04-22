@@ -6,6 +6,7 @@ UPDATE nao_portados  SET tipo = 'RADIO' WHERE tipo = 'RÁDIO';
 
 ###
 
+manage.py syncdb --noinput
 
 # Cria %
 
@@ -541,5 +542,5 @@ SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) 
 	WHERE cdr_cdr.prefix = cdr_prefixo.prefixo;
 	
 
-	
+
 

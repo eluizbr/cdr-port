@@ -25,6 +25,7 @@
 </head>
 <body>
 
+{% if info == "1" %}
 <div class="container">
     <main id="content" class="error-container" role="main">
         <div class="row">
@@ -38,7 +39,7 @@
                         Envie um email para comercial@cdr-port.net e solicite mais informações
                     </p>
                     <p class="error-info">
-                        Se você tem o código de ativação, <a href="{% url 'registro'%}">Clique aqui</a>
+                        Se você já recebeu o código de ativação via email, <a href="{% url 'registro'%}">Clique aqui</a>
                     </p>
                     <p class="error-help mb">
                         2014 &copy; CDR-port.
@@ -52,6 +53,29 @@
         2014 &copy; CDR-port.
     </footer>
 </div>
+{% else %}
+<div class="container">
+    <main id="content" class="error-container" role="main">
+        <div class="row">
+            <div class="col-lg-4 col-sm-10 col-xs-10 col-lg-offset-4 col-sm-offset-3 col-xs-offset-1">
+                <div class="error-container">
+                    <h4 class="error-code">Ativada</h4>
+                    <p class="error-info">
+
+                    </p>
+                    <p class="error-help mb">
+                        2014 &copy; CDR-port.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="page-footer">
+        2014 &copy; CDR-port.
+    </footer>
+</div>
+{% endif %}
 <!-- The Loader. Is shown when pjax happens -->
 <div class="loader-wrap hiding hide">
     <i class="fa fa-circle-o-notch fa-spin-fast"></i>

@@ -11,7 +11,8 @@ from django.db.models import Q
 
 
 def error(request):
-    info = Info.objects.values('uuid', 'system_number','system_name', 'mac','frequencia', 'data_ativacao', 'data_expira', 'ativo')
+    info = Info.objects.values_list('ativo')
+    info = str(info)[2]
     template = loader.get_template('error.html')
     context = RequestContext(request, {'info': info})
     return HttpResponse(template.render(context))
