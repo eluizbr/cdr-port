@@ -195,7 +195,7 @@ class VwStatsNoanswer(models.Model):
 
 class VwRamais(models.Model):
     ramais = models.CharField(max_length=80)
-    total = models.BigIntegerField()
+#    total = models.BigIntegerField()
 
     def __unicode__(self):
         return unicode(self.ramais)
@@ -217,7 +217,7 @@ class VwDisposition(models.Model):
 
 class VwCidades(models.Model):
     cidade = models.CharField(max_length=100, blank=True)
-    total = models.BigIntegerField()
+#    total = models.BigIntegerField()
 
     class Meta:
         managed = False
