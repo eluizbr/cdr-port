@@ -247,7 +247,13 @@
         {% if total == 0 %}
             <h1 class="page-title">CDR - <span class="fw-semi-bold">Pesquisa sem resultados</span></h1>
         {% else %}
-            <h1 class="page-title">CDR - <span class="fw-semi-bold">Total</span> <span class="fw-semi-bold"> consultado {{total|intcomma}}</span></h1>           {% endif %}
+            {% if total < 2 %}
+                <h1 class="page-title">CDR - <span class="fw-semi-bold"> Total</span> <span class="fw-semi-bold"> consultado: {{total|intcomma}}</span></h1>
+            {% else %}
+                <h1 class="page-title">CDR - <span class="fw-semi-bold">Total de números</span> <span class="fw-semi-bold"> consultados: {{total|intcomma}}</span></h1>
+            {% endif %}
+            
+        {% endif %}
         
                 <div class="row">
                     <div class="panel panel-default">
