@@ -300,26 +300,62 @@ def cdr_serach(request):
 
     ### FIM SQL personalizado
 
-    if results:
-        paginator = Paginator(results, int(paginas_f))
-        page = request.GET.get('page')
-      
-        try:
-            results = paginator.page(page)
-        except PageNotAnInteger:
-            results = paginator.page(1)
-        except (EmptyPage):
-            results = paginator.page(paginator.num_pages)
+    if info == "1":
+        if results:
+            paginator = Paginator(results, int(paginas_f))
+            page = request.GET.get('page')
+          
+            try:
+                results = paginator.page(page)
+            except PageNotAnInteger:
+                results = paginator.page(1)
+            except (EmptyPage):
+                results = paginator.page(paginator.num_pages)
 
-        template = loader.get_template('cdr.html')
-        context = RequestContext(request, { 'info':info, 'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
+            template = loader.get_template('cdr.html')
+            context = RequestContext(request, { 'info':info, 'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
+                                                'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
+                                                'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
+                                                'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
+                                                'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
+                                                'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou,
+                                                 'pagina': pagina, 'operadora': operadora, 'cidade':cidade, 'estado':estado , 'total':total})
+            return HttpResponse(template.render(context))
+
+        else:
+            template = loader.get_template('cdr.html')
+            context = RequestContext(request, { 'info':info, 'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
                                             'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
                                             'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                             'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                             'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
-                                            'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'fixo':fixo, 'movel':movel, 'radio':radio,
-                                             'pagina': pagina, 'operadora': operadora, 'cidade':cidade, 'estado':estado , 'total':total})
-        return HttpResponse(template.render(context))
+                                            'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou,
+                                            'pagina': pagina, 'operadora': operadora,'cidade':cidade, 'estado':estado})
+            return HttpResponse(template.render(context))
+
+
+    elif info == "2" or "3":
+        if results:
+            paginator = Paginator(results, int(paginas_f))
+            page = request.GET.get('page')
+          
+            try:
+                results = paginator.page(page)
+            except PageNotAnInteger:
+                results = paginator.page(1)
+            except (EmptyPage):
+                results = paginator.page(paginator.num_pages)
+
+            template = loader.get_template('cdr.html')
+            context = RequestContext(request, { 'info':info, 'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
+                                                'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
+                                                'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
+                                                'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
+                                                'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
+                                                'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'fixo':fixo, 'movel':movel, 'radio':radio,
+                                                 'pagina': pagina, 'operadora': operadora, 'cidade':cidade, 'estado':estado , 'total':total})
+            return HttpResponse(template.render(context))
+
     else:
             template = loader.get_template('cdr.html')
             context = RequestContext(request, { 'info':info, 'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
