@@ -1,6 +1,6 @@
 
 *.pyc
 *.txt
-*.sql
+
 
 cdr/views.pyc
