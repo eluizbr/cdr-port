@@ -41,7 +41,7 @@ cp install/settings.py /usr/share/cdrport/cdr-port/cdrport/
 python manage.py syncdb --noinput
 python manage.py collectstatic --noinput
 
-wget -c https://github.com/eluizbr/cdr-port/raw/master/install/base.sql.zip -O install/sql/base.sql.zip
+wget -c https://github.com/eluizbr/cdr-port/raw/master/install/sql/base.sql.zip -O install/sql/base.sql.zip
 unzip install/sql/base.sql.zip
 mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/base.sql
 mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/rotinas.sql
