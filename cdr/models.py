@@ -32,7 +32,7 @@ class cdr(models.Model):
     uniqueid = models.CharField(max_length=32)
     userfield = models.CharField(max_length=255)
     prefix = models.CharField(max_length=80, blank=True, null=True)
-    portado = models.CharField(max_length=3, null=True,  default='Nao')
+    portado = models.CharField(max_length=3, default='Nao')
     
     def __unicode__(self):
         return unicode(self.dst)

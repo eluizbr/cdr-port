@@ -39,7 +39,7 @@ pip install -r install/requirements.txt
 sed -i "s/SENHA_DB/$DB_PASSWORD/" install/settings.py
 cp install/settings.py /usr/share/cdrport/cdr-port/cdrport/
 python manage.py syncdb --noinput
-python manage.py collectstatic --noinput
+#python manage.py collectstatic --noinput
 
 wget -c https://github.com/eluizbr/cdr-port/raw/master/install/sql/base.sql.zip -O install/sql/base.sql.zip
 unzip install/sql/base.sql.zip
@@ -57,8 +57,8 @@ sed -i "s/127.0.0.1/$IPADDR/" /etc/nginx/sites-enabled/cdrport
 
 ### FIM Config nginx
 
-cp install/my.cnf /etc/mysql/
-/etc/init.d/mysql restart
+#cp install/my.cnf /etc/mysql/
+#/etc/init.d/mysql restart
 chmod +x install/gunicorn_launcher.sh
 cp install/gunicorn_launcher.sh /etc/init.d/
 update-rc.d  gunicorn_launcher.sh defaults
