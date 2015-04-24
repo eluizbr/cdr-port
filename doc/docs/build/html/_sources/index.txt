@@ -61,22 +61,22 @@ Screenshot
 .. image:: https://raw.githubusercontent.com/eluizbr/cdr-port/devel/cdr/img/dashborad.png
 
 
-* Dashboard Frontend :
+* Dashboard Resumos :
 
     http://localhost:8000/dashboard/
     Newfies-Dialer Dashboard provides a contact and call reporting for the running campaign.
 
-.. image:: https://github.com/Star2Billing/newfies-dialer/raw/develop/docs/source/_static/images/newfies-dialer-dashboard.png
+.. image:: https://raw.githubusercontent.com/eluizbr/cdr-port/devel/cdr/img/dashboar-2.png
 
 
-* Admin Dashboard :
+* CDR Versão FREE :
 
     http://localhost:8000/admin/
     This interface provides user (ACL) management, a full control of all
     Campaigns, Phonebooks, Subscribers, Gateway, configuration of the
     Audio Application.
 
-.. image:: https://github.com/Star2Billing/newfies-dialer/raw/develop/docs/source/_static/images/admin_screenshot.png
+.. image:: https://raw.githubusercontent.com/eluizbr/cdr-port/devel/cdr/img/cdr-free.png
 
 
 
