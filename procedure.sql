@@ -61,5 +61,19 @@ SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) 
 	WHERE TMP_cdr_cdr.prefix = cdr_prefixo.prefixo
 	ON DUPLICATE KEY UPDATE uniqueid = cdr_cdrport.uniqueid;
 
+TRUNCATE TABLE cdr_dispositionpercent;
+ALTER TABLE cdr_dispositionpercent AUTO_INCREMENT = 1;
+REPLACE INTO cdr_dispositionpercent (disposition, valor, perc)	
+	SELECT lista.disposition, total valor , 
+	        ((total / total.total_geral) * 100) perc
+		FROM
+		(
+		SELECT disposition, total
+			FROM vw_disposition) lista,
+		(
+		SELECT sum(total) total_geral
+			FROM vw_disposition
+		) total;
+
 END;;
 DELIMITER ;

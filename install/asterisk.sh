@@ -24,4 +24,3 @@ ldconfig
 cd ..
 /etc/init.d/asterisk restart
 echo done
-ExitFinish=1
