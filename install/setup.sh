@@ -39,14 +39,14 @@ sed -i "s/SENHA_DB/$DB_PASSWORD/" install/settings.py
 cp install/settings.py /usr/share/cdrport/cdr-port/cdrport/
 python manage.py syncdb --noinput
 python manage.py collectstatic --noinput
-pip install gunicorn
-wget -c https://github.com/eluizbr/cdr-port/raw/master/install/base.sql.zip
-unzip install/base.sql.zip
-mysql -u root -p"$DB_PASSWORD" cdrport < install/base.sql
-mysql -u root -p"$DB_PASSWORD" cdrport < install/rotinas.sql
-mysql -u root -p"$DB_PASSWORD" cdrport < install/views.sql
-mysql -u root -p"$DB_PASSWORD" cdrport < install/install/portados.sql
-rm -rf install/base.sql.zip
+
+wget -c https://github.com/eluizbr/cdr-port/raw/master/install/base.sql.zip -O install/sql/base.sql.zip
+unzip install/sql/base.sql.zip
+mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/base.sql
+mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/rotinas.sql
+mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/views.sql
+mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/portados.sql
+rm -rf install/sql/base.sql.zip
 
 ### Config nginx
 
