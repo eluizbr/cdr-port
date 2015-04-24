@@ -25,13 +25,7 @@ mysqladmin -u root password "$DB_PASSWORD"
 mysql -u root -p"$DB_PASSWORD" -e "create database cdrport";
 ### FIM MySQL install
 
-### Config nginx
 
-cp install/cdrport_nginx.conf /etc/nginx/sites-enabled/cdrport
-sed -i "s/127.0.0.1/$IPADDR/" /etc/nginx/sites-enabled/cdrport
-/etc/init.d/nginx restart
-
-### FIM Config nginx
 
 ### Virtualenvs
 
@@ -53,6 +47,14 @@ mysql -u root -p"$DB_PASSWORD" cdrport < install/rotinas.sql
 mysql -u root -p"$DB_PASSWORD" cdrport < install/views.sql
 mysql -u root -p"$DB_PASSWORD" cdrport < install/install/portados.sql
 rm -rf install/base.sql.zip
+
+### Config nginx
+
+cp install/cdrport_nginx.conf /etc/nginx/sites-enabled/cdrport
+sed -i "s/127.0.0.1/$IPADDR/" /etc/nginx/sites-enabled/cdrport
+/etc/init.d/nginx restart
+
+### FIM Config nginx
 
 cp install/my.cnf /etc/mysql/
 /etc/init.d/mysql restart
