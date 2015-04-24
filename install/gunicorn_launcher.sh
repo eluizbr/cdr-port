@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-LOGFILE=/var/log/cdr-port/gunicorn_cdr-port.log
+LOGFILE=/var/log/cdrport/gunicorn_cdrport.log
 LOGDIR=$(dirname $LOGFILE)
 
 # The number of workers is number of worker processes that will serve requests.
@@ -13,7 +13,7 @@ NUM_WORKERS=1
 USER=www-data
 GROUP=www-data
 
-cd /usr/src/deploy/virtualenvs/cdr-port/
+cd /usr/share/cdrport/cdr-port/
 source bin/activate
 
 test -d $LOGDIR || mkdir -p $LOGDIR

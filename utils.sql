@@ -7,9 +7,13 @@ UPDATE nao_portados  SET tipo = 'RADIO' WHERE tipo = 'RÁDIO';
 mysqldump --routines --no-create-info --no-data --no-create-db --skip-opt  -u root -p cdrport > rotinas.sql
 sudo /usr/local/mysql/bin/mysqldump --routines --events --no-create-info --no-data --no-create-db --skip-opt  -u root -p cdrport > rotinas.sql
 ###
+GRANT ALL ON *.* TO 'root'@'192.168.2.245' IDENTIFIED BY 'app2004' WITH GRANT OPTION;
 [mysqld]
 event_scheduler = ON
 manage.py syncdb --noinput
+
+SHOW PROCESSLIST;
+SET GLOBAL event_scheduler = ON;
 
 DELIMITER $$		
 CREATE EVENT Stats

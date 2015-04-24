@@ -36,7 +36,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'consulta',
+    'django.contrib.humanize',
+    'cdr',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -49,9 +50,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'portabilidade.urls'
+ROOT_URLCONF = 'cdrport.urls'
 
-WSGI_APPLICATION = 'portabilidade.wsgi.application'
+WSGI_APPLICATION = 'cdrport.wsgi.application'
 
 
 # Database
@@ -68,9 +69,9 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'portabilidade',
+        'NAME': 'cdrport',
         'USER': 'root',
-        'PASSWORD': 'app2004',
+        'PASSWORD': 'SENHA_DB',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -96,9 +97,7 @@ STATIC_URL = '/static/'
 TEMPLATES_LOADERS = ('django.template.loaders.filesystem.Loader',
                     'django.template.loaders.app_directories.Loader')
 
-STATIC_ROOT = "/consulta/static/"
-
-STATICFILES_DIRS = ('/usr/src/deploy/virtualenvs/cdr-port/',)
-                    
+STATIC_ROOT = "/cdr/static/"
+                 
 TEMPLATE_DIRS = os.path.join(BASE_DIR, 'templates', 'static'),
 DEBUG_TOOLBAR_PATCH_SETTINGS = False

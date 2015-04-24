@@ -29,6 +29,7 @@ mysql -u root -p"$DB_PASSWORD" -e "create database cdrport";
 
 cp install/cdrport_nginx.conf /etc/nginx/sites-enabled/cdrport
 sed -i "s/127.0.0.1/$IPADDR/" /etc/nginx/sites-enabled/cdrport
+/etc/init.d/nginx restart
 
 ### FIM Config nginx
 
@@ -39,7 +40,26 @@ cd /usr/share/cdrport
 git clone https://github.com/eluizbr/cdr-port.git
 virtualenv --system-site-packages cdr-port
 cd cdr-port
-pip install -r requirements.txt
+pip install -r install/requirements.txt
+sed -i "s/SENHA_DB/$DB_PASSWORD/" install/settings.py
+cp install/settings.py /usr/share/cdrport/cdr-port/cdrport/
+python manage.py syncdb --noinput
+python manage.py collectstatic --noinput
+pip install gunicorn
+mysql -u root -p"$DB_PASSWORD" cdrport < install/base.sql
+mysql -u root -p"$DB_PASSWORD" cdrport < install/rotinas.sql
+mysql -u root -p"$DB_PASSWORD" cdrport < install/views.sql
+
+cp install/my.cnf /etc/mysql/
+/etc/init.d/mysql restart
+chmod +x install/gunicorn_launcher.sh
+cp install/gunicorn_launcher.sh /etc/init.d/
+update-rc.d  gunicorn_launcher.sh defaults
+cd /usr/share/cdrport
+chown -R www-data cdr-port
+/etc/init.d/gunicorn_launcher.sh start
+
+
 
 ###
 
