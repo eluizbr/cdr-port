@@ -2,7 +2,13 @@
 
 # Copyright (C) 2014 CDR-port
 # cdr-port@cdr-port.net
+# GLOBAL
+IFCONFIG=`which ifconfig 2>/dev/null||echo /sbin/ifconfig`
+IPADDR=`$IFCONFIG eth0|gawk '/inet addr/{print $2}'|gawk -F: '{print $2}'`
+INSTALL_DIR='/usr/share/cdrport'
+DB_PASSWORD=`</dev/urandom tr -dc A-Za-z0-9| (head -c $1 > /dev/null 2>&1 || head -c 20)`
 
+# FIM GLOBAL
 
 apt-get -y update
 apt-get -y upgrade
@@ -11,61 +17,52 @@ apt-get install build-essential  -y
 apt-get install python-virtualenv python-mysqldb python-dev python-imaging unzip git -y
 apt-get install nginx -y
 
+### MySQL install
 export DEBIAN_FRONTEND=noninteractive
 apt-get install -q -y mysql-server mysql-client libmysqlclient-dev -y
-mysqladmin -u root password app2004
-mysql -u root -papp2004 -e "create database portabilidade";
+echo "$DB_PASSWORD" > /usr/src/mysql_senha.txt
+mysqladmin -u root password "$DB_PASSWORD"
+mysql -u root -p"$DB_PASSWORD" -e "create database cdrport";
+### FIM MySQL install
 
-cd /usr/src/
-git clone https://github.com/rdegges/pyst2.git
-cd pyst2
-python setup.py install --prefix=/usr/local
-rm -rf pyst2
-cd /usr/src/
+### Config nginx
 
-mkdir -p /usr/src/deploy/virtualenvs
-cd /usr/src/deploy/virtualenvs
-git clone https://github.com/cdr-port/cdr-port.git
+cp install/cdrport_nginx.conf /etc/nginx/sites-enabled/cdrport
+sed -i "s/127.0.0.1/$IPADDR/" /etc/nginx/sites-enabled/cdrport
+/etc/init.d/nginx restart
+
+### FIM Config nginx
+
+### Virtualenvs
+
+mkdir -p /usr/share/cdrport
+cd /usr/share/cdrport
+git clone https://github.com/eluizbr/cdr-port.git
 virtualenv --system-site-packages cdr-port
 cd cdr-port
-pip install -r requirements.txt
-
-
-cp -rf install/settings.py portabilidade/ 
-
-chmod +x manage.py
-python manage.py syncdb
-python manage.py collectstatic
-
+pip install -r install/requirements.txt
+sed -i "s/SENHA_DB/$DB_PASSWORD/" install/settings.py
+cp install/settings.py /usr/share/cdrport/cdr-port/cdrport/
+python manage.py syncdb --noinput
+python manage.py collectstatic --noinput
 pip install gunicorn
-cp install/portabilidade_nginx.conf /etc/nginx/sites-enabled/portabilidade
+wget -c https://github.com/eluizbr/cdr-port/raw/master/install/base.sql.zip
+unizip install/base.sql.zip
+mysql -u root -p"$DB_PASSWORD" cdrport < install/base.sql
+mysql -u root -p"$DB_PASSWORD" cdrport < install/rotinas.sql
+mysql -u root -p"$DB_PASSWORD" cdrport < install/views.sql
+mysql -u root -p"$DB_PASSWORD" cdrport < install/install/portados.sql
+rm -rf install/base.sql.zip
 
-cp install/memoria.sh /etc/cron.hourly/
-chmod +x /etc/cron.hourly/memoria.sh
-bash /etc/cron.hourly/memoria.sh
-
-cd install
-
-unzip base.sql.zip
-mysql -u root -papp2004 portabilidade < base.sql
-mysql -u root -papp2004 portabilidade < config_operadora.sql
-mysql -u root -papp2004 portabilidade < views.sql
-mysql -u root -papp2004 portabilidade < rotinas.sql
-mysql -u root -papp2004 portabilidade -e "SET GLOBAL binlog_format = 'ROW';"
-mysql -u root -papp2004 portabilidade -e  "grant all on *.* to 'root'@'%' identified by 'app2004' with grant option;"
-#mysql -u root -papp2004 portabilidade -e "UPDATE nao_portados  SET operadora = 'VIVO' WHERE operadora = 'TELEFONICA'"
-#mysql -u root -papp2004 portabilidade -e "UPDATE nao_portados  SET tipo = 'MOVEL' WHERE tipo = 'MÓVEL'"
-#mysql -u root -papp2004 portabilidade -e "UPDATE nao_portados  SET tipo = 'RADIO' WHERE tipo = 'RÁDIO'"
-
-chmod +x gunicorn_launcher.sh
-cp gunicorn_launcher.sh /etc/init.d/
+cp install/my.cnf /etc/mysql/
+/etc/init.d/mysql restart
+chmod +x install/gunicorn_launcher.sh
+cp install/gunicorn_launcher.sh /etc/init.d/
 update-rc.d  gunicorn_launcher.sh defaults
-cp memoria.sh /etc/cron.hourly/
-/etc/init.d/cron restart
-cd /usr/src/
-chown -R www-data deploy/
+cd /usr/share/cdrport
+chown -R www-data cdr-port
+/etc/init.d/gunicorn_launcher.sh
+echo "/etc/init.d/gunicorn_launcher.sh" >> /etc/rc.local
 
-echo "/etc/init.d/gunicorn_launcher.sh start" >> /etc/rc.local
-/etc/init.d/gunicorn_launcher.sh start
-
+###
 
