@@ -39,10 +39,10 @@ pip install -r install/requirements.txt
 sed -i "s/SENHA_DB/$DB_PASSWORD/" install/settings.py
 cp install/settings.py /usr/share/cdrport/cdr-port/cdrport/
 python manage.py syncdb --noinput
-#python manage.py collectstatic --noinput
+python manage.py collectstatic --noinput
 
 wget -c https://github.com/eluizbr/cdr-port/raw/master/install/sql/base.sql.zip -O install/sql/base.sql.zip
-unzip install/sql/base.sql.zip
+unzip install/sql/base.sql.zip  -d install/sql/
 mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/base.sql
 mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/rotinas.sql
 mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/views.sql
