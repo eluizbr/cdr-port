@@ -9,14 +9,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Dumping events for database 'cdrport'
---
-
---
--- Dumping routines for database 'cdrport'
---
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -26,7 +18,8 @@
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `cdr_port`()
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER tr_stats AFTER INSERT ON cdr_cdr
+		FOR EACH ROW
 BEGIN
 
 DROP TEMPORARY TABLE IF EXISTS TMP_cdr_cdr;
@@ -88,8 +81,7 @@ SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) 
 	WHERE TMP_cdr_cdr.prefix = cdr_prefixo.prefixo
 	ON DUPLICATE KEY UPDATE uniqueid = cdr_cdrport.uniqueid;
 
-TRUNCATE TABLE cdr_dispositionpercent;
-ALTER TABLE cdr_dispositionpercent AUTO_INCREMENT = 1;
+
 REPLACE INTO cdr_dispositionpercent (disposition, valor, perc)	
 	SELECT lista.disposition, total valor , 
 	        ((total / total.total_geral) * 100) perc
@@ -102,12 +94,20 @@ REPLACE INTO cdr_dispositionpercent (disposition, valor, perc)
 			FROM vw_disposition
 		) total;
 
-END ;;
+END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Dumping events for database 'cdrport'
+--
+
+--
+-- Dumping routines for database 'cdrport'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -115,4 +115,4 @@ DELIMITER ;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-24 18:11:37
+-- Dump completed on 2015-04-24 19:19:32

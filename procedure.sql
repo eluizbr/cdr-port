@@ -1,5 +1,7 @@
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `cdr_port`()
+
+CREATE TRIGGER tr_stats AFTER INSERT ON cdr_cdr
+		FOR EACH ROW
 BEGIN
 
 DROP TEMPORARY TABLE IF EXISTS TMP_cdr_cdr;
@@ -61,8 +63,7 @@ SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) 
 	WHERE TMP_cdr_cdr.prefix = cdr_prefixo.prefixo
 	ON DUPLICATE KEY UPDATE uniqueid = cdr_cdrport.uniqueid;
 
-TRUNCATE TABLE cdr_dispositionpercent;
-ALTER TABLE cdr_dispositionpercent AUTO_INCREMENT = 1;
+
 REPLACE INTO cdr_dispositionpercent (disposition, valor, perc)	
 	SELECT lista.disposition, total valor , 
 	        ((total / total.total_geral) * 100) perc
