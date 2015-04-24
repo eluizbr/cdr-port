@@ -16,6 +16,7 @@ apt-get remove ajenti -y
 apt-get install build-essential  -y
 apt-get install python-virtualenv python-mysqldb python-dev python-imaging unzip git -y
 apt-get install nginx -y
+apt-get clean
 
 ### MySQL install
 export DEBIAN_FRONTEND=noninteractive
