@@ -31,7 +31,6 @@ Todas as dependências podem ser facilmente instaladas usando o PIP:
 
     - https://github.com/cdr-port/cdr-port/blob/master/install/requirements.txt
 
-
 Script de instalação
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -52,14 +51,14 @@ Complete documentation :
 Screenshot
 ----------
 
-* Customer Frontend :
+* Dashboard :
 
     http://localhost:8000/
     This application provides a User interface for restricted management of
     the User's Campaign, Phonebook, Subscriber. It also provides detailed
     Reporting of calls and message delivery.
 
-.. image:: https://github.com/Star2Billing/newfies-dialer/raw/develop/docs/source/_static/images/customer_screenshot.png
+.. image:: https://raw.githubusercontent.com/eluizbr/cdr-port/devel/cdr/img/dashborad.png
 
 
 * Dashboard Frontend :
@@ -79,37 +78,5 @@ Screenshot
 
 .. image:: https://github.com/Star2Billing/newfies-dialer/raw/develop/docs/source/_static/images/admin_screenshot.png
 
-
-Additional information
------------------------
-
-* Fork the project on GitHub : https://github.com/Star2Billing/newfies-dialer
-
-* License : MPL 2.0 (https://raw.github.com/Star2Billing/newfies-dialer/master/COPYING)
-
-* Official website : http://www.newfies-dialer.org
-
-* `Google Group`_ - the mailing list is newfies-dialer@googlegroups.com
-
-* `Forum`_
-
-* `Continuous integration homepage`_ on `travis-ci.org`_
-
-* `Twitter account for news and updates`_
-
-.. _`Google Group`: https://groups.google.com/forum/?fromgroups#!forum/newfies-dialer
-.. _`Forum`: http://forum.newfies-dialer.org/
-.. _`Continuous integration homepage`: http://travis-ci.org/#!/Star2Billing/newfies-dialer
-.. _`travis-ci.org`: http://travis-ci.org/
-.. _`Twitter account for news and updates`: https://twitter.com/newfies_dialer
-
-
-Support
--------
-
-The Newfies-Dialer project is supported by Star2billing S.L.
-For more information, see http://www.newfies-dialer.org/
-
-Please email us at newfies-dialer@star2billing.com for more information
 
 
