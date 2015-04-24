@@ -62,7 +62,9 @@ cp install/gunicorn_launcher.sh /etc/init.d/
 update-rc.d  gunicorn_launcher.sh defaults
 cd /usr/share/cdrport
 chown -R www-data cdr-port
-/etc/init.d/gunicorn_launcher.sh start
+/etc/init.d/gunicorn_launcher.sh
+echo "/etc/init.d/gunicorn_launcher.sh" >> /etc/rc.local
+
 
 
 
