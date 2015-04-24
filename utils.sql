@@ -7,15 +7,17 @@ UPDATE nao_portados  SET tipo = 'RADIO' WHERE tipo = 'RÁDIO';
 mysqldump --routines --no-create-info --no-data --no-create-db --skip-opt  -u root -p cdrport > rotinas.sql
 sudo /usr/local/mysql/bin/mysqldump --routines --events --no-create-info --no-data --no-create-db --skip-opt  -u root -p cdrport > rotinas.sql
 ###
-
+[mysqld]
+event_scheduler = ON
 manage.py syncdb --noinput
 
 DELIMITER $$		
 CREATE EVENT Stats
-ON SCHEDULE EVERY 1 MINUTE
+ON SCHEDULE EVERY 5 MINUTE
 ON COMPLETION PRESERVE
 DO BEGIN
-
+TRUNCATE TABLE cdr_dispositionpercent;
+ALTER TABLE cdr_dispositionpercent AUTO_INCREMENT = 1;
 REPLACE INTO cdr_DispositionPercent (disposition, valor, perc)	
 	SELECT lista.disposition, total valor , 
 	        ((total / total.total_geral) * 100) perc
@@ -26,7 +28,7 @@ REPLACE INTO cdr_DispositionPercent (disposition, valor, perc)
 		(
 		SELECT sum(total) total_geral
 			FROM vw_disposition
-		) total
+		) total;
 
 END $$
 DELIMITER ;
