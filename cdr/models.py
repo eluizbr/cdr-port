@@ -43,13 +43,16 @@ class Cdrport(models.Model):
     dst = models.BigIntegerField(blank=True, null=True)
     duration = models.TimeField(blank=True, null=True)
     billsec = models.TimeField(blank=True, null=True)
-    disposition = models.CharField(max_length=20, blank=True)
+    disposition = models.CharField(max_length=20)
     ddd = models.IntegerField(blank=True, null=True)
     prefixo = models.IntegerField(blank=True, null=True)
-    cidade = models.CharField(max_length=50, blank=True)
-    estado = models.CharField(max_length=2, blank=True)
-    operadora = models.CharField(max_length=50, blank=True)
-    tipo = models.CharField(max_length=6, blank=True)
+    cidade = models.CharField(max_length=50)
+    estado = models.CharField(max_length=2)
+    operadora = models.CharField(max_length=50)
+    tipo = models.CharField(max_length=6)
+    rn1 = models.IntegerField(blank=True, null=True)
+    portado = models.CharField(max_length=5, blank=True)
+    uniqueid = models.CharField(unique=True, max_length=32, blank=True)
 
     def __unicode__(self):
         return unicode(self.numero)
@@ -67,7 +70,7 @@ class Prefixo(models.Model):
 
     def __unicode__(self):
         return unicode(self.ddd)
-
+'''
 class GeoLocal(models.Model):
     gm_ponto = models.TextField(blank=True)
     id = models.IntegerField(primary_key=True)
@@ -95,7 +98,7 @@ class GeoLocal(models.Model):
 
     def __unicode__(self):
         return unicode(self.nm_municipio)
-
+'''
 class DispositionPercent(models.Model):
     disposition = models.CharField(unique=True, max_length=30)
     valor = models.IntegerField(blank=True, null=True)

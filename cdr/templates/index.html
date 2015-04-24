@@ -55,10 +55,12 @@
         </ul>
         <!-- every .sidebar-nav may have a title -->
         {% if info == "1"  %}
+
+       <!--
         <h5 class="sidebar-nav-title">Premium<a class="action-link" href="#"><i class="glyphicon glyphicon-usd"></i></a></h5>
             <ul class="sidebar-nav">
                 <li>
-                    <!-- an example of nested submenu. basic bootstrap collapse component -->
+                    
                     <a class="collapsed" href="#sidebar-forms" data-toggle="collapse" data-parent="#sidebar">
                         <span class="icon">
                             <i class="glyphicon glyphicon-retweet"></i>
@@ -88,41 +90,9 @@
                     </ul>
                 </li>       
             </ul>
-        {% elif info == "2" %}
-        <h5 class="sidebar-nav-title">Premium<a class="action-link" href="#"><i class="glyphicon glyphicon-usd"></i></a></h5>
-            <ul class="sidebar-nav">
-                <li>
-                    <!-- an example of nested submenu. basic bootstrap collapse component -->
-                    <a class="collapsed" href="#sidebar-forms" data-toggle="collapse" data-parent="#sidebar">
-                        <span class="icon">
-                            <i class="glyphicon glyphicon-retweet"></i>
-                        </span>
-                        Portabilidade
-                        <i class="toggle fa fa-angle-down"></i>
-                    </a>
-                    <ul id="sidebar-forms" class="collapse">
-                        <li><a href="form_elements.html">Resumo</a></li>
-                        <li><a href="form_validation.html">Consultas</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="collapsed" href="#sidebar-ui" data-toggle="collapse" data-parent="#sidebar">
-                        <span class="icon">
-                            <i class="glyphicon glyphicon-th-list"></i>
-                        </span>
-                        PABX
-                        <i class="toggle fa fa-angle-down"></i>
-                    </a>
-                    <ul id="sidebar-ui" class="collapse">
-                        <li><a href="ui_components.html">Ramais</a></li>
-                        <li><a href="ui_notifications.html">Extensões</a></li>
-                        <li><a href="ui_icons.html">Troncos</a></li>
-                        <li><a href="ui_buttons.html">URA</a></li>
-                        <li><a href="ui_tabs_accordion.html">Filas</a></li>
-                    </ul>
-                </li>       
-            </ul>            
-        {% elif info == "3" %}  
+        -->
+        {% elif info == "2" or "3" %}
+
         <h5 class="sidebar-nav-title">Premium<a class="action-link" href="#"><i class="glyphicon glyphicon-usd"></i></a></h5>         
             <ul class="sidebar-nav">
                 <li>
@@ -494,6 +464,33 @@
                     </header>
                     <div class="widget-body">
                     </div>
+                    {% if info == "1" %}
+
+                    <div class="widget-table-overflow">
+                        <table class="table table-striped table-sm">
+                            <thead class="no-bd">
+                            </thead>
+                            <tbody>
+                            {% for dst,operadora, tipo,calldate,cidade, estado, portado in ultimo%}
+                            <tr>
+                            <td>
+                                </td>
+                            {%if dst|length > 10%}
+                                <td data-mask="(99) 99999-9999">{{dst}}</td>
+                            {% else %}
+                                <td data-mask="(99) 9999-9999">{{dst}}</td>
+                            {% endif %}
+                                <td >{{cidade|title}}</td>
+                                <td >{{estado}}</td>
+                                <td >{{operadora}}</td>
+                                <td >{{billsec|time:"H:i:s"}}</td>
+                                <td class="text-align-right fw-semi-bold">{{calldate|naturaltime}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>  
+                    
+                    {% elif info == "2" or "3" %}
                     <div class="widget-table-overflow">
                         <table class="table table-striped table-sm">
                             <thead class="no-bd">
@@ -524,7 +521,8 @@
                             </tr>
                             {% endfor %}
                             </tbody>
-                        </table>
+                        </table>                        
+                    {% endif %}
                     </div>
                     <!--
                     <div class="widget-body mt-xlg">

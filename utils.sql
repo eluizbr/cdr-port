@@ -4,9 +4,135 @@ UPDATE nao_portados  SET operadora = 'VIVO' WHERE operadora = 'TELEFONICA';
 UPDATE nao_portados  SET tipo = 'MOVEL' WHERE tipo = 'MÓVEL';
 UPDATE nao_portados  SET tipo = 'RADIO' WHERE tipo = 'RÁDIO';
 
+mysqldump --routines --no-create-info --no-data --no-create-db --skip-opt  -u root -p cdrport > rotinas.sql
+sudo /usr/local/mysql/bin/mysqldump --routines --events --no-create-info --no-data --no-create-db --skip-opt  -u root -p cdrport > rotinas.sql
 ###
 
 manage.py syncdb --noinput
+
+DELIMITER $$		
+CREATE EVENT Stats
+ON SCHEDULE EVERY 1 MINUTE
+ON COMPLETION PRESERVE
+DO BEGIN
+
+REPLACE INTO cdr_DispositionPercent (disposition, valor, perc)	
+	SELECT lista.disposition, total valor , 
+	        ((total / total.total_geral) * 100) perc
+		FROM
+		(
+		SELECT disposition, total
+			FROM vw_disposition) lista,
+		(
+		SELECT sum(total) total_geral
+			FROM vw_disposition
+		) total
+
+END $$
+DELIMITER ;
+
+
+
+
+DELIMITER $$
+CREATE TRIGGER tr_stats BEFORE INSERT ON cdr_cdr
+		FOR EACH ROW
+BEGIN
+
+	CALL atualizar;
+	CALL cdr_port;
+
+
+END$$
+DELIMITER$$
+
+### PROCEDURES
+
+CALL atualiza;
+CALL cdr_prefix;
+CALL cdr_stats_answered;
+CALL cdr_stats_noanswer;
+CALL cdr_stats_busy;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `atualizar`()
+REPLACE INTO cdr_DispositionPercent (disposition, valor, perc)	
+	SELECT lista.disposition, total valor , 
+	        ((total / total.total_geral) * 100) perc
+		FROM
+		(
+		SELECT disposition, total
+			FROM vw_disposition) lista,
+		(
+		SELECT sum(total) total_geral
+			FROM vw_disposition
+		) total
+
+CREATE PROCEDURE cdr_prefix()
+
+UPDATE cdr_cdr SET prefix = 
+		CASE
+			WHEN dst LIKE '%s-%'
+				THEN src
+			WHEN character_length(dst)='10'
+				THEN SUBSTRING(dst,1,6)
+			WHEN character_length(dst)='11'
+				THEN SUBSTRING(dst,1,7)
+			WHEN character_length(dst)<'9'
+				THEN src
+		END;
+		
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cdr_stats_answered`()
+REPLACE INTO cdr_stats_answered (d_total,s_total,m_total)
+	SELECT(
+		SELECT count(src) FROM cdr_cdr
+		WHERE disposition = 'ANSWERED' AND DAY(calldate)=DAY(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		)  AS DIA,
+		(
+		SELECT count(src) FROM cdr_cdr
+		WHERE disposition = 'ANSWERED' AND WEEK(calldate)=WEEK(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		) AS SEMANA,
+		(
+		SELECT count(src)  FROM cdr_cdr
+		WHERE disposition = 'ANSWERED' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		)AS MES
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cdr_stats_noanswer`()
+REPLACE INTO cdr_stats_noanswer (d_total,s_total,m_total)
+	SELECT(
+		SELECT count(src) FROM cdr_cdr
+		WHERE disposition = 'NO ANSWER' AND DAY(calldate)=DAY(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		)  AS DIA,
+		(
+		SELECT count(src) FROM cdr_cdr
+		WHERE disposition = 'NO ANSWER' AND WEEK(calldate)=WEEK(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		) AS SEMANA,
+		(
+		SELECT count(src)  FROM cdr_cdr
+		WHERE disposition = 'NO ANSWER' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		)AS MES
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cdr_stats_busy`()
+REPLACE INTO cdr_stats_busy (d_total,s_total,m_total)
+	SELECT(
+		SELECT count(src) FROM cdr_cdr
+		WHERE disposition = 'BUSY' AND DAY(calldate)=DAY(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		)  AS DIA,
+		(
+		SELECT count(src) FROM cdr_cdr
+		WHERE disposition = 'BUSY' AND WEEK(calldate)=WEEK(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		) AS SEMANA,
+		(
+		SELECT count(src)  FROM cdr_cdr
+		WHERE disposition = 'BUSY' AND MONTH(calldate)=MONTH(CURDATE()) AND YEAR(calldate)=YEAR(CURDATE())
+		)AS MES
+
+####
+
+
+
 
 # Cria %
 
@@ -385,10 +511,10 @@ CREATE TABLE `vw_cdr` (
 	LIMIT 10;
 
 
-	CREATE VIEW vw_cdr AS SELECT cdr_cdr.id,calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,cdr_prefixo.ddd,
+	CREATE VIEW vw_cdr AS SELECT cdr_cdrport.id,calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,cdr_prefixo.ddd,
 		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo, cdr_prefixo.rn1, portado 
-	FROM cdr_cdr, cdr_prefixo
-	WHERE cdr_cdr.prefix = cdr_prefixo.prefixo ;
+	FROM cdr_cdrport, cdr_prefixo
+	WHERE cdr_cdrport.prefixo = cdr_prefixo.prefixo ;
 	
 
 CREATE VIEW vw_prefix AS 
@@ -521,26 +647,25 @@ UPDATE cdr_cdr
 
 ###
 
-INSERT INTO cdr_cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora,tipo)
-SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,cdr_prefixo.ddd,cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo  
-	FROM cdr_cdr,cdr_prefixo
-	WHERE cdr_cdr.prefix = cdr_prefixo.prefixo ;
 
-INSERT INTO cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora,tipo)
-SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,prefixo.ddd,prefixo.prefixo,prefixo.cidade,prefixo.estado,prefixo.operadora,prefixo.tipo  
-	FROM cdr_cdr,prefixo
-	WHERE cdr_cdr.prefix = prefixo.prefixo AND prefixo.tipo = 'fixo';
-	
-	LIMIT 50;
+
 
 ### CDR VIEW  Table
 
-INSERT INTO vw_cdr (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora,tipo,rn1,portado)
+INSERT INTO cdr_cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora,tipo,rn1,portado)
 SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,cdr_prefixo.ddd,
 		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo, cdr_prefixo.rn1, portado 
 	FROM cdr_cdr,cdr_prefixo
 	WHERE cdr_cdr.prefix = cdr_prefixo.prefixo;
 	
 
-
+### INSERT virifica antes de inserir
+INSERT INTO cdr_cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora,tipo,rn1,portado,uniqueid)
+SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,cdr_prefixo.ddd,
+		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo, cdr_prefixo.rn1, portado,uniqueid 
+	FROM cdr_cdr,cdr_prefixo
+	WHERE cdr_cdr.prefix = cdr_prefixo.prefixo
+	ON DUPLICATE KEY UPDATE uniqueid = cdr_cdrport.uniqueid;
+	
+####
 
