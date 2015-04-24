@@ -116,7 +116,7 @@ def cdr_serach(request):
         if numero:
             query &=Q(dst__startswith=numero_f)
         if src:
-            query &=Q(src__icontains=src_f)
+            query &=Q(src__exact=src_f)
         if calldate:
             query &=Q(calldate__range=(calldate1,calldate2))
         if disposition:
