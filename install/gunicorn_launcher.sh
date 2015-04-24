@@ -19,6 +19,6 @@ source bin/activate
 test -d $LOGDIR || mkdir -p $LOGDIR
 
 #Execute unicorn
-exec gunicorn portabilidade.wsgi:application -b 0.0.0.0:8000 -w $NUM_WORKERS --timeout=300 \
+exec gunicorn cdrport.wsgi:application -b 0.0.0.0:8000 -w $NUM_WORKERS --timeout=300 \
     --user=$USER --group=$GROUP --log-level=debug \
     --log-file=$LOGFILE 2>>$LOGFILE -D

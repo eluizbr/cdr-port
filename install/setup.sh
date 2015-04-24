@@ -41,7 +41,7 @@ python manage.py syncdb --noinput
 python manage.py collectstatic --noinput
 pip install gunicorn
 wget -c https://github.com/eluizbr/cdr-port/raw/master/install/base.sql.zip
-unizip install/base.sql.zip
+unzip install/base.sql.zip
 mysql -u root -p"$DB_PASSWORD" cdrport < install/base.sql
 mysql -u root -p"$DB_PASSWORD" cdrport < install/rotinas.sql
 mysql -u root -p"$DB_PASSWORD" cdrport < install/views.sql
