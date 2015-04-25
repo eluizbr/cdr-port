@@ -164,6 +164,7 @@ Status atual
 
 	- [X] Setup automatizado
 	- [X] Integração descomplicada
+		- Edite apenas um arquivo para integrar (cdr_mysql.conf)
 
 	#### Integração
 
@@ -190,7 +191,6 @@ Status atual
 
 	- [X] Setup automatizado
 	- [X] Integração descomplicada
-		- Edite apenas um arquivo para integrar (cdr_mysql.conf)
 	
 	#### Integração
 
