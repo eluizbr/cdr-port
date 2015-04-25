@@ -36,8 +36,8 @@ git clone https://github.com/eluizbr/cdr-port.git
 virtualenv --system-site-packages cdr-port
 cd cdr-port
 pip install -r install/requirements.txt
-sed -i "s/SENHA_DB/$DB_PASSWORD/" install/settings.py
-cp install/settings.py /usr/share/cdrport/cdr-port/cdrport/
+sed -i "s/SENHA_DB/$DB_PASSWORD/" install/settings.txt
+cp install/settings.txt /usr/share/cdrport/cdr-port/cdrport/settings.py
 python manage.py syncdb --noinput
 python manage.py collectstatic --noinput
 
