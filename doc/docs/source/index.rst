@@ -81,10 +81,8 @@ Screenshot
 
 * CDR Versão PREMIUM :
 
-    http://localhost:8000/admin/
-    This interface provides user (ACL) management, a full control of all
-    Campaigns, Phonebooks, Subscribers, Gateway, configuration of the
-    Audio Application.
+	O CDR-port é totalmente integrado como sistema de portabilidade. A base fica 100% local,
+	Não é necessário consultas pela internet.
 
-.. image:: https://raw.githubusercontent.com/eluizbr/cdr-port/devel/cdr/img/cdr-premium-1.png
+.. image:: https://raw.githubusercontent.com/eluizbr/cdr-port/devel/cdr/img/cdr-premium-2.png
 
