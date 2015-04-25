@@ -3,7 +3,7 @@ Bem-Vindo a documentação do CDR-port!
 
 
 
-CDR-port é uma apliacação desenvolvida em Python utilizando o Framework
+**CDR-port* é uma apliacação desenvolvida em Python utilizando o Framework
 [Django](https://www.djangoproject.com/), que tem como objetivo, criar uma interface CDR (Call Detail Reports) 
 para [Asterisk](http://www.asterisk.org/) nas versões 1.8.X, 10.X, 11.X, 12.X .
 
@@ -22,26 +22,23 @@ O CDR-port, é compativel com todas as versões do [Asterisk](http://www.asteris
 O [Asterisk](http://www.asterisk.org/) deve ser compilado com suporte a MySQL.
 
 
-# Instalação
+Instalação
+-------------
 
 
 CDR-port é uma aplicação baseada em Django, e para a versão FRRE, 
 será necessário instalar as seguintes dependências:
 
 
-    - python >= 2.6
-    - Django Framework = 1.7.5 (não foi testado em outras versões)
-    - Nginx
-    - [Asterisk] (http://www.asterisk.org/) => 1.8.X
-    - MySQL
-    - [Ubuntu](http://www.ubuntu.com/server) => 12.04 LTS Server
+- python >= 2.6
+- Django Framework = 1.7.5 (não foi testado em outras versões)
+- Nginx
+- [Asterisk](http://www.asterisk.org/) => 1.8.X
+- MySQL
+- [Ubuntu](http://www.ubuntu.com/download/server) => 12.04 LTS Server
 
-	* Instalação em outras distirbuições Linux são completamente compatíveis, basta você fazer
+    * Instalação em outras distirbuições Linux são completamente compatíveis, basta você fazer
 	as atapdacões necessárias no script de instalação.
-
-Todas as dependências podem ser facilmente instaladas usando o PIP:
-
-    - https://github.com/cdr-port/cdr-port/blob/master/install/requirements.txt
 
 
 O script de instalação, faz todo o processo necessário para instalar de forma automadizada o CDR-port.
@@ -72,7 +69,7 @@ libnewt-dev libusb-dev libeditline-dev libedit-dev libssl-dev
 * Você pode compilar o Asterisk a sua maneira, pode inclusive usar uma versão já instalada. A única regra aqui é
 que precisamos do suporte ao MySQL.
 
-```
+```bash
 clear
 cd /usr/src/
 wget -c http://downloads.asterisk.org/pub/telephony/asterisk/old-releases/asterisk-1.8.28.2.tar.gz
@@ -195,24 +192,25 @@ Status atual
 
 - [ ] Integração com [Asterisk](http://www.asterisk.org/)
 - [X] Integração descomplicada com o extensions.conf
-	>
-	10 Digitos
-	exten => _XXXXXXXXXX,1,Answer()
-	exten => _XXXXXXXXXX,n,AGI(/root/executa.py,${EXTEN})
-	exten => _XXXXXXXXXX,n,NoOp(${NUMERO})
-	exten => _XXXXXXXXXX,n,Dial(SIP/${NUMERO})
-	exten => _XXXXXXXXXX,n,Dial(SIP/GSM01/0${NUMERO:3})
-	;exten => _XXXXXXXXXX,n,Goto(s-${DIALSTATUS},1)
-	exten => _XXXXXXXXXX,n,Hangup
-	
-	11 Digitos
-	exten => _XXXXXXXXXXX,1,Answer()
-	exten => _XXXXXXXXXXX,n,AGI(/root/executa.py,${EXTEN})
-	exten => _XXXXXXXXXXX,n,NoOp(${NUMERO})
-	exten => _XXXXXXXXXXX,n,Dial(SIP/${NUMERO})
-	exten => _XXXXXXXXXXX,n,Dial(SIP/GSM01/0${NUMERO:3})
-	exten => _XXXXXXXXXXX,n,Hangup
-	>
+
+```
+10 Digitos
+exten => _XXXXXXXXXX,1,Answer()
+exten => _XXXXXXXXXX,n,AGI(/root/executa.py,${EXTEN})
+exten => _XXXXXXXXXX,n,NoOp(${NUMERO})
+exten => _XXXXXXXXXX,n,Dial(SIP/${NUMERO})
+exten => _XXXXXXXXXX,n,Dial(SIP/GSM01/0${NUMERO:3})
+;exten => _XXXXXXXXXX,n,Goto(s-${DIALSTATUS},1)
+exten => _XXXXXXXXXX,n,Hangup
+
+11 Digitos
+exten => _XXXXXXXXXXX,1,Answer()
+exten => _XXXXXXXXXXX,n,AGI(/root/executa.py,${EXTEN})
+exten => _XXXXXXXXXXX,n,NoOp(${NUMERO})
+exten => _XXXXXXXXXXX,n,Dial(SIP/${NUMERO})
+exten => _XXXXXXXXXXX,n,Dial(SIP/GSM01/0${NUMERO:3})
+exten => _XXXXXXXXXXX,n,Hangup
+```
 
 ##### CDR
 
@@ -227,7 +225,6 @@ Status atual
 ============
 
 - [ ] Em desenvolvimento
-
 - [ ] PABX
 	* Em desenvolvimento
 
