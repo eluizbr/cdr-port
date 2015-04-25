@@ -162,6 +162,7 @@ Status atual
 
 	- [X] Setup automatizado
 	- [X] Integração descomplicada
+	- [X] Estatisticas de portabilidade
 	- [X] Estatisticas (Atendidas, Não atendidas, Ocupadas, Número não existe)
 	- [X] Pesquisa por ramal
 	- [X] Pesquisa por número
@@ -171,7 +172,29 @@ Status atual
 	- [X] Por range de data
 
 - [ ] Portabilidade
+	
+	#### Setup
+
+	- [X] Setup automatizado
+	- [X] Integração descomplicada
+	
+	#### Integração
+
+	- [ ] Integração com asterisk
+
+	#### CDR
+	
+	- [X] Estatisticas de portabilidade
+	- [X] Estatisticas (Atendidas, Não atendidas, Ocupadas, Número não existe)
+	- [X] Pesquisa por ramal
+	- [X] Pesquisa por número
+	- [X] Por status (Atendidas, Não atendidas, Ocupadas, Número não existe)
+	- [X] Por cidade
+	- [X] Por estado
+	- [X] Por range de data	
+
 - [ ] PABX
+	* Em desenvolvimento
 
 
 Screenshot
