@@ -162,17 +162,17 @@ Status atual
 
 #### CDR para [Asterisk] (http://www.asterisk.org/)
 
-	##### Setup
+##### Setup
 
 	- [X] Setup automatizado
 	- [X] Integração descomplicada
 		- Edite apenas um arquivo para integrar (cdr_mysql.conf)
 
-	##### Integração
+##### Integração
 
 	- [X] Integração com [Asterisk](http://www.asterisk.org/)
 
-	##### CDR
+##### CDR
 
 	- [X] Estatisticas de portabilidade
 	- [X] Estatisticas (Atendidas, Não atendidas, Ocupadas, Número não existe)
@@ -183,17 +183,17 @@ Status atual
 	- [X] Por estado
 	- [X] Por range de data
 
-	##### Billing
+##### Billing
 
 	- [ ] Em desenvolvimento
 
 #### Portabilidade
 	
-	##### Integração
+##### Integração
 
 	- [ ] Integração com [Asterisk](http://www.asterisk.org/)
 
-	##### CDR
+##### CDR
 
 	- [X] Por CSP
 	- [X] Por Operadora
