@@ -53,38 +53,31 @@ Screenshot
 
 * Dashboard :
 
-    http://localhost:8000/
-    This application provides a User interface for restricted management of
-    the User's Campaign, Phonebook, Subscriber. It also provides detailed
-    Reporting of calls and message delivery.
 
 ![Dashboard]
 (https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/dashborad.png)
 
 
-* Dashboard Resumos :
+* Dashboard - Resumos :
 
-    http://localhost:8000/dashboard/
-    Newfies-Dialer Dashboard provides a contact and call reporting for the running campaign.
 
-.. image:: https://raw.githubusercontent.com/eluizbr/cdr-port/devel/cdr/img/dashboar-2.png
+![Dashboard Resumos]
+(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/dashboar-2.png)
+
+
+![Dashboard Resumos 2]
+(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/dashboard-3.png)
+
 
 
 * CDR Versão FREE :
 
-    http://localhost:8000/admin/
-    This interface provides user (ACL) management, a full control of all
-    Campaigns, Phonebooks, Subscribers, Gateway, configuration of the
-    Audio Application.
 
-.. image:: https://raw.githubusercontent.com/eluizbr/cdr-port/devel/cdr/img/cdr-free.png
+![CDR]
+(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-free.png)
 
 
 * CDR Versão PREMIUM :
 
-    http://localhost:8000/admin/
-    This interface provides user (ACL) management, a full control of all
-    Campaigns, Phonebooks, Subscribers, Gateway, configuration of the
-    Audio Application.
-
-.. image:: https://raw.githubusercontent.com/eluizbr/cdr-port/devel/cdr/img/cdr-premium-1.png
+![CDR PREMIUM]
+(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-premium-2.png)
