@@ -32,7 +32,7 @@ Todas as dependências podem ser facilmente instaladas usando o PIP:
     - https://github.com/cdr-port/cdr-port/blob/master/install/requirements.txt
 
 Script de instalação
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Temos um script para instalação automadizada do CDR-port. 
 
