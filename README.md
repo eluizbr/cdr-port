@@ -4,8 +4,8 @@ Bem-Vindo a documentação do CDR-port!
 
 
 CDR-port é uma apliacação desenvolvida em Python utilizando o Framework
-[Django] (https://www.djangoproject.com/), que tem como objetivo, criar uma interface CDR (Call Detail Reports) 
-para [Asterisk] (http://www.asterisk.org/) nas versões 1.8.X, 10.X, 11.X, 12.X .
+[Django](https://www.djangoproject.com/), que tem como objetivo, criar uma interface CDR (Call Detail Reports) 
+para [Asterisk](http://www.asterisk.org/) nas versões 1.8.X, 10.X, 11.X, 12.X .
 
 
 Quem deve utilizar?
@@ -34,7 +34,7 @@ será necessário instalar as seguintes dependências:
     - Nginx
     - [Asterisk] (http://www.asterisk.org/) => 1.8.X
     - MySQL
-    - Ubuntu => 12.04 LTS Server
+    - [Ubuntu](http://www.ubuntu.com/server) => 12.04 LTS Server
 
 	* Instalação em outras distirbuições Linux são completamente compatíveis, basta você fazer
 	as atapdacões necessárias no script de instalação.
@@ -51,7 +51,7 @@ Tudo que você precisa fazer, é baixar e executar o script.
 
 Para a instalação do [Asterisk] (http://www.asterisk.org/), iremos adotar os seguintes componentes:
 
-* Ubuntu => 12.04 LTS Server
+* [Ubuntu](http://www.ubuntu.com/server) => 12.04 LTS Server
 * [Asterisk] (http://www.asterisk.org/) 1.8.28.2
 
 #### Instalando e copilando o [Asterisk] (http://www.asterisk.org/):
