@@ -158,9 +158,14 @@ alias uniqueid => <a_field_not_named_uniqueid>
 Status atual
 -------------
 
-- [X] CDR para Asterisk 
+- [X] CDR para Asterisk
+
+	- [X] Setup automatizado
+	- [X] Integração descomplicada
+	- [X] Estatisticas (Atendidas, Não atendidas, Ocupadas, Número não existe)
 	- [X] Pesquisa por ramal
 	- [X] Pesquisa por número
+	- [X] Por status (Atendidas, Não atendidas, Ocupadas, Número não existe)
 	- [X] Por cidade
 	- [X] Por estado
 	- [X] Por range de data
