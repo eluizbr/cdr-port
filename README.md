@@ -213,7 +213,8 @@ exten => _XXXXXXXXXXX,n,Hangup
 - [X] Estatisticas de portabilidade
 - [X] Por CSP
 - [X] Por Operadora
-- [X] Por tipo ( Portado ou não portado)
+- [X] Por tipo ( Fixo, Móvel, Rádio)
+- [X] Portabilidade ( Portado ou não portado)
 - [X] Por cidade
 - [X] Por estado
 - [X] Por range de data	
@@ -227,10 +228,27 @@ exten => _XXXXXXXXXXX,n,Hangup
 ### PABX
 =========
 
+- [ ] Estatisticas do Asterisk
 - [ ] Ramais
+    - [ ] Editar 
+    - [ ] Criar 
+    - [ ] Visualizar 
+    - [ ] Status
 - [ ] Extensions
+    - [ ] Editar 
+    - [ ] Criar 
+    - [ ] Visualizar 
+    - [ ] Status
 - [ ] Filas
+    - [ ] Editar 
+    - [ ] Criar 
+    - [ ] Visualizar 
+    - [ ] Status
 - [ ] IRV
+    - [ ] Editar 
+    - [ ] Criar 
+    - [ ] Visualizar 
+    - [ ] Status
 	
 
 Screenshot
