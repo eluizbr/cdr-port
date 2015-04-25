@@ -59,7 +59,7 @@ Screenshot
     Reporting of calls and message delivery.
 
 ![Dashboard]
-(https://raw.githubusercontent.com/eluizbr/cdr-port/devel/cdr/img/dashborad.png)
+(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/dashborad.png)
 
 
 * Dashboard Resumos :
