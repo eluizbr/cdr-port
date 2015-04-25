@@ -1,24 +1,16 @@
-Bem-Vindo a documentação do CDR-port!
-=====================================
+Bem-Vindo ao CDR-port
+=====================
 
 
-
-**CDR-port* é uma apliacação desenvolvida em Python utilizando o Framework
+***CDR-port*** é uma apliacação desenvolvida em Python utilizando o Framework
 [Django](https://www.djangoproject.com/), que tem como objetivo, criar uma interface CDR (Call Detail Reports) 
 para [Asterisk](http://www.asterisk.org/) nas versões 1.8.X, 10.X, 11.X, 12.X .
-
-
-Quem deve utilizar?
--------------------
-
-Toda e qualquer empresa e ou profissional que desejam ter um sistema de relátorios
-para [Asterisk](http://www.asterisk.org/) simples, bonito e eficiente.
 
 
 Compatibilidade
 ---------------
 
-O CDR-port, é compativel com todas as versões do [Asterisk](http://www.asterisk.org/) => 1.8.X, 10.X, 11.X, 12.X .
+O ***CDR-port***, é compativel com todas as versões do [Asterisk](http://www.asterisk.org/) => 1.8.X, 10.X, 11.X, 12.X .
 O [Asterisk](http://www.asterisk.org/) deve ser compilado com suporte a MySQL.
 
 
@@ -26,22 +18,21 @@ Instalação
 -------------
 
 
-CDR-port é uma aplicação baseada em Django, e para a versão FRRE, 
-será necessário instalar as seguintes dependências:
+***CDR-port*** é uma aplicação baseada em Django, será necessário instalar as seguintes dependências:
 
 
-- python >= 2.6
-- Django Framework = 1.7.5 (não foi testado em outras versões)
-- Nginx
+- [Python](https://www.python.org/) = 2.7.6 (Não testado em Python 3.X)
+- [Django Framework](https://www.djangoproject.com/) = 1.7.5 (não foi testado em outras versões)
+- [Nginx](http://nginx.com/solutions/web-server/)
 - [Asterisk](http://www.asterisk.org/) => 1.8.X
-- MySQL
+- [MySQL](http://dev.mysql.com/downloads/) => 5.5.X
 - [Ubuntu](http://www.ubuntu.com/download/server) => 12.04 LTS Server
 
-    * Instalação em outras distirbuições Linux são completamente compatíveis, basta você fazer
+    - Outras distribuições Linux são completamente compatíveis, basta você fazer
 	as atapdacões necessárias no script de instalação.
 
 
-O script de instalação, faz todo o processo necessário para instalar de forma automadizada o CDR-port.
+O script de instalação, faz todo o processo necessário para instalar de forma automatizada o ***CDR-port***.
 Tudo que você precisa fazer, é baixar e executar o script.
 
 ### Instalando o [Asterisk](http://www.asterisk.org/)
@@ -51,7 +42,7 @@ Para a instalação do [Asterisk](http://www.asterisk.org/), iremos adotar os se
 * [Ubuntu](http://www.ubuntu.com/server) => 12.04 LTS Server
 * [Asterisk](http://www.asterisk.org/) 1.8.28.2
 
-#### Instalando e copilando o [Asterisk](http://www.asterisk.org/):
+#### Instalando e compilando o [Asterisk](http://www.asterisk.org/):
 
 ##### Dependências:
 
@@ -69,7 +60,7 @@ libnewt-dev libusb-dev libeditline-dev libedit-dev libssl-dev
 * Você pode compilar o Asterisk a sua maneira, pode inclusive usar uma versão já instalada. A única regra aqui é
 que precisamos do suporte ao MySQL.
 
-```bash
+```
 clear
 cd /usr/src/
 wget -c http://downloads.asterisk.org/pub/telephony/asterisk/old-releases/asterisk-1.8.28.2.tar.gz
@@ -86,41 +77,40 @@ make install
 make config
 make samples
 ldconfig
-
 ```
 
-### Instalando o CDR-port
+### Instalando o ***CDR-port***
 
 #### Script de instalação
 
 
-Temos um script para instalação automadizada do CDR-port. 
+Temos um script para instalação automatizada do ***CDR-port***. 
 
 ```
-	cd /usr/src/
-    wget https://github.com/cdr-port/cdr-port/raw/master/install/setup.sh
-    bash setup.sh
+cd /usr/src/
+wget https://github.com/cdr-port/cdr-port/raw/master/install/setup.sh
+bash setup.sh
 ```
 
-* Ao executar o processo acima, toda a instalação é realizada de forma automadizada. Ao final do processo, você poderá acessar
-o CDR-port.
+Ao executar o processo acima, toda a instalação é realizada de forma automatizada. Ao final do processo, você poderá acessar
+o ***CDR-port***.
 
 ```
 	http:\\IP-DO_SERVIDOR
 ```
-* Outro ponto importante, é a senha do MySQL, ela é gerada de forma randomica durante a instalação. O script grava essa senha em
+
+Outro ponto importante, é a senha do MySQL, ela é gerada de forma randômica durante a instalação. O script grava essa senha em
 um arquivo para consulta posterior.
 
 ```
 cat /usr/src/mysql_senha.txt
-
 ```
 
-* Caso você já possua uma instalação do MySQL, você deverá alterar no script de instalação o parametro `DB_PASSWORD` no incio do script 
+* Se você já possue uma instalação do MySQL, você deverá alterar no script de instalação o parametro `DB_PASSWORD` no incio do script 
 para `DB_PASSWORD=SUA_SENHA` .
 
 
-### Configurando o [Asterisk](http://www.asterisk.org/) para o CDR-port
+### Configurando o [Asterisk](http://www.asterisk.org/) para o ***CDR-port***
 
 A configuração do [Asterisk](http://www.asterisk.org/), se resume apenas ao arquivo `/etc/asterisk/cdr_mysql.conf`, que deve ter a configuração semelhante a 
 demonstrada abaixo:
@@ -155,24 +145,30 @@ alias uniqueid => <a_field_not_named_uniqueid>
 ```
 
 Status atual
-============
+------------
 
-#### CDR para [Asterisk] (http://www.asterisk.org/)
+
+#### CDR para [Asterisk](http://www.asterisk.org/)
 ===================================================
+
+Legenda:
+>
+- [X] Pronto para o uso
+- [ ] Em desenvolvimento
 
 ##### Setup
 
 - [X] Setup automatizado
 - [X] Integração descomplicada
-	- Edite apenas um arquivo para integrar (cdr_mysql.conf)
+	- Edite apenas um arquivo para integrar o ***CDR-port*** ao [Asterisk](http://www.asterisk.org/) (cdr_mysql.conf)
 
 ##### Integração
 
 - [X] Integração com [Asterisk](http://www.asterisk.org/)
 
+
 ##### CDR
 
-- [X] Estatisticas de portabilidade
 - [X] Estatisticas (Atendidas, Não atendidas, Ocupadas, Número não existe)
 - [X] Pesquisa por ramal
 - [X] Pesquisa por número
@@ -196,16 +192,15 @@ Status atual
 ```
 10 Digitos
 exten => _XXXXXXXXXX,1,Answer()
-exten => _XXXXXXXXXX,n,AGI(/root/executa.py,${EXTEN})
+exten => _XXXXXXXXXX,n,AGI(/root/cdrport.py,${EXTEN})
 exten => _XXXXXXXXXX,n,NoOp(${NUMERO})
 exten => _XXXXXXXXXX,n,Dial(SIP/${NUMERO})
 exten => _XXXXXXXXXX,n,Dial(SIP/GSM01/0${NUMERO:3})
-;exten => _XXXXXXXXXX,n,Goto(s-${DIALSTATUS},1)
 exten => _XXXXXXXXXX,n,Hangup
 
 11 Digitos
 exten => _XXXXXXXXXXX,1,Answer()
-exten => _XXXXXXXXXXX,n,AGI(/root/executa.py,${EXTEN})
+exten => _XXXXXXXXXXX,n,AGI(/root/cdrport.py,${EXTEN})
 exten => _XXXXXXXXXXX,n,NoOp(${NUMERO})
 exten => _XXXXXXXXXXX,n,Dial(SIP/${NUMERO})
 exten => _XXXXXXXXXXX,n,Dial(SIP/GSM01/0${NUMERO:3})
@@ -214,6 +209,8 @@ exten => _XXXXXXXXXXX,n,Hangup
 
 ##### CDR
 
+- [X] Estatisticas por ramal
+- [X] Estatisticas de portabilidade
 - [X] Por CSP
 - [X] Por Operadora
 - [X] Por tipo ( Portado ou não portado)
@@ -224,10 +221,17 @@ exten => _XXXXXXXXXXX,n,Hangup
 #### Billing
 ============
 
-- [ ] Em desenvolvimento
-- [ ] PABX
-	* Em desenvolvimento
+- [ ] Tarifação
+- [ ] Configuração de custo (Local, VC1, VC2, VC3)
 
+### PABX
+=========
+
+- [ ] Ramais
+- [ ] Extensions
+- [ ] Filas
+- [ ] IRV
+	
 
 Screenshot
 ----------
