@@ -54,7 +54,13 @@ Para a instalação do Asterisk, iremos adotar os seguintes componentes:
 ##### Dependências:
 
 ```
-apt-get install -y  build-essential linux-headers-`uname -r` make bison flex  zip  curl sox  lshw ncurses-term ttf-bitstream-vera libncurses5-dev automake libtool mpg123 sqlite3 libsqlite3-dev libncursesw5-dev uuid-dev  libxml2-dev libnewt-dev  pkg-config  autoconf subversion  libltdl-dev libltdl7 libcurl3   libxml2-dev   libiksemel-dev libssl-dev libnewt-dev libusb-dev libeditline-dev libedit-dev libssl-dev
+apt-get update -y
+apt-get upgrade -y
+apt-get install -y  build-essential linux-headers-`uname -r` make bison flex  zip  curl sox 
+lshw ncurses-term ttf-bitstream-vera libncurses5-dev automake libtool mpg123 sqlite3 libsqlite3-dev 
+libncursesw5-dev uuid-dev  libxml2-dev libnewt-dev  pkg-config  autoconf subversion  
+libltdl-dev libltdl7 libcurl3   libxml2-dev   libiksemel-dev libssl-dev libnewt-dev libusb-dev 
+libeditline-dev libedit-dev libssl-dev
 ```
 ##### Compliando:
 
