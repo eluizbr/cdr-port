@@ -161,50 +161,51 @@ Status atual
 ============
 
 #### CDR para [Asterisk] (http://www.asterisk.org/)
+===================================================
 
 ##### Setup
 
-	- [X] Setup automatizado
-	- [X] Integração descomplicada
-		- Edite apenas um arquivo para integrar (cdr_mysql.conf)
+- [X] Setup automatizado
+- [X] Integração descomplicada
+	- Edite apenas um arquivo para integrar (cdr_mysql.conf)
 
 ##### Integração
 
-	- [X] Integração com [Asterisk](http://www.asterisk.org/)
+- [X] Integração com [Asterisk](http://www.asterisk.org/)
 
 ##### CDR
 
-	- [X] Estatisticas de portabilidade
-	- [X] Estatisticas (Atendidas, Não atendidas, Ocupadas, Número não existe)
-	- [X] Pesquisa por ramal
-	- [X] Pesquisa por número
-	- [X] Por status (Atendidas, Não atendidas, Ocupadas, Número não existe)
-	- [X] Por cidade
-	- [X] Por estado
-	- [X] Por range de data
+- [X] Estatisticas de portabilidade
+- [X] Estatisticas (Atendidas, Não atendidas, Ocupadas, Número não existe)
+- [X] Pesquisa por ramal
+- [X] Pesquisa por número
+- [X] Por status (Atendidas, Não atendidas, Ocupadas, Número não existe)
+- [X] Por cidade
+- [X] Por estado
+- [X] Por range de data
 
 ##### Billing
 
-	- [ ] Em desenvolvimento
+- [ ] Em desenvolvimento
 
 #### Portabilidade
 	
 ##### Integração
 
-	- [ ] Integração com [Asterisk](http://www.asterisk.org/)
+- [ ] Integração com [Asterisk](http://www.asterisk.org/)
 
 ##### CDR
 
-	- [X] Por CSP
-	- [X] Por Operadora
-	- [X] Por tipo ( Portado ou não portado)
-	- [X] Por cidade
-	- [X] Por estado
-	- [X] Por range de data	
+- [X] Por CSP
+- [X] Por Operadora
+- [X] Por tipo ( Portado ou não portado)
+- [X] Por cidade
+- [X] Por estado
+- [X] Por range de data	
 
 #### Billing
 
-	- [ ] Em desenvolvimento
+- [ ] Em desenvolvimento
 
 - [ ] PABX
 	* Em desenvolvimento
