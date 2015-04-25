@@ -31,21 +31,23 @@ Todas as dependências podem ser facilmente instaladas usando o PIP:
 
     - https://github.com/cdr-port/cdr-port/blob/master/install/requirements.txt
 
+
+O script de instalação, faz todo o processo necessário para instalar de forma automadizada o CDR-port.
+Tudo que você precisa fazer, é baixar e executar o script.
+
 Script de instalação
 --------------------
 
 Temos um script para instalação automadizada do CDR-port. 
 
+```
+	cd /usr/src/
+    wget https://github.com/cdr-port/cdr-port/raw/master/install/setup.sh
+    bash setup.sh
 
-    - wget https://github.com/cdr-port/cdr-port/raw/master/install/setup.sh
+```
 
 
-Documentation
--------------
-
-Complete documentation :
-
-    - http://docs.newfies-dialer.org/
 
 
 Screenshot
@@ -63,11 +65,6 @@ Screenshot
 
 ![Dashboard Resumos]
 (https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/dashboar-2.png)
-
-
-![Dashboard Resumos 2]
-(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/dashboard-3.png)
-
 
 
 * CDR Versão FREE :
