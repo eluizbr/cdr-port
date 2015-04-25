@@ -159,6 +159,12 @@ Status atual
 -------------
 
 - [X] CDR para Asterisk 
+	- [X] Pesquisa por ramal
+	- [X] Pesquisa por número
+	- [X] Por cidade
+	- [X] Por estado
+	- [X] Por range de data
+
 - [ ] Portabilidade
 - [ ] PABX
 
