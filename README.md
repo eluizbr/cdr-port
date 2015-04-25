@@ -12,14 +12,14 @@ Quem deve utilizar?
 -------------------
 
 Toda e qualquer empresa e ou profissional que desejam ter um sistema de relátorios
-para Asterisk simples, bonito e eficiente.
+para Asterisk] (http://www.asterisk.org/) simples, bonito e eficiente.
 
 
 Compatibilidade
 ---------------
 
-O CDR-port, é compativel com todas as versões do Asterisk => 1.8.X, 10.X, 11.X, 12.X .
-O Asterisk deve ser compilado com suporte a MySQL.
+O CDR-port, é compativel com todas as versões do Asterisk] (http://www.asterisk.org/) => 1.8.X, 10.X, 11.X, 12.X .
+O Asterisk] (http://www.asterisk.org/) deve ser compilado com suporte a MySQL.
 
 
 # Instalação
@@ -32,7 +32,7 @@ será necessário instalar as seguintes dependências:
     - python >= 2.6
     - Django Framework = 1.7.5 (não foi testado em outras versões)
     - Nginx
-    - Asterisk => 1.8.X
+    - Asterisk] (http://www.asterisk.org/) => 1.8.X
     - MySQL
     - Ubuntu => 12.04 LTS Server
 
@@ -47,14 +47,14 @@ Todas as dependências podem ser facilmente instaladas usando o PIP:
 O script de instalação, faz todo o processo necessário para instalar de forma automadizada o CDR-port.
 Tudo que você precisa fazer, é baixar e executar o script.
 
-### Instalando o asterisk
+### Instalando o Asterisk] (http://www.asterisk.org/)
 
-Para a instalação do Asterisk, iremos adotar os seguintes componentes:
+Para a instalação do Asterisk] (http://www.asterisk.org/), iremos adotar os seguintes componentes:
 
 * Ubuntu => 12.04 LTS Server
-* Asterisk 1.8.28.2
+* Asterisk] (http://www.asterisk.org/) 1.8.28.2
 
-#### Instalando e copilando o asterisk:
+#### Instalando e copilando o Asterisk] (http://www.asterisk.org/):
 
 ##### Dependências:
 
@@ -123,9 +123,9 @@ cat /usr/src/mysql_senha.txt
 para `DB_PASSWORD=SUA_SENHA` .
 
 
-### Configurando o Asterisk para o CDR-port
+### Configurando o Asterisk] (http://www.asterisk.org/) para o CDR-port
 
-A configuração do Asterisk, se resume apenas ao arquivo `/etc/asterisk/cdr_mysql.conf`, que deve ter a configuração semelhante a 
+A configuração do Asterisk] (http://www.asterisk.org/), se resume apenas ao arquivo `/etc/asterisk/cdr_mysql.conf`, que deve ter a configuração semelhante a 
 demonstrada abaixo:
 
 ```
@@ -160,7 +160,7 @@ alias uniqueid => <a_field_not_named_uniqueid>
 Status atual
 -------------
 
-- [X] CDR para Asterisk
+- [X] CDR para Asterisk] (http://www.asterisk.org/)
 
 	#### Setup
 
@@ -170,7 +170,7 @@ Status atual
 
 	#### Integração
 
-	- [X] Integração com asterisk
+	- [X] Integração com Asterisk] (http://www.asterisk.org/)
 
 	#### CDR
 
@@ -196,7 +196,7 @@ Status atual
 	
 	#### Integração
 
-	- [ ] Integração com asterisk
+	- [ ] Integração com Asterisk] (http://www.asterisk.org/)
 
 	#### CDR
 
