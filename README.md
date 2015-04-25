@@ -15,16 +15,23 @@ Toda e qualquer empresa e ou profissionais que desejam ter sistema de relátorio
 para telefonia objetivo.
 
 
-Instalação
------------
+Compatibilidade
+---------------
+
+O CDR-port, é compativel com todas as versões do Asterisk => 1.8.X, 10.X, 11.X, 12.X .
+O Asterisk deve ser compilado com suporte a MySQL.
+
+
+# Instalação
+
 
 CDR-port é uma aplicação baseada em Django, e para a versão FRRE, 
 será necessário instalar as seguintes dependências:
 
 
     - python >= 2.6
+    - Django Framework = 1.7.5 (não foi testado em outras versões)
     - Nginx
-    - Django Framework >= 1.7
 
 
 Todas as dependências podem ser facilmente instaladas usando o PIP:
@@ -35,6 +42,12 @@ Todas as dependências podem ser facilmente instaladas usando o PIP:
 O script de instalação, faz todo o processo necessário para instalar de forma automadizada o CDR-port.
 Tudo que você precisa fazer, é baixar e executar o script.
 
+### Instalando o asterisk
+
+
+
+### Instalando o CDR-port
+
 Script de instalação
 --------------------
 
@@ -44,7 +57,6 @@ Temos um script para instalação automadizada do CDR-port.
 	cd /usr/src/
     wget https://github.com/cdr-port/cdr-port/raw/master/install/setup.sh
     bash setup.sh
-
 ```
 
 
