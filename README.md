@@ -160,7 +160,7 @@ alias uniqueid => <a_field_not_named_uniqueid>
 Status atual
 -------------
 
-### CDR para [Asterisk](http://www.asterisk.org/)
+#### CDR para [Asterisk](http://www.asterisk.org/)
 
 	#### Setup
 
@@ -168,11 +168,11 @@ Status atual
 	- [X] Integração descomplicada
 		- Edite apenas um arquivo para integrar (cdr_mysql.conf)
 
-	#### Integração
+	##### Integração
 
 	- [X] Integração com [Asterisk](http://www.asterisk.org/)
 
-	#### CDR
+	##### CDR
 
 	- [X] Estatisticas de portabilidade
 	- [X] Estatisticas (Atendidas, Não atendidas, Ocupadas, Número não existe)
@@ -183,28 +183,18 @@ Status atual
 	- [X] Por estado
 	- [X] Por range de data
 
-	#### Billing
+	##### Billing
 
 	- [ ] Em desenvolvimento
 
-### Portabilidade
+#### Portabilidade
 	
-	#### Setup
-
-	- [X] Setup automatizado
-	- [X] Integração descomplicada
-	
-	#### Integração
+	##### Integração
 
 	- [ ] Integração com [Asterisk](http://www.asterisk.org/)
 
-	#### CDR
+	##### CDR
 
-	- [X] Estatisticas de portabilidade
-	- [X] Estatisticas (Atendidas, Não atendidas, Ocupadas, Número não existe)
-	- [X] Pesquisa por ramal
-	- [X] Pesquisa por número
-	- [X] Por status (Atendidas, Não atendidas, Ocupadas, Número não existe)
 	- [X] Por CSP
 	- [X] Por Operadora
 	- [X] Por tipo ( Portado ou não portado)
@@ -212,7 +202,7 @@ Status atual
 	- [X] Por estado
 	- [X] Por range de data	
 
-### Billing
+#### Billing
 
 	- [ ] Em desenvolvimento
 
