@@ -11,8 +11,8 @@ para Asterisk nas versões 1.8.X, 10.X, 11.X, 12.X .
 Quem deve utilizar?
 -------------------
 
-Toda e qualquer empresa e ou profissionais que desejam ter sistema de relátorios
-para telefonia objetivo.
+Toda e qualquer empresa e ou profissional que desejam ter um sistema de relátorios
+para Asterisk simples, bonito e eficiente.
 
 
 Compatibilidade
@@ -32,6 +32,9 @@ será necessário instalar as seguintes dependências:
     - python >= 2.6
     - Django Framework = 1.7.5 (não foi testado em outras versões)
     - Nginx
+    - Asterisk => 1.8.X
+    - MySQL
+    - Ubuntu => 12.04 LTS Server
 
 
 Todas as dependências podem ser facilmente instaladas usando o PIP:
@@ -151,6 +154,13 @@ alias userfield => <a_field_not_named_userfield>
 alias uniqueid => <a_field_not_named_uniqueid>
 
 ```
+
+Status atual
+-------------
+
+- [X] CDR para Asterisk 
+- [ ] Portabilidade
+- [ ] PABX
 
 
 Screenshot
