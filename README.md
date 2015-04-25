@@ -78,7 +78,7 @@ make distclean
 ./configure
 contrib/scripts/get_mp3_source.sh
 make menuselect.makeopts
-menuselect/menuselect --disable CORE-SOUNDS-EN-GSM --enable app_mysql --enable cdr_mysql --enable res_config_mysql --enable format_mp3 --enable cdr_csv menuselect.makeopts
+menuselect/menuselect --disable CORE-SOUNDS-EN-GSM --enable app_mysql --enable cdr_mysql --enable res_config_mysql --enable format_mp3 menuselect.makeopts
 make
 make install
 make config
@@ -100,8 +100,21 @@ Temos um script para instalação automadizada do CDR-port.
     bash setup.sh
 ```
 
+* Ao executar o processo acima, toda a instalação é realizada de forma automadizada. Ao final do processo, você poderá acessar
+o CDR-port.
 
+```
+	http:\\IP-DO_SERVIDOR
+```
+* Outro ponto importante, é a senha do MySQL, ela é gerada de forma randomica durante a instalação. O script grava essa senha em
+um arquivo para consulta posterior.
 
+```
+cat /usr/src/mysql_senha.txt
+
+```
+
+* Caso você já possua uma instalação do MySQL, você deverá alterar no script de instalação o parametro `DB_PASSWORD=`</dev/urandom tr -dc A-Za-z0-9| (head -c $1 > /dev/null 2>&1 || head -c 20)`` para `DB_PASSWORD=SUA_SENHA` .
 
 Screenshot
 ----------
