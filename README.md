@@ -196,7 +196,7 @@ Status atual
 - [ ] Integração com [Asterisk](http://www.asterisk.org/)
 - [X] Integração descomplicada com o extensions.conf
 	>
-	``
+	
 	; 10 Digitos
 	exten => _XXXXXXXXXX,1,Answer()
 	exten => _XXXXXXXXXX,n,AGI(/root/executa.py,${EXTEN})
@@ -205,7 +205,7 @@ Status atual
 	exten => _XXXXXXXXXX,n,Dial(SIP/GSM01/0${NUMERO:3})
 	;exten => _XXXXXXXXXX,n,Goto(s-${DIALSTATUS},1)
 	exten => _XXXXXXXXXX,n,Hangup
-
+	
 	; 11 Digitos
 	exten => _XXXXXXXXXXX,1,Answer()
 	exten => _XXXXXXXXXXX,n,AGI(/root/executa.py,${EXTEN})
@@ -214,8 +214,8 @@ Status atual
 	exten => _XXXXXXXXXXX,n,Dial(SIP/GSM01/0${NUMERO:3})
 	;exten => _XXXXXXXXXXX,n,Goto(s-${DIALSTATUS},1)
 	exten => _XXXXXXXXXXX,n,Hangup
-	``
-	>
+	
+	> -
 
 ##### CDR
 
