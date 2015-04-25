@@ -58,7 +58,8 @@ Screenshot
     the User's Campaign, Phonebook, Subscriber. It also provides detailed
     Reporting of calls and message delivery.
 
-.. image:: https://raw.githubusercontent.com/eluizbr/cdr-port/devel/cdr/img/dashborad.png
+![Dashboard]
+(https://raw.githubusercontent.com/eluizbr/cdr-port/devel/cdr/img/dashborad.png)
 
 
 * Dashboard Resumos :
