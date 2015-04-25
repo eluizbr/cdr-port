@@ -22,7 +22,7 @@ ON COMPLETION PRESERVE
 DO BEGIN
 TRUNCATE TABLE cdr_dispositionpercent;
 ALTER TABLE cdr_dispositionpercent AUTO_INCREMENT = 1;
-REPLACE INTO cdr_DispositionPercent (disposition, valor, perc)	
+REPLACE INTO cdr_dispositionpercent (disposition, valor, perc)	
 	SELECT lista.disposition, total valor , 
 	        ((total / total.total_geral) * 100) perc
 		FROM
@@ -33,7 +33,6 @@ REPLACE INTO cdr_DispositionPercent (disposition, valor, perc)
 		SELECT sum(total) total_geral
 			FROM vw_disposition
 		) total;
-
 END $$
 DELIMITER ;
 
