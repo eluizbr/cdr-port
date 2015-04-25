@@ -162,7 +162,7 @@ Status atual
 
 #### CDR para [Asterisk](http://www.asterisk.org/)
 
-	#### Setup
+	##### Setup
 
 	- [X] Setup automatizado
 	- [X] Integração descomplicada
