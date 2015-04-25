@@ -114,7 +114,8 @@ cat /usr/src/mysql_senha.txt
 
 ```
 
-* Caso você já possua uma instalação do MySQL, você deverá alterar no script de instalação o parametro `DB_PASSWORD=`</dev/urandom tr -dc A-Za-z0-9| (head -c $1 > /dev/null 2>&1 || head -c 20)`` para `DB_PASSWORD=SUA_SENHA` .
+* Caso você já possua uma instalação do MySQL, você deverá alterar no script de instalação o parametro no incio do script 
+para `DB_PASSWORD=SUA_SENHA` .
 
 Screenshot
 ----------
