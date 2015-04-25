@@ -268,14 +268,14 @@ Screenshot
 (https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/dashboar-2.png)
 
 
-* CDR Versão FREE :
+* CDR Versão BÁSICO :
 
 
 ![CDR]
 (https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-free.png)
 
 
-* CDR Versão PREMIUM :
+* CDR Versão com PORTABILIDADE :
 
 ![CDR PREMIUM]
 (https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-premium-2.png)
