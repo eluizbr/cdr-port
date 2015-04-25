@@ -1,3 +1,12 @@
+### GIT UTILS
+
+git rm -r --cached .
+git add.
+git commit -m "Limpando a bagunça"
+
+###
+
+
 # UPDATES
 
 UPDATE nao_portados  SET operadora = 'VIVO' WHERE operadora = 'TELEFONICA';
