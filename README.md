@@ -114,7 +114,7 @@ cat /usr/src/mysql_senha.txt
 
 ```
 
-* Caso você já possua uma instalação do MySQL, você deverá alterar no script de instalação o parametro no incio do script 
+* Caso você já possua uma instalação do MySQL, você deverá alterar no script de instalação o parametro `DB_PASSWORD` no incio do script 
 para `DB_PASSWORD=SUA_SENHA` .
 
 Screenshot
