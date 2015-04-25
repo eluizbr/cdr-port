@@ -158,9 +158,9 @@ alias uniqueid => <a_field_not_named_uniqueid>
 ```
 
 Status atual
--------------
+============
 
-#### CDR para [Asterisk](http://www.asterisk.org/)
+#### CDR para [Asterisk] (http://www.asterisk.org/)
 
 	##### Setup
 
