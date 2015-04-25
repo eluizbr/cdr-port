@@ -160,8 +160,17 @@ Status atual
 
 - [X] CDR para Asterisk
 
+	#### Setup
+
 	- [X] Setup automatizado
 	- [X] Integração descomplicada
+
+	#### Integração
+
+	- [X] Integração com asterisk
+
+	#### CDR
+
 	- [X] Estatisticas de portabilidade
 	- [X] Estatisticas (Atendidas, Não atendidas, Ocupadas, Número não existe)
 	- [X] Pesquisa por ramal
@@ -170,6 +179,10 @@ Status atual
 	- [X] Por cidade
 	- [X] Por estado
 	- [X] Por range de data
+
+	#### Billing
+
+	- [ ] Em desenvolvimento
 
 - [ ] Portabilidade
 	
@@ -183,15 +196,22 @@ Status atual
 	- [ ] Integração com asterisk
 
 	#### CDR
-	
+
 	- [X] Estatisticas de portabilidade
 	- [X] Estatisticas (Atendidas, Não atendidas, Ocupadas, Número não existe)
 	- [X] Pesquisa por ramal
 	- [X] Pesquisa por número
 	- [X] Por status (Atendidas, Não atendidas, Ocupadas, Número não existe)
+	- [X] Por CSP
+	- [X] Por Operadora
+	- [X] Por tipo ( Portado ou não portado)
 	- [X] Por cidade
 	- [X] Por estado
 	- [X] Por range de data	
+
+	#### Billing
+
+	- [ ] Em desenvolvimento
 
 - [ ] PABX
 	* Em desenvolvimento
