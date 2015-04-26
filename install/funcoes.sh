@@ -49,7 +49,7 @@ func_install_cdr-port () {
 				chmod +x $CONFIG_DIR/install/conf/gunicorn_launcher.sh
 				cp $CONFIG_DIR/install/conf/gunicorn_launcher.sh /etc/init.d/
 				update-rc.d  gunicorn_launcher.sh defaults
-				cd /usr/share/cdrport
+				cd $INSTALL_DIR
 				chown -R www-data cdr-port
 				/etc/init.d/gunicorn_launcher.sh
 				echo "/etc/init.d/gunicorn_launcher.sh" >> /etc/rc.local
@@ -116,7 +116,6 @@ func_install_asterisk () {
             	ldconfig
             	cd ..
             	/etc/init.d/asterisk restart
-            	echo done
             	ExitFinish=1                      
 }
 

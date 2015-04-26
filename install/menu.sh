@@ -54,8 +54,8 @@ while [ $ExitFinish -eq 0 ]; do
             func_install_mysql
             func_install_cdr-port
             func_install_req_asterisk
+            func_install_asterisk
             func_config_asterisk
-            bash setup.sh
             ExitFinish=1
 		;;
 
