@@ -3,6 +3,7 @@
 # Copyright (C) 2014 CDR-port
 # cdr-port@cdr-port.net
 # GLOBAL
+source funcoes.sh
 IFCONFIG=`which ifconfig 2>/dev/null||echo /sbin/ifconfig`
 IPADDR=`$IFCONFIG eth0|gawk '/inet addr/{print $2}'|gawk -F: '{print $2}'`
 INSTALL_DIR='/usr/share/cdrport'

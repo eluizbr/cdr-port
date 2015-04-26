@@ -8,7 +8,7 @@ IFCONFIG=`which ifconfig 2>/dev/null||echo /sbin/ifconfig`
 IPADDR=`$IFCONFIG eth0|gawk '/inet addr/{print $2}'|gawk -F: '{print $2}'`
 INSTALL_DIR='/usr/share/cdrport'
 CONFIG_DIR='/usr/share/cdrport/cdr-port'
-
+BRANCH='devel'
 DB_PASSWORD=`</dev/urandom tr -dc A-Za-z0-9| (head -c $1 > /dev/null 2>&1 || head -c 20)`
 echo "$DB_PASSWORD" > /usr/src/mysql_senha.txt
 
@@ -19,7 +19,7 @@ func_install_cdr-port () {
 				clear
 				mkdir -p $INSTALL_DIR
 				cd $INSTALL_DIR
-				git clone https://github.com/eluizbr/cdr-port.git
+				git clone -b $BRANCH https://github.com/eluizbr/cdr-port.git
 				virtualenv --system-site-packages cdr-port
 				cd cdr-port
 				pip install -r $CONFIG_DIR/install/conf/requirements.txt
