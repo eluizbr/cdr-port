@@ -24,7 +24,7 @@ func_install_cdr-port () {
 				cd cdr-port
 				pip install -r $CONFIG_DIR/install/conf/requirements.txt
 				sed -i "s/SENHA_DB/$DB_PASSWORD/" $CONFIG_DIR/install/conf/settings.txt
-				cp $CONFIG_DIR/install/conf/conf/settings.txt /usr/share/cdrport/cdr-port/cdrport/settings.py
+				cp $CONFIG_DIR/install/conf/settings.txt /usr/share/cdrport/cdr-port/cdrport/settings.py
 				python manage.py syncdb --noinput
 				python manage.py collectstatic --noinput
 
@@ -53,9 +53,7 @@ func_install_cdr-port () {
 				chown -R www-data cdr-port
 				/etc/init.d/gunicorn_launcher.sh
 				echo "/etc/init.d/gunicorn_launcher.sh" >> /etc/rc.local
-
-                        
-
+				ExitFinish=1
 }
 
 
@@ -71,8 +69,6 @@ func_install_req_cdr-port () {
 				apt-get install nginx -y
 				apt-get clean
 				ExitFinish=1
-                        
-
 }
 
 func_install_mysql () { 
@@ -85,8 +81,6 @@ func_install_mysql () {
 				mysqladmin -u root password "$DB_PASSWORD"
 				mysql -u root -p"$DB_PASSWORD" -e "create database cdrport";
 				ExitFinish=1
-                        
-
 }
 
 func_install_req_asterisk () { 
@@ -98,8 +92,6 @@ func_install_req_asterisk () {
 				libxml2-dev libnewt-dev  pkg-config  autoconf subversion libltdl-dev libltdl7 libcurl3 libxml2-dev libiksemel-dev\
 				libssl-dev libnewt-dev libusb-dev libeditline-dev libedit-dev libssl-dev libmysqlclient-dev
 				ExitFinish=1
-                        
-
 }
 
 func_install_asterisk () { 
@@ -125,8 +117,7 @@ func_install_asterisk () {
             	cd ..
             	/etc/init.d/asterisk restart
             	echo done
-            	ExitFinish=1
-                        
+            	ExitFinish=1                      
 }
 
 func_config_asterisk () { 
@@ -137,6 +128,4 @@ func_config_asterisk () {
             	sed -i "s/SENHA_DB/$DB_PASSWORD/" $CONFIG_DIR/install/conf/cdr_mysql.conf
             	cp -rfv $CONFIG_DIR/install/conf/cdr_mysql.conf /etc/asterisk/
             	ExitFinish=1
-                        
-
 }
