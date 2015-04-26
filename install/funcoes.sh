@@ -7,7 +7,8 @@
 IFCONFIG=`which ifconfig 2>/dev/null||echo /sbin/ifconfig`
 IPADDR=`$IFCONFIG eth0|gawk '/inet addr/{print $2}'|gawk -F: '{print $2}'`
 INSTALL_DIR='/usr/share/cdrport'
-CONFIG_DIR='/usr/share/cdrport/cdr-port/'
+CONFIG_DIR='/usr/share/cdrport/cdr-port'
+
 DB_PASSWORD=`</dev/urandom tr -dc A-Za-z0-9| (head -c $1 > /dev/null 2>&1 || head -c 20)`
 echo "$DB_PASSWORD" > /usr/src/mysql_senha.txt
 
@@ -16,28 +17,28 @@ func_install_cdr-port () {
 
 				#Instalando CDR-port
 				clear
-				mkdir -p /usr/share/cdrport
-				cd /usr/share/cdrport
+				mkdir -p $INSTALL_DIR
+				cd $INSTALL_DIR
 				git clone https://github.com/eluizbr/cdr-port.git
 				virtualenv --system-site-packages cdr-port
 				cd cdr-port
-				pip install -r conf/requirements.txt
+				pip install -r $CONFIG_DIR/install/conf/requirements.txt
 				sed -i "s/SENHA_DB/$DB_PASSWORD/" conf/settings.txt
-				cp conf/settings.txt /usr/share/cdrport/cdr-port/cdrport/settings.py
+				cp $CONFIG_DIR/conf/settings.txt /usr/share/cdrport/cdr-port/cdrport/settings.py
 				python manage.py syncdb --noinput
 				python manage.py collectstatic --noinput
 
 				wget -c https://github.com/eluizbr/cdr-port/raw/master/install/sql/base.sql.zip -O install/sql/base.sql.zip
-				unzip install/sql/base.sql.zip  -d install/sql/
-				mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/base.sql
-				mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/rotinas.sql
-				mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/views.sql
-				mysql -u root -p"$DB_PASSWORD" cdrport < install/sql/portados.sql
-				rm -rf install/sql/base.sql.zip
+				unzip $CONFIG_DIR/install/sql/base.sql.zip  -d $CONFIG_DIR/install/sql/
+				mysql -u root -p"$DB_PASSWORD" cdrport < $CONFIG_DIR/install/sql/base.sql
+				mysql -u root -p"$DB_PASSWORD" cdrport < $CONFIG_DIR/install/sql/rotinas.sql
+				mysql -u root -p"$DB_PASSWORD" cdrport < $CONFIG_DIR/install/sql/views.sql
+				mysql -u root -p"$DB_PASSWORD" cdrport < $CONFIG_DIR/install/sql/portados.sql
+				rm -rf $CONFIG_DIR/install/sql/base.sql.zip
 
 				### Config nginx
 
-				cp conf/cdrport_nginx.conf /etc/nginx/sites-enabled/cdrport
+				cp $CONFIG_DIR/install/conf/cdrport_nginx.conf /etc/nginx/sites-enabled/cdrport
 				sed -i "s/127.0.0.1/$IPADDR/" /etc/nginx/sites-enabled/cdrport
 				/etc/init.d/nginx restart
 
@@ -133,8 +134,8 @@ func_config_asterisk () {
 				#Instalando dependências Asterisk
 				clear
 				cd "$CONFIG_DIR"
-            	sed -i "s/SENHA_DB/$DB_PASSWORD/" conf/cdr_mysql.conf
-            	cp -rfv conf/cdr_mysql.conf /etc/asterisk/
+            	sed -i "s/SENHA_DB/$DB_PASSWORD/" $CONFIG_DIR/install/conf/cdr_mysql.conf
+            	cp -rfv $CONFIG_DIR/install/conf/cdr_mysql.conf /etc/asterisk/
             	ExitFinish=1
                         
 
