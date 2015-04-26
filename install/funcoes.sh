@@ -34,6 +34,7 @@ func_install_cdr-port () {
 				mysql -u root -p"$DB_PASSWORD" cdrport < $CONFIG_DIR/install/sql/rotinas.sql
 				mysql -u root -p"$DB_PASSWORD" cdrport < $CONFIG_DIR/install/sql/views.sql
 				mysql -u root -p"$DB_PASSWORD" cdrport < $CONFIG_DIR/install/sql/portados.sql
+				mysql -u root -p"$DB_PASSWORD" cdrport -e "ALTER TABLE cdr_cdr ALTER COLUMN portado SET DEFAULT 'Nao';"
 				rm -rf $CONFIG_DIR/install/sql/base.sql.zip
 
 				### Config nginx
