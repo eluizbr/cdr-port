@@ -64,7 +64,7 @@ while [ $ExitFinish -eq 0 ]; do
 			cd /usr/src/
 			rm -rf asterisk*
 			# Apaga Instalacao
-			cd /var/www/ipbx/
+			cd $CONFIG_DIR
 			rm -rf install
 			ExitFinish=1
 		;;
