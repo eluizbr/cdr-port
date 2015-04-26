@@ -4,7 +4,7 @@
 # cdr-port@cdr-port.net
 
 # Configurar o Branch
-BRANCH='master'
+BRANCH='devel'
 
 apt-get -y install lsb-release
 
