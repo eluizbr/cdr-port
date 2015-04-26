@@ -23,8 +23,8 @@ func_install_cdr-port () {
 				virtualenv --system-site-packages cdr-port
 				cd cdr-port
 				pip install -r $CONFIG_DIR/install/conf/requirements.txt
-				sed -i "s/SENHA_DB/$DB_PASSWORD/" conf/settings.txt
-				cp $CONFIG_DIR/conf/settings.txt /usr/share/cdrport/cdr-port/cdrport/settings.py
+				sed -i "s/SENHA_DB/$DB_PASSWORD/" $CONFIG_DIR/install/conf/settings.txt
+				cp $CONFIG_DIR/install/conf/conf/settings.txt /usr/share/cdrport/cdr-port/cdrport/settings.py
 				python manage.py syncdb --noinput
 				python manage.py collectstatic --noinput
 
@@ -46,8 +46,8 @@ func_install_cdr-port () {
 
 				#cp conf/my.cnf /etc/mysql/
 				#/etc/init.d/mysql restart
-				chmod +x conf/gunicorn_launcher.sh
-				cp install/gunicorn_launcher.sh /etc/init.d/
+				chmod +x $CONFIG_DIR/install/conf/gunicorn_launcher.sh
+				cp $CONFIG_DIR/install/conf/gunicorn_launcher.sh /etc/init.d/
 				update-rc.d  gunicorn_launcher.sh defaults
 				cd /usr/share/cdrport
 				chown -R www-data cdr-port
