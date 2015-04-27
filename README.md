@@ -88,8 +88,8 @@ Temos um script para instalação automatizada do ***CDR-port***.
 
 ```
 cd /usr/src/
-wget https://github.com/cdr-port/cdr-port/raw/master/install/setup.sh
-bash setup.sh
+wget https://github.com/eluizbr/cdr-port/raw/devel/install/install.sh
+bash install.sh
 ```
 
 Ao executar o processo acima, toda a instalação é realizada de forma automatizada. Ao final do processo, você poderá acessar

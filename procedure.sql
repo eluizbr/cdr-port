@@ -30,20 +30,41 @@ CREATE TEMPORARY TABLE `TMP_cdr_cdr` (
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 INSERT INTO TMP_cdr_cdr (calldate,clid,src,dst,dcontext,channel,dstchannel,lastapp,lastdata,duration,billsec,disposition,amaflags,accountcode,uniqueid,userfield,prefix,portado)
-SELECT calldate,clid,src,dst,dcontext,channel,dstchannel,lastapp,lastdata,duration,billsec,disposition,amaflags,accountcode,uniqueid,userfield,prefix,`portado`
-FROM cdr_cdr;
+SELECT calldate,clid,src,
+		CASE
+			WHEN character_length(dst)='10'
+			THEN dst
+			WHEN character_length(dst)='11'
+			THEN dst
+			WHEN character_length(dst)='9'
+			THEN dst
+			WHEN character_length(dst)='8'
+			THEN dst
+			WHEN character_length(dst)='11'
+				THEN SUBSTRING(dst,cdr_config_local.cortar+1)
+			WHEN character_length(dst)='12'
+				THEN SUBSTRING(dst,cdr_config_local.cortar+1)
+		END AS dst,
+dcontext,channel,dstchannel,lastapp,lastdata,duration,billsec,disposition,amaflags,accountcode,uniqueid,userfield,prefix,portado
+FROM cdr_config_local,cdr_cdr;
 
+SET @cortar:=(SELECT cortar FROM cdr_config_local);
+SET @ddd:=(SELECT ddd FROM cdr_config_local);
 	UPDATE TMP_cdr_cdr SET prefix = 
 		CASE
 			WHEN dst LIKE '%s-%'
 				THEN src
 			WHEN dst LIKE '%-%'
 				THEN src
-			WHEN character_length(dst)='10'
-				THEN SUBSTRING(dst,1,6)
 			WHEN character_length(dst)='11'
-				THEN SUBSTRING(dst,1,7)
-			WHEN character_length(dst)<'9'
+				THEN SUBSTRING(dst,@cortar,7)
+			WHEN character_length(dst)='10'
+				THEN SUBSTRING(dst,@cortar,6)
+			WHEN character_length(dst)='9'
+				THEN CONCAT(@ddd,SUBSTRING(dst,1,5))
+			WHEN character_length(dst)='8'
+				THEN CONCAT(@ddd,SUBSTRING(dst,1,4))
+			WHEN character_length(dst)<'7'
 				THEN src
 		END;
 

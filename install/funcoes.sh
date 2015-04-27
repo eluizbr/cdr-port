@@ -25,7 +25,7 @@ func_install_cdr-port () {
 				pip install -r $CONFIG_DIR/install/conf/requirements.txt
 				sed -i "s/SENHA_DB/$DB_PASSWORD/" $CONFIG_DIR/install/conf/settings.txt
 				cp $CONFIG_DIR/install/conf/settings.txt /usr/share/cdrport/cdr-port/cdrport/settings.py
-				python manage.py syncdb --noinput
+				python manage.py syncdb
 				python manage.py collectstatic --noinput
 
 				wget -c https://github.com/eluizbr/cdr-port/raw/master/install/sql/base.sql.zip -O install/sql/base.sql.zip
@@ -35,6 +35,8 @@ func_install_cdr-port () {
 				mysql -u root -p"$DB_PASSWORD" cdrport < $CONFIG_DIR/install/sql/views.sql
 				mysql -u root -p"$DB_PASSWORD" cdrport < $CONFIG_DIR/install/sql/portados.sql
 				mysql -u root -p"$DB_PASSWORD" cdrport -e "ALTER TABLE cdr_cdr ALTER COLUMN portado SET DEFAULT 'Nao';"
+				#sed -i "s/SENHA_DB/$DB_PASSWORD/" $CONFIG_DIR/install/valida.py
+				#python $CONFIG_DIR/install/valida.py
 				rm -rf $CONFIG_DIR/install/sql/base.sql.zip
 
 				### Config nginx

@@ -1,5 +1,70 @@
+# -*- coding: UTF-8 -*-
 from django.db import models
+from smart_selects.db_fields import ChainedForeignKey
 from django.utils.translation import ugettext_lazy as _
+
+class State(models.Model):
+
+    id_region = models.IntegerField()
+    title = models.CharField(max_length=35)
+    letter = models.CharField(max_length=2)
+    iso = models.IntegerField()
+    created_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
+    status = models.CharField(max_length=1)
+
+    def __unicode__(self):
+        return unicode(self.title)
+
+    class Meta:
+        managed = False
+        db_table = 'state'
+
+class City(models.Model):
+    id_state = models.ForeignKey('State', db_column='id_state')
+    cidade = models.CharField(max_length=50)
+    iso = models.IntegerField()
+    iso_ddd = models.CharField(max_length=6)
+    created_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
+    status = models.CharField(max_length=1)
+    
+    def __unicode__(self):
+        return unicode(self.cidade)
+
+    class Meta:
+        managed = False
+        db_table = 'city'
+
+class Cidades(models.Model):
+    cidade = models.CharField(max_length=100, blank=True)
+    estado = models.CharField(max_length=2, blank=True)
+    ddd = models.IntegerField(blank=True, null=True)
+    regiao = models.CharField(max_length=25, blank=True)
+
+    def __unicode__(self):
+        return unicode(self.estado)
+
+    class Meta:
+        managed = False
+        db_table = 'cidades'
+
+class Config_Local(models.Model):
+    ddd = models.IntegerField(help_text=_("Insira seu DDD"),verbose_name="DDD")
+    estado = models.ForeignKey(State ,help_text=_("Selecione a estado"),verbose_name="Estado")
+    cidade = ChainedForeignKey(City, chained_field="estado", chained_model_field="id_state", auto_choose=True,verbose_name="Cidade",help_text=_("Selecione a cidade"))
+    cortar = models.IntegerField(help_text=_("Numero de digitos a serem cortados. Ex: Se voce envia 551120304050, digite 2 para remover o 55."),verbose_name="Cortar")
+    custo_local = models.DecimalField(max_digits=10, decimal_places=2, blank=True, help_text=_("Custo Local"),default='0.00',verbose_name="Fixo")
+    custo_ldn = models.DecimalField(max_digits=10, decimal_places=2, blank=True, help_text=_("Custo LDN"),default='0.00',verbose_name="Fixo LDN")
+    custo_movel_local = models.DecimalField(max_digits=10, decimal_places=2, blank=True, help_text=_("Movel Local"),default='0.00',verbose_name="Movel Local")
+    custo_movel_ldn = models.DecimalField(max_digits=10, decimal_places=2, blank=True, help_text=_("Movel LDN"),default='0.00',verbose_name="Movel LDN")
+
+    def __unicode__(self):
+        return unicode(self.estado)
+
+    class Meta:
+        verbose_name='Configurar Localidade'
+
 
 class Info(models.Model):
     uuid = models.CharField(max_length=100, blank=True)
@@ -255,6 +320,7 @@ class VwCdr(models.Model):
     tipo = models.CharField(max_length=5, blank=True)
     rn1 = models.IntegerField(blank=True, null=True)
     portado = models.CharField(max_length=3, blank=True)
+    preco = models.DecimalField(max_digits=10, decimal_places=3, blank=True)
 
     def __unicode__(self):
         return unicode(self.dst)

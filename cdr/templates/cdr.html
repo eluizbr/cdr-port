@@ -10,7 +10,7 @@
     <!--[if IE 9]>
         <link href="css/application-ie9-part2.css" rel="stylesheet">
     <![endif]-->
-    <link rel="shortcut icon" href="img/favicon.png"%}>
+    <link rel="shortcut icon" href="{% static "img/favicon.png"%}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -838,6 +838,7 @@
                                 <th>Status</th>
                                 <th>Duração</th>
                                 <th>Conversação</th>
+                                <th>Custo</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -875,6 +876,7 @@
                                 </td>
                                 <td>{{i.duration|time:"H:i:s"}}</td>
                                 <td>{{i.billsec|time:"H:i:s"}}</td>
+                                <td data-mask="R$ 0,000">{{i.preco}}</td>
                                <td class="width-25">
 
                                 {% if i.disposition == "ANSWERED" %}
@@ -894,8 +896,6 @@
                                         <div class="progress-bar progress-bar-danger" data-width="100%" style="width: 0;"></div>
                                     </div>
                                 {% endif %}   
- 
-
                                 </td>
                             </tr>
                         {% endfor %}
@@ -943,6 +943,11 @@
                     <header>
                         <h5>
                             ESTATISTICAS - RAMAL: <strong>{{src_f}}</strong>
+                        </h5>
+                    </header>
+                    <header>
+                        <h5>
+                            CUSTO : <strong>R$ {{custo}}</strong>
                         </h5>
                     </header>
                     <div class="widget-body">
