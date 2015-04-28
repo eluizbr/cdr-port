@@ -25,7 +25,7 @@ def registra():
 	            "VALUES  (%s, %s, %s, %s, %s, %s, %s, 1)")
 	DADOS = (uuid, system_number, system_name, mac, frequencia, hoje, proximo_mes)
 	c.execute(SQL_INSERE, DADOS)
-	print 'Operadora e %s, %s, %s, %s, %s, %s, %s, 1'%(DADOS)
+	#print 'Operadora e %s, %s, %s, %s, %s, %s, %s, 1'%(DADOS)
 	connection.commit()
 
 def main():
