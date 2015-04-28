@@ -65,8 +65,9 @@ while [ $ExitFinish -eq 0 ]; do
         	clear
 			cd /usr/src/
 			rm -rf asterisk*
+            rm -rf *.sh
 			# Apaga Instalacao
-			cd $CONFIG_DIR
+			cd /usr/share/cdrport/cdr-port/
 			rm -rf install
 			ExitFinish=1
 		;;
