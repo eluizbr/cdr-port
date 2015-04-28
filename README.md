@@ -110,6 +110,21 @@ cat /usr/src/mysql_senha.txt
 para `DB_PASSWORD=SUA_SENHA` .
 
 
+#### Configurando o ***CDR-port***
+
+Você deve configurar sua localidade no ***CDR-port*** acessando a seguinte url:
+
+
+```
+    http:\\IP-DO_SERVIDOR/admin/cdr/
+```
+
+*Você irá precisar do usuário e senha criados durante a instalação do ***CDR-port***.
+
+Configure seu DDD, Estado, Cidade, Cortar (digitos a serem cortados. Ex: Se você disca 551120304050, você deve cortar o 55, digitando 2 para cortar os 2 primeiros digitos.), e suas tarifas. Essas configurações são fundamentais para o funcionamento correto do ***CDR-port***.
+
+
+
 ### Configurando o [Asterisk](http://www.asterisk.org/) para o ***CDR-port***
 
 A configuração do [Asterisk](http://www.asterisk.org/), se resume apenas ao arquivo `/etc/asterisk/cdr_mysql.conf`, que deve ter a configuração semelhante a 
