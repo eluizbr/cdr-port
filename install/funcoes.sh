@@ -35,8 +35,8 @@ func_install_cdr-port () {
 				mysql -u root -p"$DB_PASSWORD" cdrport < $CONFIG_DIR/install/sql/views.sql
 				mysql -u root -p"$DB_PASSWORD" cdrport < $CONFIG_DIR/install/sql/portados.sql
 				mysql -u root -p"$DB_PASSWORD" cdrport -e "ALTER TABLE cdr_cdr ALTER COLUMN portado SET DEFAULT 'Nao';"
-				#sed -i "s/SENHA_DB/$DB_PASSWORD/" $CONFIG_DIR/install/valida.py
-				#python $CONFIG_DIR/install/valida.py
+				sed -i "s/SENHA_DB/$DB_PASSWORD/" $CONFIG_DIR/install/valida.py
+				python $CONFIG_DIR/install/valida.py
 				rm -rf $CONFIG_DIR/install/sql/base.sql.zip
 
 				### Config nginx
