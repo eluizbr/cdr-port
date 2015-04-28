@@ -49,6 +49,7 @@ func_install_cdr-port () {
 
 				#cp conf/my.cnf /etc/mysql/
 				#/etc/init.d/mysql restart
+				cp -rfv $CONFIG_DIR/install/conf/base_site.html /usr/local/lib/python2.7/dist-packages/django/contrib/admin/templates/admin/
 				chmod +x $CONFIG_DIR/install/conf/gunicorn_launcher.sh
 				cp $CONFIG_DIR/install/conf/gunicorn_launcher.sh /etc/init.d/
 				update-rc.d  gunicorn_launcher.sh defaults
