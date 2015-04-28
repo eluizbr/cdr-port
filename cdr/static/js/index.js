@@ -40,13 +40,13 @@ $(function(){
                     step : 0.75
                 }
             },
-              plots:{
-                'MG' : {
-                latitude :-15.781682, 
-                longitude :-47.924195,
-                    tooltip: {content : "BH"}
-                },
-            }
+      //        plots:{
+       //         'MG' : {
+        //        latitude :-15.781682, 
+         //       longitude :-47.924195,
+          //          tooltip: {content : "BH"}
+          //      },
+          //  }
             
         });
 
