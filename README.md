@@ -222,8 +222,11 @@ exten => _XXXXXXXXXXX,n,Hangup
 #### Billing
 ============
 
-- [ ] Tarifação
-- [ ] Configuração de custo (Local, VC1, VC2, VC3)
+- [X] Tarifação
+    - [ ] Configuração de cadências
+
+- [X] Configuração de custo (FIXO-Local, FIXO-LDN, Móvel-Local, Móvel-LDN)
+    - [ ] Rotas DDI
 
 ### PABX
 =========

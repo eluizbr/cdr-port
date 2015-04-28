@@ -56,6 +56,12 @@ SET @ddd:=(SELECT ddd FROM cdr_config_local);
 				THEN src
 			WHEN dst LIKE '%-%'
 				THEN src
+			WHEN dst LIKE '0800%'
+				THEN SUBSTRING(dst,@cortar,4)
+			WHEN dst LIKE '300%'
+				THEN SUBSTRING(dst,@cortar,4)
+			WHEN dst LIKE '4004%'
+				THEN SUBSTRING(dst,@cortar,4)
 			WHEN character_length(dst)='11'
 				THEN SUBSTRING(dst,@cortar,7)
 			WHEN character_length(dst)='10'

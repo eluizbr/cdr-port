@@ -165,7 +165,6 @@ def cdr_serach(request):
     periodo_mes_2 = calldate2[5:7]
     total = results.aggregate(Count('src'))['src__count']
     custo = results.aggregate(Sum('preco'))['preco__sum']
-    print custo
 
     ### SQL personalizado
     from django.db import connection
@@ -321,7 +320,7 @@ def cdr_serach(request):
                                                 'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                                 'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                                 'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
-                                                'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou,
+                                                'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'custo':custo,
                                                  'pagina': pagina, 'operadora': operadora, 'cidade':cidade, 'estado':estado , 'total':total})
             return HttpResponse(template.render(context))
 
@@ -332,7 +331,7 @@ def cdr_serach(request):
                                             'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                             'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                             'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
-                                            'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou,
+                                            'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'custo':custo,
                                             'pagina': pagina, 'operadora': operadora,'cidade':cidade, 'estado':estado})
             return HttpResponse(template.render(context))
 
