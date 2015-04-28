@@ -101,10 +101,7 @@ def cdr_serach(request):
         if numero:
             query &=Q(dst__startswith=numero_f)
         if src:
-            if src == "0":
-                query &=Q(src__icontains=src_f)
-            else:
-                pass
+            query &=Q(src__icontains=src_f)
         if calldate:
             query &=Q(calldate__range=(calldate1,calldate2))
         if disposition:
@@ -121,10 +118,7 @@ def cdr_serach(request):
         if numero:
             query &=Q(dst__startswith=numero_f)
         if src:
-            if src == "0":
-                query &=Q(src__icontains=src_f)
-            else:
-                pass
+            query &=Q(src__icontains=src_f)
         if calldate:
             query &=Q(calldate__range=(calldate1,calldate2))
         if disposition:
@@ -197,6 +191,7 @@ def cdr_serach(request):
                             WHERE disposition = 'ANSWERED' 
                             AND src = %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, cidade_sql, estado_sql, calldate1, calldate2)
+            print atendeu
             atendeu = cursor.execute(atendeu)
             atendeu = cursor.fetchone()[0]
 
@@ -258,6 +253,7 @@ def cdr_serach(request):
                             WHERE disposition = 'ANSWERED' 
                             AND src = %s %s %s %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, cidade_sql, estado_sql, operadora_sql, portado_sql, tipo_sql, calldate1, calldate2)
+            print atendeu
             atendeu = cursor.execute(atendeu)
             atendeu = cursor.fetchone()[0]
 
