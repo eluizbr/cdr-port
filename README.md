@@ -13,6 +13,19 @@ Compatibilidade
 O ***CDR-port***, é compativel com todas as versões do [Asterisk](http://www.asterisk.org/) => 1.8.X, 10.X, 11.X, 12.X .
 O [Asterisk](http://www.asterisk.org/) deve ser compilado com suporte a MySQL.
 
+Diferenças entre versões
+------------------------
+
+O ***CDR-port*** tem 2 versões:
+
+- PREMIUM - Esta versão traz como grande diferencial, o sistema de portabilidade e a base de portabilidade LOCAL instalada 
+em seu servidor. [Valores das versões](http://www.cdr-port.net/pricing-table.html)
+
+- FREE -  Esta versão possuiu todos os recursos da versão PREMIUM, com exceção da base de portabilidade. Se você já tiver uma
+base de portabilidade, é possível instalar ela na versão FREE e a converter para versão PREMIUM.
+
+    - O ***CDR-port*** não suporta consultas on-line.
+
 
 Instalação
 -------------
