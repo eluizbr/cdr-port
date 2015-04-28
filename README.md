@@ -181,6 +181,13 @@ Legenda:
 
 - [X] Integração com [Asterisk](http://www.asterisk.org/)
 
+##### Dashboard
+
+- [ ] Mapa
+- [X] Estatisticas de chamadas
+- [X] Últimos números atendidos
+- [X] Ligações por operadora
+- [X] Calendário ligações diárias
 
 ##### CDR
 
