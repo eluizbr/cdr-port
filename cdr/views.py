@@ -90,7 +90,7 @@ def cdr_serach(request):
     cidade_f = request.GET.get('cidade', "")
     estado_f = request.GET.get('estado', "")
     portado_f = request.GET.get('portado', "")
-
+    print src_f
     if paginas_f == '':
         paginas_f = 15
     else:
@@ -102,10 +102,10 @@ def cdr_serach(request):
         if numero:
             query &=Q(dst__startswith=numero_f)
         if src:
-            if src == "0":
-                query &=Q(src__icontains=src_f)
-            else:
+            if src_f == "0":
                 pass
+            else:
+                query &=Q(src__icontains=src_f)
         if calldate:
             query &=Q(calldate__range=(calldate1,calldate2))
         if disposition:
@@ -122,10 +122,10 @@ def cdr_serach(request):
         if numero:
             query &=Q(dst__startswith=numero_f)
         if src:
-            if src == "0":
-                query &=Q(src__icontains=src_f)
-            else:
+            if src_f == "0":
                 pass
+            else:
+                query &=Q(src__icontains=src_f)
         if calldate:
             query &=Q(calldate__range=(calldate1,calldate2))
         if disposition:
