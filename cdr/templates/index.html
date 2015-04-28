@@ -616,15 +616,13 @@
 <script src="{% static "vendor/pace.js/pace.min.js"%}"></script>
 <script src="{% static "vendor/jquery-touchswipe/jquery.touchSwipe.js"%}"></script>
 <script src="{% static "vendor/jquery-touchswipe/jquery.touchSwipe.js"%}"></script>
-<script src="{% static "vendor/jquery/dist/jquery.mask.min.js" %}"></script>
-<script src="{% static "vendor/jquery/dist/jquery.mask.js" %}"></script>
 
 <!-- common app js -->
 <script src="{% static "js/settings.js"%}"></script>
 <script src="{% static "js/app.js"%}"></script>
 
 <!-- page specific libs -->
-<script id="{% static "test" src="vendor/underscore/underscore.js"%}"></script>
+<script id="test" src="{% static "vendor/underscore/underscore.js"%}"></script>
 <script src="{% static "vendor/jquery.sparkline/index.js"%}"></script>
 <script src="{% static "vendor/jquery.sparkline/index.js"%}"></script>
 <script src="{% static "vendor/d3/d3.min.js"%}"></script>
@@ -637,6 +635,8 @@
 <script src="{% static "vendor/jquery-animateNumber/jquery.animateNumber.min.js"%}"></script>
 
 <!-- page specific js -->
+<script src="{% static "vendor/jquery/dist/jquery.mask.min.js" %}"></script>
+<script src="{% static "vendor/jquery/dist/jquery.mask.js" %}"></script>
 <script src="{% static "js/index.js"%}"></script>
 
 {% include "include.html" %}
