@@ -310,10 +310,10 @@ Screenshot
 
 
 ![CDR]
-(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-free.png)
+(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-3.png)
 
 
 * CDR Versão com PORTABILIDADE :
 
 ![CDR PREMIUM]
-(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-premium-2.png)
+(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-4.png)
