@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^', include('cdr.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^chaining/', include('smart_selects.urls')),
 )

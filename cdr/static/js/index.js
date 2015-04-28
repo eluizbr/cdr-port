@@ -23,7 +23,7 @@ $(function(){
                     }
                 },
                 defaultPlot:{
-                    size: 35,
+                    size: 10,
                     attrs : {
                         fill : Sing.colors['brand-warning'],
                         stroke : "#fff",

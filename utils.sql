@@ -1,4 +1,15 @@
+### GIT UTILS
+
+git rm -r --cached .
+git add.
+git commit -m "Limpando a bagunça"
+
+###
+
+
 # UPDATES
+
+ALTER TABLE cdr_cdr ALTER COLUMN portado SET DEFAULT 'Nao';
 
 UPDATE nao_portados  SET operadora = 'VIVO' WHERE operadora = 'TELEFONICA';
 UPDATE nao_portados  SET tipo = 'MOVEL' WHERE tipo = 'MÓVEL';
@@ -522,6 +533,29 @@ CREATE TABLE `vw_cdr` (
 	WHERE cdr_cdrport.prefixo = cdr_prefixo.prefixo ;
 	
 
+### View CDR com preço
+
+CREATE VIEW vw_cdr AS
+SELECT cdr_cdrport.id,calldate,src,dst, duration,billsec,disposition,cdr_prefixo.ddd,
+		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo, cdr_prefixo.rn1, portado,
+		CASE
+			WHEN cdr_cdrport.tipo = 'FIXO' AND cdr_cdrport.cidade = cdr_prefixo.cidade AND cdr_cdrport.estado = cdr_config_local.estado_id
+					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_local/60, 3)
+			WHEN cdr_cdrport.tipo = 'MOVEL' AND cdr_cdrport.cidade = cdr_prefixo.cidade AND cdr_cdrport.estado = cdr_config_local.estado_id
+					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_movel_local/60, 3)
+			WHEN cdr_cdrport.tipo = 'FIXO'
+					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_ldn/60, 3)
+			WHEN cdr_cdrport.tipo = 'MOVEL'
+					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_movel_ldn/60, 3)
+			ELSE FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_movel_ldn/60, 3)
+		END AS preco	 
+	FROM cdr_cdrport, cdr_prefixo, cdr_config_local
+	WHERE cdr_cdrport.prefixo = cdr_prefixo.prefixo;
+
+###
+
+
+
 CREATE VIEW vw_prefix AS 
 	SELECT id, SUBSTRING(dst,1,2) AS ddd,
 		CASE
@@ -674,3 +708,23 @@ SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) 
 	
 ####
 
+
+### CUSTO
+
+SELECT dst, tipo, billsec,
+		CASE
+			WHEN cdr_cdrport.tipo = 'FIXO' AND cdr_cdrport.cidade = cdr_config_local.cidade_id AND cdr_cdrport.estado = cdr_config_local.estado_id
+					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_local/60, 3)
+			WHEN cdr_cdrport.tipo = 'MOVEL' AND cdr_cdrport.cidade = cdr_cdrport.cidade AND cdr_cdrport.estado = cdr_config_local.estado_id
+					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_movel_local/60, 3)
+			WHEN cdr_cdrport.tipo = 'FIXO'
+					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_ldn/60, 3)
+			WHEN cdr_cdrport.tipo = 'MOVEL'
+					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_movel_ldn/60, 3)
+			ELSE FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_movel_ldn/60, 3)
+		END AS preco
+  
+	from cdr_cdrport, cdr_config_local 
+	 LIMIT 100;
+
+###

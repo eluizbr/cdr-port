@@ -88,8 +88,8 @@ Temos um script para instalação automatizada do ***CDR-port***.
 
 ```
 cd /usr/src/
-wget https://github.com/cdr-port/cdr-port/raw/master/install/setup.sh
-bash setup.sh
+wget https://github.com/eluizbr/cdr-port/raw/devel/install/install.sh
+bash install.sh
 ```
 
 Ao executar o processo acima, toda a instalação é realizada de forma automatizada. Ao final do processo, você poderá acessar
@@ -108,6 +108,21 @@ cat /usr/src/mysql_senha.txt
 
 * Se você já possue uma instalação do MySQL, você deverá alterar no script de instalação o parametro `DB_PASSWORD` no incio do script 
 para `DB_PASSWORD=SUA_SENHA` .
+
+
+#### Configurando o ***CDR-port***
+
+Você deve configurar sua localidade no ***CDR-port*** acessando a seguinte url:
+
+
+```
+    http:\\IP-DO_SERVIDOR/admin/cdr/
+```
+
+*Você irá precisar do usuário e senha criados durante a instalação do ***CDR-port***.
+
+Configure seu DDD, Estado, Cidade, Cortar (digitos a serem cortados. Ex: Se você disca 551120304050, você deve cortar o 55, digitando 2 para cortar os 2 primeiros digitos.), e suas tarifas. Essas configurações são fundamentais para o funcionamento correto do ***CDR-port***.
+
 
 
 ### Configurando o [Asterisk](http://www.asterisk.org/) para o ***CDR-port***
@@ -222,8 +237,11 @@ exten => _XXXXXXXXXXX,n,Hangup
 #### Billing
 ============
 
-- [ ] Tarifação
-- [ ] Configuração de custo (Local, VC1, VC2, VC3)
+- [X] Tarifação
+    - [ ] Configuração de cadências
+
+- [X] Configuração de custo (FIXO-Local, FIXO-LDN, Móvel-Local, Móvel-LDN)
+    - [ ] Rotas DDI
 
 ### PABX
 =========

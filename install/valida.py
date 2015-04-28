@@ -5,7 +5,7 @@ import os
 import commands
 
 ## Conexão ao banco MySQL
-connection = MySQLdb.connect(host='localhost', user='root', passwd='app2004', db='cdrport')
+connection = MySQLdb.connect(host='localhost', user='root', passwd='SENHA_DB', db='cdrport')
 c = connection.cursor()
 ## Configurções padrão para data e hora
 hoje = datetime.now()

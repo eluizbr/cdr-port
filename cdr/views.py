@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
@@ -84,7 +85,7 @@ def cdr_serach(request):
     paginas_f = request.GET.get('pagina', "")
     tipo_f = request.GET.get('tipo', "")
     operadora_f = request.GET.get('operadora', "")
-    cidade_f = request.GET.get('cidade', "None")
+    cidade_f = request.GET.get('cidade', "")
     estado_f = request.GET.get('estado', "")
     portado_f = request.GET.get('portado', "")
 
@@ -163,6 +164,7 @@ def cdr_serach(request):
     periodo_mes_1 = calldate1[5:7]
     periodo_mes_2 = calldate2[5:7]
     total = results.aggregate(Count('src'))['src__count']
+    custo = results.aggregate(Sum('preco'))['preco__sum']
 
     ### SQL personalizado
     from django.db import connection
@@ -318,7 +320,7 @@ def cdr_serach(request):
                                                 'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                                 'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                                 'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
-                                                'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou,
+                                                'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'custo':custo,
                                                  'pagina': pagina, 'operadora': operadora, 'cidade':cidade, 'estado':estado , 'total':total})
             return HttpResponse(template.render(context))
 
@@ -329,7 +331,7 @@ def cdr_serach(request):
                                             'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                             'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                             'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
-                                            'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou,
+                                            'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'custo':custo,
                                             'pagina': pagina, 'operadora': operadora,'cidade':cidade, 'estado':estado})
             return HttpResponse(template.render(context))
 
@@ -353,7 +355,7 @@ def cdr_serach(request):
                                                 'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                                 'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
                                                 'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'fixo':fixo, 'movel':movel, 'radio':radio,
-                                                 'pagina': pagina, 'operadora': operadora, 'cidade':cidade, 'estado':estado , 'total':total})
+                                                 'pagina': pagina, 'operadora': operadora, 'cidade':cidade, 'estado':estado , 'total':total, 'custo':custo})
             return HttpResponse(template.render(context))
 
         else:
@@ -364,7 +366,7 @@ def cdr_serach(request):
                                                 'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                                 'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
                                                 'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'fixo':fixo, 'movel':movel, 'radio':radio,
-                                                'pagina': pagina, 'operadora': operadora,'cidade':cidade, 'estado':estado})
+                                                'pagina': pagina, 'operadora': operadora,'cidade':cidade, 'estado':estado, 'custo':custo})
                 return HttpResponse(template.render(context))
 
 

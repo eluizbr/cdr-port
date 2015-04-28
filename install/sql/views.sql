@@ -1,49 +1,215 @@
--- Create syntax for VIEW 'vw_cdr'
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_cdr`
-AS SELECT
-   `cdr_cdrport`.`id` AS `id`,
-   `cdr_cdrport`.`calldate` AS `calldate`,
-   `cdr_cdrport`.`src` AS `src`,
-   `cdr_cdrport`.`dst` AS `dst`,sec_to_time(`cdr_cdrport`.`duration`) AS `duration`,sec_to_time(`cdr_cdrport`.`billsec`) AS `billsec`,
-   `cdr_cdrport`.`disposition` AS `disposition`,
-   `cdr_prefixo`.`ddd` AS `ddd`,
-   `cdr_prefixo`.`prefixo` AS `prefixo`,
-   `cdr_prefixo`.`cidade` AS `cidade`,
-   `cdr_prefixo`.`estado` AS `estado`,
-   `cdr_prefixo`.`operadora` AS `operadora`,
-   `cdr_prefixo`.`tipo` AS `tipo`,
-   `cdr_prefixo`.`rn1` AS `rn1`,
-   `cdr_cdrport`.`portado` AS `portado`
-FROM (`cdr_cdrport` join `cdr_prefixo`) where (`cdr_cdrport`.`prefixo` = `cdr_prefixo`.`prefixo`);
+# ************************************************************
+# Sequel Pro SQL dump
+# Version 4096
+#
+# http://www.sequelpro.com/
+# http://code.google.com/p/sequel-pro/
+#
+# Host: localhost (MySQL 5.6.23)
+# Database: cdrport
+# Generation Time: 2015-04-27 21:45:10 +0000
+# ************************************************************
 
--- Create syntax for VIEW 'vw_cidades'
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_cidades`
-AS SELECT
-   `vw_cdr`.`id` AS `id`,
-   `vw_cdr`.`cidade` AS `cidade`
-FROM `vw_cdr` group by `vw_cdr`.`cidade` order by `vw_cdr`.`cidade`;
 
--- Create syntax for VIEW 'vw_day_stats'
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_day_stats`
-AS SELECT
-   cast(`cdr_cdr`.`calldate` as date) AS `dia`,month(cast(`cdr_cdr`.`calldate` as date)) AS `mes`,count(0) AS `total`
-FROM `cdr_cdr` where ((`cdr_cdr`.`calldate` > (curdate() - interval 6 month)) and curdate()) group by `dia` order by `dia`;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Create syntax for VIEW 'vw_disposition'
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_disposition`
-AS SELECT
-   `cdr_cdr`.`id` AS `id`,
-   `cdr_cdr`.`disposition` AS `disposition`,count(`cdr_cdr`.`disposition`) AS `Total`
-FROM `cdr_cdr` group by `cdr_cdr`.`disposition` order by `Total` desc;
 
--- Create syntax for VIEW 'vw_estados'
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_estados`
-AS SELECT
-   `vw_cdr`.`id` AS `id`,
-   `vw_cdr`.`estado` AS `estado`,count(`vw_cdr`.`estado`) AS `total`
-FROM `vw_cdr` group by `vw_cdr`.`estado` order by `vw_cdr`.`estado`;
+# Dump of table vw_cdr
+# ------------------------------------------------------------
 
--- Create syntax for VIEW 'vw_last_10'
+DROP VIEW IF EXISTS `vw_cdr`;
+
+CREATE TABLE `vw_cdr` (
+   `id` INT(11) NOT NULL DEFAULT '0',
+   `calldate` DATETIME NULL DEFAULT NULL,
+   `src` BIGINT(20) NULL DEFAULT NULL,
+   `dst` BIGINT(20) NULL DEFAULT NULL,
+   `duration` TIME NULL DEFAULT NULL,
+   `billsec` TIME NULL DEFAULT NULL,
+   `disposition` VARCHAR(20) NOT NULL,
+   `ddd` INT(11) NULL DEFAULT NULL,
+   `prefixo` INT(11) NULL DEFAULT NULL,
+   `cidade` VARCHAR(100) NOT NULL,
+   `estado` VARCHAR(2) NOT NULL,
+   `operadora` VARCHAR(30) NOT NULL,
+   `tipo` VARCHAR(5) NOT NULL,
+   `rn1` INT(11) NULL DEFAULT NULL,
+   `portado` VARCHAR(5) NOT NULL,
+   `preco` VARCHAR(63) NULL DEFAULT NULL
+) ENGINE=MyISAM;
+
+
+
+# Dump of table vw_cidades
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_cidades`;
+
+CREATE TABLE `vw_cidades` (
+   `id` INT(11) NOT NULL DEFAULT '0',
+   `cidade` VARCHAR(100) NOT NULL
+) ENGINE=MyISAM;
+
+
+
+# Dump of table vw_day_stats
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_day_stats`;
+
+CREATE TABLE `vw_day_stats` (
+   `dia` DATE NULL DEFAULT NULL,
+   `mes` INT(2) NULL DEFAULT NULL,
+   `total` BIGINT(21) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM;
+
+
+
+# Dump of table vw_disposition
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_disposition`;
+
+CREATE TABLE `vw_disposition` (
+   `id` INT(11) NOT NULL DEFAULT '0',
+   `disposition` VARCHAR(45) NOT NULL,
+   `Total` BIGINT(21) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM;
+
+
+
+# Dump of table vw_estados
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_estados`;
+
+CREATE TABLE `vw_estados` (
+   `id` INT(11) NOT NULL DEFAULT '0',
+   `estado` VARCHAR(2) NOT NULL,
+   `total` BIGINT(21) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM;
+
+
+
+# Dump of table vw_last_10
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_last_10`;
+
+CREATE TABLE `vw_last_10` (
+   `dst` BIGINT(20) NULL DEFAULT NULL,
+   `operadora` VARCHAR(30) NOT NULL,
+   `tipo` VARCHAR(5) NOT NULL,
+   `rn1` INT(11) NULL DEFAULT NULL,
+   `calldate` DATETIME NULL DEFAULT NULL,
+   `disposition` VARCHAR(20) NOT NULL,
+   `cidade` VARCHAR(100) NOT NULL,
+   `estado` VARCHAR(2) NOT NULL,
+   `portado` VARCHAR(5) NOT NULL
+) ENGINE=MyISAM;
+
+
+
+# Dump of table vw_month_stats
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_month_stats`;
+
+CREATE TABLE `vw_month_stats` (
+   `mes` VARCHAR(9) NULL DEFAULT NULL,
+   `total` BIGINT(21) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM;
+
+
+
+# Dump of table vw_operadoras
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_operadoras`;
+
+CREATE TABLE `vw_operadoras` (
+   `id` INT(11) NOT NULL DEFAULT '0',
+   `operadora` VARCHAR(30) NOT NULL,
+   `total` BIGINT(21) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM;
+
+
+
+# Dump of table vw_ramais
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_ramais`;
+
+CREATE TABLE `vw_ramais` (
+   `id` INT(11) NOT NULL DEFAULT '0',
+   `ramais` VARCHAR(80) NOT NULL
+) ENGINE=MyISAM;
+
+
+
+# Dump of table vw_stats_answered
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_stats_answered`;
+
+CREATE TABLE `vw_stats_answered` (
+   `dia` BIGINT(21) NULL DEFAULT NULL,
+   `semana` BIGINT(21) NULL DEFAULT NULL,
+   `mes` BIGINT(21) NULL DEFAULT NULL
+) ENGINE=MyISAM;
+
+
+
+# Dump of table vw_stats_busy
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_stats_busy`;
+
+CREATE TABLE `vw_stats_busy` (
+   `dia` BIGINT(21) NULL DEFAULT NULL,
+   `semana` BIGINT(21) NULL DEFAULT NULL,
+   `mes` BIGINT(21) NULL DEFAULT NULL
+) ENGINE=MyISAM;
+
+
+
+# Dump of table vw_stats_noanswer
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_stats_noanswer`;
+
+CREATE TABLE `vw_stats_noanswer` (
+   `dia` BIGINT(21) NULL DEFAULT NULL,
+   `semana` BIGINT(21) NULL DEFAULT NULL,
+   `mes` BIGINT(21) NULL DEFAULT NULL
+) ENGINE=MyISAM;
+
+
+
+
+
+# Replace placeholder table for vw_stats_busy with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_stats_busy`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_stats_busy`
+AS SELECT
+   (select count(`cdr_cdr`.`src`)
+FROM `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'BUSY') and (dayofmonth(`cdr_cdr`.`calldate`) = dayofmonth(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `dia`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'BUSY') and (week(`cdr_cdr`.`calldate`,0) = week(curdate(),0)) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `semana`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'BUSY') and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `mes`;
+
+
+# Replace placeholder table for vw_last_10 with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_last_10`;
+
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_last_10`
 AS SELECT
    `vw_cdr`.`dst` AS `dst`,
@@ -57,40 +223,138 @@ AS SELECT
    `vw_cdr`.`portado` AS `portado`
 FROM `vw_cdr` where (`vw_cdr`.`disposition` = 'ANSWERED') group by `vw_cdr`.`dst` order by `vw_cdr`.`calldate` desc limit 9;
 
--- Create syntax for VIEW 'vw_month_stats'
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_month_stats`
-AS SELECT
-   monthname(cast(`cdr_cdr`.`calldate` as date)) AS `mes`,count(0) AS `total`
-FROM `cdr_cdr` where (`cdr_cdr`.`disposition` = 'ANSWERED') group by `mes` order by `mes`;
 
--- Create syntax for VIEW 'vw_operadoras'
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_operadoras`
-AS SELECT
-   `vw_cdr`.`id` AS `id`,
-   `vw_cdr`.`operadora` AS `operadora`,count(`vw_cdr`.`operadora`) AS `total`
-FROM `vw_cdr` group by `vw_cdr`.`operadora` order by `total` desc;
+# Replace placeholder table for vw_ramais with correct view syntax
+# ------------------------------------------------------------
 
--- Create syntax for VIEW 'vw_ramais'
+DROP TABLE `vw_ramais`;
+
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_ramais`
 AS SELECT
    `cdr_cdr`.`id` AS `id`,
    `cdr_cdr`.`src` AS `ramais`
 FROM `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'ANSWERED') and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate()))) group by `cdr_cdr`.`src` order by `cdr_cdr`.`src` desc;
 
--- Create syntax for VIEW 'vw_stats_answered'
+
+# Replace placeholder table for vw_disposition with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_disposition`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_disposition`
+AS SELECT
+   `cdr_cdr`.`id` AS `id`,
+   `cdr_cdr`.`disposition` AS `disposition`,count(`cdr_cdr`.`disposition`) AS `Total`
+FROM `cdr_cdr` group by `cdr_cdr`.`disposition` order by `Total` desc;
+
+
+# Replace placeholder table for vw_month_stats with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_month_stats`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_month_stats`
+AS SELECT
+   monthname(cast(`cdr_cdr`.`calldate` as date)) AS `mes`,count(0) AS `total`
+FROM `cdr_cdr` where (`cdr_cdr`.`disposition` = 'ANSWERED') group by `mes` order by `mes`;
+
+
+# Replace placeholder table for vw_stats_answered with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_stats_answered`;
+
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_stats_answered`
 AS SELECT
    (select count(`cdr_cdr`.`src`)
 FROM `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'ANSWERED') and (dayofmonth(`cdr_cdr`.`calldate`) = dayofmonth(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `dia`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'ANSWERED') and (week(`cdr_cdr`.`calldate`,0) = week(curdate(),0)) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `semana`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'ANSWERED') and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `mes`;
 
--- Create syntax for VIEW 'vw_stats_busy'
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_stats_busy`
-AS SELECT
-   (select count(`cdr_cdr`.`src`)
-FROM `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'BUSY') and (dayofmonth(`cdr_cdr`.`calldate`) = dayofmonth(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `dia`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'BUSY') and (week(`cdr_cdr`.`calldate`,0) = week(curdate(),0)) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `semana`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'BUSY') and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `mes`;
 
--- Create syntax for VIEW 'vw_stats_noanswer'
+# Replace placeholder table for vw_cdr with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_cdr`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_cdr`
+AS SELECT
+   `cdr_cdrport`.`id` AS `id`,
+   `cdr_cdrport`.`calldate` AS `calldate`,
+   `cdr_cdrport`.`src` AS `src`,
+   `cdr_cdrport`.`dst` AS `dst`,
+   `cdr_cdrport`.`duration` AS `duration`,
+   `cdr_cdrport`.`billsec` AS `billsec`,
+   `cdr_cdrport`.`disposition` AS `disposition`,
+   `cdr_prefixo`.`ddd` AS `ddd`,
+   `cdr_prefixo`.`prefixo` AS `prefixo`,
+   `cdr_prefixo`.`cidade` AS `cidade`,
+   `cdr_prefixo`.`estado` AS `estado`,
+   `cdr_prefixo`.`operadora` AS `operadora`,
+   `cdr_prefixo`.`tipo` AS `tipo`,
+   `cdr_prefixo`.`rn1` AS `rn1`,
+   `cdr_cdrport`.`portado` AS `portado`,(case when ((`cdr_cdrport`.`tipo` = 'FIXO') and (`cdr_cdrport`.`cidade` = `cdr_prefixo`.`cidade`) and (`cdr_cdrport`.`estado` = `cdr_config_local`.`estado_id`)) then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_local`) / 60),3) when ((`cdr_cdrport`.`tipo` = 'MOVEL') and (`cdr_cdrport`.`cidade` = `cdr_prefixo`.`cidade`) and (`cdr_cdrport`.`estado` = `cdr_config_local`.`estado_id`)) then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_movel_local`) / 60),3) when (`cdr_cdrport`.`tipo` = 'FIXO') then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_ldn`) / 60),3) when (`cdr_cdrport`.`tipo` = 'MOVEL') then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_movel_ldn`) / 60),3) else format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_movel_ldn`) / 60),3) end) AS `preco`
+FROM ((`cdr_cdrport` join `cdr_prefixo`) join `cdr_config_local`) where (`cdr_cdrport`.`prefixo` = `cdr_prefixo`.`prefixo`);
+
+
+# Replace placeholder table for vw_estados with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_estados`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_estados`
+AS SELECT
+   `vw_cdr`.`id` AS `id`,
+   `vw_cdr`.`estado` AS `estado`,count(`vw_cdr`.`estado`) AS `total`
+FROM `vw_cdr` group by `vw_cdr`.`estado` order by `vw_cdr`.`estado`;
+
+
+# Replace placeholder table for vw_day_stats with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_day_stats`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_day_stats`
+AS SELECT
+   cast(`cdr_cdr`.`calldate` as date) AS `dia`,month(cast(`cdr_cdr`.`calldate` as date)) AS `mes`,count(0) AS `total`
+FROM `cdr_cdr` where ((`cdr_cdr`.`calldate` > (curdate() - interval 6 month)) and curdate()) group by `dia` order by `dia`;
+
+
+# Replace placeholder table for vw_cidades with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_cidades`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_cidades`
+AS SELECT
+   `vw_cdr`.`id` AS `id`,
+   `vw_cdr`.`cidade` AS `cidade`
+FROM `vw_cdr` group by `vw_cdr`.`cidade` order by `vw_cdr`.`cidade`;
+
+
+# Replace placeholder table for vw_operadoras with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_operadoras`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_operadoras`
+AS SELECT
+   `vw_cdr`.`id` AS `id`,
+   `vw_cdr`.`operadora` AS `operadora`,count(`vw_cdr`.`operadora`) AS `total`
+FROM `vw_cdr` group by `vw_cdr`.`operadora` order by `total` desc;
+
+
+# Replace placeholder table for vw_stats_noanswer with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_stats_noanswer`;
+
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_stats_noanswer`
 AS SELECT
    (select count(`cdr_cdr`.`src`)
 FROM `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'NO ANSWER') and (dayofmonth(`cdr_cdr`.`calldate`) = dayofmonth(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `dia`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'NO ANSWER') and (week(`cdr_cdr`.`calldate`,0) = week(curdate(),0)) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `semana`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'NO ANSWER') and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `mes`;
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

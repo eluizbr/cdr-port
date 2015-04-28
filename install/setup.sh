@@ -3,6 +3,7 @@
 # Copyright (C) 2014 CDR-port
 # cdr-port@cdr-port.net
 # GLOBAL
+source funcoes.sh
 IFCONFIG=`which ifconfig 2>/dev/null||echo /sbin/ifconfig`
 IPADDR=`$IFCONFIG eth0|gawk '/inet addr/{print $2}'|gawk -F: '{print $2}'`
 INSTALL_DIR='/usr/share/cdrport'
@@ -36,8 +37,8 @@ git clone https://github.com/eluizbr/cdr-port.git
 virtualenv --system-site-packages cdr-port
 cd cdr-port
 pip install -r install/requirements.txt
-sed -i "s/SENHA_DB/$DB_PASSWORD/" install/settings.py
-cp install/settings.py /usr/share/cdrport/cdr-port/cdrport/
+sed -i "s/SENHA_DB/$DB_PASSWORD/" install/settings.txt
+cp install/settings.txt /usr/share/cdrport/cdr-port/cdrport/settings.py
 python manage.py syncdb --noinput
 python manage.py collectstatic --noinput
 
