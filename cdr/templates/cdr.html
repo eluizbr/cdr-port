@@ -639,13 +639,14 @@
                         {% for i in results|slice:":50"  %}
                             <tr>
                                 <td>{{i.src}}</td>
-
-                                    {% if i.dst|length > 10 %}
-                                        <td data-mask="(99) 99999-9999">{{i.dst}}</td>
+                                  <!--  {% if i.dst|length < 11 %}
+                                        <td id="n11" data-mask="(99) 99999-9999">{{i.dst}}</td>
+                                    {% elif i.dst|length > 9 %}
+                                        <td id="n10" data-mask="(99) 9999-9999">{{i.dst}}</td>
                                     {% else %}
-                                        <td data-mask="(99) 9999-9999">{{i.dst}}</td>
-                                    {% endif %}
-
+                                        <td id="n8" data-mask="9999-9999">{{i.dst}}</td>
+                                    {% endif %}-->
+                                <td>{{i.dst}}</td>
                                 <td>{{i.cidade|title}}</td>
                                 <td>{{i.estado}}</td>
                                 <td>{{i.calldate}}</td>
@@ -853,11 +854,12 @@
                         {% for i in results|slice:":50"  %}
                             <tr>
                                 <td>{{i.src}}</td>
-                                    {%if i.dst|length > 10%}
+                                  <!--  {%if i.dst|length > 10%}
                                         <td data-mask="(99) 99999-9999">{{i.dst}}</td>
                                     {% else %}
                                         <td data-mask="(99) 9999-9999">{{i.dst}}</td>
-                                    {% endif %}
+                                    {% endif %}-->
+                                <td>{{i.dst}}</td>
                                 <td>{{i.cidade|title}}</td>
                                 <td>{{i.estado}}</td>
                                 <td>{{i.operadora}}</td>
@@ -1090,8 +1092,9 @@
 <script src="{% static "vendor/markdown/lib/markdown.js"%}"></script>
 <script src="{% static "vendor/bootstrap-markdown/js/bootstrap-markdown.js"%}"></script>
 <script src="{% static "vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"%}"></script>
-<script src="{% static "vendor/jquery/dist/jquery.mask.min.js" %}"></script>
 <script src="{% static "vendor/jquery/dist/jquery.mask.js" %}"></script>
+<script src="{% static "vendor/jquery/dist/jquery.mask.min.js" %}"></script>
+
 
 <!-- common app js -->
 <script src="{% static "js/settings.js"%}"></script>

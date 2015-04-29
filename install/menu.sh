@@ -32,7 +32,7 @@ while [ $ExitFinish -eq 0 ]; do
             func_install_mysql
             func_install_cdr-port
             func_config_asterisk
-            bash setup.sh
+            bash /usr/src/menu.sh
             ExitFinish=1
 		;;
 
@@ -41,6 +41,7 @@ while [ $ExitFinish -eq 0 ]; do
 			clear
 			func_install_req_asterisk
 			func_install_asterisk
+            bash /usr/src/menu.sh
 			ExitFinish=1
 		;;
 
@@ -56,6 +57,7 @@ while [ $ExitFinish -eq 0 ]; do
             func_install_req_asterisk
             func_install_asterisk
             func_config_asterisk
+            bash /usr/src/menu.sh
             ExitFinish=1
 		;;
 
@@ -63,8 +65,9 @@ while [ $ExitFinish -eq 0 ]; do
         	clear
 			cd /usr/src/
 			rm -rf asterisk*
+            rm -rf *.sh
 			# Apaga Instalacao
-			cd $CONFIG_DIR
+			cd /usr/share/cdrport/cdr-port/
 			rm -rf install
 			ExitFinish=1
 		;;

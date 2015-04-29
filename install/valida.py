@@ -20,17 +20,17 @@ frequencia = commands.getoutput('dmidecode -s  processor-frequency')
 
 def registra():
 
-	SQL_INSERE = ("INSERT INTO info" 
+	SQL_INSERE = ("INSERT INTO cdr_info" 
 	            "(uuid, system_number, system_name, mac, frequencia, data_ativacao, data_expira, ativo)" 
 	            "VALUES  (%s, %s, %s, %s, %s, %s, %s, 1)")
 	DADOS = (uuid, system_number, system_name, mac, frequencia, hoje, proximo_mes)
 	c.execute(SQL_INSERE, DADOS)
-	print 'Operadora e %s, %s, %s, %s, %s, %s, %s, 1'%(DADOS)
+	#print 'Operadora e %s, %s, %s, %s, %s, %s, %s, 1'%(DADOS)
 	connection.commit()
 
 def main():
 
-	x = "SELECT uuid FROM info WHERE uuid ='%s' " % uuid
+	x = "SELECT uuid FROM cdr_info WHERE uuid ='%s' " % uuid
 	x = c.execute(x)
 	if not c.fetchone() is None:
 		print 'Sistema já ativo'

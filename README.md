@@ -13,6 +13,19 @@ Compatibilidade
 O ***CDR-port***, é compativel com todas as versões do [Asterisk](http://www.asterisk.org/) => 1.8.X, 10.X, 11.X, 12.X .
 O [Asterisk](http://www.asterisk.org/) deve ser compilado com suporte a MySQL.
 
+Diferenças entre versões
+------------------------
+
+O ***CDR-port*** tem 2 versões:
+
+- PREMIUM - Esta versão traz como grande diferencial, o sistema de portabilidade e a base de portabilidade LOCAL instalada 
+em seu servidor. [Valores das versões](http://www.cdr-port.net/pricing-table.html)
+
+- FREE -  Esta versão possuiu todos os recursos da versão PREMIUM, com exceção da base de portabilidade. Se você já tiver uma
+base de portabilidade, é possível instalar ela na versão FREE e a converter para versão PREMIUM.
+
+    - O ***CDR-port*** não suporta consultas on-line.
+
 
 Instalação
 -------------
@@ -181,6 +194,13 @@ Legenda:
 
 - [X] Integração com [Asterisk](http://www.asterisk.org/)
 
+##### Dashboard
+
+- [ ] Mapa
+- [X] Estatisticas de chamadas
+- [X] Últimos números atendidos
+- [X] Ligações por operadora
+- [X] Calendário ligações diárias
 
 ##### CDR
 
@@ -290,10 +310,10 @@ Screenshot
 
 
 ![CDR]
-(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-free.png)
+(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-3.png)
 
 
 * CDR Versão com PORTABILIDADE :
 
 ![CDR PREMIUM]
-(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-premium-2.png)
+(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-4.png)

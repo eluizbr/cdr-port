@@ -36,6 +36,7 @@ def index(request):
     info = str(info)[2]
     perc = DispositionPercent.objects.values_list('disposition', 'valor', 'perc')
     total = DispositionPercent.objects.aggregate(Sum('valor'))['valor__sum']
+    print total
     stats_AN = VwStatsAnswered.objects.values_list('dia', 'semana', 'mes')
     stats_NO = VwStatsNoanswer.objects.values_list('dia', 'semana', 'mes')
     stats_BU = VwStatsBusy.objects.values_list('dia', 'semana', 'mes')
@@ -58,7 +59,7 @@ def cdr_serach(request):
     
     hora = datetime.now()
     hoje = hora.strftime("%Y-%m-%dT23:59:59") 
-    ontem = hora - timedelta(days=5)
+    ontem = hora - timedelta(days=1)
     ontem = ontem.strftime("%Y-%m-%dT00:00:00")
 
     byDay = VwDayStats.objects.values_list('dia', 'mes', 'total')
@@ -75,6 +76,7 @@ def cdr_serach(request):
     estado = VwEstados.objects.all()
     portado = VwCdr.objects.values_list('portado')
     pagina = 20,30,50,100,200
+   
 
     
     numero_f = request.GET.get('numero', "")
@@ -88,7 +90,7 @@ def cdr_serach(request):
     cidade_f = request.GET.get('cidade', "")
     estado_f = request.GET.get('estado', "")
     portado_f = request.GET.get('portado', "")
-
+    print src_f
     if paginas_f == '':
         paginas_f = 15
     else:
@@ -100,7 +102,10 @@ def cdr_serach(request):
         if numero:
             query &=Q(dst__startswith=numero_f)
         if src:
-            query &=Q(src__icontains=src_f)
+            if src_f == "0":
+                pass
+            else:
+                query &=Q(src__icontains=src_f)
         if calldate:
             query &=Q(calldate__range=(calldate1,calldate2))
         if disposition:
@@ -117,7 +122,10 @@ def cdr_serach(request):
         if numero:
             query &=Q(dst__startswith=numero_f)
         if src:
-            query &=Q(src__exact=src_f)
+            if src_f == "0":
+                pass
+            else:
+                query &=Q(src__icontains=src_f)
         if calldate:
             query &=Q(calldate__range=(calldate1,calldate2))
         if disposition:
@@ -165,6 +173,10 @@ def cdr_serach(request):
     periodo_mes_2 = calldate2[5:7]
     total = results.aggregate(Count('src'))['src__count']
     custo = results.aggregate(Sum('preco'))['preco__sum']
+    if custo == None:
+        custo = 0
+    else:
+        custo = custo
 
     ### SQL personalizado
     from django.db import connection

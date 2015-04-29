@@ -40,13 +40,13 @@ $(function(){
                     step : 0.75
                 }
             },
-              plots:{
-                'MG' : {
-                latitude :-15.781682, 
-                longitude :-47.924195,
-                    tooltip: {content : "BH"}
-                },
-            }
+      //        plots:{
+       //         'MG' : {
+        //        latitude :-15.781682, 
+         //       longitude :-47.924195,
+          //          tooltip: {content : "BH"}
+          //      },
+          //  }
             
         });
 
@@ -125,9 +125,9 @@ $(function(){
     }
 
     function initAnimations(){
-        $('#geo-locations-number, #percent-1, #percent-2, #percent-3').each(function(){
+        $('#geo-locations-number').each(function(){
             $(this).animateNumber({
-               // number: $(this).text().replace(/ /gi, ''),
+                number: $(this).text().replace(/ /gi, ''),
                 numberStep: $.animateNumber.numberStepFactories.separator(' '),
                 easing: 'easeInQuad'
             }, 1000);
@@ -138,7 +138,7 @@ $(function(){
 
     function pjaxPageLoad(){
         $('.widget').widgster();
-     initMap();
+        initMap();
         initCalendar();
        // initRickshaw();
         initAnimations();
