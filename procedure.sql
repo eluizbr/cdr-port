@@ -83,8 +83,6 @@ UPDATE TMP_cdr_cdr
 				THEN 'Sim'
 		END;
 
-SET @cortar:=(SELECT cortar FROM cdr_config_local);
-SET @ddd:=(SELECT ddd FROM cdr_config_local);
 UPDATE TMP_cdr_cdr SET dst = 
 	CASE
 		WHEN character_length(dst)='8'
@@ -92,8 +90,6 @@ UPDATE TMP_cdr_cdr SET dst =
 	END
 	WHERE  character_length(dst)='8';
 
-SET @cortar:=(SELECT cortar FROM cdr_config_local);
-SET @ddd:=(SELECT ddd FROM cdr_config_local);
 UPDATE TMP_cdr_cdr SET dst = 
 	CASE
 		WHEN character_length(dst)='9'
@@ -101,9 +97,9 @@ UPDATE TMP_cdr_cdr SET dst =
 	END
 	WHERE  character_length(dst)='9';
 
-INSERT INTO cdr_cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora_id,tipo,rn1_id,portado,uniqueid)
+INSERT INTO cdr_cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora_id,tipo,rn1_id,portado,uniqueid,userfield)
 SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,cdr_prefixo.ddd,
-		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo, cdr_prefixo.rn1, portado, uniqueid 
+		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo, cdr_prefixo.rn1, portado, uniqueid,userfield 
 	FROM TMP_cdr_cdr,cdr_prefixo
 	WHERE TMP_cdr_cdr.prefix = cdr_prefixo.prefixo
 	ON DUPLICATE KEY UPDATE uniqueid = cdr_cdrport.uniqueid;

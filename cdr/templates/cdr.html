@@ -632,6 +632,10 @@
                                 <th>Duração</th>
                                 <th>Conversação</th>
                                 <th>Custo</th>
+                                {% if gravacao == "Sim" %}
+                                <th>Audio</th> 
+                                {% else %}
+                                {% endif %}
                                 <th></th>
                             </tr>
                             </thead>
@@ -664,6 +668,17 @@
                                 <td>{{i.duration|time:"H:i:s"}}</td>
                                 <td>{{i.billsec|time:"H:i:s"}}</td>
                                 <td data-mask="R$ 0,000">{{i.preco}}</td>
+                                
+                                <td>
+                                {% if gravacao == "Sim" %}
+                                    {% if i.userfield == '' %}  
+                                    {% else %}
+                                        <a href="/gravacao/{{i.userfield}}"><span class="glyphicon glyphicon-volume-up"></span></a>
+                                    {% endif %}
+                                {% else %}
+                                {% endif %}
+                                </td>
+
                                <td class="width-25">
 
                                 {% if i.disposition == "ANSWERED" %}
@@ -847,6 +862,10 @@
                                 <th>Duração</th>
                                 <th>Conversação</th>
                                 <th>Custo</th>
+                                {% if gravacao == Sim %}
+                                <th>Audio</th> 
+                                {% else %}
+                                {% endif %}
                                 <th></th>
                             </tr>
                             </thead>
@@ -886,6 +905,15 @@
                                 <td>{{i.duration|time:"H:i:s"}}</td>
                                 <td>{{i.billsec|time:"H:i:s"}}</td>
                                 <td data-mask="R$ 0,000">{{i.preco}}</td>
+                                <td>
+                                {% if gravacao == Sim %}
+                                    {% if i.userfield == '' %}  
+                                    {% else %}
+                                        <a href="/gravacao/{{i.userfield}}"><span class="glyphicon glyphicon-volume-up"></span></a>
+                                    {% endif %}
+                                {% else %}
+                                {% endif %}
+                                </td>
                                 <td class="width-25">
 
                                 {% if i.disposition == "ANSWERED" %}

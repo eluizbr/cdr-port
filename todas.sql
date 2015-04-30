@@ -16,7 +16,7 @@ CREATE VIEW vw_day_stats AS
 CREATE VIEW vw_last_10 AS SELECT dst, operadora, tipo, rn1, calldate, disposition, cidade, estado, portado
 	FROM vw_cdr
 	WHERE disposition = 'ANSWERED'
-	GROUP BY dst  ORDER BY calldate DESC  LIMIT 8;
+	ORDER BY calldate DESC  LIMIT 8;
 
 CREATE VIEW vw_operadoras AS SELECT id, operadora, count(operadora) AS total 
 	FROM vw_cdr
@@ -82,7 +82,7 @@ CREATE VIEW vw_stats_busy AS 	SELECT(
 
 CREATE VIEW vw_cdr AS
 SELECT cdr_cdrport.id,calldate,src,dst, duration,billsec,disposition,cdr_prefixo.ddd,
-		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_cdrport.operadora_id,cdr_prefixo.tipo, cdr_cdrport.rn1_id, portado,
+		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_cdrport.operadora_id AS operadora,cdr_prefixo.tipo, cdr_cdrport.rn1_id AS rn1, portado,
 		CASE
 			WHEN cdr_cdrport.tipo = 'FIXO' AND cdr_cdrport.cidade = cdr_prefixo.cidade AND cdr_cdrport.estado = cdr_config_local.estado_id
 					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_local/60, 3)
@@ -93,7 +93,7 @@ SELECT cdr_cdrport.id,calldate,src,dst, duration,billsec,disposition,cdr_prefixo
 			WHEN cdr_cdrport.tipo = 'MOVEL'
 					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_movel_ldn/60, 3)
 			ELSE FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_movel_ldn/60, 3)
-		END AS preco	 
+		END AS preco, userfield	 
 	FROM cdr_cdrport, cdr_prefixo, cdr_config_local
 	WHERE cdr_cdrport.prefixo = cdr_prefixo.prefixo;
 

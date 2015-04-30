@@ -172,6 +172,21 @@ alias uniqueid => <a_field_not_named_uniqueid>
 
 ```
 
+### Usando o ***CDR-port***
+
+
+Se você estiver usando a portabilidade, você devereá encaminhar as chamadas sem "ZERO", exemplo:
+
+```
+30405060 (LOCAL 8 digitos)
+1130405060 (LDN 10 digitos)
+230405060 (LOCAL 9 digitos)
+11230405060 (LDN 11 digitos)
+```
+
+Se você tem necessidade de enviar chamadas da forma diferente da referenciada acima, você deverá tratar a chamada antes de chegar ao ***CDR-port*** .
+
+
 Status atual
 ------------
 
@@ -211,6 +226,7 @@ Legenda:
 - [X] Por cidade
 - [X] Por estado
 - [X] Por range de data
+- [X] Arquivos de gravação de áudio
 
 ##### Billing
 
@@ -252,7 +268,8 @@ exten => _XXXXXXXXXXX,n,Hangup
 - [X] Portabilidade ( Portado ou não portado)
 - [X] Por cidade
 - [X] Por estado
-- [X] Por range de data	
+- [X] Por range de data
+- [X] Arquivos de gravação de áudio
 
 #### Billing
 ============
@@ -287,7 +304,14 @@ exten => _XXXXXXXXXXX,n,Hangup
     - [ ] Criar 
     - [ ] Visualizar 
     - [ ] Status
-	
+
+Suporte
+--------
+
+Para suporte acesse :
+
+[suporte](https://github.com/eluizbr/cdr-port/issues)	
+
 
 Screenshot
 ----------
