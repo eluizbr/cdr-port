@@ -475,7 +475,7 @@
                             <tr>
                             <td>
                                 </td>
-                            {%if dst|length > 10%}
+                            {%if dst|length < 11%}
                                 <td data-mask="(99) 99999-9999">{{dst}}</td>
                             {% else %}
                                 <td data-mask="(99) 9999-9999">{{dst}}</td>
@@ -500,7 +500,7 @@
                             <tr>
                             <td>
                                 </td>
-                            {%if dst|length > 10%}
+                            {%if dst|length < 11%}
                                 <td data-mask="(99) 99999-9999">{{dst}}</td>
                             {% else %}
                                 <td data-mask="(99) 9999-9999">{{dst}}</td>

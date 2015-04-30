@@ -113,9 +113,9 @@ class Cdrport(models.Model):
     prefixo = models.IntegerField(blank=True, null=True)
     cidade = models.CharField(max_length=50)
     estado = models.CharField(max_length=2)
-    operadora = models.CharField(max_length=50)
+    operadora_id = models.CharField(max_length=50)
     tipo = models.CharField(max_length=6)
-    rn1 = models.IntegerField(blank=True, null=True)
+    rn1_id = models.IntegerField(blank=True, null=True)
     portado = models.CharField(max_length=5, blank=True)
     uniqueid = models.CharField(unique=True, max_length=32, blank=True)
 
@@ -171,7 +171,7 @@ class DispositionPercent(models.Model):
 
     def __unicode__(self):
         return unicode(self.disposition)
-
+'''
 class Stats_ANSWERED(models.Model):
     d_total = models.IntegerField(unique=True, blank=True, null=True)
     s_total = models.IntegerField(blank=True, null=True)
@@ -186,6 +186,7 @@ class Stats_BUSY(models.Model):
     d_total = models.IntegerField(unique=True, blank=True, null=True)
     s_total = models.IntegerField(blank=True, null=True)
     m_total = models.IntegerField(blank=True, null=True)
+'''
 
 class VwDayStats(models.Model):
     dia = models.IntegerField(blank=True, null=True)

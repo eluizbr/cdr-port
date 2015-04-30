@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
-from .models import cdr, DispositionPercent, Stats_ANSWERED, Stats_NOANSWER, Stats_BUSY, Info, Cdrport
+from .models import cdr, DispositionPercent, Info, Cdrport
 from .models import VwDayStats, VwMonthStats,VwLast10, VwOperadoras, VwStatsAnswered, VwStatsBusy, VwStatsNoanswer, VwRamais,\
                     VwDisposition, VwCdr, VwCidades, VwEstados
 from django.db.models import Sum, Count, Avg, Max, Min

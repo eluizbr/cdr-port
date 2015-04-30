@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.23)
 # Database: cdrport
-# Generation Time: 2015-04-27 21:45:10 +0000
+# Generation Time: 2015-04-30 01:33:35 +0000
 # ************************************************************
 
 
@@ -37,7 +37,7 @@ CREATE TABLE `vw_cdr` (
    `prefixo` INT(11) NULL DEFAULT NULL,
    `cidade` VARCHAR(100) NOT NULL,
    `estado` VARCHAR(2) NOT NULL,
-   `operadora` VARCHAR(30) NOT NULL,
+   `operadora` VARCHAR(50) NOT NULL,
    `tipo` VARCHAR(5) NOT NULL,
    `rn1` INT(11) NULL DEFAULT NULL,
    `portado` VARCHAR(5) NOT NULL,
@@ -53,7 +53,8 @@ DROP VIEW IF EXISTS `vw_cidades`;
 
 CREATE TABLE `vw_cidades` (
    `id` INT(11) NOT NULL DEFAULT '0',
-   `cidade` VARCHAR(100) NOT NULL
+   `cidade` VARCHAR(100) NOT NULL,
+   `total` BIGINT(21) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM;
 
 
@@ -78,7 +79,7 @@ DROP VIEW IF EXISTS `vw_disposition`;
 
 CREATE TABLE `vw_disposition` (
    `id` INT(11) NOT NULL DEFAULT '0',
-   `disposition` VARCHAR(45) NOT NULL,
+   `disposition` VARCHAR(20) NOT NULL,
    `Total` BIGINT(21) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM;
 
@@ -104,7 +105,7 @@ DROP VIEW IF EXISTS `vw_last_10`;
 
 CREATE TABLE `vw_last_10` (
    `dst` BIGINT(20) NULL DEFAULT NULL,
-   `operadora` VARCHAR(30) NOT NULL,
+   `operadora` VARCHAR(50) NOT NULL,
    `tipo` VARCHAR(5) NOT NULL,
    `rn1` INT(11) NULL DEFAULT NULL,
    `calldate` DATETIME NULL DEFAULT NULL,
@@ -135,7 +136,7 @@ DROP VIEW IF EXISTS `vw_operadoras`;
 
 CREATE TABLE `vw_operadoras` (
    `id` INT(11) NOT NULL DEFAULT '0',
-   `operadora` VARCHAR(30) NOT NULL,
+   `operadora` VARCHAR(50) NOT NULL,
    `total` BIGINT(21) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM;
 
@@ -148,7 +149,8 @@ DROP VIEW IF EXISTS `vw_ramais`;
 
 CREATE TABLE `vw_ramais` (
    `id` INT(11) NOT NULL DEFAULT '0',
-   `ramais` VARCHAR(80) NOT NULL
+   `ramais` BIGINT(20) NULL DEFAULT NULL,
+   `total` BIGINT(21) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM;
 
 
@@ -201,8 +203,8 @@ DROP TABLE `vw_stats_busy`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_stats_busy`
 AS SELECT
-   (select count(`cdr_cdr`.`src`)
-FROM `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'BUSY') and (dayofmonth(`cdr_cdr`.`calldate`) = dayofmonth(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `dia`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'BUSY') and (week(`cdr_cdr`.`calldate`,0) = week(curdate(),0)) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `semana`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'BUSY') and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `mes`;
+   (select count(`cdr_cdrport`.`src`)
+FROM `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'BUSY') and (dayofmonth(`cdr_cdrport`.`calldate`) = dayofmonth(curdate())) and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate())))) AS `dia`,(select count(`cdr_cdrport`.`src`) from `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'BUSY') and (week(`cdr_cdrport`.`calldate`,0) = week(curdate(),0)) and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate())))) AS `semana`,(select count(`cdr_cdrport`.`src`) from `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'BUSY') and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate())))) AS `mes`;
 
 
 # Replace placeholder table for vw_last_10 with correct view syntax
@@ -221,7 +223,7 @@ AS SELECT
    `vw_cdr`.`cidade` AS `cidade`,
    `vw_cdr`.`estado` AS `estado`,
    `vw_cdr`.`portado` AS `portado`
-FROM `vw_cdr` where (`vw_cdr`.`disposition` = 'ANSWERED') group by `vw_cdr`.`dst` order by `vw_cdr`.`calldate` desc limit 9;
+FROM `vw_cdr` where (`vw_cdr`.`disposition` = 'ANSWERED') group by `vw_cdr`.`dst` order by `vw_cdr`.`calldate` desc limit 8;
 
 
 # Replace placeholder table for vw_ramais with correct view syntax
@@ -231,9 +233,9 @@ DROP TABLE `vw_ramais`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_ramais`
 AS SELECT
-   `cdr_cdr`.`id` AS `id`,
-   `cdr_cdr`.`src` AS `ramais`
-FROM `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'ANSWERED') and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate()))) group by `cdr_cdr`.`src` order by `cdr_cdr`.`src` desc;
+   `cdr_cdrport`.`id` AS `id`,
+   `cdr_cdrport`.`src` AS `ramais`,count(`cdr_cdrport`.`src`) AS `total`
+FROM `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'ANSWERED') and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate()))) group by `cdr_cdrport`.`src` order by `total` desc;
 
 
 # Replace placeholder table for vw_disposition with correct view syntax
@@ -243,9 +245,9 @@ DROP TABLE `vw_disposition`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_disposition`
 AS SELECT
-   `cdr_cdr`.`id` AS `id`,
-   `cdr_cdr`.`disposition` AS `disposition`,count(`cdr_cdr`.`disposition`) AS `Total`
-FROM `cdr_cdr` group by `cdr_cdr`.`disposition` order by `Total` desc;
+   `cdr_cdrport`.`id` AS `id`,
+   `cdr_cdrport`.`disposition` AS `disposition`,count(`cdr_cdrport`.`disposition`) AS `Total`
+FROM `cdr_cdrport` group by `cdr_cdrport`.`disposition` order by `Total` desc;
 
 
 # Replace placeholder table for vw_month_stats with correct view syntax
@@ -255,8 +257,8 @@ DROP TABLE `vw_month_stats`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_month_stats`
 AS SELECT
-   monthname(cast(`cdr_cdr`.`calldate` as date)) AS `mes`,count(0) AS `total`
-FROM `cdr_cdr` where (`cdr_cdr`.`disposition` = 'ANSWERED') group by `mes` order by `mes`;
+   monthname(cast(`cdr_cdrport`.`calldate` as date)) AS `mes`,count(0) AS `total`
+FROM `cdr_cdrport` where (`cdr_cdrport`.`disposition` = 'ANSWERED') group by `mes` order by `mes`;
 
 
 # Replace placeholder table for vw_stats_answered with correct view syntax
@@ -266,8 +268,8 @@ DROP TABLE `vw_stats_answered`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_stats_answered`
 AS SELECT
-   (select count(`cdr_cdr`.`src`)
-FROM `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'ANSWERED') and (dayofmonth(`cdr_cdr`.`calldate`) = dayofmonth(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `dia`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'ANSWERED') and (week(`cdr_cdr`.`calldate`,0) = week(curdate(),0)) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `semana`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'ANSWERED') and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `mes`;
+   (select count(`cdr_cdrport`.`src`)
+FROM `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'ANSWERED') and (dayofmonth(`cdr_cdrport`.`calldate`) = dayofmonth(curdate())) and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate())))) AS `dia`,(select count(`cdr_cdrport`.`src`) from `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'ANSWERED') and (week(`cdr_cdrport`.`calldate`,0) = week(curdate(),0)) and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate())))) AS `semana`,(select count(`cdr_cdrport`.`src`) from `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'ANSWERED') and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate())))) AS `mes`;
 
 
 # Replace placeholder table for vw_cdr with correct view syntax
@@ -288,9 +290,9 @@ AS SELECT
    `cdr_prefixo`.`prefixo` AS `prefixo`,
    `cdr_prefixo`.`cidade` AS `cidade`,
    `cdr_prefixo`.`estado` AS `estado`,
-   `cdr_prefixo`.`operadora` AS `operadora`,
+   `cdr_cdrport`.`operadora_id` AS `operadora`,
    `cdr_prefixo`.`tipo` AS `tipo`,
-   `cdr_prefixo`.`rn1` AS `rn1`,
+   `cdr_cdrport`.`rn1_id` AS `rn1`,
    `cdr_cdrport`.`portado` AS `portado`,(case when ((`cdr_cdrport`.`tipo` = 'FIXO') and (`cdr_cdrport`.`cidade` = `cdr_prefixo`.`cidade`) and (`cdr_cdrport`.`estado` = `cdr_config_local`.`estado_id`)) then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_local`) / 60),3) when ((`cdr_cdrport`.`tipo` = 'MOVEL') and (`cdr_cdrport`.`cidade` = `cdr_prefixo`.`cidade`) and (`cdr_cdrport`.`estado` = `cdr_config_local`.`estado_id`)) then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_movel_local`) / 60),3) when (`cdr_cdrport`.`tipo` = 'FIXO') then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_ldn`) / 60),3) when (`cdr_cdrport`.`tipo` = 'MOVEL') then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_movel_ldn`) / 60),3) else format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_movel_ldn`) / 60),3) end) AS `preco`
 FROM ((`cdr_cdrport` join `cdr_prefixo`) join `cdr_config_local`) where (`cdr_cdrport`.`prefixo` = `cdr_prefixo`.`prefixo`);
 
@@ -314,8 +316,8 @@ DROP TABLE `vw_day_stats`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_day_stats`
 AS SELECT
-   cast(`cdr_cdr`.`calldate` as date) AS `dia`,month(cast(`cdr_cdr`.`calldate` as date)) AS `mes`,count(0) AS `total`
-FROM `cdr_cdr` where ((`cdr_cdr`.`calldate` > (curdate() - interval 6 month)) and curdate()) group by `dia` order by `dia`;
+   cast(`cdr_cdrport`.`calldate` as date) AS `dia`,month(cast(`cdr_cdrport`.`calldate` as date)) AS `mes`,count(0) AS `total`
+FROM `cdr_cdrport` where (`cdr_cdrport`.`calldate` between (curdate() - interval 6 month) and curdate()) group by `dia` order by `dia`;
 
 
 # Replace placeholder table for vw_cidades with correct view syntax
@@ -326,7 +328,7 @@ DROP TABLE `vw_cidades`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_cidades`
 AS SELECT
    `vw_cdr`.`id` AS `id`,
-   `vw_cdr`.`cidade` AS `cidade`
+   `vw_cdr`.`cidade` AS `cidade`,count(`vw_cdr`.`cidade`) AS `total`
 FROM `vw_cdr` group by `vw_cdr`.`cidade` order by `vw_cdr`.`cidade`;
 
 
@@ -349,8 +351,8 @@ DROP TABLE `vw_stats_noanswer`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_stats_noanswer`
 AS SELECT
-   (select count(`cdr_cdr`.`src`)
-FROM `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'NO ANSWER') and (dayofmonth(`cdr_cdr`.`calldate`) = dayofmonth(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `dia`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'NO ANSWER') and (week(`cdr_cdr`.`calldate`,0) = week(curdate(),0)) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `semana`,(select count(`cdr_cdr`.`src`) from `cdr_cdr` where ((`cdr_cdr`.`disposition` = 'NO ANSWER') and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (month(`cdr_cdr`.`calldate`) = month(curdate())) and (year(`cdr_cdr`.`calldate`) = year(curdate())))) AS `mes`;
+   (select count(`cdr_cdrport`.`src`)
+FROM `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'NO ANSWER') and (dayofmonth(`cdr_cdrport`.`calldate`) = dayofmonth(curdate())) and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate())))) AS `dia`,(select count(`cdr_cdrport`.`src`) from `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'NO ANSWER') and (week(`cdr_cdrport`.`calldate`,0) = week(curdate(),0)) and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate())))) AS `semana`,(select count(`cdr_cdrport`.`src`) from `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'NO ANSWER') and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate())))) AS `mes`;
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

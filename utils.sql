@@ -229,7 +229,7 @@ CREATE VIEW vw_day_stats AS
 
 CREATE VIEW vw_month_stats AS
 SELECT MONTHNAME(date(calldate)) AS mes, count(*) AS total 
-		FROM cdr_cdr
+		FROM cdr_cdrport
 		WHERE disposition = 'ANSWERED'
 		GROUP BY mes ORDER BY mes ASC;		
 
@@ -268,42 +268,42 @@ DELIMITER$$
 # TRIGGERS 
 
 CREATE VIEW vw_stats_answered AS 	SELECT(
-		SELECT count(src) FROM cdr_cdr
+		SELECT count(src) FROM cdr_cdrport
 		WHERE disposition = 'ANSWERED' AND DAY(calldate)=DAY(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		)  AS dia,
 		(
-		SELECT count(src) FROM cdr_cdr
+		SELECT count(src) FROM cdr_cdrport
 		WHERE disposition = 'ANSWERED' AND WEEK(calldate)=WEEK(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		) AS semana,
 		(
-		SELECT count(src)  FROM cdr_cdr
+		SELECT count(src)  FROM cdr_cdrport
 		WHERE disposition = 'ANSWERED' AND MONTH(calldate)=MONTH(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		)AS mes;
 
 
 CREATE VIEW vw_stats_noanswer AS SELECT(
-		SELECT count(src) FROM cdr_cdr
+		SELECT count(src) FROM cdr_cdrport
 		WHERE disposition = 'NO ANSWER' AND DAY(calldate)=DAY(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		)  AS dia,
 		(
-		SELECT count(src) FROM cdr_cdr
+		SELECT count(src) FROM cdr_cdrport
 		WHERE disposition = 'NO ANSWER' AND WEEK(calldate)=WEEK(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		) AS semana,
 		(
-		SELECT count(src)  FROM cdr_cdr
+		SELECT count(src)  FROM cdr_cdrport
 		WHERE disposition = 'NO ANSWER' AND MONTH(calldate)=MONTH(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		)AS mes;
 
 CREATE VIEW vw_stats_busy AS 	SELECT(
-		SELECT count(src) FROM cdr_cdr
+		SELECT count(src) FROM cdr_cdrport
 		WHERE disposition = 'BUSY' AND DAY(calldate)=DAY(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		)  AS dia,
 		(
-		SELECT count(src) FROM cdr_cdr
+		SELECT count(src) FROM cdr_cdrport
 		WHERE disposition = 'BUSY' AND WEEK(calldate)=WEEK(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		) AS semana,
 		(
-		SELECT count(src)  FROM cdr_cdr
+		SELECT count(src)  FROM cdr_cdrport
 		WHERE disposition = 'BUSY' AND MONTH(calldate)=MONTH(CURDATE()) AND MONTH(calldate)=MONTH(CURDATE())  AND YEAR(calldate)=YEAR(CURDATE())
 		)AS mes;
 
@@ -311,7 +311,7 @@ CREATE VIEW vw_stats_busy AS 	SELECT(
 SELECT nao_portados.operadora, nao_portados.tipo 
 	FROM nao_portados
 	WHERE prefixo IN (SELECT SUBSTRING(dst,1,6) AS prefixo
-	FROM cdr_cdr
+	FROM cdr_cdrport
 	WHERE disposition = 'ANSWERED')
 	GROUP BY prefixo ORDER BY operadora LIMIT 20
 
@@ -728,3 +728,50 @@ SELECT dst, tipo, billsec,
 	 LIMIT 100;
 
 ###
+
+UPDATE cdr_cdrport rt, 
+				(SELECT numero, rn1
+				FROM portados, cdr_cdrport 
+				WHERE portados.numero = cdr_cdrport.dst
+				) rs
+				SET
+				rt.csp = rs.rn1
+				WHERE rt.dst = rs.numero;
+
+
+UPDATE cdr_cdrport rt,
+				(select operadora,csp
+				FROM cdr_cdrport,cdr_prefixo
+				WHERE cdr_prefixo.rn1 = cdr_cdrport.rn1_id
+				AND cdr_cdrport.portado = 'Sim'
+				GROUP BY cdr_prefixo.rn1) rs
+				SET 
+				rt.operadora_id = rs.operadora
+				WHERE rt.csp = rs.csp;
+
+
+
+select cdr_cdrport_2.csp, cdr_prefixo.operadora 
+	FROM cdr_cdrport_2,cdr_prefixo
+	WHERE cdr_prefixo.rn1 = cdr_cdrport_2.csp
+	AND cdr_cdrport_2.portado = 'Sim'
+	GROUP BY cdr_prefixo.rn1
+ 
+
+SELECT portados.numero, portados.rn1, nao_portados.operadora
+	FROM portados
+	INNER JOIN nao_portados
+	ON (portados.rn1 = nao_portados.rn1)
+	WHERE numero = 3182897920
+	GROUP BY  nao_portados.operadora
+
+
+
+
+ 
+ select csp, operadora
+				FROM cdr_cdrport_2,cdr_prefixo
+				WHERE cdr_prefixo.rn1 = cdr_cdrport_2.csp
+				AND cdr_cdrport_2.portado = 'Sim'
+				GROUP BY cdr_prefixo.rn1
+
