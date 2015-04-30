@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.23)
 # Database: cdrport
-# Generation Time: 2015-04-30 01:33:35 +0000
+# Generation Time: 2015-04-30 02:48:31 +0000
 # ************************************************************
 
 
@@ -223,7 +223,7 @@ AS SELECT
    `vw_cdr`.`cidade` AS `cidade`,
    `vw_cdr`.`estado` AS `estado`,
    `vw_cdr`.`portado` AS `portado`
-FROM `vw_cdr` where (`vw_cdr`.`disposition` = 'ANSWERED') group by `vw_cdr`.`dst` order by `vw_cdr`.`calldate` desc limit 8;
+FROM `vw_cdr` where (`vw_cdr`.`disposition` = 'ANSWERED') order by `vw_cdr`.`calldate` desc limit 8;
 
 
 # Replace placeholder table for vw_ramais with correct view syntax
