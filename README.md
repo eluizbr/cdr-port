@@ -325,24 +325,31 @@ Screenshot
 
 
 ![Dashboard]
-(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/dashborad.png)
+(https://github.com/cdr-port/cdr-port.github.io/raw/master/img/dashboard.png)
 
 
 * Dashboard - Resumos :
 
 
 ![Dashboard Resumos]
-(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/dashboar-2.png)
+(https://github.com/cdr-port/cdr-port.github.io/raw/master/img/dashboar-2.png)
 
 
 * CDR Versão BÁSICO :
 
 
 ![CDR]
-(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-3.png)
+(https://github.com/cdr-port/cdr-port.github.io/raw/master/img/cdr-3.png)
 
 
 * CDR Versão com PORTABILIDADE :
 
 ![CDR PREMIUM]
-(https://github.com/eluizbr/cdr-port/raw/devel/cdr/img/cdr-4.png)
+(https://github.com/cdr-port/cdr-port.github.io/raw/master/img/cdr-4.png)
+
+
+* CDR -  Link para Áudio de gravações :
+
+![ÁUDIO]
+(https://github.com/cdr-port/cdr-port.github.io/raw/master/img/audio.png)
+
