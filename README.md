@@ -348,7 +348,7 @@ Screenshot
 (https://github.com/cdr-port/cdr-port.github.io/raw/master/img/cdr-4.png)
 
 
-* CDR -  Link para Áudio de gravações :
+* CDR -  Gravação:
 
 ![ÁUDIO]
 (https://github.com/cdr-port/cdr-port.github.io/raw/master/img/audio.png)
