@@ -50,10 +50,17 @@ class Cidades(models.Model):
         db_table = 'cidades'
 
 class Config_Local(models.Model):
+
+    AUDIO =(
+        ('Nao', 'Nao'),
+        ('Sim', 'Sim'),
+    )
+
     ddd = models.IntegerField(help_text=_("Insira seu DDD"),verbose_name="DDD")
     estado = models.ForeignKey(State ,help_text=_("Selecione a estado"),verbose_name="Estado")
     cidade = ChainedForeignKey(City, chained_field="estado", chained_model_field="id_state", auto_choose=True,verbose_name="Cidade",help_text=_("Selecione a cidade"))
     cortar = models.IntegerField(help_text=_("Numero de digitos a serem cortados. Ex: Se voce envia 551120304050, digite 2 para remover o 55."),verbose_name="Cortar")
+    gravar = models.CharField(max_length=3,help_text=_("Selecione SIM, se voce grava ligacoes."),verbose_name="Audio",choices=AUDIO)
     custo_local = models.DecimalField(max_digits=10, decimal_places=2, blank=True, help_text=_("Custo Local"),default='0.00',verbose_name="Fixo")
     custo_ldn = models.DecimalField(max_digits=10, decimal_places=2, blank=True, help_text=_("Custo LDN"),default='0.00',verbose_name="Fixo LDN")
     custo_movel_local = models.DecimalField(max_digits=10, decimal_places=2, blank=True, help_text=_("Movel Local"),default='0.00',verbose_name="Movel Local")
@@ -63,7 +70,7 @@ class Config_Local(models.Model):
         return unicode(self.estado)
 
     class Meta:
-        verbose_name='Configurar Localidade'
+        verbose_name='Configurações geral'
 
 
 class Info(models.Model):
@@ -94,7 +101,7 @@ class cdr(models.Model):
     disposition = models.CharField(max_length=45)
     amaflags = models.IntegerField()
     accountcode = models.CharField(max_length=20)
-    uniqueid = models.CharField(max_length=32)
+    uniqueid = models.CharField(unique=True, max_length=32)
     userfield = models.CharField(max_length=255)
     prefix = models.CharField(max_length=80, blank=True, null=True)
     portado = models.CharField(max_length=3, default='Nao')
@@ -113,11 +120,12 @@ class Cdrport(models.Model):
     prefixo = models.IntegerField(blank=True, null=True)
     cidade = models.CharField(max_length=50)
     estado = models.CharField(max_length=2)
-    operadora = models.CharField(max_length=50)
+    operadora_id = models.CharField(max_length=50)
     tipo = models.CharField(max_length=6)
-    rn1 = models.IntegerField(blank=True, null=True)
+    rn1_id = models.IntegerField(blank=True, null=True)
     portado = models.CharField(max_length=5, blank=True)
     uniqueid = models.CharField(unique=True, max_length=32, blank=True)
+    userfield = models.CharField(max_length=255, blank=True)
 
     def __unicode__(self):
         return unicode(self.numero)
@@ -171,7 +179,7 @@ class DispositionPercent(models.Model):
 
     def __unicode__(self):
         return unicode(self.disposition)
-
+'''
 class Stats_ANSWERED(models.Model):
     d_total = models.IntegerField(unique=True, blank=True, null=True)
     s_total = models.IntegerField(blank=True, null=True)
@@ -186,6 +194,7 @@ class Stats_BUSY(models.Model):
     d_total = models.IntegerField(unique=True, blank=True, null=True)
     s_total = models.IntegerField(blank=True, null=True)
     m_total = models.IntegerField(blank=True, null=True)
+'''
 
 class VwDayStats(models.Model):
     dia = models.IntegerField(blank=True, null=True)
@@ -321,6 +330,7 @@ class VwCdr(models.Model):
     rn1 = models.IntegerField(blank=True, null=True)
     portado = models.CharField(max_length=3, blank=True)
     preco = models.DecimalField(max_digits=10, decimal_places=3, blank=True)
+    userfield = models.CharField(max_length=255, blank=True)
 
     def __unicode__(self):
         return unicode(self.dst)

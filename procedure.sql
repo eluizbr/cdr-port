@@ -83,13 +83,46 @@ UPDATE TMP_cdr_cdr
 				THEN 'Sim'
 		END;
 
-INSERT INTO cdr_cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora,tipo,rn1,portado,uniqueid)
+UPDATE TMP_cdr_cdr SET dst = 
+	CASE
+		WHEN character_length(dst)='8'
+			THEN CONCAT(@ddd,SUBSTRING(dst,1))  
+	END
+	WHERE  character_length(dst)='8';
+
+UPDATE TMP_cdr_cdr SET dst = 
+	CASE
+		WHEN character_length(dst)='9'
+			THEN CONCAT(@ddd,SUBSTRING(dst,1))  
+	END
+	WHERE  character_length(dst)='9';
+
+INSERT INTO cdr_cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora_id,tipo,rn1_id,portado,uniqueid,userfield)
 SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,cdr_prefixo.ddd,
-		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo, cdr_prefixo.rn1, portado, uniqueid 
+		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo, cdr_prefixo.rn1, portado, uniqueid,userfield 
 	FROM TMP_cdr_cdr,cdr_prefixo
 	WHERE TMP_cdr_cdr.prefix = cdr_prefixo.prefixo
 	ON DUPLICATE KEY UPDATE uniqueid = cdr_cdrport.uniqueid;
 
+UPDATE cdr_cdrport rt, 
+				(SELECT numero, rn1
+				FROM portados, cdr_cdrport 
+				WHERE portados.numero = cdr_cdrport.dst
+				) rs
+				SET
+				rt.rn1_id = rs.rn1
+				WHERE rt.dst = rs.numero;
+
+
+UPDATE cdr_cdrport rt,
+				(select operadora,rn1_id
+				FROM cdr_cdrport,cdr_prefixo
+				WHERE cdr_prefixo.rn1 = cdr_cdrport.rn1_id
+				AND cdr_cdrport.portado = 'Sim'
+				GROUP BY cdr_prefixo.rn1) rs
+				SET 
+				rt.operadora_id = rs.operadora
+				WHERE rt.rn1_id = rs.rn1_id;		
 
 REPLACE INTO cdr_dispositionpercent (disposition, valor, perc)	
 	SELECT lista.disposition, total valor , 

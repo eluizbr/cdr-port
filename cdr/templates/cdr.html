@@ -632,7 +632,10 @@
                                 <th>Duração</th>
                                 <th>Conversação</th>
                                 <th>Custo</th>
-                                <th></th>
+                                {% if gravacao == "Sim" %}
+                                <th>Audio</th> 
+                                {% else %}
+                                {% endif %}
                             </tr>
                             </thead>
                             <tbody>
@@ -664,27 +667,15 @@
                                 <td>{{i.duration|time:"H:i:s"}}</td>
                                 <td>{{i.billsec|time:"H:i:s"}}</td>
                                 <td data-mask="R$ 0,000">{{i.preco}}</td>
-                               <td class="width-25">
-
-                                {% if i.disposition == "ANSWERED" %}
-                                    <div class="progress progress-sm mt-xs js-progress-animate">
-                                        <div class="progress-bar progress-bar-success" data-width="100%" style="width: 0;"></div>
-                                    </div>
-                                {% elif i.disposition == "NO ANSWER" %}
-                                    <div class="progress progress-sm mt-xs js-progress-animate">
-                                        <div class="progress-bar" data-width="100%" style="width: 0;"></div>
-                                    </div>
-                                {% elif i.disposition == "BUSY" %}
-                                    <div class="progress progress-sm mt-xs js-progress-animate">
-                                        <div class="progress-bar progress-bar-warning" data-width="100%" style="width: 0;"></div>
-                                    </div>
+                                
+                                <td>
+                                {% if gravacao == "Sim" %}
+                                    {% if i.userfield == '' %}  
+                                    {% else %}
+                                        <a href="/gravacao/{{i.userfield}}"><span class="glyphicon glyphicon-volume-up"></span></a>
+                                    {% endif %}
                                 {% else %}
-                                    <div class="progress progress-sm mt-xs js-progress-animate">
-                                        <div class="progress-bar progress-bar-danger" data-width="100%" style="width: 0;"></div>
-                                    </div>
-                                {% endif %}   
- 
-
+                                {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -847,7 +838,10 @@
                                 <th>Duração</th>
                                 <th>Conversação</th>
                                 <th>Custo</th>
-                                <th></th>
+                                {% if gravacao == Sim %}
+                                <th>Audio</th> 
+                                {% else %}
+                                {% endif %}
                             </tr>
                             </thead>
                             <tbody>
@@ -886,26 +880,15 @@
                                 <td>{{i.duration|time:"H:i:s"}}</td>
                                 <td>{{i.billsec|time:"H:i:s"}}</td>
                                 <td data-mask="R$ 0,000">{{i.preco}}</td>
-                                <td class="width-25">
-
-                                {% if i.disposition == "ANSWERED" %}
-                                    <div class="progress progress-sm mt-xs js-progress-animate">
-                                        <div class="progress-bar progress-bar-success" data-width="100%" style="width: 0;"></div>
-                                    </div>
-                                {% elif i.disposition == "NO ANSWER" %}
-                                    <div class="progress progress-sm mt-xs js-progress-animate">
-                                        <div class="progress-bar" data-width="100%" style="width: 0;"></div>
-                                    </div>
-                                {% elif i.disposition == "BUSY" %}
-                                    <div class="progress progress-sm mt-xs js-progress-animate">
-                                        <div class="progress-bar progress-bar-warning" data-width="100%" style="width: 0;"></div>
-                                    </div>
+                                <td>
+                                {% if gravacao == Sim %}
+                                    {% if i.userfield == '' %}  
+                                    {% else %}
+                                        <a href="/gravacao/{{i.userfield}}"><span class="glyphicon glyphicon-volume-up"></span></a>
+                                    {% endif %}
                                 {% else %}
-                                    <div class="progress progress-sm mt-xs js-progress-animate">
-                                        <div class="progress-bar progress-bar-danger" data-width="100%" style="width: 0;"></div>
-                                    </div>
-                                {% endif %}   
-                                </td>
+                                {% endif %}
+                                </td>   
                             </tr>
                         {% endfor %}
                             </tbody>

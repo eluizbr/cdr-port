@@ -74,6 +74,12 @@ SET @ddd:=(SELECT ddd FROM cdr_config_local);
 				THEN src
 			WHEN dst LIKE '%-%'
 				THEN src
+			WHEN dst LIKE '0800%'
+				THEN SUBSTRING(dst,@cortar,4)
+			WHEN dst LIKE '300%'
+				THEN SUBSTRING(dst,@cortar,4)
+			WHEN dst LIKE '4004%'
+				THEN SUBSTRING(dst,@cortar,4)
 			WHEN character_length(dst)='11'
 				THEN SUBSTRING(dst,@cortar,7)
 			WHEN character_length(dst)='10'
@@ -95,13 +101,46 @@ UPDATE TMP_cdr_cdr
 				THEN 'Sim'
 		END;
 
-INSERT INTO cdr_cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora,tipo,rn1,portado,uniqueid)
+UPDATE TMP_cdr_cdr SET dst = 
+	CASE
+		WHEN character_length(dst)='8'
+			THEN CONCAT(@ddd,SUBSTRING(dst,1))  
+	END
+	WHERE  character_length(dst)='8';
+
+UPDATE TMP_cdr_cdr SET dst = 
+	CASE
+		WHEN character_length(dst)='9'
+			THEN CONCAT(@ddd,SUBSTRING(dst,1))  
+	END
+	WHERE  character_length(dst)='9';
+
+INSERT INTO cdr_cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora_id,tipo,rn1_id,portado,uniqueid)
 SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,cdr_prefixo.ddd,
 		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo, cdr_prefixo.rn1, portado, uniqueid 
 	FROM TMP_cdr_cdr,cdr_prefixo
 	WHERE TMP_cdr_cdr.prefix = cdr_prefixo.prefixo
 	ON DUPLICATE KEY UPDATE uniqueid = cdr_cdrport.uniqueid;
 
+UPDATE cdr_cdrport rt, 
+				(SELECT numero, rn1
+				FROM portados, cdr_cdrport 
+				WHERE portados.numero = cdr_cdrport.dst
+				) rs
+				SET
+				rt.rn1_id = rs.rn1
+				WHERE rt.dst = rs.numero;
+
+
+UPDATE cdr_cdrport rt,
+				(select operadora,rn1_id
+				FROM cdr_cdrport,cdr_prefixo
+				WHERE cdr_prefixo.rn1 = cdr_cdrport.rn1_id
+				AND cdr_cdrport.portado = 'Sim'
+				GROUP BY cdr_prefixo.rn1) rs
+				SET 
+				rt.operadora_id = rs.operadora
+				WHERE rt.rn1_id = rs.rn1_id;		
 
 REPLACE INTO cdr_dispositionpercent (disposition, valor, perc)	
 	SELECT lista.disposition, total valor , 
@@ -136,4 +175,4 @@ DELIMITER ;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-27 13:59:07
+-- Dump completed on 2015-04-29 23:46:54

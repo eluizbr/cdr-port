@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
-from .models import cdr, DispositionPercent, Stats_ANSWERED, Stats_NOANSWER, Stats_BUSY, Info
+from .models import cdr, DispositionPercent, Info, Cdrport,Config_Local
 from .models import VwDayStats, VwMonthStats,VwLast10, VwOperadoras, VwStatsAnswered, VwStatsBusy, VwStatsNoanswer, VwRamais,\
                     VwDisposition, VwCdr, VwCidades, VwEstados
 from django.db.models import Sum, Count, Avg, Max, Min
@@ -36,7 +36,6 @@ def index(request):
     info = str(info)[2]
     perc = DispositionPercent.objects.values_list('disposition', 'valor', 'perc')
     total = DispositionPercent.objects.aggregate(Sum('valor'))['valor__sum']
-    print total
     stats_AN = VwStatsAnswered.objects.values_list('dia', 'semana', 'mes')
     stats_NO = VwStatsNoanswer.objects.values_list('dia', 'semana', 'mes')
     stats_BU = VwStatsBusy.objects.values_list('dia', 'semana', 'mes')
@@ -45,8 +44,8 @@ def index(request):
     byMonth = VwMonthStats.objects.values_list('mes', 'total')
     operadora = VwOperadoras.objects.values_list('operadora', 'total')
     cidade = VwCidades.objects.values_list('cidade').count()
-    portados_s = cdr.objects.filter(portado='Sim').count()
-    portados_n = cdr.objects.filter(portado='Nao').count()
+    portados_s = Cdrport.objects.filter(portado='Sim').count()
+    portados_n = Cdrport.objects.filter(portado='Nao').count()
     template = loader.get_template('index.html')
     context = RequestContext(request, { 'info':info, 'perc': perc, 'total': total, 'stats_AN':stats_AN, 'stats_NO':stats_NO,'cidade':cidade,'portados_s':portados_s,
 								    	'portados_n':portados_n,'stats_BU':stats_BU, 'ultimo':ultimo, 'byDay':byDay, 'byMonth':byMonth, 'operadora':operadora })
@@ -56,7 +55,10 @@ def cdr_serach(request):
 
     info = Info.objects.values_list('ativo')
     info = str(info)[2]
-    
+    gravacao = Config_Local.objects.values_list('gravar')
+    gravacao = str(gravacao)[4:-4]
+    print gravacao
+
     hora = datetime.now()
     hoje = hora.strftime("%Y-%m-%dT23:59:59") 
     ontem = hora - timedelta(days=1)
@@ -177,7 +179,6 @@ def cdr_serach(request):
         custo = 0
     else:
         custo = custo
-
     ### SQL personalizado
     from django.db import connection
     cursor = connection.cursor()
@@ -332,7 +333,7 @@ def cdr_serach(request):
                                                 'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                                 'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                                 'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
-                                                'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'custo':custo,
+                                                'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'custo':custo, 'gravacao':gravacao,
                                                  'pagina': pagina, 'operadora': operadora, 'cidade':cidade, 'estado':estado , 'total':total})
             return HttpResponse(template.render(context))
 
@@ -343,7 +344,7 @@ def cdr_serach(request):
                                             'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                             'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                             'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
-                                            'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'custo':custo,
+                                            'n_atendeu':n_atendeu, 'ocupado':ocupado, 'falhou':falhou, 'custo':custo,'gravacao':gravacao,
                                             'pagina': pagina, 'operadora': operadora,'cidade':cidade, 'estado':estado})
             return HttpResponse(template.render(context))
 
