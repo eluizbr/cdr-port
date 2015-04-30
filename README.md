@@ -134,7 +134,7 @@ Você deve configurar sua localidade no ***CDR-port*** acessando a seguinte url:
 
 *Você irá precisar do usuário e senha criados durante a instalação do ***CDR-port***.
 
-Configure seu DDD, Estado, Cidade, Cortar (digitos a serem cortados. Ex: Se você disca 551120304050, você deve cortar o 55, digitando 2 para cortar os 2 primeiros digitos.), e suas tarifas. Essas configurações são fundamentais para o funcionamento correto do ***CDR-port***.
+Configure seu DDD, Estado, Cidade, Cortar (digitos a serem cortados. Ex: Se você disca 551120304050, você deve cortar o 55, digitando 2 para cortar os 2 primeiros digitos.), Audio (Se você grava ligações, escolha SIM) e suas tarifas. Essas configurações são fundamentais para o funcionamento correto do ***CDR-port***.
 
 
 
@@ -151,6 +151,7 @@ table=cdr_cdr
 password=SENHA_DB
 user=root
 port=3306
+userfield=1
 
 [columns]
 alias start => calldate
@@ -230,7 +231,11 @@ Legenda:
 
 ##### Billing
 
-- [ ] Em desenvolvimento
+- [X] Tarifação
+    - [ ] Configuração de cadências
+
+- [X] Configuração de custo (FIXO-Local, FIXO-LDN, Móvel-Local, Móvel-LDN)
+    - [ ] Rotas DDI
 
 #### Portabilidade
 ==================
@@ -246,7 +251,7 @@ exten => _XXXXXXXXXX,1,Answer()
 exten => _XXXXXXXXXX,n,AGI(/root/cdrport.py,${EXTEN})
 exten => _XXXXXXXXXX,n,NoOp(${NUMERO})
 exten => _XXXXXXXXXX,n,Dial(SIP/${NUMERO})
-exten => _XXXXXXXXXX,n,Dial(SIP/GSM01/0${NUMERO:3})
+exten => _XXXXXXXXXX,n,Dial(SIP/OPERADORA/0${NUMERO:3})
 exten => _XXXXXXXXXX,n,Hangup
 
 11 Digitos
@@ -254,7 +259,7 @@ exten => _XXXXXXXXXXX,1,Answer()
 exten => _XXXXXXXXXXX,n,AGI(/root/cdrport.py,${EXTEN})
 exten => _XXXXXXXXXXX,n,NoOp(${NUMERO})
 exten => _XXXXXXXXXXX,n,Dial(SIP/${NUMERO})
-exten => _XXXXXXXXXXX,n,Dial(SIP/GSM01/0${NUMERO:3})
+exten => _XXXXXXXXXXX,n,Dial(SIP/OPERADORA/0${NUMERO:3})
 exten => _XXXXXXXXXXX,n,Hangup
 ```
 
