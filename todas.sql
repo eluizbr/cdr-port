@@ -91,7 +91,9 @@ SELECT cdr_cdrport.id,calldate,src,dst, duration,billsec,disposition,cdr_prefixo
 			WHEN cdr_cdrport.tipo = 'FIXO'
 					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_ldn/60, 3)
 			WHEN cdr_cdrport.tipo = 'MOVEL'
-					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_movel_ldn/60, 3)
+					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_ldn/60, 3)
+			WHEN cdr_cdrport.tipo = 'RAMAL'
+					THEN FORMAT(cdr_cdrport.billsec*0, 3)
 			ELSE FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_movel_ldn/60, 3)
 		END AS preco, userfield	 
 	FROM cdr_cdrport, cdr_prefixo, cdr_config_local
