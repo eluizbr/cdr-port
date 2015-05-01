@@ -473,13 +473,7 @@
                             <tbody>
                             {% for dst,operadora, tipo,calldate,cidade, estado, portado in ultimo%}
                             <tr>
-                            <td>
-                                </td>
-                            {%if dst|length < 11%}
-                                <td data-mask="(99) 99999-9999">{{dst}}</td>
-                            {% else %}
-                                <td data-mask="(99) 9999-9999">{{dst}}</td>
-                            {% endif %}
+                                <td>{{dst}}</td>
                                 <td >{{cidade|title}}</td>
                                 <td >{{estado}}</td>
                                 <td >{{operadora}}</td>
@@ -498,13 +492,7 @@
                             <tbody>
                             {% for dst,operadora, tipo,calldate,cidade, estado, portado in ultimo%}
                             <tr>
-                            <td>
-                                </td>
-                            {%if dst|length < 11%}
-                                <td data-mask="(99) 99999-9999">{{dst}}</td>
-                            {% else %}
-                                <td data-mask="(99) 9999-9999">{{dst}}</td>
-                            {% endif %}
+                                <td>{{dst}}</td>
                                 <td >{{cidade|title}}</td>
                                 <td >{{estado}}</td>
                                 <td >{{operadora}}</td>
