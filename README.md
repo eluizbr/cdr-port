@@ -19,10 +19,9 @@ Diferenças entre versões
 O ***CDR-port*** tem 2 versões:
 
 - PREMIUM - Esta versão traz como grande diferencial, o sistema de portabilidade e a base de portabilidade LOCAL instalada 
-em seu servidor. [Valores das versões](http://www.cdr-port.net/pricing-table.html)
+em seu servidor. [Quanto custa?](http://www.cdr-port.net/pricing-table.html)
 
-- FREE -  Esta versão possuiu todos os recursos da versão PREMIUM, com exceção da base de portabilidade. Se você já tiver uma
-base de portabilidade, é possível instalar ela na versão FREE e a converter para versão PREMIUM.
+- FREE -  Esta versão possuiu todos os recursos da versão PREMIUM, com exceção da base de portabilidade.
 
     - O ***CDR-port*** não suporta consultas on-line.
 

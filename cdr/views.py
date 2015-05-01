@@ -112,6 +112,8 @@ def cdr_serach(request):
             query &=Q(calldate__range=(calldate1,calldate2))
         if disposition:
             query &=Q(disposition__icontains=disposition_f)
+        if tipo:
+            query &=Q(tipo__icontains=tipo_f)
         if cidade:
             query &=Q(cidade__icontains=cidade_f)
         if estado:
@@ -148,8 +150,8 @@ def cdr_serach(request):
 
             
     if info == "1":
-        url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&cidade=%s&estado=%s"\
-            % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, cidade_f, estado_f)
+        url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%stipo=%s&cidade=%s&estado=%s"\
+            % (numero_f, src_f, calldate1, calldate2, tipo_f, disposition_f, paginas_f, cidade_f, estado_f)
     else:
         url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&tipo=%s&operadora=%s&cidade=%s&estado=%s&portado=%s"\
     % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, tipo_f, operadora_f, cidade_f, estado_f, portado_f)

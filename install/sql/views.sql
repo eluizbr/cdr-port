@@ -317,7 +317,7 @@ DROP TABLE `vw_day_stats`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_day_stats`
 AS SELECT
    cast(`cdr_cdrport`.`calldate` as date) AS `dia`,month(cast(`cdr_cdrport`.`calldate` as date)) AS `mes`,count(0) AS `total`
-FROM `cdr_cdrport` where (`cdr_cdrport`.`calldate` between (curdate() - interval 6 month) and curdate()) group by `dia` order by `dia`;
+FROM `cdr_cdrport` where (`cdr_cdrport`.`calldate`) group by `dia` order by `dia`;
 
 
 # Replace placeholder table for vw_cidades with correct view syntax

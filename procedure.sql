@@ -32,6 +32,8 @@ CREATE TEMPORARY TABLE `TMP_cdr_cdr` (
 INSERT INTO TMP_cdr_cdr (calldate,clid,src,dst,dcontext,channel,dstchannel,lastapp,lastdata,duration,billsec,disposition,amaflags,accountcode,uniqueid,userfield,prefix,portado)
 SELECT calldate,clid,src,
 		CASE
+			WHEN character_length(dst)<'7'
+			THEN dst
 			WHEN character_length(dst)='10'
 			THEN dst
 			WHEN character_length(dst)='11'
@@ -48,6 +50,7 @@ SELECT calldate,clid,src,
 dcontext,channel,dstchannel,lastapp,lastdata,duration,billsec,disposition,amaflags,accountcode,uniqueid,userfield,prefix,portado
 FROM cdr_config_local,cdr_cdr;
 
+SET @prefixo:= 999999;
 SET @cortar:=(SELECT cortar FROM cdr_config_local);
 SET @ddd:=(SELECT ddd FROM cdr_config_local);
 	UPDATE TMP_cdr_cdr SET prefix = 
@@ -58,7 +61,7 @@ SET @ddd:=(SELECT ddd FROM cdr_config_local);
 				THEN src
 			WHEN dst LIKE '0800%'
 				THEN SUBSTRING(dst,@cortar,4)
-			WHEN dst LIKE '300%'
+			WHEN dst LIKE '0300%'
 				THEN SUBSTRING(dst,@cortar,4)
 			WHEN dst LIKE '4004%'
 				THEN SUBSTRING(dst,@cortar,4)
@@ -71,7 +74,7 @@ SET @ddd:=(SELECT ddd FROM cdr_config_local);
 			WHEN character_length(dst)='8'
 				THEN CONCAT(@ddd,SUBSTRING(dst,1,4))
 			WHEN character_length(dst)<'7'
-				THEN src
+				THEN CONCAT(@prefixo,SUBSTRING(dst,4,6))
 		END;
 
 UPDATE TMP_cdr_cdr

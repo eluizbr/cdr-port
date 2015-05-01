@@ -335,6 +335,20 @@
                                         {% endfor %}
                                         </select>
                                     </div>
+                                    <label class="col-sm-1 control-label" for="default-select">Tipo</label>
+                                    <div class="col-sm-1">
+                                        <select
+                                                data-width="auto"
+                                                data-minimum-results-for-search="10"
+                                                tabindex="-1"
+                                                class="select2 form-control" name="tipo" id="tipo">
+                                            <option></option>
+                                            <option>Ramal</option>
+                                            <option>Fixo</option>
+                                            <option>Movel</option>
+                                            <option>Radio</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <legend><strong>Selecione uma data</strong></legend>
                                 <div class="row">
@@ -536,6 +550,7 @@
                                                 tabindex="-1"
                                                 class="select2 form-control" name="tipo" id="tipo">
                                             <option></option>
+                                            <option>Ramal</option>
                                             <option>Fixo</option>
                                             <option>Movel</option>
                                             <option>Radio</option>
@@ -627,6 +642,7 @@
                                 <th>Número</th>
                                 <th>Cidade</th>
                                 <th>Estado</th>
+                                <th>Tipo</th>
                                 <th>Data</th>
                                 <th>Status</th>
                                 <th>Duração</th>
@@ -652,6 +668,7 @@
                                 <td>{{i.dst}}</td>
                                 <td>{{i.cidade|title}}</td>
                                 <td>{{i.estado}}</td>
+                                <td>{{i.tipo}}</td>
                                 <td>{{i.calldate}}</td>
                                 <td>
                                     {% if i.disposition == "ANSWERED" %}
