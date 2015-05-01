@@ -23,8 +23,9 @@ func_install_cdr-port () {
 				virtualenv --system-site-packages cdr-port
 				cd cdr-port
 				pip install -r $CONFIG_DIR/install/conf/requirements.txt
-				sed -i "s/SENHA_DB/$DB_PASSWORD/" $CONFIG_DIR/install/conf/settings.txt
+				sed -i "s/SENHA_DB/$DB_PASSWORD/" /install/conf/settings.txt
 				cp $CONFIG_DIR/install/conf/settings.txt /usr/share/cdrport/cdr-port/cdrport/settings.py
+				rm -rf $CONFIG_DIR/cdr-port/*/migrations
 				python manage.py syncdb
 				python manage.py collectstatic --noinput
 

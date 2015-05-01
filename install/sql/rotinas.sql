@@ -18,9 +18,7 @@
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER tr_stats AFTER INSERT ON cdr_cdr
-		FOR EACH ROW
-BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tr_stats` AFTER INSERT ON `cdr_cdr` FOR EACH ROW BEGIN
 
 DROP TEMPORARY TABLE IF EXISTS TMP_cdr_cdr;
 
@@ -50,6 +48,8 @@ CREATE TEMPORARY TABLE `TMP_cdr_cdr` (
 INSERT INTO TMP_cdr_cdr (calldate,clid,src,dst,dcontext,channel,dstchannel,lastapp,lastdata,duration,billsec,disposition,amaflags,accountcode,uniqueid,userfield,prefix,portado)
 SELECT calldate,clid,src,
 		CASE
+			WHEN character_length(dst)<'7'
+			THEN dst
 			WHEN character_length(dst)='10'
 			THEN dst
 			WHEN character_length(dst)='11'
@@ -66,6 +66,7 @@ SELECT calldate,clid,src,
 dcontext,channel,dstchannel,lastapp,lastdata,duration,billsec,disposition,amaflags,accountcode,uniqueid,userfield,prefix,portado
 FROM cdr_config_local,cdr_cdr;
 
+SET @prefixo:= 999999;
 SET @cortar:=(SELECT cortar FROM cdr_config_local);
 SET @ddd:=(SELECT ddd FROM cdr_config_local);
 	UPDATE TMP_cdr_cdr SET prefix = 
@@ -76,7 +77,7 @@ SET @ddd:=(SELECT ddd FROM cdr_config_local);
 				THEN src
 			WHEN dst LIKE '0800%'
 				THEN SUBSTRING(dst,@cortar,4)
-			WHEN dst LIKE '300%'
+			WHEN dst LIKE '0300%'
 				THEN SUBSTRING(dst,@cortar,4)
 			WHEN dst LIKE '4004%'
 				THEN SUBSTRING(dst,@cortar,4)
@@ -89,7 +90,7 @@ SET @ddd:=(SELECT ddd FROM cdr_config_local);
 			WHEN character_length(dst)='8'
 				THEN CONCAT(@ddd,SUBSTRING(dst,1,4))
 			WHEN character_length(dst)<'7'
-				THEN src
+				THEN CONCAT(@prefixo,SUBSTRING(dst,4,6))
 		END;
 
 UPDATE TMP_cdr_cdr
@@ -115,9 +116,9 @@ UPDATE TMP_cdr_cdr SET dst =
 	END
 	WHERE  character_length(dst)='9';
 
-INSERT INTO cdr_cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora_id,tipo,rn1_id,portado,uniqueid)
+INSERT INTO cdr_cdrport (calldate,src,dst,duration,billsec,disposition,ddd,prefixo,cidade,estado,operadora_id,tipo,rn1_id,portado,uniqueid,userfield)
 SELECT calldate,src,dst,SEC_TO_TIME(duration) AS duration, SEC_TO_TIME(billsec) AS billsec,disposition,cdr_prefixo.ddd,
-		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo, cdr_prefixo.rn1, portado, uniqueid 
+		cdr_prefixo.prefixo,cdr_prefixo.cidade,cdr_prefixo.estado,cdr_prefixo.operadora,cdr_prefixo.tipo, cdr_prefixo.rn1, portado, uniqueid,userfield 
 	FROM TMP_cdr_cdr,cdr_prefixo
 	WHERE TMP_cdr_cdr.prefix = cdr_prefixo.prefixo
 	ON DUPLICATE KEY UPDATE uniqueid = cdr_cdrport.uniqueid;
@@ -175,4 +176,4 @@ DELIMITER ;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-29 23:46:54
+-- Dump completed on 2015-05-01 14:06:01
