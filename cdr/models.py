@@ -121,7 +121,7 @@ class Cdrport(models.Model):
     cidade = models.CharField(max_length=50)
     estado = models.CharField(max_length=2)
     operadora_id = models.CharField(max_length=50)
-    tipo = models.CharField(max_length=6)
+    tipo = models.CharField(max_length=10)
     rn1_id = models.IntegerField(blank=True, null=True)
     portado = models.CharField(max_length=5, blank=True)
     uniqueid = models.CharField(unique=True, max_length=32, blank=True)
@@ -138,7 +138,7 @@ class Prefixo(models.Model):
     cidade = models.CharField(max_length=100, blank=True)
     estado = models.CharField(max_length=2, blank=True)
     operadora = models.CharField(max_length=30, blank=True)
-    tipo = models.CharField(max_length=5, blank=True)
+    tipo = models.CharField(max_length=10, blank=True)
     rn1 = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):

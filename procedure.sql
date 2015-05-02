@@ -59,9 +59,25 @@ SET @ddd:=(SELECT ddd FROM cdr_config_local);
 				THEN src
 			WHEN dst LIKE '%-%'
 				THEN src
+			WHEN dst BETWEEN '103' AND '174'
+				THEN SUBSTRING(dst,@cortar,3)
+			WHEN dst BETWEEN '180' AND '181'
+				THEN SUBSTRING(dst,@cortar,3)
+			WHEN dst BETWEEN '190' AND '199'
+				THEN SUBSTRING(dst,@cortar,3)
+			WHEN dst BETWEEN '10312' AND '10398'
+				THEN SUBSTRING(dst,@cortar,3)
+			WHEN dst BETWEEN '1050' AND '1059'
+				THEN SUBSTRING(dst,@cortar,3)
+			WHEN dst BETWEEN '1060' AND '1067'
+				THEN SUBSTRING(dst,@cortar,3)
+			WHEN dst BETWEEN '10610' AND '10699'
+				THEN SUBSTRING(dst,@cortar,3)
 			WHEN dst LIKE '0800%'
 				THEN SUBSTRING(dst,@cortar,4)
 			WHEN dst LIKE '0300%'
+				THEN SUBSTRING(dst,@cortar,4)
+			WHEN dst LIKE '4003%'
 				THEN SUBSTRING(dst,@cortar,4)
 			WHEN dst LIKE '4004%'
 				THEN SUBSTRING(dst,@cortar,4)

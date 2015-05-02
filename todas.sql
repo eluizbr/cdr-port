@@ -92,6 +92,8 @@ SELECT cdr_cdrport.id,calldate,src,dst, duration,billsec,disposition,cdr_prefixo
 					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_ldn/60, 3)
 			WHEN cdr_cdrport.tipo = 'MOVEL'
 					THEN FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_ldn/60, 3)
+			WHEN cdr_cdrport.tipo = 'FIXON'
+					THEN FORMAT(cdr_cdrport.billsec*0, 3)
 			WHEN cdr_cdrport.tipo = 'RAMAL'
 					THEN FORMAT(cdr_cdrport.billsec*0, 3)
 			ELSE FORMAT(cdr_cdrport.billsec*cdr_config_local.custo_movel_ldn/60, 3)

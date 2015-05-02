@@ -18,7 +18,9 @@
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tr_stats` AFTER INSERT ON `cdr_cdr` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER tr_stats AFTER INSERT ON cdr_cdr
+		FOR EACH ROW
+BEGIN
 
 DROP TEMPORARY TABLE IF EXISTS TMP_cdr_cdr;
 
@@ -75,9 +77,23 @@ SET @ddd:=(SELECT ddd FROM cdr_config_local);
 				THEN src
 			WHEN dst LIKE '%-%'
 				THEN src
+			WHEN dst BETWEEN '180' AND '181'
+				THEN SUBSTRING(dst,@cortar,3)
+			WHEN dst BETWEEN '190' AND '199'
+				THEN SUBSTRING(dst,@cortar,3)
+			WHEN dst BETWEEN '10312' AND '10398'
+				THEN SUBSTRING(dst,@cortar,3)
+			WHEN dst BETWEEN '1050' AND '1059'
+				THEN SUBSTRING(dst,@cortar,3)
+			WHEN dst BETWEEN '1060' AND '1067'
+				THEN SUBSTRING(dst,@cortar,3)
+			WHEN dst BETWEEN '10610' AND '10699'
+				THEN SUBSTRING(dst,@cortar,3)
 			WHEN dst LIKE '0800%'
 				THEN SUBSTRING(dst,@cortar,4)
 			WHEN dst LIKE '0300%'
+				THEN SUBSTRING(dst,@cortar,4)
+			WHEN dst LIKE '4003%'
 				THEN SUBSTRING(dst,@cortar,4)
 			WHEN dst LIKE '4004%'
 				THEN SUBSTRING(dst,@cortar,4)
@@ -176,4 +192,4 @@ DELIMITER ;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-01 14:06:01
+-- Dump completed on 2015-05-01 21:39:30
