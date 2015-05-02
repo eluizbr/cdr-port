@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.23)
 # Database: cdrport
-# Generation Time: 2015-05-02 00:39:09 +0000
+# Generation Time: 2015-05-02 00:45:02 +0000
 # ************************************************************
 
 
@@ -294,7 +294,7 @@ AS SELECT
    `cdr_cdrport`.`operadora_id` AS `operadora`,
    `cdr_prefixo`.`tipo` AS `tipo`,
    `cdr_cdrport`.`rn1_id` AS `rn1`,
-   `cdr_cdrport`.`portado` AS `portado`,(case when ((`cdr_cdrport`.`tipo` = 'FIXO') and (`cdr_cdrport`.`cidade` = `cdr_prefixo`.`cidade`) and (`cdr_cdrport`.`estado` = `cdr_config_local`.`estado_id`)) then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_local`) / 60),3) when ((`cdr_cdrport`.`tipo` = 'MOVEL') and (`cdr_cdrport`.`cidade` = `cdr_prefixo`.`cidade`) and (`cdr_cdrport`.`estado` = `cdr_config_local`.`estado_id`)) then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_movel_local`) / 60),3) when (`cdr_cdrport`.`tipo` = 'FIXO') then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_ldn`) / 60),3) when (`cdr_cdrport`.`tipo` = 'MOVEL') then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_ldn`) / 60),3) when (`cdr_cdrport`.`tipo` = 'FIXON') then format((`cdr_cdrport`.`billsec` * 0),3) when (`cdr_cdrport`.`tipo` = 'RAMAL') then format((`cdr_cdrport`.`billsec` * 0),3) else format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_movel_ldn`) / 60),3) end) AS `preco`,
+   `cdr_cdrport`.`portado` AS `portado`,(case when ((`cdr_cdrport`.`tipo` = 'FIXO') and (`cdr_cdrport`.`cidade` = `cdr_prefixo`.`cidade`) and (`cdr_cdrport`.`estado` = `cdr_config_local`.`estado_id`)) then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_local`) / 60),3) when ((`cdr_cdrport`.`tipo` = 'MOVEL') and (`cdr_cdrport`.`cidade` = `cdr_prefixo`.`cidade`) and (`cdr_cdrport`.`estado` = `cdr_config_local`.`estado_id`)) then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_movel_local`) / 60),3) when (`cdr_cdrport`.`tipo` = 'FIXO') then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_ldn`) / 60),3) when (`cdr_cdrport`.`tipo` = 'MOVEL') then format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_ldn`) / 60),3) when (`cdr_cdrport`.`tipo` = 'NACIONAL') then format((`cdr_cdrport`.`billsec` * 0),3) when (`cdr_cdrport`.`tipo` = 'RAMAL') then format((`cdr_cdrport`.`billsec` * 0),3) else format(((`cdr_cdrport`.`billsec` * `cdr_config_local`.`custo_movel_ldn`) / 60),3) end) AS `preco`,
    `cdr_cdrport`.`userfield` AS `userfield`
 FROM ((`cdr_cdrport` join `cdr_prefixo`) join `cdr_config_local`) where (`cdr_cdrport`.`prefixo` = `cdr_prefixo`.`prefixo`);
 
