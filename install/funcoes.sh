@@ -49,8 +49,8 @@ func_install_cdr-port () {
 
 				### FIM Config nginx
 
-				#cp conf/my.cnf /etc/mysql/
-				#/etc/init.d/mysql restart
+				cp $CONFIG_DIR/install/conf/my.cnf /etc/mysql/
+				/etc/init.d/mysql restart
 				chmod +x $CONFIG_DIR/install/conf/cdrport.sh
 				cp $CONFIG_DIR/install/conf/cdrport.sh /etc/init.d/
 				#update-rc.d  cdrport.sh defaults

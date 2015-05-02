@@ -6,6 +6,9 @@ git commit -m "Limpando a bagunça"
 
 ###
 
+INSERT INTO `cdr_prefixo` (`ddd`, `prefixo`, `inicial`, `final`, `cidade`, `estado`, `operadora`, `tipo`, `rn1`)
+VALUES
+(0,999999,0,9999,'RAMAL','RR','RAMAL','RAMAL',99999);
 
 # UPDATES
 
@@ -27,13 +30,25 @@ SHOW PROCESSLIST;
 SET GLOBAL event_scheduler = ON;
 
 DELIMITER $$		
-CREATE EVENT Stats
-ON SCHEDULE EVERY 5 MINUTE
-ON COMPLETION PRESERVE
-DO BEGIN
-TRUNCATE TABLE cdr_dispositionpercent;
-ALTER TABLE cdr_dispositionpercent AUTO_INCREMENT = 1;
-REPLACE INTO cdr_dispositionpercent (disposition, valor, perc)	
+	CREATE EVENT atualiza
+	ON SCHEDULE EVERY 5 MINUTE
+	ON COMPLETION PRESERVE
+	DO BEGIN
+	TRUNCATE TABLE cdr_dispositionpercent;
+	ALTER TABLE cdr_dispositionpercent AUTO_INCREMENT = 1;
+END $$
+DELIMITER ;
+
+
+
+DELIMITER $$		
+	CREATE EVENT atualiza
+	ON SCHEDULE EVERY 1 HOUR
+	ON COMPLETION PRESERVE
+	DO BEGIN
+	TRUNCATE TABLE cdr_dispositionpercent;
+	ALTER TABLE cdr_dispositionpercent AUTO_INCREMENT = 1;
+	REPLACE INTO cdr_dispositionpercent (disposition, valor, perc)	
 	SELECT lista.disposition, total valor , 
 	        ((total / total.total_geral) * 100) perc
 		FROM

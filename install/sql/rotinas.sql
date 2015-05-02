@@ -18,9 +18,7 @@
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER tr_stats AFTER INSERT ON cdr_cdr
-		FOR EACH ROW
-BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tr_stats` AFTER INSERT ON `cdr_cdr` FOR EACH ROW BEGIN
 
 DROP TEMPORARY TABLE IF EXISTS TMP_cdr_cdr;
 
@@ -159,6 +157,7 @@ UPDATE cdr_cdrport rt,
 				rt.operadora_id = rs.operadora
 				WHERE rt.rn1_id = rs.rn1_id;		
 
+call atualizar();
 REPLACE INTO cdr_dispositionpercent (disposition, valor, perc)	
 	SELECT lista.disposition, total valor , 
 	        ((total / total.total_geral) * 100) perc
@@ -181,6 +180,40 @@ DELIMITER ;
 --
 -- Dumping events for database 'cdrport'
 --
+/*!50106 SET @save_time_zone= @@TIME_ZONE */ ;
+DELIMITER ;;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;;
+/*!50003 SET character_set_client  = latin1 */ ;;
+/*!50003 SET character_set_results = latin1 */ ;;
+/*!50003 SET collation_connection  = latin1_swedish_ci */ ;;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;;
+/*!50003 SET @saved_time_zone      = @@time_zone */ ;;
+/*!50003 SET time_zone             = 'SYSTEM' */ ;;
+/*!50106 CREATE*/ /*!50117 DEFINER=`root`@`localhost`*/ /*!50106 EVENT `atualiza` ON SCHEDULE EVERY 1 HOUR STARTS '2015-05-01 23:04:53' ON COMPLETION PRESERVE ENABLE DO BEGIN
+	TRUNCATE TABLE cdr_dispositionpercent;
+	ALTER TABLE cdr_dispositionpercent AUTO_INCREMENT = 1;
+	REPLACE INTO cdr_dispositionpercent (disposition, valor, perc)	
+	SELECT lista.disposition, total valor , 
+	        ((total / total.total_geral) * 100) perc
+		FROM
+		(
+		SELECT disposition, total
+			FROM vw_disposition) lista,
+		(
+		SELECT sum(total) total_geral
+			FROM vw_disposition
+		) total;
+END */ ;;
+/*!50003 SET time_zone             = @saved_time_zone */ ;;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;;
+/*!50003 SET character_set_results = @saved_cs_results */ ;;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;;
+DELIMITER ;
+/*!50106 SET TIME_ZONE= @save_time_zone */ ;
 
 --
 -- Dumping routines for database 'cdrport'
@@ -192,4 +225,4 @@ DELIMITER ;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-01 21:39:30
+-- Dump completed on 2015-05-01 23:05:17
