@@ -212,20 +212,15 @@
 <div class="content-wrap">
     <!-- main page content. the place to put widgets in. usually consists of .row > .col-md-* > .widget.  -->
     <main id="content" class="content" role="main">
-        <h1 class="page-title">Dashboard <small><small>CDR-port</small></small></h1>
+        <h1 class="page-title">PABX <small><small> realtime</small></small></h1>
         <div class="row">
             <div class="col-md-8">
-                <!-- minimal widget consist of .widget class. note bg-transparent - it can be any background like bg-gray,
-                bg-primary, bg-white -->
-
-                    <!-- .widget-body is a mostly semantic class. may be a sibling to .widget>header or .widget>footer -->
             <div class="col-md-12">
                 <section class="widget">
                     <div class="widget-body">
                     </div>
-
                     <div class="widget-table-overflow">
-                        <table class="table table-striped table-sm table-hover">
+                        <table class="table table-striped table-sm">
                             <thead>
                             <tr>
                                 <td>Ramal</td>
@@ -235,11 +230,9 @@
                                 <td>Tempo</td>
                             </tr>
                             </thead>
-
                             <tbody>
                             {% for i in exten|slice:":10" %}
                                 {% if i.Extension == ' ' %}
-
                             {% else %}
                             <tr>
                                 <td>{{i.AccountCode}}</td>
@@ -265,16 +258,11 @@
             </div>
             <div class="col-md-4">
                 <section class="widget">
-                    <header>
-                        <h5>
-                            <span class="fw-semi-bold">Troncos registrados</span>
-                        </h5>
-                    </header>
                     <div class="widget-body">
                     </div>
                     <div class="widget-table-overflow">
                         <table class="table table-striped table-sm">
-                            <thead class="no-bd">
+                            <thead>
                             <tr>
                                 <th>Operadora</th>
                                 <th>Usuario</th>

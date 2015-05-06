@@ -67,6 +67,7 @@ for l in lines:
 
 def exten_request(action=None):
     
+
     data = urllib.urlencode({'action': action, 'username': 'root','secret': 88285069,})
     myrequesturlurl = main_url + data
     # print myrequesturlurl
@@ -89,12 +90,13 @@ def exten_request(action=None):
  
 # Aqui, colocamos os dados num arquivo temporÃƒÂ¡rio, na memÃƒÂ³ria.
 # Quebramos em linhas para podermos iterar...
-output = StringIO()
+out_exten = StringIO()
 #mydata = my_request(action='Login')
-output.writelines(exten_request(action='Login'))
-lines = output.getvalue().splitlines()
-output.close()
-output = None
+out_exten.writelines(exten_request(action='Login'))
+lines = out_exten.getvalue().splitlines()
+out_exten.close()
+out_exten = None
+
  
 # Criamos uma lista temporÃƒÂ¡rio com nossas chaves e valores, para podermos
 # preencher nosso dicionÃƒÂ¡rio
@@ -114,6 +116,8 @@ for l in lines:
             exten.append(mydict)
             mydict = {}
         mydict[temp[0]] = temp[1]
+
+
 
 def trunk_request(action=None):
     
