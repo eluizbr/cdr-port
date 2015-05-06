@@ -32,6 +32,7 @@ def registro(request):
 
 
 def index(request):
+
     info = Info.objects.values_list('ativo')
     info = str(info)[2]
     perc = DispositionPercent.objects.values_list('disposition', 'valor', 'perc')
@@ -47,7 +48,7 @@ def index(request):
     portados_s = Cdrport.objects.filter(portado='Sim').count()
     portados_n = Cdrport.objects.filter(portado='Nao').count()
     template = loader.get_template('index.html')
-    context = RequestContext(request, { 'info':info, 'perc': perc, 'total': total, 'stats_AN':stats_AN, 'stats_NO':stats_NO,'cidade':cidade,'portados_s':portados_s,
+    context = RequestContext(request, {'info':info, 'perc': perc, 'total': total, 'stats_AN':stats_AN, 'stats_NO':stats_NO,'cidade':cidade,'portados_s':portados_s,
 								    	'portados_n':portados_n,'stats_BU':stats_BU, 'ultimo':ultimo, 'byDay':byDay, 'byMonth':byMonth, 'operadora':operadora })
     return HttpResponse(template.render(context))
 
