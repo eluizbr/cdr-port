@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# coding:utf-8
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
@@ -16,9 +16,7 @@ from django.core.cache import cache
 
 def pabx(request):
 	
-	#ramais_sip  = asterisk.sip
 	exten = asterisk.stats_request('CoreShowChannels')
-	print exten
 	ramais_sip = asterisk.stats_request('SIPpeers')
 	trunk = asterisk.stats_request('SIPshowregistry')
 	info = Info.objects.values_list('ativo')

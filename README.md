@@ -292,12 +292,12 @@ exten => _XXXXXXXXXXX,n,Hangup
     - [ ] Editar 
     - [ ] Criar 
     - [ ] Visualizar 
-    - [ ] Status
+    - [X] Status
 - [ ] Extensions
     - [ ] Editar 
     - [ ] Criar 
     - [ ] Visualizar 
-    - [ ] Status
+    - [X] Status
 - [ ] Filas
     - [ ] Editar 
     - [ ] Criar 
