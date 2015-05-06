@@ -235,6 +235,7 @@
                                 {% if i.Extension == ' ' %}
                             {% else %}
                             <tr>
+                                {% if i.Application == " Dial"  %}
                                 <td>{{i.AccountCode}}</td>
                                 <td>{{i.Extension}}</td>
                                 <td>{{i.Context}}</td>
@@ -246,6 +247,8 @@
                                             <td>Desligou</td>
                                     {% endif %}
                                 <td>{{i.Duration}}</td>
+                                {% else %}
+                                {% endif %}
                             </tr>
                                {% endif %}
                             {% endfor %}
@@ -260,7 +263,7 @@
                 <section class="widget">
                     <div class="widget-body">
                     </div>
-                    <div id="instafeed" class="widget-table-overflow">
+                    <div class="widget-table-overflow">
                         <table class="table table-striped table-sm">
                             <thead>
                             <tr>
