@@ -8,98 +8,64 @@
 </head>
 <body>
 
-<script>
-function reload_page() {
-    location.reload();
-}
-</script>
+  <script>
+    updateableSettings = {
+      timeout: 1000,
+      callback: function() {
+        console.log(this);
+    }};
+  </script>
 
-
-<script type="text/javascript">
-    
-
-    function initNvd31(){
-
-        nv.addGraph(function() {
-            var chart = nv.models.lineChart()
-                .useInteractiveGuideline(true)
-                .margin({left: 28, bottom: 30, right: 0})
-                .color(['#82DFD6', '#ddd']);
-
-            chart.xAxis
-                .showMaxMin(false)
-                .ticks(1000)
-                .tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)) });
-
-            chart.yAxis
-                .showMaxMin(false)
-                .ticks(0)
-                .tickFormat(d3.format(',f'));
-
-            d3.select('#nvd31 svg')
-                .style('height', '300px')
-                .datum(testData(['Search', 'Referral'], 50).map(function(el, i){
-                    el.area = true;
-                    return el;
-                }))
-                .transition().duration(500)
-                .call(chart)
-            ;
-
-
-            SingApp.onResize(chart.update);
-
-            return chart;
-        });
-    }
-
-    
-</script>
-
-<script type="text/javascript">
-    
-    function initCalendar(){
-
-        var monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-
-        var dayNames = ["D", "S", "T", "Q", "Q", "S", "S"];
-
-        var now = new Date(),
-            month = now.getMonth() + 1,
-            year = now.getFullYear();
-
-        var events = [
-            {% for dia, mes, total in byDay %}
-            [
-                "{{dia|date:"j"}}/"+{{mes}}+"/"+year,
-                '{{total|intcomma}} ligações nesta data',
-                Sing.colors['brand-primary'],
-            ],
-            {% endfor %}
-        ];
-        var $calendar = $('#events-calendar');
-        $calendar.calendar({
-            months: monthNames,
-            days: dayNames,
-            events: events,
-            popover_options:{
-                placement: 'top',
-                html: true
-            }
-        });
-        $calendar.find('.icon-arrow-left').addClass('fa fa-arrow-left');
-        $calendar.find('.icon-arrow-right').addClass('fa fa-arrow-right');
-        function restyleCalendar(){
-            $calendar.find('.event').each(function(){
-                var $this = $(this),
-                    $eventIndicator = $('<span></span>');
-                $eventIndicator.css('background-color', $this.css('background-color')).appendTo($this.find('a'));
-                $this.css('background-color', '');
-            })
-        }
-        $calendar.find('.icon-arrow-left, .icon-arrow-right').parent().on('click', restyleCalendar);
-        restyleCalendar();
-    }
-</script>
 </body>
 </html>
+
+
+
+
+<!-- common libraries. required for every page-->
+<!-- common libraries. required for every page-->
+<script src="{% static "vendor/jquery/dist/jquery.min.js"%}"></script>
+<script src="{% static "vendor/jquery-pjax/jquery.pjax.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/transition.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/button.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/alert.js"%}"></script>
+<script src="{% static "vendor/slimScroll/jquery.slimscroll.min.js"%}"></script>
+<script src="{% static "vendor/widgster/widgster.js"%}"></script>
+<script src="{% static "vendor/pace.js/pace.min.js"%}"></script>
+<script src="{% static "vendor/jquery-touchswipe/jquery.touchSwipe.js"%}"></script>
+
+<!-- common app js -->
+<script src="{% static "js/settings.js"%}"></script>
+<script src="{% static "js/app.js"%}"></script>
+
+<!-- page specific libs -->
+<script src="{% static "vendor/underscore/underscore.js"%}"></script>
+<script src="{% static "vendor/jquery.sparkline/index.js"%}"></script>
+<script src="{% static "vendor/d3/d3.min.js"%}"></script>
+
+<script src="{% static "vendor/raphael/raphael-min.js"%}"></script>
+<script src="{% static "vendor/jQuery-Mapael/js/jquery.mapael.js"%}"></script>
+<script src="{% static "vendor/flot/jquery.flot.js"%}"></script>
+<script src="{% static "vendor/MetroJS/release/MetroJs.Full/MetroJs.js"%}"></script>
+<script src="{% static "vendor/skycons/skycons.js"%}"></script>
+
+<!-- page specific js -->
+<script src="{% static "demo/js/_fake-world-data.js"%}"></script>
+<script src="{% static "js/widgets.js"%}"></script>
+
+
+
+<script>
+updateableSettings = {
+  timeout: 100000,
+  callback: function() {
+    console.log(this);
+}};
+</script>
+
+<script src='{% static 'updateable.js' %}'></script>
+
+

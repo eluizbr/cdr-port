@@ -1,5 +1,20 @@
 ### INICIO VIEWS
 
+CREATE VIEW `vw_sipregs` AS SELECT
+    `id`
+    ,`name`
+    ,`ipaddr`
+    ,`port`
+    ,`regseconds`
+    ,`defaultuser`
+    ,`fullcontact`
+    ,`regserver`
+    ,`useragent`
+    ,`lastms`
+FROM `sip`;
+
+
+
 CREATE VIEW vw_disposition AS
 		SELECT id, disposition, count(disposition) AS Total
 		FROM cdr_cdrport

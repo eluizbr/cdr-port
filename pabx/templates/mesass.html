@@ -1,0 +1,714 @@
+{% load humanize %}
+{% load l10n %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CDR-port - Dashboard</title>
+    <link href="{% static "css/application.min.css"%}" rel="stylesheet">
+    <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
+    <!--[if IE 9]>
+        <link href="css/application-ie9-part2.css" rel="stylesheet">
+    <![endif]-->
+    <link rel="shortcut icon" href="{% static "img/favicon.png"%}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script>
+        /* yeah we need this empty stylesheet here. It's cool chrome & chromium fix
+         chrome fix https://code.google.com/p/chromium/issues/detail?id=167083
+         https://code.google.com/p/chromium/issues/detail?id=332189
+         */
+    </script>
+</head>
+<body>
+<!--
+  Main sidebar seen on the left. may be static or collapsing depending on selected state.
+
+    * Collapsing - navigation automatically collapse when mouse leaves it and expand when enters.
+    * Static - stays always open.
+-->
+<nav id="sidebar" class="sidebar" role="navigation">
+    <!-- need this .js class to initiate slimscroll -->
+    <div class="js-sidebar-content">
+        <header class="logo hidden-xs">
+            <a href="{% url 'index'%}">CDR-port</a>
+        </header>
+        <!-- main notification links are placed inside of .sidebar-nav -->
+        <ul class="sidebar-nav">
+            <li class="active">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="#sidebar-dashboard" data-toggle="collapse" data-parent="#sidebar">
+                    <span class="icon">
+                        <i class="fa fa-desktop"></i>
+                    </span>
+                    CDR
+                    <i class="toggle fa fa-angle-down"></i>
+                </a>
+                <ul id="sidebar-dashboard" class="collapse in">
+                    <li class="active"><a href="{% url 'index'%}">Dashboard</a></li>
+                    <li><a href="{% url 'consulta'%}">CDR</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- every .sidebar-nav may have a title -->
+        {% if info == "1"  %}
+       <!--
+        <h5 class="sidebar-nav-title">Premium<a class="action-link" href="#"><i class="glyphicon glyphicon-usd"></i></a></h5>
+            <ul class="sidebar-nav">
+                <li>
+                    <a class="collapsed" href="#sidebar-forms" data-toggle="collapse" data-parent="#sidebar">
+                        <span class="icon">
+                            <i class="glyphicon glyphicon-retweet"></i>
+                        </span>
+                        Portabilidade
+                        <i class="toggle fa fa-angle-down"></i>
+                    </a>
+                    <ul id="sidebar-forms" class="collapse">
+                        <li><a href="{% url 'error'%}">Resumo</a></li>
+                        <li><a href="{% url 'error'%}">errors</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="collapsed" href="#sidebar-ui" data-toggle="collapse" data-parent="#sidebar">
+                        <span class="icon">
+                            <i class="glyphicon glyphicon-th-list"></i>
+                        </span>
+                        PABX
+                        <i class="toggle fa fa-angle-down"></i>
+                    </a>
+                    <ul id="sidebar-ui" class="collapse">
+                        <li><a href="{% url 'error'%}">Ramais</a></li>
+                        <li><a href="{% url 'error'%}">Extensões</a></li>
+                        <li><a href="{% url 'error'%}">Troncos</a></li>
+                        <li><a href="{% url 'error'%}">URA</a></li>
+                        <li><a href="{% url 'error'%}">Filas</a></li>
+                    </ul>
+                </li>       
+            </ul>
+       -->
+        {% elif info == "2" or "3" %}
+        <!--  
+        <h5 class="sidebar-nav-title">Premium<a class="action-link" href="#"><i class="glyphicon glyphicon-usd"></i></a></h5>         
+            <ul class="sidebar-nav">
+                <li>
+                    
+                    <a class="collapsed" href="#sidebar-forms" data-toggle="collapse" data-parent="#sidebar">
+                        <span class="icon">
+                            <i class="glyphicon glyphicon-retweet"></i>
+                        </span>
+                        Portabilidade
+                        <i class="toggle fa fa-angle-down"></i>
+                    </a>
+                    <ul id="sidebar-forms" class="collapse">
+                        <li><a href="form_elements.html">Resumo</a></li>
+                        <li><a href="form_validation.html">Consultas</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="collapsed" href="#sidebar-ui" data-toggle="collapse" data-parent="#sidebar">
+                        <span class="icon">
+                            <i class="glyphicon glyphicon-th-list"></i>
+                        </span>
+                        PABX
+                        <i class="toggle fa fa-angle-down"></i>
+                    </a>
+                    <ul id="sidebar-ui" class="collapse">
+                        <li><a href="ui_components.html">Ramais</a></li>
+                        <li><a href="ui_notifications.html">Extensões</a></li>
+                        <li><a href="ui_icons.html">Troncos</a></li>
+                        <li><a href="ui_buttons.html">URA</a></li>
+                        <li><a href="ui_tabs_accordion.html">Filas</a></li>
+                    </ul>
+                </li>       
+            </ul> -->
+        {% endif %}  
+        <!-- some styled links in sidebar. ready to use as links to email folders, projects, groups, etc -->
+
+    </div>
+</nav>
+<!-- This is the white navigation bar seen on the top. A bit enhanced BS navbar. See .page-controls in _base.scss. -->
+<nav class="page-controls navbar navbar-default">
+    <div class="container-fluid">
+        <!-- .navbar-header contains links seen on xs & sm screens -->
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li>
+                    <!-- whether to automatically collapse sidebar on mouseleave. If activated acts more like usual admin templates -->
+                    <a class="hidden-sm hidden-xs" id="nav-state-toggle" href="#" title="Turn on/off sidebar collapsing" data-placement="bottom">
+                        <i class="fa fa-bars fa-lg"></i>
+                    </a>
+                    <!-- shown on xs & sm screen. collapses and expands navigation -->
+                    <a class="visible-sm visible-xs" id="nav-collapse-toggle" href="#" title="Show/hide sidebar" data-placement="bottom">
+                        <span class="rounded rounded-lg bg-gray text-white visible-xs"><i class="fa fa-bars fa-lg"></i></span>
+                        <i class="fa fa-bars fa-lg hidden-xs"></i>
+                    </a>
+                </li>
+                <li class="ml-sm mr-n-xs hidden-xs"><a onclick="reload_page()"><i class="fa fa-refresh fa-lg"></i></a></li>
+                <li class="ml-n-xs hidden-xs"><a href="#"><i class="fa fa-times fa-lg"></i></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right visible-xs">
+                <li>
+                    <!-- toggles chat -->
+                    <a href="#" data-toggle="chat-sidebar">
+                        <span class="rounded rounded-lg bg-gray text-white"><i class="fa fa-globe fa-lg"></i></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- xs & sm screen logo -->
+            <a class="navbar-brand visible-xs" href="{% url 'index'%}">
+                <i class="fa fa-circle text-gray mr-n-sm"></i>
+                <i class="fa fa-circle text-warning"></i>
+                &nbsp;
+                CDR-port
+                &nbsp;
+                <i class="fa fa-circle text-warning mr-n-sm"></i>
+                <i class="fa fa-circle text-gray"></i>
+            </a>
+        </div>
+
+        <!-- this part is hidden for xs screens -->
+        <div class="collapse navbar-collapse">
+            <!-- search form! link it to your search server -->
+            <form class="navbar-form navbar-left" role="search">
+
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle dropdown-toggle-notifications" id="notifications-dropdown-toggle" data-toggle="dropdown">
+                        &nbsp;
+                        CDR-port <strong>        
+                    {% if info == "1"  %}
+                        Free</strong>
+                    {% elif info == "2"   %}
+                        Professional</strong>
+                    {% elif info == "3"   %}
+                        Premium</strong>
+                    {% endif %}   
+                        </strong>&nbsp;
+                    <div class="dropdown-menu animated fadeInUp" id="notifications-dropdown-menu">
+                        <section class="panel notifications">
+                            <!-- notification list with .thin-scroll which styles scrollbar for webkit -->
+                            <div id="notifications-list" class="list-group thin-scroll">
+
+                                <a class="list-group-item" href="#">
+                                </a>
+                            </div>
+
+                        </section>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-md-* > .widget.  -->
+    <main id="content" class="content" role="main">
+        <!--<ol class="breadcrumb">
+            <li>Você esta aqui</li>
+            <li class="active">CDR</li>
+        </ol>-->
+
+            <h1 class="page-title">CDR-port - <span class="fw-semi-bold">Mesa operadora</span></h1>
+
+        
+<div class="row">
+    <div class="panel panel-default">
+    <!--
+        <div class="panel-heading collapsed">
+            <h5 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                    <strong>Expandir Ramais</strong>
+                    <i class="fa fa-angle-down pull-right"></i>
+                </a>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
+    
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <section class="widget bg-primary text-white">
+                    <div class="widget-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-globe"></i>
+                                </span>
+                            </div>
+                            <div class="col-xs-9">
+                                <h5 class="no-margin">USERS GROWTH</h5>
+                                <p class="h2 no-margin fw-normal">4,332</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Registrations</h5>
+                                <p class="value4">+830</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Bounce Rate</h5>
+                                <p class="value4">4.5%</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+    -->
+            <!--
+            <div class="col-md-3 col-sm-6">
+                <section class="widget bg-info text-white">
+                    <div class="widget-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <span class="widget-icon">
+                                    <i class=" glyphicon glyphicon-user"></i>
+                                </span>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="live-tile" data-mode="carousel" data-speed="750" data-delay="3000" data-height="57">
+                                    <div>
+                                        <h5 class="no-margin">VISITS TODAY</h5>
+                                        <p class="h2 no-margin fw-normal">12,324</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="no-margin">VISITS YESTERDAY</h5>
+                                        <p class="h2 no-margin fw-normal">11,885</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">New Visitors</h5>
+                                <div class="live-tile" data-mode="carousel" data-speed="750" data-delay="3000" data-height="25">
+                                    <div>
+                                        <p class="value4">1,332</p>
+                                    </div>
+                                    <div>
+                                        <p class="value4">20.1%</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Bounce Rate</h5>
+                                <div class="live-tile" data-mode="carousel" data-speed="750" data-delay="3000" data-height="26">
+                                    <div>
+                                        <p class="value4">217</p>
+                                    </div>
+                                    <div>
+                                        <p class="value4">2.3%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            -->
+{% for call in exten %} {# Configura os chamadas INICIO 01#}
+    {% for sip in  ramais_sip %} {# Configura os ramais SIP INICIO 01#}
+        {% if call.ChannelStateDesc != None %} {# Configura o SATUS da ligação 01#}
+
+            <div class="col-md-3 col-sm-6">
+                <section class="widget bg-gray text-white">
+                    <div class="widget-body clearfix">
+                        <div class="live-tile" data-mode="fade" data-speed="750" data-delay="1000" data-height="100">
+                            <div class="bg-gray">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span class="widget-icon">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <h5 class="no-margin">Ramal</h5>
+                                        <p class="h2 no-margin fw-normal">{{sip.name}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Tempo</h5>
+                                        <p class="value5">{{call.Duration}} ms</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Status</h5>
+                                        <p class="value5">{{call.ChannelStateDesc}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span class="widget-icon">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <h5 class="no-margin">Ramal</h5>
+                                        <p class="h2 no-margin fw-normal">{{sip.name}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Tempo</h5>
+                                        <p class="value5">{{call.Duration}} ms</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Status</h5>
+                                        <p class="value5">{{call.ChannelStateDesc}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </section>
+            </div>
+        {% else %}
+            <div class="col-md-3 col-sm-6">
+                <section class="widget bg-gray text-white">
+                    <div class="widget-body clearfix">
+                     <!--   <div class="live-tile" data-mode="fade" data-speed="750" data-delay="1000" data-height="100"> -->
+                        <div>
+                            <div class="bg-gray">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span class="widget-icon">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <h5 class="no-margin">Ramal</h5>
+                                        <p class="h2 no-margin fw-normal">{{sip.name}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Rigistro</h5>
+                                        <p class="value5">{{sip.lastms}} ms</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">IP</h5>
+                                        <p class="value5">{{sip.ipaddr}}:{{sip.port}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        <!--    
+                            <div>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span class="widget-icon">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <h5 class="no-margin">PICKED ORDERS</h5>
+                                        <p class="h2 no-margin fw-normal">13.8%</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Basic</h5>
+                                        <p class="value4">3,692</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Advanced</h5>
+                                        <p class="value4">1,441</p>
+                                    </div>
+                                </div>
+                            </div>
+                        -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        {% endif %} {# Configura o SATUS da ligação 01#}
+    {% endfor %} {# Configura os ramais SIP FIM - 01 #}    
+{% endfor %} {# Configura os chamadas FIM 01#}
+            <!--
+            <div class="col-md-3 col-sm-6">
+                <section class="widget bg-success text-white">
+                    <div class="widget-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-usd"></i>
+                                </span>
+                            </div>
+                            <div class="col-xs-9">
+                                <h5 class="no-margin">TOTAL PROFIT</h5>
+                                <p class="h2 no-margin fw-normal">$7,448</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Last Month</h5>
+                                <p class="value4">$83,541</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Last Week</h5>
+                                <p class="value4">$17,926</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            -->
+        </div>
+
+        </div>
+    </div>
+</div>
+       <!--   
+        <div class="row">
+            <div class="col-md-12">
+                <section class="widget">
+                    <div>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Ramal</th>
+                                <th>Número</th>
+                                <th>Cidade</th>
+                                <th>Estado</th>
+                                <th>Tipo</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Duração</th>
+                                <th>Conversação</th>
+                                <th>Custo</th>
+                                {% if gravacao == "Sim" %}
+                                <th>Audio</th> 
+                                {% else %}
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                        {% for i in results|slice:":50"  %}
+                            <tr>
+                                <td>{{i.src}}</td>
+                                    {% if i.dst|length < 11 %}
+                                        <td id="n11" data-mask="(99) 99999-9999">{{i.dst}}</td>
+                                    {% elif i.dst|length > 9 %}
+                                        <td id="n10" data-mask="(99) 9999-9999">{{i.dst}}</td>
+                                    {% else %}
+                                        <td id="n8" data-mask="9999-9999">{{i.dst}}</td>
+                                    {% endif %}
+                                <td>{{i.dst}}</td>
+                                <td>{{i.cidade|title}}</td>
+                                <td>{{i.estado}}</td>
+                                <td>{{i.tipo}}</td>
+                                <td>{{i.calldate}}</td>
+                                <td>
+                                    {% if i.disposition == "ANSWERED" %}
+                                        <span class="text-center">Atendida</span>
+                                    {% elif i.disposition == "NO ANSWER" %}
+                                        <span class="text-center">Não atendida</span>
+                                    {% elif i.disposition == "BUSY" %}
+                                        <span class="text-center">Ocupado</span>
+                                    {% else %}
+                                        <span class="text-center">Não existe</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{i.duration|time:"H:i:s"}}</td>
+                                <td>{{i.billsec|time:"H:i:s"}}</td>
+                                <td data-mask="R$ 0,000">{{i.preco}}</td>
+                                
+                                <td>
+                                {% if gravacao == "Sim" %}
+                                    {% if i.userfield == '' %}  
+                                    {% else %}
+                                        <a href="/gravacao/{{i.userfield}}"><span class="glyphicon glyphicon-volume-up"></span></a>
+                                    {% endif %}
+                                {% else %}
+                                {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                            </tbody>
+
+                        </table>
+
+            <div class="col-md-14">
+                <section class="widget">
+                    
+                {% if src_f == '0' and total == 0 %}
+                    <header class="alert alert-info alert-sm">
+                        <h5>
+                            <strong>Nenhuma informação encontrada.</strong>
+                        </h5>
+                    </header>
+
+                {% elif src_f == '0' %}
+
+                    <header class="alert alert-danger alert-sm">
+                        <h5>
+                            <strong>Selecione um ramal para gerar estatisticas.</strong>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+                        <div class="stats-row">
+                            <div class="btn-toolbar mt-lg text-align-right hidden-print">
+                            <button id="print" class="btn btn-inverse">
+                                <i class="fa fa-print"></i>
+                                &nbsp;&nbsp;
+                                Imprimir
+                            </button>
+                            </div>
+                        </div>
+
+                        <div class="progress progress-xs">
+                            <div class="progress-bar progress-bar-gray" role="progressbar" aria-valuenow="30"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                            </div>
+                        </div>
+                    </div>
+
+                {% else %}
+
+                    <header>
+                        <h5>
+                            ESTATISTICAS - RAMAL: <strong>{{src_f}}</strong>
+                        </h5>
+                    </header>
+                    <head>
+                        <h5>
+                            CUSTO no periodo de {{periodo_dia_1}}/{{periodo_mes_1}} à {{periodo_dia_2}}/{{periodo_mes_2}} : <strong>R$ {{custo}}</strong>
+                        </h5>
+                    </head>
+                    <div class="widget-body">
+                        <div class="stats-row">
+                            <div class="stat-item">
+                                <h6 class="name">Periodo</h6>
+                                <p class="value">{{periodo_dia_1}}/{{periodo_mes_1}} à {{periodo_dia_2}}/{{periodo_mes_2}} </p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Tempo total</h6>
+                                <p class="value">{{tempo}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Tempo medio por cahamda</h6>
+                                <p class="value">{{tempo_medio}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Chamda mais longa</h6>
+                                <p class="value">{{tempo_maior}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Chamda mais curta</h6>
+                                <p class="value">{{tempo_menor}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Atendidas</h6>
+                                <p class="value">{{atendeu|intcomma}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Não atendidas</h6>
+                                <p class="value">{{n_atendeu|intcomma}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Ocupadas</h6>
+                                <p class="value">{{ocupado|intcomma}}</p>
+                            </div>
+                            <div class="stat-item">
+                                <h6 class="name">Número não existe</h6>
+                                <p class="value">{{falhou|intcomma}}</p>
+                            </div>
+                            <div class="btn-toolbar mt-lg text-align-right hidden-print">
+                            <button id="print" class="btn btn-inverse">
+                                <i class="fa fa-print"></i>
+                                &nbsp;&nbsp;
+                                Imprimir
+                            </button>
+                            </div>
+                        </div>
+
+                        <div class="progress progress-xs">
+                            <div class="progress-bar progress-bar-gray" role="progressbar" aria-valuenow="30"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                {% endif %}
+
+                </section>
+
+                        <div class="row text-center">
+                                <div class="col-lg-12">
+                            <ul class="pagination">
+                                {% if results.has_previous %}
+                                        <li><a href="?page={{ results.previous_page_number }}&{{url}}">Anterior</a></li>
+                                {% endif %}
+                                {% for pg in results.paginator.page_range%}
+                                        {% if results.number == pg %}
+                                        {% else %}
+                                        {% endif %}
+                                {% endfor %}
+                                {% if results.has_next %}
+                                <li class="active"><a>{{ results.number }} de {{ results.paginator.num_pages }}</a></li>
+                                        <li><a href="?page={{ results.next_page_number }}&{{url}}"> Próximo</a></li>
+                                {% endif %}
+                            </ul>
+
+                            </div>
+                        </div>
+            </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+        -->
+        
+    </main>
+</div>
+<!-- The Loader. Is shown when pjax happens -->
+<div class="loader-wrap hiding hide">
+    <i class="fa fa-circle-o-notch fa-spin-fast"></i>
+</div>
+
+<!-- common libraries. required for every page-->
+<!-- common libraries. required for every page-->
+<script src="{% static "vendor/jquery/dist/jquery.min.js"%}"></script>
+<script src="{% static "vendor/jquery-pjax/jquery.pjax.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/transition.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/button.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/alert.js"%}"></script>
+<script src="{% static "vendor/slimScroll/jquery.slimscroll.min.js"%}"></script>
+<script src="{% static "vendor/widgster/widgster.js"%}"></script>
+<script src="{% static "vendor/pace.js/pace.min.js"%}"></script>
+<script src="{% static "vendor/jquery-touchswipe/jquery.touchSwipe.js"%}"></script>
+
+<!-- common app js -->
+<script src="{% static "js/settings.js"%}"></script>
+<script src="{% static "js/app.js"%}"></script>
+
+<!-- page specific libs -->
+<script src="{% static "vendor/underscore/underscore.js"%}"></script>
+<script src="{% static "vendor/jquery.sparkline/index.js"%}"></script>
+<script src="{% static "vendor/d3/d3.min.js"%}"></script>
+
+<script src="{% static "vendor/raphael/raphael-min.js"%}"></script>
+<script src="{% static "vendor/jQuery-Mapael/js/jquery.mapael.js"%}"></script>
+<script src="{% static "vendor/flot/jquery.flot.js"%}"></script>
+<script src="{% static "vendor/MetroJS/release/MetroJs.Full/MetroJs.js"%}"></script>
+<script src="{% static "vendor/skycons/skycons.js"%}"></script>
+
+<!-- page specific js -->
+<script src="{% static "demo/js/_fake-world-data.js"%}"></script>
+<script src="{% static "js/widgets.js"%}"></script>
+
+{% include "include.html" %}
+</body>
+</html>

@@ -1,0 +1,155 @@
+'''
+http://www.voip-info.org/wiki/view/channel+status
+<status> values:
+0 Channel is down and available
+1 Channel is down, but reserved
+2 Channel is off hook
+3 Digits (or equivalent) have been dialed
+4 Line is ringing
+5 Remote end is ringing (Recebendo a chamada)
+6 Line is up
+7 Line is busy
+
+
+
+Channel:SIP/400-00000058
+Context:saida
+Exten:
+Priority:1
+Stats:Up
+Application:AppDial
+Data:(Outgoing Line)
+CallerID:400
+Accountcode:300
+Amaflags:300
+Duration:2
+!516!
+Bridged:SIP/300-00000057!1431242827.88
+
+SIP/300-00000057!saida!400!3!Up!Dial!SIP/400!300!300!300!2!516!SIP/400-00000058!1431242827.87
+
+'''
+Event: CoreShowChannel
+Channel: SIP/216.53.4.1-00016e10
+UniqueID: 1431363213.93712
+Context: default
+Extension: 
+Priority: 1
+ChannelState: 6
+ChannelStateDesc: Up
+Application: AppDial
+ApplicationData: (Outgoing Line)
+CallerIDnum: 01532135709
+CallerIDname: 
+ConnectedLineNum: 98339
+ConnectedLineName: 
+Duration: 00:02:19
+AccountCode: 98339
+BridgedChannel: SIP/98339-00016e0f
+BridgedUniqueID: 1431363213.93711
+
+
+Event: CoreShowChannel
+Channel: SIP/98339-00016e0f
+UniqueID: 1431363213.93711
+Context: saida
+Extension: 01532135709
+Priority: 1
+ChannelState: 6
+ChannelStateDesc: Up
+Application: Dial
+ApplicationData: SIP/216.53.4.1/99900551532135709,60,
+CallerIDnum: 98339
+CallerIDname: 
+ConnectedLineNum: 
+ConnectedLineName: 
+Duration: 00:02:20
+AccountCode: 98339
+BridgedChannel: SIP/216.53.4.1-00016e10
+BridgedUniqueID: 1431363213.93712 
+
+
+------------------RAMAIS------------------------------------
+
+ORIGEM
+Event: CoreShowChannel
+Channel: SIP/300-00000038
+UniqueID: 1431236341.56
+Context: saida
+Extension: 400 <--------- Destino da ligação
+Priority: 3
+ChannelState: 4
+ChannelStateDesc: Ring
+Application: Dial
+ApplicationData: SIP/400 <--------- Destino da ligação
+CallerIDnum: 300 <--------- Ramal que gerou a ligacao
+CallerIDname: Beta
+ConnectedLineNum: 
+ConnectedLineName: 
+Duration: 00:00:01
+AccountCode: 300 <--------- Ramal que gerou a ligacao
+BridgedChannel: 
+BridgedUniqueID: 
+
+DESTINO
+Event: CoreShowChannel
+Channel: SIP/400-00000039
+UniqueID: 1431236341.57
+Context: saida
+Extension: 400
+Priority: 1
+ChannelState: 5
+ChannelStateDesc: Ringing
+Application: AppDial
+ApplicationData: (Outgoing Line)
+CallerIDnum: 400
+CallerIDname: 
+ConnectedLineNum: 300
+ConnectedLineName: Beta
+Duration: 00:00:01
+AccountCode: 300
+BridgedChannel: 
+BridgedUniqueID: 
+
+
+Event: CoreShowChannel
+Channel: SIP/400-0000004d
+UniqueID: 1431242297.77
+Context: saida
+Extension: 
+Priority: 1
+ChannelState: 6
+ChannelStateDesc: Up
+Application: AppDial
+ApplicationData: (Outgoing Line)
+CallerIDnum: 400
+CallerIDname: 
+ConnectedLineNum: 300
+ConnectedLineName: Beta
+Duration: 00:00:08
+AccountCode: 300
+BridgedChannel: SIP/300-0000004c
+BridgedUniqueID: 1431242297.76
+
+Event: CoreShowChannel
+Channel: SIP/300-0000004c
+UniqueID: 1431242297.76
+Context: saida
+Extension: 400
+Priority: 3
+ChannelState: 6
+ChannelStateDesc: Up
+Application: Dial
+ApplicationData: SIP/400
+CallerIDnum: 300
+CallerIDname: Beta
+ConnectedLineNum: 
+ConnectedLineName: 
+Duration: 00:00:08
+AccountCode: 300
+BridgedChannel: SIP/400-0000004d
+BridgedUniqueID: 1431242297.77
+
+
+
+
