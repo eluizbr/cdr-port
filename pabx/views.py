@@ -34,10 +34,8 @@ def pabx(request):
 	exten = asterisk.stats_request('CoreShowChannels')
 	#x = json.dumps(exten, indent=1)
 	#print x
-
+	troncos = asterisk.stats_request('SIPshowregistry')
 	ramais_sip = VwSipregs.objects.all()
-	sip = VwSipregs.objects.all()
-
 	eventos =  Cel.objects.all()
 	#print eventos
 	#uniqueid = exten[0]["UniqueID"]
@@ -61,7 +59,7 @@ def pabx(request):
 	'''
 
 	template = loader.get_template('mesa.html')
-	context = RequestContext(request, {'exten':exten, 'ramais_sip':ramais_sip, 'eventos':eventos})
+	context = RequestContext(request, {'exten':exten, 'ramais_sip':ramais_sip, 'eventos':eventos, 'troncos':troncos})
 	return HttpResponse(template.render(context))
 
 	

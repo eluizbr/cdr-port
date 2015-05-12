@@ -7,3 +7,4 @@ ehthumbs.db
 Thumbs.db
 *.pyc
 settings.py
+*.json
