@@ -29,7 +29,7 @@ cookie = ''
 
 def stats_request(action=None):
     #data = urllib.urlencode({'action': 'Login', 'username': 'root','secret': 'ZhVKlFXeCgTNyBr9lbIH',})
-    data = urllib.urlencode({'action': 'Login', 'username': 'asterisk','secret': 'senha',})
+    data = urllib.urlencode({'action': 'Login', 'username': 'root','secret': 'senha',})
     myrequesturlurl = main_url + data
     #print myrequesturlurl
     req = urllib2.Request(myrequesturlurl)

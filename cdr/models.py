@@ -100,9 +100,9 @@ class cdr(models.Model):
     billsec = models.IntegerField()
     disposition = models.CharField(max_length=45)
     amaflags = models.IntegerField()
-    accountcode = models.CharField(max_length=20)
+    accountcode = models.CharField(max_length=20, null=True)
     uniqueid = models.CharField(unique=True, max_length=32)
-    userfield = models.CharField(max_length=255)
+    userfield = models.CharField(max_length=255, null=True)
     prefix = models.CharField(max_length=80, blank=True, null=True)
     portado = models.CharField(max_length=3, default='Nao')
     

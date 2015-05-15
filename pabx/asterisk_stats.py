@@ -22,7 +22,7 @@ import re
 
 myrequesturl = ''
 #main_url = 'http://sip.tofalando.com.br:8088/asterisk/rawman?'
-main_url = 'http://192.168.2.230:8088/asterisk/rawman?'
+main_url = 'http://192.168.2.230:8088/rawman?'
 cookie = ''
 
 
@@ -71,7 +71,7 @@ def stats_request(action=None):
              temp = l.split(':')
 
         if len(temp) > 1:
-            if temp[1].strip() != '':
+            if temp[1].strip() != 'ZZZZZZZZZ':
                 if mydict.has_key(temp[0]):
                     asterisk.append(mydict)
                     mydict = {}

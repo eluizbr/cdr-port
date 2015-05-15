@@ -216,133 +216,131 @@
 
             <h1 class="page-title">CDR-port - <span class="fw-semi-bold">Mesa operadora</span></h1>
 
+
 <div class="row">
 
-    <div class="row">
-                <div class="col-md-9">
-                  <div class="row">
-        <div class="col-md-10">
-    
-        {% for sip in ramais_sip %} {#Tratamento dos ramais ON/OFF#}
-            {% if sip.lastms < 1 %} {#Trata ramais ON/OFF#}   
-            <!-- 
-                <div class="col-md-4">
-
-                    <section class="widget bg-gray text-white">
-                        <div class="widget-body clearfix">
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <span class="widget-icon">
-                                        <i class="glyphicon glyphicon-user"></i>
-                                    </span>
-                                </div>
-                                <div class="col-xs-4">
-                                    <h5 class="no-margin">Ramal</h5>
-                                    <p class="h2 no-margin fw-normal">{{sip.name}}</p>
-                                </div>
-                                <div class="col-xs-4">
-                                    <h5 class="no-margin">OFF LINE</h5>
-                                    <p class="h2 no-margin fw-normal"></p>
-                                </div>
+    <div class="col-md-9">
+    {% for sip in ramais_sip %} {#Trataento para ramais SIP#}
+    {% for call in exten %} {#Tratamento para ligações#}
+        {% if call.CallerIDname == call.CallerIDnum and sip.name == call.CallerIDname %}
+            <div class="col-md-4">
+                <section class="widget bg-primary text-white">
+                    <div class="widget-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <h5 class="no-margin">Registro</h5>
-                                    <p class="value4">0 ms</p>
-                                </div>
-                                <div class="col-xs-6">
-                                    <h5 class="no-margin">IP</h5>
-                                    <p class="value4">{{ eventos.eventtype }}</p>
-                                </div>
+                        {% if call.ConnectedLineNum == call.ConnectedLineName %}
+                            <div class="col-xs-4">
+                                <h5 class="no-margin">Ramal</h5>
+                                <p class="h2 no-margin fw-normal">{{sip.name}}</p>
+                            </div>
+                            <div class="col-xs-4">
+                                <h5 class="no-margin">Falando com</h5>
+                                <p class="h2 no-margin fw-normal">{{call.Extension}}</p>
+                            </div>
+                        {% else %}
+                            <div class="col-xs-4">
+                                <h5 class="no-margin">Ramal</h5>
+                                <p class="h2 no-margin fw-normal">{{sip.name}}</p>
+                            </div>
+                        {% endif %}
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <h5 class="no-margin">Registro</h5>
+                                <p class="value4">{{sip.lastms}} ms</p>
+                            </div>
+                        <div class="col-xs-4">
+                                <h5 class="no-margin">IP</h5>
+                                <p class="value4">{{sip.ipaddr}}</p>
                             </div>
                         </div>
-                    </section>
-                </div>
-            -->
-            {% else %} {#Trata ramais ON/OFF#}
-                <div class="col-md-4">
-                    <section class="widget bg-primary text-white">
-                        <div class="widget-body clearfix">
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <span class="widget-icon">
-                                        <i class="glyphicon glyphicon-user"></i>
-                                    </span>
-                                </div>
-                                <div class="col-xs-4">
-                                    <h5 class="no-margin">Ramal</h5>
-                                    <p class="h2 no-margin fw-normal">{{sip.name}}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <h5 class="no-margin">Registro</h5>
-                                    <p class="value4">{{sip.lastms}} ms</p>
-                                </div>
-                                <div class="col-xs-6">
-                                    <h5 class="no-margin">IP</h5>
-                                    <p class="value4">{{sip.ipaddr}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            {% endif %} {#Trata ramais ON/OFF#}
-        {% endfor %} {#Tratamento dos ramais ON/OFF#}
-    
-        </div>
-                  </div>
-                </div>
-            <div class="col-md-3">
-                <div class="col-md-12">
-                    <section class="widget">
-                        <header>
-                            <h5>
-                                Troncos <span class="fw-semi-bold"></span>
-                            </h5>
-                            <div class="widget-controls">
-                                <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
-                                <a href="#"><i class="fa fa-refresh"></i></a>
-                                <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
-                            </div>
-                        </header>
-                    {% for trunk in troncos %}
-                        <div class="widget-body">
-                                <div>
-                                    <legend>
-                                        Tronco {{trunk.Username}}
-                                    </legend>    
-                                    <br/>
-                                </div>
-                                
-                                {% for call in exten %}
-                                    {% if call.ConnectedLineNum == trunk.Username %}
-                                    <div class="stats-row">
-                                        <div class="stat-item">
-                                            <h6 class="name">Ramal</h6>
-                                            <p class="value">{{call.CallerIDnum}}</p>
-                                        </div>
-                                        <div class="stat-item">
-                                            <h6 class="name">Chamando</h6>
-                                            <p class="value">{{call.Extension}}</p>
-                                        </div>
-                                        <div class="stat-item">
-                                            <h6 class="name">Tempo</h6>
-                                            <p class="value">{{call.Duration}}</p>
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                {% endfor %}       
-                        </div>
-                    {% endfor %}
-                    </section>
-                </div>
+                    </div>
+                </section>
             </div>
-           
+      
 
+        {% else %}
+            <div class="col-md-4">
+                <section class="widget bg-primary text-white">
+                    <div class="widget-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                            </div>
+                            <div class="col-xs-4">
+                                <h5 class="no-margin">Ramal</h5>
+                                <p class="h2 no-margin fw-normal">{{sip.name}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <h5 class="no-margin">Registro</h5>
+                                <p class="value4">{{sip.lastms}} ms</p>
+                            </div>
+                        <div class="col-xs-4">
+                                <h5 class="no-margin">IP</h5>
+                                <p class="value4">{{sip.ipaddr}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        {% endif %}
+    {% endfor %} {#Trataento para ramais SIP#}
+    {% endfor %} {#Tratamento para ligações#}
+    </div>     
+    <div class="col-md-3">
+        <div class="col-md-12">
+            <section class="widget">
+                <header>
+                    <h5>
+                        Troncos <span class="fw-semi-bold"></span>
+                    </h5>
+                    <div class="widget-controls">
+                        <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
+                        <a href="#"><i class="fa fa-refresh"></i></a>
+                        <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
+                    </div>
+                </header>
+            {% for trunk in troncos %}
+                <div class="widget-body">
+                        <div>
+                            <legend>
+                                Tronco {{trunk.Username}}
+                            </legend>    
+                            <br/>
+                        </div>
+                        
+                        {% for call in exten %}
+                            {% if call.ConnectedLineNum == trunk.Username %}
+                            <div class="stats-row">
+                                <div class="stat-item">
+                                    <h6 class="name">Ramal</h6>
+                                    <p class="value">{{call.CallerIDnum}}</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h6 class="name">Chamando</h6>
+                                    <p class="value">{{call.Extension}}</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h6 class="name">Tempo</h6>
+                                    <p class="value">{{call.Duration}}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}       
+                </div>
+            {% endfor %}
+            </section>
+        </div>
     </div>
 </div>
-
 
     </main>
 </div>

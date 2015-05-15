@@ -6,6 +6,34 @@ from choices import TYPE, TRANSPORT, DTMFMODE, DIRECTMEDIA, NAT, TRUSTRPID, PROG
                     IGNORESDPVERSION, ALLOWTRANSFER, DYNAMIC 
 
 
+
+class rt_calls(models.Model):
+    Event = models.CharField(blank=True, null=True, max_length=100)
+    Channel = models.CharField(blank=True, null=True, max_length=100)
+    ChannelState = models.CharField(max_length=100)
+    ChannelStateDesc = models.CharField(blank=True, null=True, max_length=10)
+    CallerIDNum = models.IntegerField(blank=True, null=True, max_length=40)
+    CallerIDName = models.CharField(max_length=100)
+    ConnectedLineNum = models.CharField(blank=True, null=True, max_length=100)
+    ConnectedLineName = models.CharField(blank=True, null=True, max_length=100)
+    Language = models.CharField(blank=True, null=True, max_length=10)
+    AccountCode = models.CharField(blank=True, null=True, max_length=100)
+    Context = models.CharField(blank=True, null=True, max_length=100)
+    Exten = models.CharField(blank=True, null=True, max_length=100)
+    Priority = models.IntegerField(blank=True, null=True, max_length=10)
+    Uniqueid = models.CharField(unique=True, max_length=100)
+    Application = models.CharField(blank=True, null=True, max_length=100)
+    ApplicationData = models.CharField(blank=True, null=True, max_length=100)
+    Duration = models.TimeField()
+    BridgeId = models.CharField(unique=True, blank=True, null=True, max_length=200)
+    
+    def __unicode__(self):
+        return unicode(self.Event)
+
+
+
+
+
 class Sip(models.Model):
     name = models.CharField(unique=True, max_length=10)
     ipaddr = models.CharField(max_length=15, blank=True, default='0.0.0.0')
@@ -143,6 +171,7 @@ class Cel(models.Model):
     linkedid = models.CharField(max_length=150)
     userfield = models.CharField(max_length=255)
     peer = models.CharField(max_length=80)
+    extra = models.CharField(max_length=255)
 
     def __unicode__(self):
         return unicode(self.eventtype)
