@@ -26,6 +26,7 @@ class rt_calls(models.Model):
     ApplicationData = models.CharField(blank=True, null=True, max_length=100)
     Duration = models.TimeField()
     BridgeId = models.CharField(unique=True, blank=True, null=True, max_length=200)
+    controle = models.IntegerField(max_length=1, default=0, blank=True, null=True)
     
     def __unicode__(self):
         return unicode(self.Event)

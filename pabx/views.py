@@ -35,7 +35,8 @@ http://www.voip-info.org/wiki/view/Asterisk+cmd+SetAMAFlags
 
 def pabx(request):
 	
-	exten = asterisk.stats_request('CoreShowChannels')
+	exten = rt_calls.objects.all()
+	print exten
 
 
 	troncos = asterisk.stats_request('SIPshowregistry')

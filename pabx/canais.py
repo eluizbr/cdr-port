@@ -70,12 +70,12 @@ def real_time():
 				else:
 
 					x = """SELECT Uniqueid FROM pabx_rt_calls WHERE BridgeId = '%s' AND Uniqueid = %s"""  % (BridgeId,Uniqueid)
-					print x
+					#print x
 					x = c.execute(x)
 
 					if not c.fetchone() is None:
 						up = """DELETE FROM pabx_rt_calls WHERE BridgeId != '%s' AND Uniqueid != '%s' """ % (BridgeId,Uniqueid)
-						print up
+						#print up
 						c.execute(up)	
 						down = "DELETE FROM pabx_rt_calls WHERE BridgeId = '' AND ChannelStateDesc = 'Down' AND Uniqueid = " + str(Uniqueid)
 						c.execute(down)					
@@ -102,7 +102,11 @@ def real_time():
 
 
 			except KeyError as e:
-				pass
+				
+				atualiza = "UPDATE pabx_rt_calls SET controle = 1 "
+				#print atualiza
+				c.execute(atualiza)
+				connection.commit()
 real_time()
 
 '''
@@ -111,6 +115,6 @@ def work():
 	t = threading.Timer(1, work)
 	t.start()
 	real_time()
-	t.cancel()
+	
 work()
 '''
