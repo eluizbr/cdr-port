@@ -2,18 +2,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader, Template
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
-from cdr.models import cdr, DispositionPercent, Info, Cdrport,Config_Local
-from cdr.models import  VwDayStats, VwMonthStats,VwLast10, VwOperadoras, VwStatsAnswered, VwStatsBusy, VwStatsNoanswer, VwRamais,\
-                    VwDisposition, VwCdr, VwCidades, VwEstados
-from pabx.models import VwSipregs,  Cel, rt_calls
-from django.db.models import Sum, Count, Avg, Max, Min
+from pabx.models import VwSipregs, rt_calls
 from datetime import datetime, timedelta, time
-from django.db.models import Q
-from django.http import QueryDict
 import asterisk_stats as asterisk
-from django.core import serializers
-import ari
 import simplejson as json
 
 '''
@@ -36,20 +27,16 @@ http://www.voip-info.org/wiki/view/Asterisk+cmd+SetAMAFlags
 def pabx(request):
 	
 	exten = rt_calls.objects.all()
-	print exten
-
+	#print exten
 
 	troncos = asterisk.stats_request('SIPshowregistry')
 	ramais_sip = VwSipregs.objects.all()
-	eventos =  Cel.objects.all()
-	eventos_id =  Cel.objects.values_list('uniqueid')
 	#print eventos_id
 
 
 	template = loader.get_template('mesa.html')
-	context = RequestContext(request, {'exten':exten, 'ramais_sip':ramais_sip, 'eventos':eventos, 'troncos':troncos})
+	context = RequestContext(request, {'exten':exten, 'ramais_sip':ramais_sip, 'troncos':troncos})
 	return HttpResponse(template.render(context))
-
 	
 
 

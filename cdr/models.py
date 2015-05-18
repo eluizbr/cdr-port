@@ -100,9 +100,9 @@ class cdr(models.Model):
     billsec = models.IntegerField()
     disposition = models.CharField(max_length=45)
     amaflags = models.IntegerField()
-    accountcode = models.CharField(max_length=20, null=True)
+    accountcode = models.CharField(max_length=20)
     uniqueid = models.CharField(unique=True, max_length=32)
-    userfield = models.CharField(max_length=255, null=True)
+    userfield = models.CharField(max_length=255)
     prefix = models.CharField(max_length=80, blank=True, null=True)
     portado = models.CharField(max_length=3, default='Nao')
     
@@ -138,7 +138,7 @@ class Prefixo(models.Model):
     cidade = models.CharField(max_length=100, blank=True)
     estado = models.CharField(max_length=2, blank=True)
     operadora = models.CharField(max_length=30, blank=True)
-    tipo = models.CharField(max_length=25, blank=True)
+    tipo = models.CharField(max_length=15, blank=True)
     rn1 = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):

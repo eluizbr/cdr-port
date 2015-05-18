@@ -6,11 +6,11 @@ from choices import TYPE, TRANSPORT, DTMFMODE, DIRECTMEDIA, NAT, TRUSTRPID, PROG
                     IGNORESDPVERSION, ALLOWTRANSFER, DYNAMIC 
 
 
-
+'''
 class rt_calls(models.Model):
     Event = models.CharField(blank=True, null=True, max_length=100)
     Channel = models.CharField(blank=True, null=True, max_length=100)
-    ChannelState = models.CharField(max_length=100)
+    ChannelState = models.IntegerField()
     ChannelStateDesc = models.CharField(blank=True, null=True, max_length=10)
     CallerIDNum = models.IntegerField(blank=True, null=True, max_length=40)
     CallerIDName = models.CharField(max_length=100)
@@ -29,7 +29,30 @@ class rt_calls(models.Model):
     controle = models.IntegerField(max_length=1, default=0, blank=True, null=True)
     
     def __unicode__(self):
-        return unicode(self.Event)
+        return "%s %s %s" %(self.ChannelState, self.ChannelStateDesc, self.controle)
+
+'''
+
+class rt_calls(models.Model):
+    Channel = models.CharField(blank=True, null=True, max_length=100)
+    ChannelState = models.IntegerField()
+    ChannelStateDesc = models.CharField(blank=True, null=True, max_length=10)
+    CallerIDNum = models.IntegerField(blank=True, null=True, max_length=40)
+    CallerIDName = models.CharField(max_length=100)
+    ConnectedLineNum = models.CharField(blank=True, null=True, max_length=100)
+    ConnectedLineName = models.CharField(blank=True, null=True, max_length=100)
+    AccountCode = models.CharField(blank=True, null=True, max_length=100)
+    Context = models.CharField(blank=True, null=True, max_length=100)
+    Exten = models.CharField(blank=True, null=True, max_length=100)
+    Priority = models.IntegerField(blank=True, null=True, max_length=10)
+    Uniqueid = models.CharField(max_length=100)
+    Application = models.CharField(blank=True, null=True, max_length=100)
+    Duration = models.TimeField()
+    BridgeId = models.CharField(blank=True, null=True, max_length=200)
+    controle = models.IntegerField(max_length=1, default=0, blank=True, null=True)
+    
+    def __unicode__(self):
+        return "%s %s %s" %(self.ChannelState, self.ChannelStateDesc, self.controle)
 
 
 
@@ -150,7 +173,7 @@ class VwSipregs(models.Model):
     class Meta:
         managed = False
         db_table = 'vw_sipregs'
-
+'''
 class Cel(models.Model):
     eventtype = models.CharField(max_length=30)
     eventtime = models.DateTimeField()
@@ -180,3 +203,4 @@ class Cel(models.Model):
     class Meta:
         managed = False
         db_table = 'cel'
+'''

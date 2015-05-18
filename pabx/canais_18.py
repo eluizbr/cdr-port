@@ -28,7 +28,7 @@ dados = json.dumps(exten)
 dados_load = json.loads(dados)
 #print dados_load
 
-asterisk == 11
+
 
 def real_time():
 
@@ -41,20 +41,19 @@ def real_time():
 				Channel = item['Channel']
 				ChannelState = item['ChannelState']
 				ChannelStateDesc = item['ChannelStateDesc']
-				CallerIDNum = item['CallerIDNum']
-				CallerIDName = item['CallerIDName']
+				CallerIDNum = item['CallerIDnum']
+				CallerIDName = item['CallerIDname']
 				ConnectedLineNum = item['ConnectedLineNum']
 				ConnectedLineName = item['ConnectedLineName']
-				Language = item['Language']
 				AccountCode = item['AccountCode']
 				Context = item['Context']
-				Exten = item['Exten']
+				Exten = item['Extension']
 				Priority = item['Priority']
-				Uniqueid = item['Uniqueid']
+				Uniqueid = item['UniqueID']
 				Application = item['Application']
 				ApplicationData = item['ApplicationData']
 				Duration = item['Duration']
-				BridgeId = item['BridgeId']
+				BridgeId = item['BridgedUniqueID']
 
 
 				if ChannelState != "6":

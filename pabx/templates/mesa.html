@@ -218,78 +218,260 @@
 
 <div class="row">
 
+{% updateable %}
     <div class="row">
                 <div class="col-md-9">
                   <div class="row">
         <div class="col-md-10">
-    
-        {% for sip in ramais_sip %} {#Tratamento dos ramais ON/OFF#}
-            {% if sip.lastms < 1 %} {#Trata ramais ON/OFF#}   
-            <!-- 
-                <div class="col-md-4">
 
-                    <section class="widget bg-gray text-white">
-                        <div class="widget-body clearfix">
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <span class="widget-icon">
-                                        <i class="glyphicon glyphicon-user"></i>
-                                    </span>
-                                </div>
-                                <div class="col-xs-4">
-                                    <h5 class="no-margin">Ramal</h5>
-                                    <p class="h2 no-margin fw-normal">{{sip.name}}</p>
-                                </div>
-                                <div class="col-xs-4">
-                                    <h5 class="no-margin">OFF LINE</h5>
-                                    <p class="h2 no-margin fw-normal"></p>
-                                </div>
+{% for rt in exten %}
+
+
+
+    {% if rt.controle == 1 and rt.Exten|length > 7 %}
+
+            <div class="col-md-4">
+                <section class="widget bg-primary text-white">
+                    <div class="widget-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <h5 class="no-margin">Registro</h5>
-                                    <p class="value4">0 ms</p>
-                                </div>
-                                <div class="col-xs-6">
-                                    <h5 class="no-margin">IP</h5>
-                                    <p class="value4">{{ eventos.eventtype }}</p>
-                                </div>
+                    {% if rt.controle == 1 %}
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ramal</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
+                            </div>
+                        {% if rt.ChannelStateDesc == "Up" %}
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Falando com:</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.Exten}}</p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Tempo</h5>
+                                <p class="value5">{{rt.Duration|time:"H:i:s"}}</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Status</h5>
+                                <p class="value5">Ao Telefone</p>
                             </div>
                         </div>
-                    </section>
-                </div>
-            -->
-            {% else %} {#Trata ramais ON/OFF#}
-                <div class="col-md-4">
-                    <section class="widget bg-primary text-white">
-                        <div class="widget-body clearfix">
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <span class="widget-icon">
-                                        <i class="glyphicon glyphicon-user"></i>
-                                    </span>
-                                </div>
-                                <div class="col-xs-4">
-                                    <h5 class="no-margin">Ramal</h5>
-                                    <p class="h2 no-margin fw-normal">{{sip.name}}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <h5 class="no-margin">Registro</h5>
-                                    <p class="value4">{{sip.lastms}} ms</p>
-                                </div>
-                                <div class="col-xs-6">
-                                    <h5 class="no-margin">IP</h5>
-                                    <p class="value4">{{sip.ipaddr}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            {% endif %} {#Trata ramais ON/OFF#}
-        {% endfor %} {#Tratamento dos ramais ON/OFF#}
+                    </div>
+                </section>
+            </div>
     
+
+    {% elif rt.controle == 1 %}
+        
+            
+        <div class="col-md-4">
+            <section class="widget bg-primary text-white">
+                <div class="widget-body clearfix">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <span class="widget-icon">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </span>
+                        </div>
+                        <div class="col-xs-4">
+                            <h6 class="no-margin">Ramal</h6>
+                            <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
+                        </div>
+                    {% if rt.ChannelStateDesc == "Up" %}
+                        <div class="col-xs-4">
+                            <h6 class="no-margin">Recebendo de:</h6>
+                            <p class="h3 no-margin fw-normal">{{rt.Exten}}</p>
+                        </div>
+                    {% else %}
+                        <div class="col-xs-4">
+                            <h6 class="no-margin">Falando com:</h6>
+                            <p class="h3 no-margin fw-normal">{{rt.ConnectedLineNum}}</p>
+                        </div>
+                    {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h5 class="no-margin">Tempo</h5>
+                            <p class="value5">{{rt.Duration|time:"H:i:s"}}</p>
+                        </div>
+                        <div class="col-xs-6">
+                            <h5 class="no-margin">Status</h5>
+                            <p class="value5">Ao Telefone</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>  
+
+        <div class="col-md-4">
+            <section class="widget bg-primary text-white">
+                <div class="widget-body clearfix">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <span class="widget-icon">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </span>
+                        </div>
+                {% if rt.controle == 1 %}
+                        <div class="col-xs-4">
+                            <h6 class="no-margin">Ramal</h6>
+                            <p class="h3 no-margin fw-normal">{{rt.Exten}}</p>
+                        </div>
+                    {% if rt.ChannelStateDesc == "Up" %}
+                        <div class="col-xs-4">
+                            <h6 class="no-margin">Ligando para:</h6>
+                            <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h5 class="no-margin">Tempo</h5>
+                            <p class="value5">{{rt.Duration|time:"H:i:s"}}</p>
+                        </div>
+                        <div class="col-xs-6">
+                            <h5 class="no-margin">Status</h5>
+                            <p class="value5">Ao Telefone</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div> 
+        
+    
+
+    {% elif rt.controle == 0  and rt.Exten|length > 7 %}
+
+            <div class="col-md-4">
+                <section class="widget bg-primary text-white">
+                    <div class="widget-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                            </div>
+                    {% if rt.controle == 0 %}
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ramal</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
+                            </div>
+                        {% if rt.ChannelStateDesc == "Ring" %}
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ligando para:</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.Exten}}</p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Tempo</h5>
+                                <p class="value5">{{rt.Duration|time:"H:i:s"}}</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Status</h5>
+                                <p class="value5">Chamando</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+    {% elif rt.controle == 0 %}
+        
+            <div class="col-md-4">
+                <section class="widget bg-primary text-white">
+                    <div class="widget-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                            </div>
+                    {% if rt.controle == 0 %}
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ramal</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
+                            </div>
+                        {% if rt.ChannelStateDesc == "Ring" %}
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Chamando:</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.Exten}}</p>
+                            </div>
+                        {% else %}
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ligando para:</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.ConnectedLineNum}}</p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Tempo</h5>
+                                <p class="value5">{{rt.Duration|time:"H:i:s"}}</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Status</h5>
+                                <p class="value5">Chamando</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-4">
+                <section class="widget bg-primary text-white">
+                    <div class="widget-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                            </div>
+                    {% if rt.controle == 0 %}
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ramal</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.Exten}}</p>
+                            </div>
+                        {% if rt.ChannelStateDesc == "Ring" %}
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ligando:</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Tempo</h5>
+                                <p class="value5">{{rt.Duration|time:"H:i:s"}}</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Status</h5>
+                                <p class="value5">Chamando</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+    {% else %}
+    
+    {% endif %}
+
+
+
+{% endfor %}
+
+
         </div>
                   </div>
                 </div>
@@ -316,19 +498,63 @@
                                 </div>
                                 
                                 {% for call in exten %}
-                                    {% if call.ConnectedLineNum == trunk.Username %}
+                                    {% if call.ConnectedLineNum != trunk.Username and call.Exten|length > 7 %}
                                     <div class="stats-row">
                                         <div class="stat-item">
                                             <h6 class="name">Ramal</h6>
-                                            <p class="value">{{call.CallerIDnum}}</p>
+                                            <p class="value">{{call.CallerIDNum}}</p>
                                         </div>
                                         <div class="stat-item">
                                             <h6 class="name">Chamando</h6>
-                                            <p class="value">{{call.Extension}}</p>
+                                            <p class="value">{{call.Exten}}</p>
                                         </div>
                                         <div class="stat-item">
                                             <h6 class="name">Tempo</h6>
-                                            <p class="value">{{call.Duration}}</p>
+                                            <p class="value">{{call.Duration|time:"H:i:s"}}</p>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}       
+                        </div>
+                    {% endfor %}
+                    </section>
+                </div>
+            <!---
+                <div class="col-md-12">
+                    <section class="widget">
+                        <header>
+                            <h5>
+                                Fila de Atendimento <span class="fw-semi-bold"></span>
+                            </h5>
+                            <div class="widget-controls">
+                                <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
+                                <a href="#"><i class="fa fa-refresh"></i></a>
+                                <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
+                            </div>
+                        </header>
+                    {% for trunk in troncos %}
+                        <div class="widget-body">
+                                <div>
+                                    <legend>
+                                        Fila
+                                    </legend>    
+                                    <br/>
+                                </div>
+                                
+                                {% for call in exten %}
+                                    {% if call.ConnectedLineNum != trunk.Username and call.Exten|length > 7 %}
+                                    <div class="stats-row">
+                                        <div class="stat-item">
+                                            <h6 class="name">Ramal</h6>
+                                            <p class="value">{{call.CallerIDNum}}</p>
+                                        </div>
+                                        <div class="stat-item">
+                                            <h6 class="name">Chamando</h6>
+                                            <p class="value">{{call.Exten}}</p>
+                                        </div>
+                                        <div class="stat-item">
+                                            <h6 class="name">Tempo</h6>
+                                            <p class="value">{{call.Duration|time:"H:i:s"}}</p>
                                         </div>
                                     </div>
                                     {% endif %}
@@ -338,9 +564,12 @@
                     </section>
                 </div>
             </div>
+            -->
+
            
 
     </div>
+{% endupdateable %}
 </div>
 
 
@@ -395,8 +624,9 @@ updateableSettings = {
 }};
 </script>
 
-<!--
 <script src='{% static 'updateable.js' %}'></script>
+<!--
+
 -->
 </body>
 </html>

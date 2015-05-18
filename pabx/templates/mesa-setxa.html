@@ -217,165 +217,288 @@
             <h1 class="page-title">CDR-port - <span class="fw-semi-bold">Mesa operadora</span></h1>
 
 <div class="row">
+
 {% updateable %}
     <div class="row">
                 <div class="col-md-9">
                   <div class="row">
-{% for call in exten %} {#Tratamento para as extensoes#}
-    {% for sip in ramais_sip %} {#Tratapento para os ramais#}
-        {% if call.CallerIDname == call.CallerIDnum and sip.name == call.CallerIDname %} {#Tratamento para as ligacoes realizadas#}
-                    <div class="col-md-4">
-                        <section class="widget bg-primary text-white">
-                            <div class="widget-body clearfix">
-                                <div class="row">
-                                    <div class="col-xs-2">
-                                        <span class="widget-icon">
-                                            <i class="glyphicon glyphicon-user"></i>
-                                        </span>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Ramal</h5>
-                                        <p class="h3 no-margin fw-normal">{{sip.name}}</p>
-                                    </div>
-                                {% if call.ChannelState == "4" %}
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Ligando para:</h5>
-                                        <p class="h3 no-margin fw-normal">{{call.Extension}}</p>
-                                    </div>
-                                {% else %}
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Falando Com:</h5>
-                                        <p class="h3 no-margin fw-normal">{{call.Extension}}</p>
-                                    </div>
-                                {% endif %}
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <h5 class="no-margin">Tempo</h5>
-                                        <p class="value4">{{call.Duration}}</p>
-                                    </div>
-                                {% if call.ChannelState == "4" %} {#Tratanto o Status da ligacao 01#}
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Status</h5>
-                                        <p class="value4">Chamando</p>
-                                    </div>
-                                {% elif call.ChannelState == "6" %} {#Tratanto o Status da ligacao 01#}
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Status</h5>
-                                        <p class="value4">Falando</p>
-                                    </div>
-                                {% endif %} {#Tratanto o Status da ligacao 01#}
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-        {% elif call.CallerIDname != call.CallerIDnum and sip.name != call.CallerIDname %} {#Tratamento para as ligacoes realizadas#}
-        {% else %} {#Tratamento para as ligacoes realizadas#}
-                    <div class="col-md-4">
-                {% if sip.lastms < 1 %} {#Trata se o ramal estiver desligado 01#}
-                        <section class="widget bg-danger text-white">
-                {% else %} {#Trata se o ramal estiver desligado 01#}
-                    {% if call.Extension == sip.name and call.ChannelState == "4" %} {#Trata o status do ramal 01#}
-                        <section class="widget bg-info text-white">
-                    {% elif call.Extension == sip.name and call.ChannelState == "6" %} {#Trata o status do ramal 01#}
-                        <section class="widget bg-primary text-white">
-                    {% else %} {#Trata o status do ramal 01#}
-                        <section class="widget bg-gray text-white">
-                    {% endif %} {#Trata o status do ramal 01#}
-                {% endif %} {#Trata se o ramal estiver desligado 01#}
-                            <div class="widget-body clearfix">
-                                <div class="row">
-                                    <div class="col-xs-2">
-                                        <span class="widget-icon">
-                                            <i class="glyphicon glyphicon-user"></i>
-                                        </span>
-                                    </div>
-                            {% if call.Extension == sip.name and call.ChannelState == "4" %} {#Tratanto o Status da ligacao 02#}
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Ramal</h5>
-                                        <p class="h3 no-margin fw-normal">{{sip.name}}</p>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Recebendo de:</h5>
-                                        <p class="h3 no-margin fw-normal">{{call.CallerIDname}}</p>
-                                    </div>
-                            {% elif call.Extension == sip.name and call.ChannelState == "6" %} {#Tratanto o Status da ligacao 02#}
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Ramal</h5>
-                                        <p class="h3 no-margin fw-normal">{{sip.name}}</p>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Falando com:</h5>
-                                        <p class="h3 no-margin fw-normal">{{call.CallerIDname}}</p>
-                                    </div>
-                            {% else %} {#Tratanto o Status da ligacao 02#}
-                                {% if sip.lastms < 1 %} {#Trata se o ramal esta logado 01#}
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Ramal</h5>
-                                        <p class="h3 no-margin fw-normal">Desligado</p>
-                                    </div>
-                                {% else %} {#Trata se o ramal esta logado 01#}
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Ramal</h5>
-                                        <p class="h3 no-margin fw-normal">{{sip.name}}</p>
-                                    </div>
-                                {% endif %} {#Trata se o ramal esta logado 01#}
-                            {% endif %} {#Tratanto o Status da ligacao 02#}
-                                </div>
-                                <div class="row">
-                            {% if call.Extension == sip.name and call.ChannelState == "4" %}
-                                    <div class="col-xs-6">
-                                        <h5 class="no-margin">Tempo</h5>
-                                        <p class="value4">{{call.Duration}}</p>
-                                    </div>
-                                {% if call.ChannelState == "4" %} {#Tratanto o Status da ligacao 03#}
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Status</h5>
-                                        <p class="value4">Chamando</p>
-                                    </div>
-                                {% elif call.ChannelState == "6" %} {#Tratanto o Status da ligacao 03#}
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Status</h5>
-                                        <p class="value4">Falando</p>
-                                    </div>
-                                {% endif %} {#Tratanto o Status da ligacao 03#}
-                            {% elif call.Extension == sip.name and call.ChannelState == "6" %}
-                                    <div class="col-xs-6">
-                                        <h5 class="no-margin">Tempo</h5>
-                                        <p class="value4">{{call.Duration}}</p>
-                                    </div>
-                                {% if call.ChannelState == "4" %} {#Tratanto o Status da ligacao 04#}
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Status</h5>
-                                        <p class="value4">Chamando</p>
-                                    </div>
-                                {% elif call.ChannelState == "6" %} {#Tratanto o Status da ligacao 04#}
-                                    <div class="col-xs-3">
-                                        <h5 class="no-margin">Status</h5>
-                                        <p class="value4">Falando</p>
-                                    </div>
-                                {% endif %} {#Tratanto o Status da ligacao 04#}
-                            {% else %}
-                                    {% if sip.lastms < 1 %} {#Trata se o ramal esta logado 02#}
+        <div class="col-md-10">
 
-                                    {% else %} {#Trata se o ramal esta logado 02#}
-                                        <div class="col-xs-6">
-                                            <h5 class="no-margin">Status</h5>
-                                            <p class="value4">{{sip.lastms}} ms</p>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <h5 class="no-margin">IP</h5>
-                                            <p class="value4">{{sip.ipaddr}}</p>
-                                        </div>
-                                    {% endif %} {#Trata se o ramal esta logado 02#}
+{% for rt in exten %}
+    
+    {% if rt.ChannelStateDesc == "Up" and rt.Exten == rt.ConnectedLineNum  %}
+
+        {% for sip in ramais_sip %} {#Tratamento dos ramais ON/OFF#}    
+                <div class="col-md-4">
+                    <section class="widget bg-primary text-white">
+                        <div class="widget-body clearfix">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <span class="widget-icon">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </span>
+                                </div>
+                        {% if rt.CallerIDNum != rt.CallerIDNum and rt.Application == "Dial" %}
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ramal</h5>
+                                    <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                </div>
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Falando com</h5>
+                                    <p class="h3 no-margin fw-normal">{{rt.Exten}}</p>
+                                </div>
+                        {% else %}
+                            {% if rt.ConnectedLineNum == rt.ConnectedLineName and rt.Application == "Dial" %}
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ramal</h5>
+                                    <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                </div>
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Falando com</h5>
+                                    <p class="h3 no-margin fw-normal">{{rt.Exten}}</p>
+                                </div>
+                            {% else %}
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ramal</h5>
+                                    <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                </div>
                             {% endif %}
+                        {% endif %}
+                            </div>
+                    {% if rt.ConnectedLineNum == rt.ConnectedLineName and rt.Application == "Dial" %}
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h5 class="no-margin">Tempo</h5>
+                                    <p class="value4">{{rt.Duration|time:"H:i:s"}}</p>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h5 class="no-margin">Status</h5>
+                                    <p class="value4">Ao telefone</p>
+                                </div>
+                    {% else %}
+                            {% if rt.ConnectedLineNum == rt.ConnectedLineName and rt.Application == "Dial" %}
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Tempo</h5>
+                                        <p class="value4">{{rt.Duration|time:"H:i:s"}}</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Status</h5>
+                                        <p class="value4">Ao telefone</p>
+                                    </div>
+                            {% else %}
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Registro</h5>
+                                        <p class="value4">{{sip.lastms}} ms</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">IP</h5>
+                                        <p class="value4">{{ sip.ipaddr }}</p>
+                                    </div>
+                            {% endif %}
+                    {% endif %}
+                            </div>
+                        </div>
+                    </section>
+                </div>
+        {% endfor %} {#Tratamento dos ramais ON/OFF#}
+    
+   
+    {% elif rt.ChannelState == 6 and rt.ChannelStateDesc == "Down" and rt.Application == "Dial" %}
+        ZZZZZZ
+        {% for sip in ramais_sip %} {#Tratamento dos ramais ON/OFF#}    
+                <div class="col-md-4">
+                    <section class="widget bg-primary text-white">
+                        <div class="widget-body clearfix">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <span class="widget-icon">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </span>
+                                </div>
+                        {% if rt.Application == "AppDial" %}
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ramal</h5>
+                                    <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                </div>
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ligando para</h5>
+                                    <p class="h3 no-margin fw-normal">{{rt.ConnectedLineN}}</p>
+                                </div>
+                        {% else %}
+                            {% if rt.Application == "Dial" %}
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ramal</h5>
+                                    <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                </div>
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ligando Para</h5>
+                                    <p class="h3 no-margin fw-normal">{{rt.Exten}}</p>
+                                </div>
+                            {% else %}
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ramal</h5>
+                                    <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                            </div>
+                    {% if rt.ConnectedLineNum == sip.name %}
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h5 class="no-margin">Tempo</h5>
+                                    <p class="value4">{{rt.Duration|time:"H:i:s"}}</p>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h5 class="no-margin">Status</h5>
+                                    <p class="value4">Ao telefone</p>
+                                </div>
+                    {% else %}
+                            {% if rt.Application == "Dial" %}
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Tempo</h5>
+                                        <p class="value4">{{rt.Duration|time:"H:i:s"}}</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Status</h5>
+                                        <p class="value4">Ao telefone</p>
+                                    </div>
+                            {% else %}
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Registro</h5>
+                                        <p class="value4">{{sip.lastms}} ms</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">IP</h5>
+                                        <p class="value4">{{ sip.ipaddr }}</p>
+                                    </div>
+                            {% endif %}
+                    {% endif %}
+                            </div>
+                        </div>
+                    </section>
+                </div>
+        {% endfor %} {#Tratamento dos ramais ON/OFF#}
+
+    {% elif rt.ChannelState == 4 and rt.ChannelStateDesc == "Ring" or "Ringing" and rt.Application == "Dial" %}
+        Aqui
+        {% for sip in ramais_sip %} {#Tratamento dos ramais ON/OFF#}    
+                <div class="col-md-4">
+                    <section class="widget bg-primary text-white">
+                        <div class="widget-body clearfix">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <span class="widget-icon">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </span>
+                                </div>
+                        {% if rt.Application == "AppDial" %}
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ramal</h5>
+                                    <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                </div>
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ligando para</h5>
+                                    <p class="h3 no-margin fw-normal">{{rt.ConnectedLineN}}</p>
+                                </div>
+                        {% else %}
+                            {% if rt.Application == "Dial" %}
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ramal</h5>
+                                    <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                </div>
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ligando Para</h5>
+                                    <p class="h3 no-margin fw-normal">{{rt.Exten}}</p>
+                                </div>
+                            {% else %}
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ramal</h5>
+                                    <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                            </div>
+                    {% if rt.ConnectedLineNum == sip.name %}
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h5 class="no-margin">Tempo</h5>
+                                    <p class="value4">{{rt.Duration|time:"H:i:s"}}</p>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h5 class="no-margin">Status</h5>
+                                    <p class="value4">Ao telefone</p>
+                                </div>
+                    {% else %}
+                            {% if rt.Application == "Dial" %}
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Tempo</h5>
+                                        <p class="value4">{{rt.Duration|time:"H:i:s"}}</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Status</h5>
+                                        <p class="value4">Ao telefone</p>
+                                    </div>
+                            {% else %}
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">Registro</h5>
+                                        <p class="value4">{{sip.lastms}} ms</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5 class="no-margin">IP</h5>
+                                        <p class="value4">{{ sip.ipaddr }}</p>
+                                    </div>
+                            {% endif %}
+                    {% endif %}
+                            </div>
+                        </div>
+                    </section>
+                </div>
+        {% endfor %} {#Tratamento dos ramais ON/OFF#}
+
+
+    {% elif  rt.ChannelStateDesc == "Down" and rt.controle == 1  and rt.Application == "Dial" and rt.BridgeId == rt.BridgeId and rt.ChannelState == 6 %}
+
+   {% for sip in ramais_sip %} {#Tratamento dos ramais ON/OFF#}    
+                <div class="col-md-4">
+                    <section class="widget bg-primary text-white">
+                        <div class="widget-body clearfix">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <span class="widget-icon">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </span>
+                                </div>
+                                <div class="col-xs-4">
+                                    <h5 class="no-margin">Ramal</h5>
+                                    <p class="h2 no-margin fw-normal">{{sip.name}}</p>
                                 </div>
                             </div>
-                        </section>
-                    </div>        
-        {% endif %} {#Tratamento para as ligacoes realizadas#}
-    {% endfor %} {#Tratapento para os ramais#}
-{% endfor %} {#Tratamento para as extensoes#}
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h5 class="no-margin">Registro</h5>
+                                    <p class="value4">{{sip.lastms}} ms</p>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h5 class="no-margin">IP</h5>
+                                    <p class="value4">{{ sip.ipaddr }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+        {% endfor %} {#Tratamento dos ramais ON/OFF#}  
+
+    {% endif %}
+    
+
+{% endfor %}
+
+    
+    
+        </div>
                   </div>
                 </div>
             <div class="col-md-3">
@@ -424,8 +547,9 @@
                 </div>
             </div>
            
-{% endupdateable %}
+
     </div>
+{% endupdateable %}
 </div>
 
 
@@ -480,8 +604,9 @@ updateableSettings = {
 }};
 </script>
 
-<!--
 <script src='{% static 'updateable.js' %}'></script>
+<!--
+
 -->
 </body>
 </html>
