@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CDR-port - Dashboard</title>
+    <title>CDR-port - Mesa Operadora</title>
     <link href="{% static "css/application.min.css"%}" rel="stylesheet">
     <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
     <!--[if IE 9]>
@@ -25,12 +25,6 @@
     </script>
 </head>
 <body>
-<!--
-  Main sidebar seen on the left. may be static or collapsing depending on selected state.
-
-    * Collapsing - navigation automatically collapse when mouse leaves it and expand when enters.
-    * Static - stays always open.
--->
 <nav id="sidebar" class="sidebar" role="navigation">
     <!-- need this .js class to initiate slimscroll -->
     <div class="js-sidebar-content">
@@ -56,10 +50,12 @@
         </ul>
         <!-- every .sidebar-nav may have a title -->
         {% if info == "1"  %}
+
        <!--
         <h5 class="sidebar-nav-title">Premium<a class="action-link" href="#"><i class="glyphicon glyphicon-usd"></i></a></h5>
             <ul class="sidebar-nav">
                 <li>
+                    
                     <a class="collapsed" href="#sidebar-forms" data-toggle="collapse" data-parent="#sidebar">
                         <span class="icon">
                             <i class="glyphicon glyphicon-retweet"></i>
@@ -89,9 +85,9 @@
                     </ul>
                 </li>       
             </ul>
-       -->
+        -->
         {% elif info == "2" or "3" %}
-        <!--  
+    <!--
         <h5 class="sidebar-nav-title">Premium<a class="action-link" href="#"><i class="glyphicon glyphicon-usd"></i></a></h5>         
             <ul class="sidebar-nav">
                 <li>
@@ -124,13 +120,13 @@
                         <li><a href="ui_tabs_accordion.html">Filas</a></li>
                     </ul>
                 </li>       
-            </ul> -->
+            </ul>
+            -->
         {% endif %}  
         <!-- some styled links in sidebar. ready to use as links to email folders, projects, groups, etc -->
 
     </div>
 </nav>
-<!-- This is the white navigation bar seen on the top. A bit enhanced BS navbar. See .page-controls in _base.scss. -->
 <nav class="page-controls navbar navbar-default">
     <div class="container-fluid">
         <!-- .navbar-header contains links seen on xs & sm screens -->
@@ -173,9 +169,7 @@
         <!-- this part is hidden for xs screens -->
         <div class="collapse navbar-collapse">
             <!-- search form! link it to your search server -->
-            <form class="navbar-form navbar-left" role="search">
 
-            </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle dropdown-toggle-notifications" id="notifications-dropdown-toggle" data-toggle="dropdown">
@@ -467,14 +461,13 @@
     
     {% endif %}
 
-
-
 {% endfor %}
 
 
         </div>
                   </div>
-                </div>
+            
+            </div>
             <div class="col-md-3">
                 <div class="col-md-12">
                     <section class="widget">
@@ -565,12 +558,12 @@
                 </div>
             </div>
             -->
-
-           
-
+        
     </div>
+
 {% endupdateable %}
 </div>
+
 
 
     </main>

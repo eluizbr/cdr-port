@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader, Template
+
 from pabx.models import VwSipregs, rt_calls
 from datetime import datetime, timedelta, time
 import asterisk_stats as asterisk
@@ -25,7 +26,8 @@ http://www.voip-info.org/wiki/view/Asterisk+cmd+SetAMAFlags
 '''
 
 def pabx(request):
-	
+
+
 	exten = rt_calls.objects.all()
 	#print exten
 
