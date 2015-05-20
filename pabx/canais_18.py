@@ -162,7 +162,7 @@ def real_time():
 								else:	
 
 									print 'Atualizou para 4'
-									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(i)
+									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(f)
 									print atualiza
 									atualiza = c.execute(atualiza)
 									dead = """DELETE FROM pabx_rt_calls WHERE controle = 4 """
