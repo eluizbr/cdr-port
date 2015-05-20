@@ -30,7 +30,9 @@ def pabx(request):
 
 
 	exten = rt_calls.objects.all()
-	#print exten
+	#exten = rt_calls.objects.values('Channel','ChannelState','ChannelStateDesc','CallerIDName','ConnectedLineName',
+	#									'Exten','Uniqueid','Application','Duration','BridgeId','controle')
+	
 	info = Info.objects.values_list('ativo')
 	info = str(info)[2]
 	troncos = asterisk.stats_request('SIPshowregistry')

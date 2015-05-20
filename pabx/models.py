@@ -52,8 +52,8 @@ class rt_calls(models.Model):
     controle = models.IntegerField(max_length=1, default=0, blank=True, null=True)
     
     def __unicode__(self):
-        return "%s %s %s" %(self.ChannelState, self.ChannelStateDesc, self.controle)
-
+       # return "%s %s %s" %(self.ChannelState, self.ChannelStateDesc, self.controle)
+       return unicode(self.ChannelState)
 
 
 

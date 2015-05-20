@@ -71,6 +71,73 @@ def real_time():
 						print atualiza
 
 						connection.commit()
+
+						status = "SELECT ChannelStateDesc FROM pabx_rt_calls"
+						staus = c.execute(status)
+						status = c.fetchall()
+
+						for status in status:
+							status = str(status[0])
+
+						id_controle = "SELECT controle FROM pabx_rt_calls"
+						id_controle = c.execute(id_controle)
+						id_controle = c.fetchall()
+						id_controle = id_controle
+
+
+						for control in id_controle:
+							control = str(control[0])
+							
+
+						id_ring = "SELECT Uniqueid FROM pabx_rt_calls WHERE ChannelStateDesc = 'Ring'"
+						id_ring = c.execute(id_ring)
+						id_ring = c.fetchall()
+						id_ring = id_ring
+
+						id_up = "SELECT Uniqueid FROM pabx_rt_calls WHERE ChannelStateDesc = 'Up' AND Uniqueid != " + str(Uniqueid)
+						id_up = c.execute(id_up)
+						id_up = c.fetchall()
+						id_up = id_up
+						
+						for id_up  in id_up:
+							id_up = str(id_up[0])
+							print id_up				
+
+							if id_up == id_up and status == "Up":
+
+								
+								if control == 4:
+									pass
+								else:	
+
+									print 'Atualizou para 4'
+									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Up' AND Uniqueid = " + str(id_up)
+									print atualiza
+									atualiza = c.execute(atualiza)
+									dead = """DELETE FROM pabx_rt_calls WHERE controle = 4 """
+									print dead
+									c.execute(dead)
+
+									connection.commit()
+							
+							if id_up == id_up and status == "Ring":
+
+								
+								if control == 4:
+									pass
+								
+								else:	
+
+									print 'Atualizou para 4'
+									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(id_up)
+									print atualiza
+									atualiza = c.execute(atualiza)
+									dead = """DELETE FROM pabx_rt_calls WHERE controle = 4 """
+									print dead
+									c.execute(dead)
+
+									connection.commit()
+
 					
 
 					else:
@@ -132,11 +199,11 @@ def real_time():
 						id_up = c.fetchall()
 						id_up = id_up
 
-						for f  in id_up:
-							f = str(f[0])
-							print f				
+						for id_up  in id_up:
+							id_up = str(id_up[0])
+							print id_up				
 
-							if f == f and status == "Up":
+							if id_up == id_up and status == "Up":
 
 								
 								if control == 4:
@@ -145,7 +212,7 @@ def real_time():
 								else:	
 
 									print 'Atualizou para 4'
-									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Up' AND Uniqueid = " + str(f)
+									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Up' AND Uniqueid = " + str(id_up)
 									print atualiza
 									atualiza = c.execute(atualiza)
 									dead = """DELETE FROM pabx_rt_calls WHERE controle = 4 """
@@ -154,7 +221,7 @@ def real_time():
 
 									connection.commit()
 							
-							if f == f and status == "Ring":
+							if id_up == id_up and status == "Ring":
 
 								
 								if control == 4:
@@ -163,7 +230,7 @@ def real_time():
 								else:	
 
 									print 'Atualizou para 4'
-									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(f)
+									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(id_up)
 									print atualiza
 									atualiza = c.execute(atualiza)
 									dead = """DELETE FROM pabx_rt_calls WHERE controle = 4 """
@@ -173,11 +240,11 @@ def real_time():
 									connection.commit()
 
 
-						for i in id_ring:
-							i = str(i[0])
-							print i
+						for id_ring in id_ring:
+							id_ring = str(id_ring[0])
+							print id_ring
 
-							if i == i and status == "Up":
+							if id_ring == id_ring and status == "Up":
 
 								
 								if control == 4:
@@ -186,7 +253,7 @@ def real_time():
 								else:	
 
 									print 'Atualizou para 4'
-									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(i)
+									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(id_ring)
 									print atualiza
 									atualiza = c.execute(atualiza)
 									dead = """DELETE FROM pabx_rt_calls WHERE controle = 4 """
@@ -195,7 +262,7 @@ def real_time():
 
 									connection.commit()
 							
-							if i == i and status == "Ring":
+							if id_ring == id_ring and status == "Ring":
 
 								
 								if control == 4:
@@ -204,7 +271,7 @@ def real_time():
 								else:	
 
 									print 'Atualizou para 4'
-									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(i)
+									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(id_ring)
 									print atualiza
 									atualiza = c.execute(atualiza)
 									dead = """DELETE FROM pabx_rt_calls WHERE controle = 4 """
@@ -244,7 +311,7 @@ def real_time():
 				
 
 				connection.commit()
-				
+				'''
 				status = "SELECT ChannelStateDesc FROM pabx_rt_calls"
 				staus = c.execute(status)
 				status = c.fetchall()
@@ -280,7 +347,7 @@ def real_time():
 					else:
 						print 'deixa' 
 
-
+					'''
 real_time()
 
 
