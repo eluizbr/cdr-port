@@ -28,7 +28,6 @@ dados = json.dumps(exten)
 dados_load = json.loads(dados)
 #print dados_load
 
-asterisk == 11
 
 def real_time():
 
@@ -68,7 +67,7 @@ def real_time():
 						print 'O numero %s ja existe'%(Uniqueid)
 						atualiza = """UPDATE pabx_rt_calls SET Duration = '%s' WHERE Uniqueid = '%s' AND Application = "Dial" """ % (Duration,Uniqueid)
 						atualiza = c.execute(atualiza)
-						print atualiza
+						#print atualiza
 
 						connection.commit()
 
@@ -98,10 +97,12 @@ def real_time():
 						id_up = c.execute(id_up)
 						id_up = c.fetchall()
 						id_up = id_up
+
 						
 						for id_up  in id_up:
 							id_up = str(id_up[0])
-							print id_up				
+							print id_up
+
 
 							if id_up == id_up and status == "Up":
 
@@ -110,13 +111,18 @@ def real_time():
 									pass
 								else:	
 
-									print 'Atualizou para 4'
+									print 'Atualizou para 41'
 									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Up' AND Uniqueid = " + str(id_up)
 									print atualiza
 									atualiza = c.execute(atualiza)
 									dead = """DELETE FROM pabx_rt_calls WHERE controle = 4 """
 									print dead
 									c.execute(dead)
+
+									print 'Atualizou para 41'
+									atualizaz = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(id_up)
+									print atualizaz
+									atualiza = c.execute(atualizaz)
 
 									connection.commit()
 							
@@ -136,7 +142,40 @@ def real_time():
 									print dead
 									c.execute(dead)
 
+									print 'Atualizou para 41'
+									atualizaz = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(id_up)
+									print atualizaz
+									atualiza = c.execute(atualizaz)
+
 									connection.commit()
+
+						for id_ring  in id_ring:
+							id_ring = str(id_ring[0])
+							print id_ring
+
+							
+							if id_ring != Uniqueid and status == "Ring":
+
+								
+								if Uniqueid == Uniqueid:
+									print 'Atualizou para 42'
+									atualiza = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(id_ring)
+									print atualiza
+									atualiza = c.execute(atualiza)
+									dead = """DELETE FROM pabx_rt_calls WHERE controle = 4 """
+									print dead
+									c.execute(dead)
+
+									print 'Atualizou para 42'
+									atualizaz = "UPDATE pabx_rt_calls SET controle = 4 WHERE ChannelStateDesc = 'Ring' AND Uniqueid = " + str(id_ring)
+									print atualizaz
+									atualiza = c.execute(atualizaz)
+
+									connection.commit()
+								
+								else:
+									pass	
+
 
 					
 
@@ -242,7 +281,7 @@ def real_time():
 
 						for id_ring in id_ring:
 							id_ring = str(id_ring[0])
-							print id_ring
+							print 'ID RING é %s' % id_ring
 
 							if id_ring == id_ring and status == "Up":
 

@@ -166,6 +166,7 @@ class VwSipregs(models.Model):
     regserver = models.CharField(max_length=100, blank=True)
     useragent = models.CharField(max_length=20, blank=True)
     lastms = models.IntegerField()
+    callerid = models.CharField(max_length=40, blank=True)
 
     def __unicode__(self):
         return unicode(self.name)
@@ -173,6 +174,22 @@ class VwSipregs(models.Model):
     class Meta:
         managed = False
         db_table = 'vw_sipregs'
+
+
+class VwCall(models.Model):
+    origem = models.CharField(max_length=50, blank=True)
+    destino = models.CharField(max_length=100, blank=True)
+    ramal = models.CharField(max_length=10)
+    ip = models.CharField(max_length=15)
+    lastms = models.IntegerField(blank=True, null=True)
+    status = models.CharField(max_length=10, blank=True)
+    tempo = models.TimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'vw_call'
+
+
 '''
 class Cel(models.Model):
     eventtype = models.CharField(max_length=30)

@@ -1,5 +1,12 @@
 ### INICIO VIEWS
 
+CREATE VIEW vw_call AS
+		SELECT pabx_rt_calls.CallerIDNum AS origem,pabx_rt_calls.Exten AS dstino, pabx_sip.name as ramal, pabx_sip.ipaddr AS ip, pabx_sip.lastms, pabx_rt_calls.ChannelStateDesc AS status, pabx_rt_calls.Duration AS tempo
+		FROM pabx_rt_calls, pabx_sip
+		WHERE pabx_sip.name = pabx_rt_calls.CallerIDNum;
+
+
+
 CREATE VIEW `vw_sipregs` AS SELECT
     `id`
     ,`name`
@@ -11,7 +18,8 @@ CREATE VIEW `vw_sipregs` AS SELECT
     ,`regserver`
     ,`useragent`
     ,`lastms`
-FROM `sip`;
+    ,`callerid`
+FROM `pabx_sip`;
 
 
 

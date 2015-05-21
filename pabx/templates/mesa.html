@@ -217,243 +217,288 @@
         <div class="col-md-9">
             <div class="row">
                 <div class="col-md-10">
-                {% for rt in exten %}
 
+{% for rt in exten %}
 
-                            
-                            {% if rt.controle == 1 %}
-                                
-                                {% for sip in ramais_sip %}       
-                                    <div class="col-md-4">
-                                    {% if sip.name != rt.CallerIDNum and sip.name != rt.ConnectedLineNum %}
-                                        <section class="widget bg-gray text-white">
-                                        <div class="widget-controls">
-                                            <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
-                                            <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-envelope text-white"></i></a>
-                                        </div>
-                                    {% else %}
-                                        <section class="widget bg-primary text-white">
-                                        <div class="widget-controls">
-                                            <a class="bg-primari" href="#"><i class="glyphicon glyphicon-retweet text-white"></i></a>
-                                            <a class="bg-primari" href="#"><i class="glyphicon glyphicon-remove text-white"></i></a>
-                                        </div>
-                                    {% endif %}
-                                            <div class="widget-body clearfix">
-                                                <div class="row">
-                                                    <div class="col-xs-2">
-                                                        <span class="widget-icon">
-                                                            <i class="glyphicon glyphicon-user"></i>
-                                                        </span>
-                                                    </div>
-                                                {% if sip.name != rt.CallerIDNum and sip.name != rt.ConnectedLineNum %}
-                                                        <div class="col-xs-4">
-                                                            <h6 class="no-margin">Ramal</h6>
-                                                            <p class="h3 no-margin fw-normal">{{sip.name}}</p>
-                                                        </div>
-                                                {% else %}
-                                                    {% if sip.name == rt.Exten %}
-                                                        <div class="col-xs-4">
-                                                            <h6 class="no-margin">Ramal</h6>
-                                                            <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
-                                                        </div>
-                                                    {% else %}
-                                                        <div class="col-xs-4">
-                                                            <h6 class="no-margin">Ramal</h6>
-                                                            <p class="h3 no-margin fw-normal">{{rt.ConnectedLineNum}}</p>
-                                                        </div>
-                                                    {% endif %}
-                                                {% endif %}
-                                            {% if rt.ChannelStateDesc == "Up" %}
-                                                {% if sip.name != rt.CallerIDNum and sip.name != rt.ConnectedLineNum %}
-
-                                                {% else %}
-                                                    {% if sip.name == rt.Exten %}
-                                                        <div class="col-xs-4">
-                                                            <h6 class="no-margin">Flando com:</h6>
-                                                            <p class="h3 no-margin fw-normal">{{rt.Exten}}</p>
-                                                        </div>
-                                                    {% else %}
-                                                        <div class="col-xs-4">
-                                                            <h6 class="no-margin">Falando com:</h6>
-                                                            <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
-                                                        </div>
-                                                    {% endif %}
-                                                {% endif %}
-                                            {% else %}
-                                                    <div class="col-xs-4">
-                                                        <h6 class="no-margin">Falando com:</h6>
-                                                        <p class="h3 no-margin fw-normal">{{rt.ConnectedLineNum}}</p>
-                                                    </div>
-                                            {% endif %}
-                                                </div>
-                                            {% if sip.name != rt.CallerIDNum and sip.name != rt.ConnectedLineNum %}
-                                                <div class="row">
-                                                    <div class="col-xs-6">
-                                                        <h5 class="no-margin">Registro</h5>
-                                                        <p class="value5">{{sip.lastms}} ms</p>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h5 class="no-margin">IP</h5>
-                                                        <p class="value5">{{sip.ipaddr}}</p>
-                                                    </div>
-                                                </div>
-                                            {% else %}
-                                                <div class="row">
-                                                    <div class="col-xs-6">
-                                                        <h5 class="no-margin">Tempo</h5>
-                                                        <p class="value5">{{rt.Duration|time:"H:i:s"}}</p>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h5 class="no-margin">Status</h5>
-                                                        <p class="value5">Ao Telefone</p>
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-
-                                            </div>
-                                        </section>
-                                    </div>  
-
-                                {% endfor %} 
-                                
-                            {% elif rt.controle == 0 %}
-
-
-
-                                {% for sip in ramais_sip %}       
-                                    <div class="col-md-4">
-                                    {% if sip.name != rt.CallerIDNum and sip.name != rt.ConnectedLineNum %}
-                                        <section class="widget bg-gray text-white">
-                                        <div class="widget-controls">
-                                            <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
-                                            <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-envelope text-white"></i></a>
-                                        </div>
-                                    {% else %}
-                                        <section class="widget bg-primary text-white">
-                                        <div class="widget-controls">
-                                            <a class="bg-primary" href="#"><i class="glyphicon glyphicon-remove text-white"></i></a>
-                                        </div>
-                                    {% endif %}
-                                            <div class="widget-body clearfix">
-                                                <div class="row">
-                                                    <div class="col-xs-2">
-                                                        <span class="widget-icon">
-                                                            <i class="glyphicon glyphicon-user"></i>
-                                                        </span>
-                                                    </div>
-                                                {% if sip.name != rt.CallerIDNum and sip.name != rt.ConnectedLineNum %}
-                                                        <div class="col-xs-4">
-                                                            <h6 class="no-margin">Ramal</h6>
-                                                            <p class="h3 no-margin fw-normal">{{sip.name}}</p>
-                                                        </div>
-                                                {% else %}
-                                                    {% if sip.name != rt.Exten %}
-                                                        <div class="col-xs-4">
-                                                            <h6 class="no-margin">Ramal</h6>
-                                                            <p class="h3 no-margin fw-normal">{{rt.ConnectedLineNum}}</p>
-                                                        </div>
-                                                    {% else %}
-                                                        <div class="col-xs-4">
-                                                            <h6 class="no-margin">Ramal</h6>
-                                                            <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
-                                                        </div>
-                                                    {% endif %}
-                                                {% endif %}
-                                            {% if rt.ChannelStateDesc == "Ring" %}
-                                                {% if sip.name != rt.CallerIDNum and sip.name != rt.ConnectedLineNum %}
-
-                                                {% else %}
-                                                    {% if sip.name == rt.Exten %}
-                                                        <div class="col-xs-4">
-                                                            <h6 class="no-margin">Ligando para:</h6>
-                                                            <p class="h3 no-margin fw-normal">{{rt.Exten}}</p>
-                                                        </div>
-                                                    {% else %}
-                                                        <div class="col-xs-4">
-                                                            <h6 class="no-margin">Recebendo de:</h6>
-                                                            <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
-                                                        </div>
-                                                    {% endif %}
-
-                                                {% endif %}
-                                            {% else %}
-                                            {% endif %}
-                                                </div>
-                                                {% if sip.name != rt.CallerIDNum and sip.name != rt.ConnectedLineNum %}
-                                                    <div class="row">
-                                                        <div class="col-xs-6">
-                                                            <h5 class="no-margin">Registro</h5>
-                                                            <p class="value5">{{sip.lastms}} ms</p>
-                                                        </div>
-                                                        <div class="col-xs-6">
-                                                            <h5 class="no-margin">IP</h5>
-                                                            <p class="value5">{{sip.ipaddr}}</p>
-                                                        </div>
-                                                    </div>
-                                                {% else %}
-                                                    <div class="row">
-                                                        <div class="col-xs-6">
-                                                            <h5 class="no-margin">Tempo</h5>
-                                                            <p class="value5">{{rt.Duration|time:"H:i:s"}}</p>
-                                                        </div>
-                                                        <div class="col-xs-6">
-                                                            <h5 class="no-margin">Status</h5>
-                                                            <p class="value5">Ao Telefone</p>
-                                                        </div>
-                                                </div>
-                                                {% endif %}
-
-                                            </div>
-                                        </section>
-                                    </div>  
-
-                                {% endfor %}
-
-
-
+    {% if rt.destino|length > 7 %}
+            
+            <div class="col-md-4">
+                <section class="widget bg-gray text-white">
+                    <div class="widget-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                            </div>
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ramal</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.origem}}</p>
+                            </div>
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ligando para:</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.destino}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Tempo</h5>
+                                <p class="value5">{{rt.tempo|time:"H:i:s"}}</p>
+                            </div>
+                            {% if rt.status == "Up" %}
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Status</h5>
+                                <p class="value5">Ao Telefone</p>
+                            </div>
                             {% else %}
-                                    {% for sip in ramais_sip %}
-                                        {% if forloop.counter == forloop.parentloop.counter %}
-                                            <div class="col-md-4">
-                                                    <section class="widget bg-gray text-white">
-                                                        <div class="widget-body clearfix">
-                                                            <div class="row">
-                                                                <div class="col-xs-2">
-                                                                    <span class="widget-icon">
-                                                                        <i class="glyphicon glyphicon-user"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="col-xs-2">
-                                                                    <h5 class="no-margin">Ramal</h5>
-                                                                    <p class="h2 no-margin fw-normal">{{sip.name}}</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-xs-6">
-                                                                    <h5 class="no-margin">Registro</h5>
-                                                                    <p class="value5">{{sip.lastms}} ms</p>
-                                                                </div>
-                                                                <div class="col-xs-6">
-                                                                    <h5 class="no-margin">IP</h5>
-                                                                    <p class="value5">{{sip.ipaddr}}:{{sip.port}}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </section>
-                                            </div>
-                                        {% endif %} 
-                                    {% endfor %} 
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Status</h5>
+                                <p class="value5">Chamando</p>
+                            </div>
+                                
                             {% endif %}
-                {% empty %}
+                        </div>
+                    </div>
+                </section>
+            </div>
+        
+        {% if rt.ramal != rt.ramal %}
+ 
+
+            {% for sip in ramais_sip %}
+                {% if sip.name != rt.origem and sip.name != rt.ramal %}     
+                        <div class="col-md-4">
+                            <section class="widget bg-gray text-white">
+                                <div class="widget-body clearfix">
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            <span class="widget-icon">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <h5 class="no-margin">Ramal</h5>
+                                            <p class="h2 no-margin fw-normal">{{sip.name}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <h5 class="no-margin">Registro</h5>
+                                            <p class="value5">{{sip.lastms}} ms</p>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <h5 class="no-margin">IP</h5>
+                                            <p class="value5">{{sip.ipaddr}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                {% endif %}
+            {% endfor %}
+
+
+        {% endif %}
+
+    {% elif rt.destino|length < 6  %}
+
+            <div class="col-md-4">
+                <section class="widget bg-primary text-white">
+                    <div class="widget-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                            </div>
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ramal</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.origem}}</p>
+                            </div>
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ligando para:</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.destino}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Tempo</h5>
+                                <p class="value5">{{rt.tempo|time:"H:i:s"}}</p>
+                            </div>
+                            {% if rt.status == "Up" %}
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Status</h5>
+                                <p class="value5">Ao Telefone</p>
+                            </div>
+                            {% else %}
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Status</h5>
+                                <p class="value5">Chamando</p>
+                            </div>
+                                
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        
+
+        {% if rt.status == "Ring" %}
+
+                {% for sip in ramais_sip %}
+                    
+                    {% if rt.status == "Ring" and sip.name != rt.origem and sip.name != rt.ramal %}
+                            <div class="col-md-4">
+                                <section class="widget bg-gray text-white">
+                                    <div class="widget-body clearfix">
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <span class="widget-icon">
+                                                    <i class="glyphicon glyphicon-user"></i>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <h6 class="no-margin">Ramal</h6>
+                                                <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <h5 class="no-margin">Registro</h5>
+                                                <p class="value5">{{sip.lastms}} ms</p>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <h5 class="no-margin">IP</h5>
+                                                <p class="value5">{{sip.ipaddr}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                    {% elif sip.name == rt.origem and sip.name == rt.destino and rt.status == "Up" %}
+                    faça isso 
+                    {% elif sip.name != rt.origem and sip.name != rt.destino and rt.status == "Up" %}
+                            <div class="col-md-4">
+                                <section class="widget bg-gray text-white">
+                                    <div class="widget-body clearfix">
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <span class="widget-icon">
+                                                    <i class="glyphicon glyphicon-user"></i>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <h6 class="no-margin">Ramal</h6>
+                                                <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <h5 class="no-margin">Registro</h5>
+                                                <p class="value5">{{sip.lastms}} ms</p>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <h5 class="no-margin">IP</h5>
+                                                <p class="value5">{{sip.ipaddr}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                    {% endif %}
+                
+                {% endfor %}
+
+        {% elif rt.status == "Up" %}
+
+                {% for sip in ramais_sip %}
+                    
+                    {% if sip.name != rt.origem and sip.name != rt.destino and rt.status == "Ring" %}
+                    {% elif sip.name == rt.origem and sip.name == rt.destino and rt.status == "Up" %}
+                    faça isso 
+                    {% elif sip.name != rt.origem and sip.name != rt.destino and rt.status == "Up" %}
+                            <div class="col-md-4">
+                                <section class="widget bg-gray text-white">
+                                    <div class="widget-body clearfix">
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <span class="widget-icon">
+                                                    <i class="glyphicon glyphicon-user"></i>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <h6 class="no-margin">Ramal</h6>
+                                                <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <h5 class="no-margin">Registro</h5>
+                                                <p class="value5">{{sip.lastms}} ms</p>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <h5 class="no-margin">IP</h5>
+                                                <p class="value5">{{sip.ipaddr}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                    {% endif %}
+
+                {% endfor %}        
+            
+        {% else %}
+            {% if rt.ramal == rt.ramal %}
+                {% for sip in ramais_sip %}
+                    
+                    {% if sip.name != rt.origem and sip.name != rt.destino %}
+                            <div class="col-md-4">
+                                <section class="widget bg-gray text-white">
+                                    <div class="widget-body clearfix">
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <span class="widget-icon">
+                                                    <i class="glyphicon glyphicon-user"></i>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <h6 class="no-margin">Ramal</h6>
+                                                <p class="h3 no-margin fw-normal">{{sip.name}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <h5 class="no-margin">Registro</h5>
+                                                <p class="value5">{{sip.lastms}} ms</p>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <h5 class="no-margin">IP</h5>
+                                                <p class="value5">{{sip.ipaddr}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                    
+                    {% endif %}
+                
+                {% endfor %}
+        
+        {% endif %}
+
+            {% endif %}
+        
+    {% endif %}
+                        
+
+{% empty %}
 
                             {% for sip in ramais_sip %}
                                 
                                     <div class="col-md-4">
                                             <section class="widget bg-gray text-white">
-                                            <div class="widget-controls">
-                                                <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
-                                                <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-envelope text-white"></i></a>
-                                            </div>
                                                 <div class="widget-body clearfix">
                                                     <div class="row">
                                                         <div class="col-xs-2">
@@ -482,7 +527,7 @@
                                
                             {% endfor %} 
 
-                {% endfor %}
+{% endfor %}
                 </div>
             </div>
         </div>

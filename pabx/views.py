@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader, Template
 
-from pabx.models import VwSipregs, rt_calls
+from pabx.models import VwSipregs, rt_calls, VwCall
 from cdr.models import Info
 from datetime import datetime, timedelta, time
 import asterisk_stats as asterisk
@@ -29,9 +29,9 @@ http://www.voip-info.org/wiki/view/Asterisk+cmd+SetAMAFlags
 def pabx(request):
 
 
-	exten = rt_calls.objects.all()
-	#exten = rt_calls.objects.values('Channel','ChannelState','ChannelStateDesc','CallerIDName','ConnectedLineName',
-	#									'Exten','Uniqueid','Application','Duration','BridgeId','controle')
+	exten = VwCall.objects.all()
+	#exten = rt_calls.objects.values('Channel','ChannelState','ChannelStateDesc','CallerIDNum','CallerIDName','ConnectedLineName',
+	#									'ConnectedLineNum','Exten','Uniqueid','Application','Duration','BridgeId','controle')
 	
 	info = Info.objects.values_list('ativo')
 	info = str(info)[2]
