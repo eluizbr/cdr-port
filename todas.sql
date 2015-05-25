@@ -1,7 +1,7 @@
 ### INICIO VIEWS
 
 CREATE VIEW vw_call AS
-		SELECT pabx_rt_calls.CallerIDNum AS origem,pabx_rt_calls.Exten AS dstino, pabx_sip.name as ramal, pabx_sip.ipaddr AS ip, pabx_sip.lastms, pabx_rt_calls.ChannelStateDesc AS status, pabx_rt_calls.Duration AS tempo
+		SELECT pabx_sip.id, pabx_rt_calls.CallerIDNum AS origem,pabx_rt_calls.Exten AS destino, pabx_sip.name as ramal, pabx_sip.ipaddr AS ip, pabx_sip.lastms, pabx_rt_calls.ChannelStateDesc AS status, pabx_rt_calls.Duration AS tempo, pabx_rt_calls.controle
 		FROM pabx_rt_calls, pabx_sip
 		WHERE pabx_sip.name = pabx_rt_calls.CallerIDNum;
 

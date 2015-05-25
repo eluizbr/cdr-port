@@ -50,6 +50,8 @@ class rt_calls(models.Model):
     Duration = models.TimeField()
     BridgeId = models.CharField(blank=True, null=True, max_length=200)
     controle = models.IntegerField(max_length=1, default=0, blank=True, null=True)
+    ipaddr = models.CharField(max_length=15,blank=True, null=True)
+    lastms = models.IntegerField(blank=True, null=True)
     
     def __unicode__(self):
        # return "%s %s %s" %(self.ChannelState, self.ChannelStateDesc, self.controle)
@@ -168,6 +170,7 @@ class VwSipregs(models.Model):
     lastms = models.IntegerField()
     callerid = models.CharField(max_length=40, blank=True)
 
+
     def __unicode__(self):
         return unicode(self.name)
 
@@ -184,6 +187,7 @@ class VwCall(models.Model):
     lastms = models.IntegerField(blank=True, null=True)
     status = models.CharField(max_length=10, blank=True)
     tempo = models.TimeField()
+    controle = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False

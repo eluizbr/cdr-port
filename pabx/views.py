@@ -29,7 +29,7 @@ http://www.voip-info.org/wiki/view/Asterisk+cmd+SetAMAFlags
 def pabx(request):
 
 
-	exten = VwCall.objects.all()
+	exten = rt_calls.objects.all()
 	#exten = rt_calls.objects.values('Channel','ChannelState','ChannelStateDesc','CallerIDNum','CallerIDName','ConnectedLineName',
 	#									'ConnectedLineNum','Exten','Uniqueid','Application','Duration','BridgeId','controle')
 	
