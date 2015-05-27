@@ -16,6 +16,7 @@ dial_unico = []
 channelDESC_unico = []
 channelSTATE_unico = []
 destino_unico = []
+duracao_unico = []
 
 for item in dados_load:
 
@@ -43,6 +44,7 @@ for item in dados_load:
 			dial_unico.append(Application)
 			ApplicationData = item['ApplicationData']
 			Duration = item['Duration']
+			duracao_unico.append(Duration)
 			BridgeId = item['BridgedUniqueID']
 			print Uniqueid
 
