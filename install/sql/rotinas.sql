@@ -43,7 +43,7 @@ CREATE TEMPORARY TABLE `TMP_cdr_cdr` (
   `prefix` varchar(80) DEFAULT NULL,
   `portado` varchar(3) DEFAULT 'Nao',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+) ENGINE=MEMORY AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 INSERT INTO TMP_cdr_cdr (calldate,clid,src,dst,dcontext,channel,dstchannel,lastapp,lastdata,duration,billsec,disposition,amaflags,accountcode,uniqueid,userfield,prefix,portado)
 SELECT calldate,clid,src,

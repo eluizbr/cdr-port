@@ -1,59 +1,89 @@
 # coding: utf-8
 #!/usr/bin/env python
-import threading
-import time
 import MySQLdb
-import asterisk_stats as asterisk
+import channel_status_18 as canais
 import json
-import sys
-import random
+#import channel_status as canais
+
+'''
+CREATE TABLE `TMP_canais` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `Uniqueid` varchar(100) DEFAULT NULL,
+  `CallerIDNum` varchar(100) DEFAULT NULL,
+  `Exten` varchar(100) DEFAULT NULL,
+  `ChannelStateDesc` varchar(10) DEFAULT NULL,
+  `ChannelState` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Uniqueid` (`Uniqueid`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+'''
 
 ## Conexão ao banco MySQL
 connection = MySQLdb.connect(host='localhost', user='root', passwd='app2004', db='cdrport')
 c = connection.cursor()
 
-exten = asterisk.stats_request('CoreShowChannels')
-dados = json.dumps(exten)
-dados_load = json.loads(dados)
+id_morto = "SELECT Uniqueid FROM TMP_canais"
+id_morto = c.execute(id_morto)
+id_morto = c.fetchall()
+id_morto = id_morto
 
-SQL_INSERE = ("INSERT INTO rt_uniqueid"
-			"(Uniqueid,ChannelStateDesc)"
-			"VALUES (%s,%s)")
-query = ''
+id_morto_v = []
 
-for item in dados_load:
+def insere_canais_tmp():
 
-	Uniqueid = item['Uniqueid']
-	ChannelStateDesc = item['ChannelStateDesc']
-	query += " AND Uniqueid != " + Uniqueid
-print query
+	'''
+	Esta função insere no banco todos os novo Uniqueid's .
+	'''
 
+	contador = -1
+	while canais.CallerIDNum and contador < len(canais.origem_unico):
+		
+		try:
 
+			contador = contador + 1
+			unico = canais.id_unico[contador]
+			origem = canais.origem_unico[contador]
+			destino = canais.destino_unico[contador]
+			channel = canais.channelDESC_unico[contador]
+			state = canais.channelSTATE_unico[contador]
 
-id_falando = "SELECT Uniqueid FROM pabx_rt_calls WHERE ChannelState !=9 %s" % query
-print id_falando
-id_falando = c.execute(id_falando)
-id_falando = c.fetchall()
+			SQL_INSERE = ("INSERT INTO TMP_canais"
+						"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
+						"VALUES (%s,%s,%s,%s,%s)")
+			#print SQL_INSERE
+			DADOS = (unico,origem,destino,channel,state)
+			#print DADOS
+			c.execute(SQL_INSERE, DADOS)
 
-id_morto = ''
+			connection.commit()
 
-for id_falando_v in id_falando:
-	id_falando_v = str(id_falando_v[0],)
-	id_morto += '' + id_falando_v + ''
+			print 'Inseriu novo..'
 
-print id_morto
+		except MySQLdb.IntegrityError as e:
+			pass
 
-ring = "DELETE FROM rt_uniqueid WHERE Uniqueid in (%s)" % id_morto
-print ring
-#c.execute(ring)
-#connection.commit()
+		except IndexError as e:
+			pass
 
+def apaga_canais_tmp():
+	'''
+	Esta função remove do banco todos os Uniqueid's que não mais existem.
+	'''
 
-
-
-
-
+	sql = canais.validar_uniqueid()
+	sql = "DELETE FROM TMP_canais WHERE id != 0 %s " % sql
+	sql = c.execute(sql)
+	connection.commit()
+	print 'Apagou....'
 
 	
+def main():
 
+	'''
+	Esta função é iniciada ao rodar este script.b
+	'''
+	apaga_canais_tmp()
+	insere_canais_tmp()
+
+main()
 
