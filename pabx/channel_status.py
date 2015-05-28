@@ -107,10 +107,10 @@ def ligando_para(ramal=None):
 	try:
 
 		sql = "SELECT Exten FROM TMP_canais WHERE CallerIDNum = %s AND ChannelStateDesc = 'Ring'" % ramal
-		print sql
+		#print sql
 		sql = c.execute(sql)
 		sql = c.fetchone()[0]
-		print sql
+		#print sql
 		return sql
 
 	except Exception:
@@ -129,10 +129,10 @@ def falando_com(ramal=None):
 	try:
 
 		sql = "SELECT Exten FROM TMP_canais WHERE CallerIDNum = %s AND ChannelStateDesc = 'Up'" % ramal
-		print sql
+		#print sql
 		sql = c.execute(sql)
 		sql = c.fetchone()[0]
-		print sql
+		#print sql
 		return sql
 
 	except Exception:
@@ -154,10 +154,10 @@ def status_ligacao(ramal=None):
 	try:
 
 		sql = "SELECT ChannelState FROM TMP_canais WHERE CallerIDNum = %s" % ramal
-		print sql
+		#print sql
 		sql = c.execute(sql)
 		sql = c.fetchone()[0]
-		print sql
+		#print sql
 		return sql
 
 	except Exception:

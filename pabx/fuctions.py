@@ -24,7 +24,7 @@ def insere_ramal(ramal):
 
 
 	pega_ramal = "SELECT name FROM vw_sipregs WHERE name = %s AND name not in (SELECT CallerIDNum FROM pabx_rt_calls)" % ramal
-	#print pega_ramal
+	print pega_ramal
 	pega_ramal = c.execute(pega_ramal)
 	pega_ramal = c.fetchall()
 	
@@ -112,8 +112,11 @@ def consulta_ramal(ramal):
 	except:
 		print 'ramal %s esta diaponivel' %ramal
 
-#ramal = insere_ramal(301)
+
+
+
+#ramal = insere_ramal(400)
 #ramal = checa_status_ramal(300)
 #ramal = altera_status_ramal(300,8)
-ramal = consulta_ramal(300)
+#ramal = consulta_ramal(300)
 
