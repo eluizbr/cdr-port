@@ -8,8 +8,6 @@ import channel_status_18 as canais
 import json
 import random
 
-
-
 ## Conexão ao banco MySQL
 connection = MySQLdb.connect(host='localhost', user='root', passwd='app2004', db='cdrport')
 c = connection.cursor()
@@ -32,9 +30,16 @@ class Ramais:
 
 
 
-	def insere_ramal(self):
+	def insere_ramal(self,ramal):
 
-		pega_ramal = "SELECT name FROM vw_sipregs WHERE name not in (SELECT CallerIDNum FROM pabx_rt_calls) ORDER BY convert(name,unsigned)"
+		'''
+		Esta função insere o ramal que não esta em uso ou não existe na tabela pabx_rt_calls.
+		Uso:
+			INSTANCIA.insere_ramal(ramal)
+		'''
+		self.ramal = ramal
+
+		pega_ramal = "SELECT name FROM vw_sipregs WHERE name = %s AND name not in (SELECT CallerIDNum FROM pabx_rt_calls)" % ramal
 		#print pega_ramal
 		pega_ramal = c.execute(pega_ramal)
 		pega_ramal = c.fetchall()
@@ -112,27 +117,6 @@ class Ramais:
 
 
 
-#ramal_400 = Ramais(300)
-#status = ramal_400.checa_status_ramal(300)
+ramal_400 = Ramais(300)
+ramal = ramal_400.insere_ramal(300)
 
-'''
-contador = -1
-while canais.Uniqueid and contador < len(canais.id_unico):
-	
-	try:
-		contador = contador + 1
-		id = canais.id_unico[contador]
-		print id
-
-	except IndexError as e:
-		pass	
-
-
-		if pega_ramal == 5:
-			print 'ramal é %s' % self.ramal
-		
-		else:
-
-			print 'ramal %s tem status %s ' %(self.ramal, pega_ramal)
-
-'''

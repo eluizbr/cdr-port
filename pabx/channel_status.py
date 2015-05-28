@@ -58,7 +58,7 @@ for item in dados_load:
 def validar_uniqueid():
 
 	'''
-	Esta função retorna ao MySQL os Uniqueid a serem comparados
+	Esta função retorna ao MySQL os Uniqueid a serem apagados.
 	'''
 	
 	try:
@@ -78,9 +78,35 @@ def validar_uniqueid():
 
 def uniqueid_existente(uniqueid=None):
 
+	'''
+	Esta função retorna se Uniqueid existe. Se sim. ele retorna ele mesmo.
+	'''
 	try:
-		#self.uniqueid = uniqueid
+
 		sql = "SELECT Uniqueid FROM TMP_canais WHERE Uniqueid = %s" % uniqueid
+		#print sql
+		sql = c.execute(sql)
+		sql = c.fetchone()[0]
+		#print sql
+		return sql
+
+	except Exception:
+		pass
+
+#uniqueid_existente(1432820460.3)
+
+
+def ligando_para(ramal=None):
+
+	'''
+	Esta função tem como objetivo, retorna com que o ramal esta ligando.
+	Uso:
+		VAR = ligando_para(ramal)
+	'''
+
+	try:
+
+		sql = "SELECT Exten FROM TMP_canais WHERE CallerIDNum = %s AND ChannelStateDesc = 'Ring'" % ramal
 		print sql
 		sql = c.execute(sql)
 		sql = c.fetchone()[0]
@@ -88,6 +114,57 @@ def uniqueid_existente(uniqueid=None):
 		return sql
 
 	except Exception:
-		pass
+		return None
 
-#uniqueid_existente(1432820460.3)
+#ligando_para(300)
+
+def falando_com(ramal=None):
+
+	'''
+	Esta função tem como objetivo, retorna com que o ramal esta falando.
+	Uso:
+		var = falando_com(ramal)
+	'''
+
+	try:
+
+		sql = "SELECT Exten FROM TMP_canais WHERE CallerIDNum = %s AND ChannelStateDesc = 'Up'" % ramal
+		print sql
+		sql = c.execute(sql)
+		sql = c.fetchone()[0]
+		print sql
+		return sql
+
+	except Exception:
+		return None
+
+#falando_com(300)
+
+def status_ligacao(ramal=None):
+
+	'''
+	Esta função tem como objetivo retornar o status da ligacao.
+	Status possiveis:
+	4 ou 5 = Ring / Ringing
+	6 = Up (Falando)
+	Uso:
+		var = status_ligacao(ramal)
+	'''
+
+	try:
+
+		sql = "SELECT ChannelState FROM TMP_canais WHERE CallerIDNum = %s" % ramal
+		print sql
+		sql = c.execute(sql)
+		sql = c.fetchone()[0]
+		print sql
+		return sql
+
+	except Exception:
+		return None
+
+#status_ligacao(300)
+
+
+
+

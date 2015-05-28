@@ -1,7 +1,7 @@
 # coding: utf-8
 #!/usr/bin/env python
 import MySQLdb
-import channel_status_18 as canais
+import channel_status as canais
 import json
 #import channel_status as canais
 
@@ -49,23 +49,48 @@ def insere_canais_tmp():
 
 			x = canais.uniqueid_existente(unico)
 			x = x
-			#print  x, unico
-			if x == unico:
-				pass
-			else:
-				print '%s nao e igual a %s' % (unico,x)
-				
-				SQL_INSERE = ("INSERT INTO TMP_canais"
-							"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
-							"VALUES (%s,%s,%s,%s,%s)")
-				DADOS = (unico,origem,destino,channel,state)
-				c.execute(SQL_INSERE, DADOS)
+			print  unico, state
+
+			if state == '4':
+				print  'alterando o status para 4'
+
+				if x == unico:
+					pass
+				else:
+					print '%s nao e igual a %s' % (unico,x)
+					
+					SQL_INSERE = ("INSERT INTO TMP_canais"
+								"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
+								"VALUES (%s,%s,%s,%s,%s)")
+					DADOS = (unico,origem,destino,channel,state)
+					c.execute(SQL_INSERE, DADOS)
+					connection.commit()
+					#print 'Inseriu novo..'
+			elif state == '5':
+				print  'alterando o status para 5'
+
+				if x == unico:
+					pass
+				else:
+					print '%s nao e igual a %s' % (unico,x)
+					
+					SQL_INSERE = ("INSERT INTO TMP_canais"
+								"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
+								"VALUES (%s,%s,%s,%s,%s)")
+					DADOS = (unico,origem,destino,channel,state)
+					c.execute(SQL_INSERE, DADOS)
+					connection.commit()
+					#print 'Inseriu novo..'
+
+			if state == '6':
+				print  'alterando o status para 6'
+
+				sql = "UPDATE TMP_canais SET ChannelState = 6, ChannelStateDesc = 'Up' WHERE Uniqueid = %s" % unico
+				print sql
+				sql = c.execute(sql)
+				sql = c.fetchone()
 				connection.commit()
-				#print 'Inseriu novo..'
 
-
-
-			
 
 		except MySQLdb.IntegrityError as e:
 			pass
@@ -85,16 +110,16 @@ def apaga_canais_tmp():
 	else:
 		sql = "DELETE FROM TMP_canais WHERE id != 0 %s " % sql
 		sql = c.execute(sql)
-		connection.commit()
+		#connection.commit()
 		print 'Apagou o id %s' % sql
 
 def main():
 
 	'''
-	Esta função é iniciada ao rodar este script.b
+	Esta função é iniciada ao rodar este script
 	'''
 	try:
-	
+		
 		apaga_canais_tmp()
 		insere_canais_tmp()
 	
@@ -102,7 +127,7 @@ def main():
 		
 		sql = "DELETE FROM TMP_canais"
 		sql = c.execute(sql)
-		connection.commit()
+		#connection.commit()
 		print 'Apagou ligações mortas'
 		
 main()
