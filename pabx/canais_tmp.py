@@ -1,7 +1,7 @@
 # coding: utf-8
 #!/usr/bin/env python
 import MySQLdb
-import channel_status_18 as canais
+import channel_status as canais
 import json
 #import channel_status as canais
 
@@ -47,14 +47,19 @@ def insere_canais_tmp():
 			channel = canais.channelDESC_unico[contador]
 			state = canais.channelSTATE_unico[contador]
 
+			x = canais.uniqueid_existente(unico)
+			x = x
+			print  x, unico
+			if x == unico:
+				print '%s igual' % x
+			else:
+				print '%s nao e igual' % x
+
 			SQL_INSERE = ("INSERT INTO TMP_canais"
 						"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
 						"VALUES (%s,%s,%s,%s,%s)")
-			#print SQL_INSERE
 			DADOS = (unico,origem,destino,channel,state)
-			#print DADOS
 			c.execute(SQL_INSERE, DADOS)
-
 			connection.commit()
 
 			print 'Inseriu novo..'
@@ -71,19 +76,31 @@ def apaga_canais_tmp():
 	'''
 
 	sql = canais.validar_uniqueid()
-	sql = "DELETE FROM TMP_canais WHERE id != 0 %s " % sql
-	sql = c.execute(sql)
-	connection.commit()
-	print 'Apagou....'
+	#print canais.id_unico
+	if sql == canais.id_unico:
+		print 'ok'
+	else:
+		sql = "DELETE FROM TMP_canais WHERE id != 0 %s " % sql
+		sql = c.execute(sql)
+		connection.commit()
+		print 'Apagou o id %s' % sql
 
-	
 def main():
 
 	'''
 	Esta função é iniciada ao rodar este script.b
 	'''
-	apaga_canais_tmp()
-	insere_canais_tmp()
-
+	try:
+	
+		apaga_canais_tmp()
+		insere_canais_tmp()
+	
+	except Exception:
+		
+		sql = "DELETE FROM TMP_canais"
+		sql = c.execute(sql)
+		connection.commit()
+		print 'Apagou ligações mortas'
+		
 main()
 

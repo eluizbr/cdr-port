@@ -2,9 +2,15 @@
 #!/usr/bin/env python
 
 
-
+import MySQLdb
 import asterisk_stats as asterisk
 import json
+
+## Conexão ao banco MySQL
+connection = MySQLdb.connect(host='localhost', user='root', passwd='app2004', db='cdrport')
+c = connection.cursor()
+
+
 
 exten = asterisk.stats_request('CoreShowChannels')
 dados = json.dumps(exten)
@@ -56,13 +62,35 @@ def validar_uniqueid():
 	'''
 	Esta função retorna ao MySQL os Uniqueid a serem comparados
 	'''
-	contador = -1
-	var = ''
-	while contador < len(Uniqueid):
-		try:
-			contador = contador + 1
-			var += ' AND Uniqueid != ' + id_unico[contador]
-		except IndexError as e:
-			pass
+	
+	try:
+		contador = -1
+		var = ''
+		while contador < len(Uniqueid):
+			try:
+				contador = contador + 1
+				var += ' AND Uniqueid != ' + id_unico[contador]
+			except IndexError as e:
+				pass
 
-	return var
+		return var
+
+	except KeyError as e:
+		pass
+
+def uniqueid_existente(uniqueid=None):
+
+	try:
+		#self.uniqueid = uniqueid
+		sql = "SELECT Uniqueid FROM TMP_canais WHERE Uniqueid = %s" % uniqueid
+		print sql
+		sql = c.execute(sql)
+		sql = c.fetchone()[0]
+		#print sql
+		return sql
+
+	except Exception:
+		pass
+
+#uniqueid_existente(1432770882.99)
+
