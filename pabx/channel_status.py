@@ -10,8 +10,6 @@ import json
 connection = MySQLdb.connect(host='localhost', user='root', passwd='app2004', db='cdrport')
 c = connection.cursor()
 
-
-
 exten = asterisk.stats_request('CoreShowChannels')
 dados = json.dumps(exten)
 dados_load = json.loads(dados)
@@ -86,11 +84,10 @@ def uniqueid_existente(uniqueid=None):
 		print sql
 		sql = c.execute(sql)
 		sql = c.fetchone()[0]
-		#print sql
+		print sql
 		return sql
 
 	except Exception:
 		pass
 
-#uniqueid_existente(1432770882.99)
-
+#uniqueid_existente(1432820460.3)

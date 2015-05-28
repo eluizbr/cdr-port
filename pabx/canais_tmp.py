@@ -1,7 +1,7 @@
 # coding: utf-8
 #!/usr/bin/env python
 import MySQLdb
-import channel_status as canais
+import channel_status_18 as canais
 import json
 #import channel_status as canais
 
@@ -49,20 +49,23 @@ def insere_canais_tmp():
 
 			x = canais.uniqueid_existente(unico)
 			x = x
-			print  x, unico
+			#print  x, unico
 			if x == unico:
-				print '%s igual' % x
+				pass
 			else:
-				print '%s nao e igual' % x
+				print '%s nao e igual a %s' % (unico,x)
+				
+				SQL_INSERE = ("INSERT INTO TMP_canais"
+							"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
+							"VALUES (%s,%s,%s,%s,%s)")
+				DADOS = (unico,origem,destino,channel,state)
+				c.execute(SQL_INSERE, DADOS)
+				connection.commit()
+				#print 'Inseriu novo..'
 
-			SQL_INSERE = ("INSERT INTO TMP_canais"
-						"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
-						"VALUES (%s,%s,%s,%s,%s)")
-			DADOS = (unico,origem,destino,channel,state)
-			c.execute(SQL_INSERE, DADOS)
-			connection.commit()
 
-			print 'Inseriu novo..'
+
+			
 
 		except MySQLdb.IntegrityError as e:
 			pass

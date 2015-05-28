@@ -4,7 +4,7 @@
 
 import MySQLdb
 import asterisk_stats as asterisk
-import channel_status as canais
+import channel_status_18 as canais
 import json
 import random
 
@@ -32,7 +32,6 @@ class Ramais:
 
 
 
-'''
 	def insere_ramal(self):
 
 		pega_ramal = "SELECT name FROM vw_sipregs WHERE name not in (SELECT CallerIDNum FROM pabx_rt_calls) ORDER BY convert(name,unsigned)"
@@ -111,11 +110,10 @@ class Ramais:
 
 			print 'nada'
 
-'''
+
 
 #ramal_400 = Ramais(300)
 #status = ramal_400.checa_status_ramal(300)
-
 
 '''
 contador = -1
