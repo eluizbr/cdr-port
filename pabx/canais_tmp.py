@@ -35,6 +35,7 @@ def insere_canais_tmp():
 	Esta função insere no banco todos os novo Uniqueid's .
 	'''
 
+	
 	contador = -1
 	while canais.CallerIDNum and contador < len(canais.origem_unico):
 		
@@ -49,7 +50,7 @@ def insere_canais_tmp():
 
 			x = canais.uniqueid_existente(unico)
 			x = x
-			print  unico, state
+			#print  unico, state
 
 			if state == '4':
 				print  'alterando o status para 4'
@@ -57,7 +58,7 @@ def insere_canais_tmp():
 				if x == unico:
 					pass
 				else:
-					print '%s nao e igual a %s' % (unico,x)
+					#print '%s nao e igual a %s' % (unico,x)
 					
 					SQL_INSERE = ("INSERT INTO TMP_canais"
 								"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
@@ -67,7 +68,7 @@ def insere_canais_tmp():
 					connection.commit()
 					#print 'Inseriu novo..'
 			elif state == '5':
-				print  'alterando o status para 5'
+				#print  'alterando o status para 5'
 
 				if x == unico:
 					pass
@@ -83,13 +84,14 @@ def insere_canais_tmp():
 					#print 'Inseriu novo..'
 
 			if state == '6':
-				print  'alterando o status para 6'
+				#print  'alterando o status para 6'
 
 				sql = "UPDATE TMP_canais SET ChannelState = 6, ChannelStateDesc = 'Up' WHERE Uniqueid = %s" % unico
-				print sql
+				#print sql
 				sql = c.execute(sql)
 				sql = c.fetchone()
 				connection.commit()
+
 
 
 		except MySQLdb.IntegrityError as e:
@@ -98,20 +100,32 @@ def insere_canais_tmp():
 		except IndexError as e:
 			pass
 
+
+
 def apaga_canais_tmp():
 	'''
 	Esta função remove do banco todos os Uniqueid's que não mais existem.
 	'''
 
+
 	sql = canais.validar_uniqueid()
-	#print canais.id_unico
 	if sql == canais.id_unico:
 		print 'ok'
 	else:
 		sql = "DELETE FROM TMP_canais WHERE id != 0 %s " % sql
 		sql = c.execute(sql)
-		#connection.commit()
+		connection.commit()
 		print 'Apagou o id %s' % sql
+
+def apaga_canais_RT():
+	'''
+	Esta função remove do banco todos os Uniqueid's que não mais existem na tabela pabx_rt_calls.
+	'''
+
+	sql = "DELETE FROM pabx_rt_calls WHERE ChannelState != 9 AND Uniqueid NOT IN (SELECT Uniqueid FROM TMP_canais)"
+	sql = c.execute(sql)
+	connection.commit()
+	print 'Apagou o id %s' % sql
 
 def main():
 
@@ -123,11 +137,11 @@ def main():
 		apaga_canais_tmp()
 		insere_canais_tmp()
 	
-	except Exception:
+	except:
 		
 		sql = "DELETE FROM TMP_canais"
 		sql = c.execute(sql)
-		#connection.commit()
+		connection.commit()
 		print 'Apagou ligações mortas'
 		
 main()

@@ -5,7 +5,6 @@
 import MySQLdb
 import asterisk_stats as asterisk
 import channel_status as canais
-import json
 import random
 
 ## Conexão ao banco MySQL
@@ -24,7 +23,6 @@ def insere_ramal(ramal):
 
 
 	pega_ramal = "SELECT name FROM vw_sipregs WHERE name = %s AND name not in (SELECT CallerIDNum FROM pabx_rt_calls)" % ramal
-	print pega_ramal
 	pega_ramal = c.execute(pega_ramal)
 	pega_ramal = c.fetchall()
 	
@@ -57,11 +55,11 @@ def checa_status_ramal(ramal):
 
 
 	pega_ramal = "SELECT CallerIDNum FROM pabx_rt_calls WHERE CallerIDNum = %s" % ramal
-	print pega_ramal
+	#print pega_ramal
 	pega_ramal = c.execute(pega_ramal)
 	pega_ramal = c.fetchone()[0]
-	print pega_ramal
-	print canais.origem_unico
+	#print pega_ramal
+	#print canais.origem_unico
 	contador = -1
 	try:
 		while canais.CallerIDNum and contador < len(canais.origem_unico):
@@ -69,21 +67,22 @@ def checa_status_ramal(ramal):
 			try:
 				contador = contador + 1
 				callerid = canais.origem_unico[contador]
-				print callerid
+				#print callerid
 
 				if callerid == pega_ramal:
-					print '%s e igual a %s' % (callerid,pega_ramal)
+					#print '%s e igual a %s' % (callerid,pega_ramal)
 					ramal = altera_status_ramal(callerid,9)
-					print ramal
+					#print ramal
 				else:
-					print '%s e diferente %s' % (callerid,pega_ramal)
+					#print '%s e diferente %s' % (callerid,pega_ramal)
+					pass
 
 			except IndexError as e:
 				pass
 	except:
-		print 'Nenhuma ligação no momento'
+		#print 'Nenhuma ligação no momento'
 		ramal = altera_status_ramal(pega_ramal,8)
-		print ramal
+		#print ramal
 
 
 def altera_status_ramal(ramal,controle):
@@ -91,11 +90,11 @@ def altera_status_ramal(ramal,controle):
 
 
 	atualiza_ramal = "UPDATE pabx_rt_calls SET controle = %s WHERE CallerIDNum = %s" % (controle,ramal)
-	print atualiza_ramal
+	#print atualiza_ramal
 	atualiza_ramal = c.execute(atualiza_ramal)
 	atualiza_ramal = c.fetchone()
 	connection.commit()
-	print atualiza_ramal
+	#print atualiza_ramal
 
 def consulta_ramal(ramal):
 
@@ -107,16 +106,12 @@ def consulta_ramal(ramal):
 		#print consulta
 
 		if consulta == canais.uniqueid_existente(consulta):
-			print 'ramal %s esta em ligacao' %ramal
+			#print 'ramal %s esta em ligacao' %ramal
+			pass
 
 	except:
 		print 'ramal %s esta diaponivel' %ramal
 
 
 
-
-#ramal = insere_ramal(400)
-#ramal = checa_status_ramal(300)
-#ramal = altera_status_ramal(300,8)
-#ramal = consulta_ramal(300)
 

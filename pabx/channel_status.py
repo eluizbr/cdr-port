@@ -95,18 +95,33 @@ def uniqueid_existente(uniqueid=None):
 
 #uniqueid_existente(1432820460.3)
 
-
-def ligando_para(ramal=None):
+def todos_existente():
 
 	'''
-	Esta função tem como objetivo, retorna com que o ramal esta ligando.
-	Uso:
-		VAR = ligando_para(ramal)
+	Esta função retorna se Uniqueid existe. Se sim. ele retorna ele mesmo.
 	'''
-
 	try:
 
-		sql = "SELECT Exten FROM TMP_canais WHERE CallerIDNum = %s AND ChannelStateDesc = 'Ring'" % ramal
+		sql = "SELECT Uniqueid FROM TMP_canais"
+		#print sql
+		sql = c.execute(sql)
+		sql = c.fetchall()
+		print sql
+		return sql
+
+	except Exception:
+		pass
+
+#todos_existente()
+
+def uniqueid_ramal(ramal=None):
+
+	'''
+	Esta função retorna se Uniqueid existe. Se sim. ele retorna ele mesmo.
+	'''
+	try:
+
+		sql = "SELECT Uniqueid FROM TMP_canais WHERE CallerIDNum = %s" % ramal
 		#print sql
 		sql = c.execute(sql)
 		sql = c.fetchone()[0]
@@ -114,9 +129,54 @@ def ligando_para(ramal=None):
 		return sql
 
 	except Exception:
-		return None
+		pass
 
-#ligando_para(300)
+#uniqueid_ramal(300)
+
+class Ramais:
+	'''
+	Esta classe, trata como esta o status atual do ramal. Ela trabalha quando 
+	ramal esta em Stand By, e quando esta em ligação.
+	
+	'''
+
+
+
+	def __init__(self,ramal):
+		'''
+		Esta função insere o ramal no MySQL quando ele incia uma ligação. Alterando seu status:
+		Controle: 8 - Ramal em Stand By, 9 - Ramal em reservar (em ligação)
+		'''
+
+		self.ramal = ramal
+
+	def origem(self,ramal):
+
+		try:
+			sql = "SELECT CallerIDNum FROM TMP_canais WHERE CallerIDNum = %s AND ChannelStateDesc = 'Ring'" % self.ramal
+			#print sql
+			sql = c.execute(sql)
+			sql = c.fetchone()[0]
+			#print sql
+			return sql
+
+		except:
+			pass
+
+	def destino(self,ramal):
+
+		try:
+			sql = "SELECT Exten FROM TMP_canais WHERE CallerIDNum = %s AND ChannelStateDesc = 'Ring'" % self.ramal
+			#print sql
+			sql = c.execute(sql)
+			sql = c.fetchone()[0]
+			#print sql
+			return sql
+		
+		except:
+			pass
+
+
 
 def falando_com(ramal=None):
 
