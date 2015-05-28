@@ -29,20 +29,6 @@ class Ramais:
 
 		self.ramal = ramal
 
-	def temp_table():
-
-
-
-		SQL_DB_CRIA = "CREATE TEMPORARY TABLE `TMP_cdr_cdr` (`CallerIDNum` varchar(100), `ChannelStateDesc` varchar(10) ENGINE=MEMORY AUTO_INCREMENT=0 DEFAULT CHARSET=latin1 )" 
-		SQL_INSERE = ("INSERT INTO rt_uniqueid"
-			"(Uniqueid,ChannelStateDesc)"
-			"VALUES (%s,%s)")
-		
-		DADOS = (canais.CallerIDNum,canais.ChannelStateDesc)
-		print DADOS
-		c.execute(SQL_INSERE, DADOS)
-		connection.commit()
-
 
 
 
