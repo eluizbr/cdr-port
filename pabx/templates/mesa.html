@@ -222,6 +222,10 @@
     {% if rt.ChannelState == 9 %}
             <div class="col-md-4">
                 <section class="widget bg-gray text-white">
+                <div class="widget-controls">
+                    <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
+                    <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-envelope text-white"></i></a>
+                </div>
                     <div class="widget-body clearfix">
                         <div class="row">
                             <div class="col-xs-2">
@@ -253,6 +257,10 @@
        
             <div class="col-md-4">
                 <section class="widget bg-info text-white">
+                    <div class="widget-controls">
+                        <a class="bg-primari" href="#"><i class="glyphicon glyphicon-retweet text-white"></i></a>
+                        <a class="bg-primari" href="#"><i class="glyphicon glyphicon-remove text-white"></i></a>
+                    </div>
                     <div class="widget-body clearfix">
                         <div class="row">
                             <div class="col-xs-2">
@@ -295,6 +303,10 @@
          
             <div class="col-md-4">
                 <section class="widget bg-primary text-white">
+                    <div class="widget-controls">
+                        <a class="bg-primari" href="#"><i class="glyphicon glyphicon-retweet text-white"></i></a>
+                        <a class="bg-primari" href="#"><i class="glyphicon glyphicon-remove text-white"></i></a>
+                    </div>
                     <div class="widget-body clearfix">
                         <div class="row">
                             <div class="col-xs-2">
@@ -316,17 +328,10 @@
                                 <h5 class="no-margin">Tempo</h5>
                                 <p class="value5">{{rt.Duration|time:"H:i:s"}}</p>
                             </div>
-                        {% if rt.ChannelStateDesc == "Ring" %}
-                            <div class="col-xs-6">
-                                <h5 class="no-margin">Status</h5>
-                                <p class="value5">Chamando</p>
-                            </div>
-                        {% else %}
                             <div class="col-xs-6">
                                 <h5 class="no-margin">Status</h5>
                                 <p class="value5">Falando</p>
                             </div>
-                        {% endif %}
                         </div>
                     </div>
                 </section>
@@ -362,7 +367,7 @@
                                     </div>
                                     
                                     {% for call in exten %}
-                                        {% if call.ConnectedLineNum != trunk.Username and call.ChannelState != 9 and call.Application = 'Dial' and call.Exten|length > 7 %}
+                                        {% if call.ConnectedLineNum != trunk.Username and call.Application = 'Dial' and call.Exten|length > 7 %}
                                         <div class="stats-row">
                                             <div class="stat-item">
                                                 <h7 class="name">Ramal</h7>
