@@ -4,11 +4,13 @@
 
 import MySQLdb
 import asterisk_stats as asterisk
-import channel_status as canais
+import channel_status_18 as canais
 import random
+import globais
+
 
 ## Conexão ao banco MySQL
-connection = MySQLdb.connect(host='localhost', user='root', passwd='app2004', db='cdrport')
+connection = MySQLdb.connect(host=globais.host, user=globais.user, passwd=globais.password, db=globais.db)
 c = connection.cursor()
 
 
@@ -113,5 +115,15 @@ def consulta_ramal(ramal):
 		print 'ramal %s esta diaponivel' %ramal
 
 
+def checa_status_id(uniqueid=None):
 
+	
+	sql = "SELECT Uniqueid FROM pabx_rt_calls WHERE Uniqueid = %s" % (uniqueid)
+	print sql
+	sql = c.execute(sql)
+	sql = c.fetchone()
+	#connection.commit()
+	print sql
+	return sql
 
+#checa_status_id('1432928438.166091')

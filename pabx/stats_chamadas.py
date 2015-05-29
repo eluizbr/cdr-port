@@ -4,26 +4,26 @@
 
 import MySQLdb
 import funcoes as funcao
-import channel_status as canais
+import channel_status_18 as canais
 import canais_tmp
+import globais
 
 
 ## Conexão ao banco MySQL
-connection = MySQLdb.connect(host='localhost', user='root', passwd='app2004', db='cdrport')
+connection = MySQLdb.connect(host=globais.host, user=globais.user, passwd=globais.password, db=globais.db)
 c = connection.cursor()
 
 def insere_chamada():
 
-	lista = int(len(canais.origem_unico))
-	print lista
+	loop = len(canais.origem_unico)
+	loop = loop - 1
 
 
 	contador = -1
-	while  contador < len(canais.origem_unico):
+	while contador < loop:
 		
 
 			contador = contador +1
-			print contador
 			unico = canais.id_unico[contador]
 			state = canais.channelSTATE_unico[contador]
 			canal = canais.channel_unico[contador]
@@ -42,31 +42,54 @@ def insere_chamada():
 			ApplicationData = canais.ApplicationData_unico[contador]
 			BridgeId = canais.BridgeId_unico[contador]
 
+			print unico
 			x = canais.uniqueid_existente(unico)
 			x = x
-			print  unico, state
+			print 'x é %s' % x
 
 			if state == '4' or '5':
-				print  'alterando o status para 4'
-				print x, unico
-				if x == unico:
-					print 'ja tem'
+				#print  'alterando o status para 4'
+				#print x, unico
+				if unico != unico:
+
+					atualiza_ring = """UPDATE pabx_rt_calls SET Duration = '%s' WHERE Uniqueid = '%s' AND ChannelStateDesc = 'Ring' """ % (Duration,unico)
+					#print atualiza_ring
+					atualiza_ring = c.execute(atualiza_ring)
+					connection.commit()
+					atualiza_ringing = """UPDATE pabx_rt_calls SET Duration = '%s' WHERE Uniqueid = '%s' AND ChannelStateDesc = 'Ringing' """ % (Duration,unico)
+					#print atualiza_ringing
+					atualiza_ringing = c.execute(atualiza_ringing)
+					#print atualiza
+					connection.commit()
 
 				else:
-					try:
-						print 'inserindo chamanda'
-						
-						apaga_origem = "DELETE FROM pabx_rt_calls WHERE ChannelState = 9 AND CallerIDNum = %s" %origem
-						print apaga_origem
-						apaga_origem = c.execute(apaga_origem)
-						connection.commit()
-						print 'Apagou o id %s' % apaga_origem
-						apaga_destino = "DELETE FROM pabx_rt_calls WHERE ChannelState = 9 AND CallerIDNum = %s" %destino
-						print apaga_destino
-						apaga_destino = c.execute(apaga_destino)
-						connection.commit()
-						print 'Apagou o id %s' % apaga_destino
 
+					print 'inserindo chamanda'
+					apaga_origem = "DELETE FROM pabx_rt_calls WHERE ChannelState = 9 AND CallerIDNum = %s" %origem
+					#print apaga_origem
+					apaga_origem = c.execute(apaga_origem)
+					connection.commit()
+					#print 'Apagou o id %s' % apaga_origem
+					print 'destino e %s' % destino
+					
+					if len(destino) < 7:
+						if destino != '':
+
+							apaga_destino = "DELETE FROM pabx_rt_calls WHERE ChannelState = 9 AND CallerIDNum = %s" %destino
+							#print apaga_destino
+							apaga_destino = c.execute(apaga_destino)
+							connection.commit()
+							#print 'Apagou o id %s' % apaga_destino
+					else: 
+						pass
+
+					zz = funcao.checa_status_id(str(unico))
+					print 'zz e %s e unico e %s' %(zz,unico)
+
+					if zz != None:
+						print 'ja existe'
+					else:
+						print 'inserindo......'
 						SQL_INSERE = ("INSERT INTO pabx_rt_calls"
 								"(Channel,ChannelState,ChannelStateDesc,CallerIDNum,CallerIDName,ConnectedLineNum,ConnectedLineName,\
 									AccountCode,Context,Exten,Priority,Uniqueid,Application,Duration,BridgeId,controle)"
@@ -77,24 +100,30 @@ def insere_chamada():
 						c.execute(SQL_INSERE, DADOS)
 						connection.commit()
 
-					except:
-						pass
+
+
+
 
 			if state == '6':
 				print  'alterando o status para 6'
 
 				sql = "UPDATE pabx_rt_calls SET ChannelState = 6, ChannelStateDesc = 'Up' WHERE Uniqueid = %s" % unico
-				print sql
+				#print sql
 				sql = c.execute(sql)
 				sql = c.fetchone()
 				connection.commit()
+				atualiza_ring = """UPDATE pabx_rt_calls SET Duration = '%s' WHERE Uniqueid = '%s' AND ChannelStateDesc = 'Up' """ % (Duration,unico)
+				#print atualiza_ring
+				atualiza_ring = c.execute(atualiza_ring)
+				connection.commit()
+	
 
 
 def main():
 
-	canais_tmp.main()
-	funcao.insere_ramal()
-	canais_tmp.apaga_canais_RT()
+	#canais_tmp.main()
+	#funcao.insere_ramal()
+	#canais_tmp.apaga_canais_RT()
 	insere_chamada()
 
 main()

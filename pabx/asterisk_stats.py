@@ -21,14 +21,14 @@ import json
 import re
 
 myrequesturl = ''
-#main_url = 'http://sip.tofalando.com.br:8088/asterisk/rawman?'
-main_url = 'http://192.168.2.230:8088/rawman?'
+main_url = 'http://sip.tofalando.com.br:8088/asterisk/rawman?'
+#main_url = 'http://192.168.2.230:8088/rawman?'
 cookie = ''
 
 
 def stats_request(action=None):
-    #data = urllib.urlencode({'action': 'Login', 'username': 'root','secret': 'ZhVKlFXeCgTNyBr9lbIH',})
-    data = urllib.urlencode({'action': 'Login', 'username': 'asterisk','secret': 'senha',})
+    data = urllib.urlencode({'action': 'Login', 'username': 'root','secret': 'ZhVKlFXeCgTNyBr9lbIH',})
+    #data = urllib.urlencode({'action': 'Login', 'username': 'asterisk','secret': 'senha',})
     myrequesturlurl = main_url + data
     #print myrequesturlurl
     req = urllib2.Request(myrequesturlurl)

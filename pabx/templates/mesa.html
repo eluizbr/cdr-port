@@ -219,7 +219,7 @@
                 <div class="col-md-10">
 
 {% for rt in exten %} {#Configura o FOR para ramais SIP 01#}
-    {% if rt.controle == 8 %}
+    {% if rt.ChannelState == 9 %}
             <div class="col-md-4">
                 <section class="widget bg-gray text-white">
                     <div class="widget-body clearfix">
@@ -247,6 +247,8 @@
                     </div>
                 </section>
             </div>
+
+
     {% elif rt.ChannelState == 4 %}
             <div class="col-md-4">
                 <section class="widget bg-info text-white">
@@ -287,8 +289,7 @@
                 </section>
             </div>        
 
-
-    {% elif rt.ChannelState == 6 %}
+    {% elif rt.ChannelState == 6 and rt.Application = 'Dial' %}
             <div class="col-md-4">
                 <section class="widget bg-primary text-white">
                     <div class="widget-body clearfix">
@@ -320,13 +321,15 @@
                         {% else %}
                             <div class="col-xs-6">
                                 <h5 class="no-margin">Status</h5>
-                                <p class="value5">Ao Telefone</p>
+                                <p class="value5">Falando</p>
                             </div>
                         {% endif %}
                         </div>
                     </div>
                 </section>
             </div>        
+
+
     {% endif %}
 {% endfor %} {#Configura o FOR para ramais SIP 01#}
 
@@ -361,7 +364,7 @@
                                         <div class="stats-row">
                                             <div class="stat-item">
                                                 <h7 class="name">Ramal</h7>
-                                                <p class="value">{{call.CallerIDNum}}</p>
+                                                <p class="value">{{call.ConnectedLineNum}}</p>
                                             </div>
                                             <div class="stat-item">
                                                 <h7 class="name">Chamando</h7>

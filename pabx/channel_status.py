@@ -5,9 +5,11 @@
 import MySQLdb
 import asterisk_stats as asterisk
 import json
+import globais
+
 
 ## Conexão ao banco MySQL
-connection = MySQLdb.connect(host='localhost', user='root', passwd='app2004', db='cdrport')
+connection = MySQLdb.connect(host=globais.host, user=globais.user, passwd=globais.password, db=globais.db)
 c = connection.cursor()
 
 exten = asterisk.stats_request('CoreShowChannels')

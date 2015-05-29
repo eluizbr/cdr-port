@@ -1,8 +1,9 @@
 # coding: utf-8
 #!/usr/bin/env python
 import MySQLdb
-import channel_status as canais
+import channel_status_18 as canais
 import json
+import globais
 #import channel_status as canais
 
 '''
@@ -19,7 +20,7 @@ CREATE TABLE `TMP_canais` (
 '''
 
 ## Conexão ao banco MySQL
-connection = MySQLdb.connect(host='localhost', user='root', passwd='app2004', db='cdrport')
+connection = MySQLdb.connect(host=globais.host, user=globais.user, passwd=globais.password, db=globais.db)
 c = connection.cursor()
 
 id_morto = "SELECT Uniqueid FROM TMP_canais"
@@ -83,6 +84,22 @@ def insere_canais_tmp():
 					connection.commit()
 					#print 'Inseriu novo..'
 
+			elif state == '0':
+				#print  'alterando o status para 5'
+
+				if x == unico:
+					pass
+				else:
+					print '%s nao e igual a %s' % (unico,x)
+					
+					SQL_INSERE = ("INSERT INTO TMP_canais"
+								"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
+								"VALUES (%s,%s,%s,%s,%s)")
+					DADOS = (unico,origem,destino,channel,state)
+					c.execute(SQL_INSERE, DADOS)
+					connection.commit()
+					#print 'Inseriu novo..'
+
 			if state == '6':
 				#print  'alterando o status para 6'
 
@@ -99,7 +116,7 @@ def insere_canais_tmp():
 
 		except IndexError as e:
 			pass
-
+insere_canais_tmp()
 
 
 def apaga_canais_tmp():
