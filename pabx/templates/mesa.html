@@ -367,7 +367,7 @@
                                     </div>
                                     
                                     {% for call in exten %}
-                                        {% if call.Application == 'Dial' or call.Application == 'Ring' or call.Application == 'Down' and call.Exten|length > 7 %}
+                                        {% if call.Application == 'Dial' or call.Application == 'Ring' or call.Application == 'Down' or call.Application == 'AGI' and call.Exten|length > 7 %}
                                         <div class="stats-row">
                                             <div class="stat-item">
                                                 <h7 class="name">Ramal</h7>
