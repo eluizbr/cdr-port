@@ -14,6 +14,13 @@ exten = asterisk.stats_request('CoreShowChannels')
 dados = json.dumps(exten)
 dados_load = json.loads(dados)
 
+channel_unico = []
+CallerIDName_unico = []
+ConnectedLineNum_unico = []
+ConnectedLineName_unico = []
+AccountCode_unico = []
+Context_uinico = []
+Priority_unico = []
 id_unico = []
 origem_unico = []
 dial_unico = []
@@ -21,36 +28,64 @@ channelDESC_unico = []
 channelSTATE_unico = []
 destino_unico = []
 duracao_unico = []
+ApplicationData_unico = []
+BridgeId_unico = []
 
 for item in dados_load:
 
 		try:
 			
 			Event = item['Event']
+
 			Channel = item['Channel']
+			channel_unico.append(Channel)
+
 			ChannelState = item['ChannelState']
 			channelSTATE_unico.append(ChannelState)
+			
 			ChannelStateDesc = item['ChannelStateDesc']
 			channelDESC_unico .append(ChannelStateDesc)
+			
 			CallerIDNum = item['CallerIDNum']
 			origem_unico.append(CallerIDNum)
+			
 			CallerIDName = item['CallerIDName']
+			CallerIDName_unico.append(CallerIDName)
+			
 			ConnectedLineNum = item['ConnectedLineNum']
+			ConnectedLineNum_unico.append(ConnectedLineNum)
+			
 			ConnectedLineName = item['ConnectedLineName']
+			ConnectedLineName_unico.append(ConnectedLineName)
+
 			Language = item['Language']
+
 			AccountCode = item['AccountCode']
+			AccountCode_unico.append(AccountCode)
+
 			Context = item['Context']
+			Context_uinico.append(Context)
+
 			Exten = item['Exten']
 			destino_unico.append(Exten)
+
 			Priority = item['Priority']
+			Priority_unico.append(Priority)
+
 			Uniqueid = item['Uniqueid']
 			id_unico.append(Uniqueid)
+			
 			Application = item['Application']
 			dial_unico.append(Application)
+			
 			ApplicationData = item['ApplicationData']
+			ApplicationData_unico.append(ApplicationData)
+			
 			Duration = item['Duration']
 			duracao_unico.append(Duration)
+			
 			BridgeId = item['BridgeId']
+			BridgeId_unico.append(BridgeId)
 
 		except KeyError as e:
 			pass
@@ -83,7 +118,7 @@ def uniqueid_existente(uniqueid=None):
 	'''
 	try:
 
-		sql = "SELECT Uniqueid FROM TMP_canais WHERE Uniqueid = %s" % uniqueid
+		sql = "SELECT Uniqueid FROM pabx_rt_calls WHERE Uniqueid = %s" % uniqueid
 		#print sql
 		sql = c.execute(sql)
 		sql = c.fetchone()[0]

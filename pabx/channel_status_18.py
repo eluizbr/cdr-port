@@ -104,7 +104,7 @@ def todos_existente():
 	try:
 
 		sql = "SELECT Uniqueid FROM TMP_canais"
-		#print sql
+		print sql
 		sql = c.execute(sql)
 		sql = c.fetchall()
 		print sql
@@ -123,10 +123,10 @@ def uniqueid_ramal(ramal=None):
 	try:
 
 		sql = "SELECT Uniqueid FROM TMP_canais WHERE CallerIDNum = %s" % ramal
-		#print sql
+		print sql
 		sql = c.execute(sql)
 		sql = c.fetchone()[0]
-		#print sql
+		print sql
 		return sql
 
 	except Exception:
@@ -155,10 +155,10 @@ class Ramais:
 
 		try:
 			sql = "SELECT CallerIDNum FROM TMP_canais WHERE CallerIDNum = %s AND ChannelStateDesc = 'Ring'" % self.ramal
-			#print sql
+			print sql
 			sql = c.execute(sql)
 			sql = c.fetchone()[0]
-			#print sql
+			print sql
 			return sql
 
 		except:
@@ -168,10 +168,10 @@ class Ramais:
 
 		try:
 			sql = "SELECT Exten FROM TMP_canais WHERE CallerIDNum = %s AND ChannelStateDesc = 'Ring'" % self.ramal
-			#print sql
+			print sql
 			sql = c.execute(sql)
 			sql = c.fetchone()[0]
-			#print sql
+			print sql
 			return sql
 		
 		except:
@@ -190,10 +190,10 @@ def falando_com(ramal=None):
 	try:
 
 		sql = "SELECT Exten FROM TMP_canais WHERE CallerIDNum = %s AND ChannelStateDesc = 'Up'" % ramal
-		#print sql
+		print sql
 		sql = c.execute(sql)
 		sql = c.fetchone()[0]
-		#print sql
+		print sql
 		return sql
 
 	except Exception:
@@ -215,10 +215,10 @@ def status_ligacao(ramal=None):
 	try:
 
 		sql = "SELECT ChannelState FROM TMP_canais WHERE CallerIDNum = %s" % ramal
-		#print sql
+		print sql
 		sql = c.execute(sql)
 		sql = c.fetchone()[0]
-		#print sql
+		print sql
 		return sql
 
 	except Exception:

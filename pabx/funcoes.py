@@ -13,7 +13,7 @@ c = connection.cursor()
 
 
 
-def insere_ramal(ramal):
+def insere_ramal():
 
 	'''
 	Esta função insere o ramal que não esta em uso ou não existe na tabela pabx_rt_calls.
@@ -22,7 +22,7 @@ def insere_ramal(ramal):
 	'''
 
 
-	pega_ramal = "SELECT name FROM vw_sipregs WHERE name = %s AND name not in (SELECT CallerIDNum FROM pabx_rt_calls)" % ramal
+	pega_ramal = "SELECT name FROM vw_sipregs WHERE name not in (SELECT CallerIDNum FROM pabx_rt_calls)" 
 	pega_ramal = c.execute(pega_ramal)
 	pega_ramal = c.fetchall()
 	
