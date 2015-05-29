@@ -367,7 +367,7 @@
                                     </div>
                                     
                                     {% for call in exten %}
-                                        {% if call.ConnectedLineNum != trunk.Username and call.Application = 'Dial' and call.Exten|length > 7 %}
+                                        {% if call.Application == 'Dial' or call.Application == 'Ring' or call.Application == 'Down' and call.Exten|length > 7 %}
                                         <div class="stats-row">
                                             <div class="stat-item">
                                                 <h7 class="name">Ramal</h7>
@@ -380,6 +380,10 @@
                                             <div class="stat-item">
                                                 <h7 class="name">Tempo</h7>
                                                 <p class="value">{{call.Duration|time:"H:i:s"}}</p>
+                                            </div>
+                                            <div class="stat-item">
+                                                <h7 class="name">Status</h7>
+                                                <p class="value">{{call.ChannelStateDesc}}</p>
                                             </div>
                                         </div>
                                         {% endif %}

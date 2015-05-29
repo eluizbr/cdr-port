@@ -1,7 +1,7 @@
 # coding: utf-8
 #!/usr/bin/env python
 import MySQLdb
-import channel_status_18 as canais
+import channel_status as canais
 import json
 import globais
 #import channel_status as canais

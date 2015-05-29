@@ -4,7 +4,7 @@
 
 import MySQLdb
 import asterisk_stats as asterisk
-import channel_status_18 as canais
+import channel_status as canais
 import random
 import globais
 
