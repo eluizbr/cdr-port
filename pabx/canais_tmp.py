@@ -36,87 +36,91 @@ def insere_canais_tmp():
 	Esta função insere no banco todos os novo Uniqueid's .
 	'''
 
-	
-	contador = -1
-	while canais.CallerIDNum and contador < len(canais.origem_unico):
-		
-		try:
+	try:
 
-			contador = contador + 1
-			unico = canais.id_unico[contador]
-			origem = canais.origem_unico[contador]
-			destino = canais.destino_unico[contador]
-			channel = canais.channelDESC_unico[contador]
-			state = canais.channelSTATE_unico[contador]
+		contador = -1
+		while canais.CallerIDNum and contador < len(canais.origem_unico):
+			
+			try:
 
-			x = canais.uniqueid_existente(unico)
-			x = x
-			#print  unico, state
+				contador = contador + 1
+				unico = canais.id_unico[contador]
+				origem = canais.origem_unico[contador]
+				destino = canais.destino_unico[contador]
+				channel = canais.channelDESC_unico[contador]
+				state = canais.channelSTATE_unico[contador]
 
-			if state == '4':
-				print  'alterando o status para 4'
+				x = canais.uniqueid_existente(unico)
+				x = x
+				#print  unico, state
 
-				if x == unico:
-					pass
-				else:
-					#print '%s nao e igual a %s' % (unico,x)
-					
-					SQL_INSERE = ("INSERT INTO TMP_canais"
-								"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
-								"VALUES (%s,%s,%s,%s,%s)")
-					DADOS = (unico,origem,destino,channel,state)
-					c.execute(SQL_INSERE, DADOS)
+				if state == '4':
+					print  'alterando o status para 4'
+
+					if x == unico:
+						pass
+					else:
+						#print '%s nao e igual a %s' % (unico,x)
+						
+						SQL_INSERE = ("INSERT INTO TMP_canais"
+									"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
+									"VALUES (%s,%s,%s,%s,%s)")
+						DADOS = (unico,origem,destino,channel,state)
+						c.execute(SQL_INSERE, DADOS)
+						connection.commit()
+						#print 'Inseriu novo..'
+				elif state == '5':
+					#print  'alterando o status para 5'
+
+					if x == unico:
+						pass
+					else:
+						print '%s nao e igual a %s' % (unico,x)
+						
+						SQL_INSERE = ("INSERT INTO TMP_canais"
+									"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
+									"VALUES (%s,%s,%s,%s,%s)")
+						DADOS = (unico,origem,destino,channel,state)
+						c.execute(SQL_INSERE, DADOS)
+						connection.commit()
+						#print 'Inseriu novo..'
+
+				elif state == '0':
+					#print  'alterando o status para 5'
+
+					if x == unico:
+						pass
+					else:
+						print '%s nao e igual a %s' % (unico,x)
+						
+						SQL_INSERE = ("INSERT INTO TMP_canais"
+									"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
+									"VALUES (%s,%s,%s,%s,%s)")
+						DADOS = (unico,origem,destino,channel,state)
+						c.execute(SQL_INSERE, DADOS)
+						connection.commit()
+						#print 'Inseriu novo..'
+
+				if state == '6':
+					#print  'alterando o status para 6'
+
+					sql = "UPDATE TMP_canais SET ChannelState = 6, ChannelStateDesc = 'Up' WHERE Uniqueid = %s" % unico
+					#print sql
+					sql = c.execute(sql)
+					sql = c.fetchone()
 					connection.commit()
-					#print 'Inseriu novo..'
-			elif state == '5':
-				#print  'alterando o status para 5'
-
-				if x == unico:
-					pass
-				else:
-					print '%s nao e igual a %s' % (unico,x)
-					
-					SQL_INSERE = ("INSERT INTO TMP_canais"
-								"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
-								"VALUES (%s,%s,%s,%s,%s)")
-					DADOS = (unico,origem,destino,channel,state)
-					c.execute(SQL_INSERE, DADOS)
-					connection.commit()
-					#print 'Inseriu novo..'
-
-			elif state == '0':
-				#print  'alterando o status para 5'
-
-				if x == unico:
-					pass
-				else:
-					print '%s nao e igual a %s' % (unico,x)
-					
-					SQL_INSERE = ("INSERT INTO TMP_canais"
-								"(Uniqueid,CallerIDNum,Exten,ChannelStateDesc,ChannelState)"
-								"VALUES (%s,%s,%s,%s,%s)")
-					DADOS = (unico,origem,destino,channel,state)
-					c.execute(SQL_INSERE, DADOS)
-					connection.commit()
-					#print 'Inseriu novo..'
-
-			if state == '6':
-				#print  'alterando o status para 6'
-
-				sql = "UPDATE TMP_canais SET ChannelState = 6, ChannelStateDesc = 'Up' WHERE Uniqueid = %s" % unico
-				#print sql
-				sql = c.execute(sql)
-				sql = c.fetchone()
-				connection.commit()
 
 
 
-		except MySQLdb.IntegrityError as e:
-			pass
+			except MySQLdb.IntegrityError as e:
+				pass
 
-		except IndexError as e:
-			pass
-insere_canais_tmp()
+			except IndexError as e:
+				pass
+	except:
+		pass
+
+
 
 
 def apaga_canais_tmp():
