@@ -212,7 +212,7 @@
 
 <div class="row">
 
-{% updateable %}
+
     <div class="row">
         <div class="col-md-9">
             <div class="row">
@@ -221,10 +221,11 @@
 {% for rt in exten %} {#Configura o FOR para ramais SIP 01#}
 
     {% if rt.lastms == -1 %}
+        {% updateable %}   
             <div class="col-md-4">
                 <section class="widget bg-danger text-white">
                 <div class="widget-controls">
-                    <a class="bg-danger-transparent" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
+                    <a class="bg-danger-transparent" data-toggle="modal" data-target="#ramal_off" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
                 </div>
                     <div class="widget-body clearfix">
                         <div class="row">
@@ -255,12 +256,66 @@
                     </div>
                 </section>
             </div>
+        {% endupdateable %}
+
+    <div class="modal fade" id="ramal_off" tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title text-align-center fw-bold mt" id="myModalLabel18">Editar o ramal {{rt.CallerIDNum}}</h4>
+
+                    </div>
+                    <div class="modal-body bg-gray-lighter">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-no-border"
+                                               placeholder="Ramal">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-no-border"
+                                               placeholder="Senha">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-no-border"
+                                               placeholder="Nat">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-no-border"
+                                               placeholder="CallerIDNum">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-no-border"
+                                               placeholder="Senha">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-gray" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success">Salvar</button>
+                    </div>
+                </div>
+            </div>
+    </div>
 
     {% elif rt.ChannelState == 9 %}
+        {% updateable %}
             <div class="col-md-4">
                 <section class="widget bg-gray text-white">
                 <div class="widget-controls">
-                    <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
+                    <a class="bg-gray-transparent" data-toggle="modal" data-target="#ramal" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
                     <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-envelope text-white"></i></a>
                 </div>
                     <div class="widget-body clearfix">
@@ -273,6 +328,10 @@
                             <div class="col-xs-4">
                                 <h6 class="no-margin">Ramal</h6>
                                 <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
+                            </div>
+                            <div class="col-xs-4">
+                                <h6 class="no-margin"></h6>
+                                <p class="h4 no-margin fw-normal">Disponivel</p>
                             </div>
                         </div>
                         <div class="row">
@@ -288,9 +347,62 @@
                     </div>
                 </section>
             </div>
+        {% endupdateable %}
+
+    <div class="modal fade" id="ramal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title text-align-center fw-bold mt" id="myModalLabel19">Editar o ramal {{rt.CallerIDNum}}</h4>
+
+                    </div>
+                    <div class="modal-body bg-gray-lighter">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-no-border"
+                                               placeholder="Ramal">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-no-border"
+                                               placeholder="Senha">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-no-border"
+                                               placeholder="Nat">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-no-border"
+                                               placeholder="CallerIDNum">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-no-border"
+                                               placeholder="Senha">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-gray" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success">Salvar</button>
+                    </div>
+                </div>
+            </div>
+    </div>
 
     {% elif rt.ChannelState == 4 %}
-       
+        {% updateable %}       
             <div class="col-md-4">
                 <section class="widget bg-info text-white">
                     <div class="widget-controls">
@@ -333,10 +445,12 @@
                     </div>
                 </section>
             </div>
+        {% endupdateable %}
                
 
     {% elif rt.ChannelState == 6 and rt.Application = 'Dial' %}
-         
+        
+        {% updateable %}
             <div class="col-md-4">
                 <section class="widget bg-primary text-white">
                     <div class="widget-controls">
@@ -372,6 +486,7 @@
                     </div>
                 </section>
             </div>
+        {% endupdateable %}
               
     {% endif %}
 {% endfor %} {#Configura o FOR para ramais SIP 01#}
@@ -432,10 +547,9 @@
 
 
     </div>
-{% endupdateable %}
+
 
 </div>
-    
 
     </main>
 </div>
@@ -454,6 +568,9 @@
 <script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/button.js"%}"></script>
 <script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js"%}"></script>
 <script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/alert.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/popover.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/modal.js"%}"></script>
+
 <script src="{% static "vendor/slimScroll/jquery.slimscroll.min.js"%}"></script>
 <script src="{% static "vendor/widgster/widgster.js"%}"></script>
 <script src="{% static "vendor/pace.js/pace.min.js"%}"></script>
@@ -462,6 +579,10 @@
 
 <script src="{% static "js/settings.js"%}"></script>
 <script src="{% static "js/app.js"%}"></script>
+<script src="{% static "js/ui-components.js"%}"></script>
+
+
+
 <!-- 
 
 <script src="{% static "vendor/underscore/underscore.js"%}"></script>
@@ -474,9 +595,9 @@
 <script src="{% static "vendor/MetroJS/release/MetroJs.Full/MetroJs.js"%}"></script>
 <script src="{% static "vendor/skycons/skycons.js"%}"></script>
 
-
-<script src="{% static "demo/js/_fake-world-data.js"%}"></script>
 <script src="{% static "js/widgets.js"%}"></script>
+<script src="{% static "demo/js/_fake-world-data.js"%}"></script>
+
 -->
 
 <script>
