@@ -50,7 +50,34 @@ def insere_ramal():
 
 		DADOS = (ramal_v,numero,ipaddr,lastms)
 		c.execute(SQL_INSERE, DADOS)
-		connection.commit()	
+		#connection.commit()	
+
+
+def upadate_status_ramal():
+
+
+	pega_ramal = "SELECT name FROM vw_sipregs WHERE name in (SELECT CallerIDNum FROM pabx_rt_calls)" 
+	pega_ramal = c.execute(pega_ramal)
+	pega_ramal = c.fetchall()
+
+	for ramal_v in pega_ramal:
+		ramal_v = str(ramal_v[0])
+
+		ipaddr = "SELECT ipaddr FROM vw_sipregs WHERE name = " + str(ramal_v)
+		ipaddr = c.execute(ipaddr)
+		ipaddr = c.fetchone()[0]
+
+		lastms = "SELECT lastms FROM vw_sipregs WHERE name = " + str(ramal_v)
+		lastms = c.execute(lastms)
+		lastms = c.fetchone()[0]
+		#print ramal_v, ipaddr, lastms
+
+		atualiza_ramal = "UPDATE pabx_rt_calls SET lastms = '%s', ipaddr = '%s' WHERE CallerIDNum = '%s'" % (lastms,ipaddr,ramal_v)
+		#print atualiza_ramal
+		atualiza_ramal = c.execute(atualiza_ramal)
+		atualiza_ramal = c.fetchone()
+		connection.commit()
+		#print atualiza_ramal
 
 
 def checa_status_ramal(ramal):

@@ -132,9 +132,10 @@ def insere_chamada():
 
 def main():
 
-	#canais_tmp.main()
-	#funcao.insere_ramal()
-	#canais_tmp.apaga_canais_RT()
+	canais_tmp.main()
+	funcao.insere_ramal()
+	funcao.upadate_status_ramal()
+	canais_tmp.apaga_canais_RT()
 	insere_chamada()
 
 main()
