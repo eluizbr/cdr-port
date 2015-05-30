@@ -219,7 +219,44 @@
                 <div class="col-md-10">
 
 {% for rt in exten %} {#Configura o FOR para ramais SIP 01#}
-    {% if rt.ChannelState == 9 %}
+
+    {% if rt.lastms == -1 %}
+            <div class="col-md-4">
+                <section class="widget bg-danger text-white">
+                <div class="widget-controls">
+                    <a class="bg-danger-transparent" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
+                </div>
+                    <div class="widget-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                            </div>
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ramal</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
+                            </div>
+                            <div class="col-xs-4">
+                                <h6 class="no-margin"></h6>
+                                <p class="h4 no-margin fw-normal">Desligado</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Registro</h5>
+                                <p class="value5">Sem registro</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">IP</h5>
+                                <p class="value5">Desconhecido</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+    {% elif rt.ChannelState == 9 %}
             <div class="col-md-4">
                 <section class="widget bg-gray text-white">
                 <div class="widget-controls">
@@ -251,7 +288,6 @@
                     </div>
                 </section>
             </div>
-
 
     {% elif rt.ChannelState == 4 %}
        

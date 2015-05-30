@@ -129,7 +129,6 @@ def insere_chamada():
 	except:
 		pass
 
-
 def main():
 
 	canais_tmp.main()
