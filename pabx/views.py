@@ -1,9 +1,10 @@
 # coding:utf-8
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response, get_object_or_404, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.template import RequestContext, loader, Template
-
-from pabx.models import VwSipregs, rt_calls, VwCall
+from forms import SipForm
+from pabx.models import VwSipregs, rt_calls, VwCall, Sip
 from cdr.models import Info
 from datetime import datetime, timedelta, time
 import asterisk_stats as asterisk
@@ -38,12 +39,24 @@ def pabx(request):
 	troncos = asterisk.stats_request('SIPshowregistry')
 	ramais_sip = VwSipregs.objects.all()
 
-
-
 	template = loader.get_template('mesa.html')
 	context = RequestContext(request, {'info':info,'exten':exten, 'ramais_sip':ramais_sip, 'troncos':troncos})
 	return HttpResponse(template.render(context))
+
 	
+def editar_ramal(request,name):
+
+	sip = get_object_or_404(Sip, name=name)
+	
+	if request.method == 'POST':
+		form = SipForm(request.POST, instance=sip)
+		if form.is_valid():
+			form.save()
+			#return HttpResponseRedirect(reverse('editar_ramal'))
+	else:
+		form = SipForm(instance=sip)
+	return render(request, 'editar_ramal.html', {'sip':sip,'form':form})
+
 
 
 

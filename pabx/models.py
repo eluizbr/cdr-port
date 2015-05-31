@@ -61,8 +61,8 @@ class rt_calls(models.Model):
 
 
 class Sip(models.Model):
-    name = models.CharField(unique=True, max_length=10)
-    ipaddr = models.CharField(max_length=15, blank=True, default='0.0.0.0')
+    name = models.CharField(u'Ramal', unique=True, max_length=10)
+    ipaddr = models.CharField(u'IP', max_length=15, blank=True, default='0.0.0.0')
     port = models.IntegerField(blank=True, null=True, default='5060')
     regseconds = models.IntegerField(blank=True, null=True)
     defaultuser = models.CharField(max_length=10, blank=True)
@@ -75,7 +75,7 @@ class Sip(models.Model):
     context = models.CharField(max_length=40, blank=True, default='default')
     permit = models.CharField(max_length=40, blank=True)
     deny = models.CharField(max_length=40, blank=True)
-    secret = models.CharField(max_length=40, blank=True)
+    secret = models.CharField(u'Senha', max_length=40, blank=True)
     md5secret = models.CharField(max_length=40, blank=True)
     remotesecret = models.CharField(max_length=40, blank=True)
     transport = models.CharField(max_length=7, blank=True, choices=TRANSPORT, default='udp')

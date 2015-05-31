@@ -225,7 +225,8 @@
             <div class="col-md-4">
                 <section class="widget bg-danger text-white">
                 <div class="widget-controls">
-                    <a class="bg-danger-transparent" data-toggle="modal" data-target="#ramal_off" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
+                    <a class="bg-danger-transparent" data-toggle="modal" data-target="#ramal_off" href="{% url 'editar_ramal'%}{{rt.CallerIDNum}}/"><i class="glyphicon glyphicon-cog text-white"></i></a>
+                    <a class="bg-dnager-transparent" href="{% url 'editar_ramal'%}{{rt.CallerIDNum}}/"><i class="glyphicon glyphicon-envelope text-white"></i></a>
                 </div>
                     <div class="widget-body clearfix">
                         <div class="row">
@@ -258,50 +259,11 @@
             </div>
         {% endupdateable %}
 
+    
     <div class="modal fade" id="ramal_off" tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title text-align-center fw-bold mt" id="myModalLabel18">Editar o ramal {{rt.CallerIDNum}}</h4>
 
-                    </div>
-                    <div class="modal-body bg-gray-lighter">
-                        <form>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-no-border"
-                                               placeholder="Ramal">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-no-border"
-                                               placeholder="Senha">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-no-border"
-                                               placeholder="Nat">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-no-border"
-                                               placeholder="CallerIDNum">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-no-border"
-                                               placeholder="Senha">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-gray" data-dismiss="modal">Cancelar</button>
                         <button type="button" class="btn btn-success">Salvar</button>
@@ -315,8 +277,8 @@
             <div class="col-md-4">
                 <section class="widget bg-gray text-white">
                 <div class="widget-controls">
-                    <a class="bg-gray-transparent" data-toggle="modal" data-target="#ramal" href="#"><i class="glyphicon glyphicon-cog text-white"></i></a>
-                    <a class="bg-gray-transparent" href="#"><i class="glyphicon glyphicon-envelope text-white"></i></a>
+                    <a class="bg-danger-transparent" data-toggle="modal" data-target="#ramal_off" href="{% url 'editar_ramal'%}{{rt.CallerIDNum}}/"><i class="glyphicon glyphicon-cog text-white"></i></a>
+                    <a class="bg-dnager-transparent" href="{% url 'editar_ramal'%}{{rt.CallerIDNum}}/"><i class="glyphicon glyphicon-envelope text-white"></i></a>
                 </div>
                     <div class="widget-body clearfix">
                         <div class="row">
@@ -357,42 +319,7 @@
                         <h4 class="modal-title text-align-center fw-bold mt" id="myModalLabel19">Editar o ramal {{rt.CallerIDNum}}</h4>
 
                     </div>
-                    <div class="modal-body bg-gray-lighter">
-                        <form>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-no-border"
-                                               placeholder="Ramal">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-no-border"
-                                               placeholder="Senha">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-no-border"
-                                               placeholder="Nat">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-no-border"
-                                               placeholder="CallerIDNum">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-no-border"
-                                               placeholder="Senha">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-gray" data-dismiss="modal">Cancelar</button>
                         <button type="button" class="btn btn-success">Salvar</button>
@@ -448,7 +375,7 @@
         {% endupdateable %}
                
 
-    {% elif rt.ChannelState == 6 and rt.Application = 'Dial' %}
+    {% elif rt.ChannelState == 6 and rt.Application == 'Dial' %}
         
         {% updateable %}
             <div class="col-md-4">
@@ -602,7 +529,7 @@
 
 <script>
 updateableSettings = {
-  timeout: 1000,
+  timeout: 100000000,
   callback: function() {
 }};
 </script>
