@@ -8,7 +8,7 @@ class SipForm(forms.ModelForm):
 	
 	class Meta:
 		model = Sip
-		fields = ('name','secret','host', 'context', 'nat', 'type', 'allow', 'insecure')
+		fields = ('secret','host', 'context', 'nat', 'type', 'allow')
 
 
 		 

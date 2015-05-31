@@ -50,14 +50,13 @@ def editar_ramal(request,name):
 	
 	if request.method == 'POST':
 		form = SipForm(request.POST, instance=sip)
+		
 		if form.is_valid():
 			form.save()
 			#return HttpResponseRedirect(reverse('editar_ramal'))
 	else:
 		form = SipForm(instance=sip)
 	return render(request, 'editar_ramal.html', {'sip':sip,'form':form})
-
-
 
 
 
