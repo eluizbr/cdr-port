@@ -31,7 +31,8 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = (
     'core',
-    'django_admin_bootstrapped',
+    'updateable',
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -104,3 +105,23 @@ STATIC_ROOT = "/cdr/static/"
                  
 TEMPLATE_DIRS = os.path.join(BASE_DIR, 'templates', 'static'),
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
+
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.core.context_processors.request',
+)
+
+
+
+SUIT_CONFIG = {
+
+    'HEADER_DATE_FORMAT': 'l, d F Y',
+    'HEADER_TIME_FORMAT': 'H:i',
+
+    'MENU_ICONS': {
+        'auth': 'icon-user',
+        'cdr': 'icon-th-list',
+        'pabx': 'icon-asterisk',
+    }
+}
