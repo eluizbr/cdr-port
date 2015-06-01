@@ -1,10 +1,26 @@
 {% extends "admin/base.html" %}
-{% load i18n %}{% load admin_static bootstrapped_goodies_tags %}
-
-{% block title %}{% render_with_template_if_exist "admin/admin_title.html" "Django administration" %} | CDR-port {% endblock %}
+{% load i18n %}
+{% block title %} CDR-port {% endblock %}
 
 {% block branding %}
 <a class="navbar-brand" href="{% url 'admin:index' %}">CDR-port</a>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}
+
+{% block footer_links %}
+  <!--
+  <a href="/docs/" class="icon"><i class="icon-question-sign"></i>Documentação</a>
+  -->
+{% endblock %}
+
+{% block footer_branding %}
+
+CDR-Port
+
+{% endblock %}
+
+
+{% block copyright %}
+{  Copyright &copy; 2015 <br>Desenvolvido por <a href="http://www.cdr-port.net" target="_blank">CDR-Port</a> }
+{% endblock %}
