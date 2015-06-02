@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     url(r'^pabx/$', views.pabx, name='pabx'),
     url(r'^ramal/$', views.editar_ramal, name='editar_ramal'),
+    url(r'^ramal-alterado/$', views.editar_ramal_ok, name='ramal_ok'),
     url(r'^ramal/(?P<name>\d+)/$', views.editar_ramal, name='editar_ramal'),
 
 )

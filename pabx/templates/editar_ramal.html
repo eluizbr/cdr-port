@@ -1,6 +1,7 @@
 {% load humanize %}
 {% load l10n %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 
 <!DOCTYPE html>
@@ -26,12 +27,38 @@
     </script>
 </head>
 <body>
-	
+
+
+
+
+
+<!--
 	<div>
+        <div class="col-md-12">
+            <section class="widget">
+                <div class="widget-body">
+                     <form action="/ramal/{{sip.name}}/" method="POST" class="form-horizontal" role="form">{% csrf_token %}
+                        <fieldset>
+                            <legend><strong>Editando o ramal</strong> {{sip.name}}</legend>
+                                
+                                 {% crispy form %}
+
+                        </fieldset>
+  
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+-->
+
+
+
+    <div>
         <div class="col-md-14">
             <section class="widget">
                 <div class="widget-body">
-                    <form action="." method="post" class="form-horizontal" role="form">{% csrf_token %}
+                     <form action="/ramal/{{sip.name}}/" method="GET" class="form-horizontal" role="form">{% csrf_token %}
                         <fieldset>
                             <legend><strong>Editando o ramal</strong> {{sip.name}}</legend>
 
@@ -40,7 +67,7 @@
                                 <div class="col-sm-7">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        <input type="password" class="form-control" value="{{sip.secret}}">
+                                        <input type="password" class="form-control" name="secret" id="secret">
                                     </div>
                                 </div>
                             </div>
@@ -49,11 +76,11 @@
                                     Codec
                                 </label>
                                 <div class="col-sm-7">
-                                    <select multiple
+                                    <select multiple data-role="tagsinput"
                                             data-placeholder="Selecione um ou mais codec's"
                                             data-minimum-results-for-search="10"
-                                            tabindex="-1"
-                                            class="select2 form-control" id="multiple-select">
+                                            tabindex="-1" name="allow" id="allow"
+                                            class="select2 form-control" id="multiple-select"  >
                                         <option value="ulaw">ulaw</option>
                                         <option value="alaw">alaw</option>
                                         <option value="gsm">gsm</option>
@@ -131,6 +158,9 @@
         </div>
     </div>
 
+
+
+
 </body>
 </html>
 
@@ -182,5 +212,8 @@
 <script src="{% static "js/form-elements.js"%}"></script>
 </body>
 
+<script type="text/javascript">
+    $("select").val()
 
+</script>
 

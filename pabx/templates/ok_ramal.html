@@ -1,0 +1,109 @@
+{% load humanize %}
+{% load l10n %}
+{% load staticfiles %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CDR-port - Editar Ramal {{sip.name}}</title>
+    <link href="{% static "css/application.min.css"%}" rel="stylesheet">
+    <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
+    <!--[if IE 9]>
+        <link href="css/application-ie9-part2.css" rel="stylesheet">
+    <![endif]-->
+    <link rel="shortcut icon" href="{% static "img/favicon.png"%}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script>
+        /* yeah we need this empty stylesheet here. It's cool chrome & chromium fix
+         chrome fix https://code.google.com/p/chromium/issues/detail?id=167083
+         https://code.google.com/p/chromium/issues/detail?id=332189
+         */
+    </script>
+</head>
+<body>
+    
+
+<legend><strong>Ramal Editado com</strong> sucesso</legend>
+
+<!--
+    <div>
+        <div class="col-md-14">
+            <section class="widget">
+                <div class="widget-body">
+
+                        <fieldset>
+                            
+
+                        </fieldset>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-sm-offset-4 col-sm-7">
+                                    <button type="close" class="btn btn-inverse">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+-->
+
+</body>
+</html>
+
+
+
+
+<script src="{% static "vendor/jquery/dist/jquery.min.js"%}"></script>
+<script src="{% static "vendor/jquery-pjax/jquery.pjax.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/transition.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/button.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/alert.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/popover.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/modal.js"%}"></script>
+
+<script src="{% static "vendor/slimScroll/jquery.slimscroll.min.js"%}"></script>
+<script src="{% static "vendor/widgster/widgster.js"%}"></script>
+<script src="{% static "vendor/pace.js/pace.min.js"%}"></script>
+<script src="{% static "vendor/jquery-touchswipe/jquery.touchSwipe.js"%}"></script>
+
+<script src="{% static "js/settings.js"%}"></script>
+<script src="{% static "js/app.js"%}"></script>
+<script src="{% static "js/ui-components.js"%}"></script>
+
+
+<!-- page specific libs -->
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js"%}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/modal.js"%}"></script>
+<script src="{% static "vendor/bootstrap-select/dist/js/bootstrap-select.min.js"%}"></script>
+<script src="{% static "vendor/jquery-autosize/jquery.autosize.min.js"%}"></script>
+<script src="{% static "vendor/bootstrap3-wysihtml5/lib/js/wysihtml5-0.3.0.min.js"%}"></script>
+<script src="{% static "vendor/bootstrap3-wysihtml5/src/bootstrap3-wysihtml5.js"%}"></script>
+<script src="{% static "vendor/select2/select2.min.js"%}"></script>
+<script src="{% static "vendor/switchery/dist/switchery.min.js"%}"></script>
+<script src="{% static "vendor/moment/min/moment.min.js"%}"></script>
+<script src="{% static "vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"%}"></script>
+<script src="{% static "vendor/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"%}"></script>
+<script src="{% static "vendor/jasny-bootstrap/js/inputmask.js"%}"></script>
+<script src="{% static "vendor/jasny-bootstrap/js/fileinput.js"%}"></script>
+<script src="{% static "vendor/holderjs/holder.js"%}"></script>
+<script src="{% static "vendor/dropzone/dist/min/dropzone.min.js"%}"></script>
+<script src="{% static "vendor/markdown/lib/markdown.js"%}"></script>
+<script src="{% static "vendor/bootstrap-markdown/js/bootstrap-markdown.js"%}"></script>
+<script src="{% static "vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"%}"></script>
+
+<!-- page specific js -->
+<script src="{% static "js/form-elements.js"%}"></script>
+</body>
+
+
+

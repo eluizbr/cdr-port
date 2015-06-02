@@ -62,7 +62,7 @@ def cdr_serach(request):
 
     hora = datetime.now()
     hoje = hora.strftime("%Y-%m-%dT23:59:59") 
-    ontem = hora - timedelta(days=1)
+    ontem = hora - timedelta(days=5)
     ontem = ontem.strftime("%Y-%m-%dT00:00:00")
 
     byDay = VwDayStats.objects.values_list('dia', 'mes', 'total')

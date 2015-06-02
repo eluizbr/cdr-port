@@ -1,6 +1,8 @@
 # coding:utf-8
-from django.shortcuts import render, render_to_response, get_object_or_404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.shortcuts import render, render_to_response, get_object_or_404, HttpResponseRedirect, redirect
+from django.contrib import messages
+from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
 from django.template import RequestContext, loader, Template
 from forms import SipForm
@@ -9,6 +11,8 @@ from cdr.models import Info
 from datetime import datetime, timedelta, time
 import asterisk_stats as asterisk
 import simplejson as json
+from django.db.models import F, Q
+
 
 '''
 https://github.com/Star2Billing/cdr-stats/blob/master/cdr_stats/cdr/tasks.py
@@ -46,17 +50,58 @@ def pabx(request):
 	
 def editar_ramal(request,name):
 
+	'''
 	sip = get_object_or_404(Sip, name=name)
+	secret_f = request.GET.get('secret', "")
+	codec_f = request.GET.get('allow', "")
+	print request.method 
 	
+	if request.method == 'POST':
+
+		sip = get_object_or_404(Sip, name=name)
+		secret_f = request.GET.get('secret', "")
+		codec_f = request.GET.get('allow', "")
+
+	else:
+		ramal = Sip.objects.get(name=name)
+		ramal.secret = secret_f
+		ramal.allow = codec_f
+		#ramal.secret = make_password(password=secret_f,hasher='md5')
+		#print secret_f
+		ramal.save()
+	
+
+	return render(request, 'editar_ramal.html', {'secret_f':secret_f,'codec_f':codec_f,'sip':sip})
+
+
+	'''
+
+	sip = get_object_or_404(Sip, name=name)
+	#secret_f = request.GET.get('secret', "")
+	#print secret_f
+	#print request
+
 	if request.method == 'POST':
 		form = SipForm(request.POST, instance=sip)
 		
 		if form.is_valid():
 			form.save()
-			#return HttpResponseRedirect(reverse('editar_ramal'))
+			messages.success(request, 'Ramal alterado')
+			#return HttpResponseRedirect('/ramal-alterado/')
 	else:
 		form = SipForm(instance=sip)
-	return render(request, 'editar_ramal.html', {'sip':sip,'form':form})
+
+	return render(request, 'editar_ramal.html', {'sip':sip, 'form':form})
+
+
+	
+
+def editar_ramal_ok(request):
+
+	sip = Sip.objects.all()
+
+	
+	return render_to_response("ok_ramal.html", {'sip':sip})
 
 
 
