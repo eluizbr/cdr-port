@@ -4,7 +4,7 @@
 # cdr-port@cdr-port.net
 
 # Configurar o Branch
-BRANCH='devel'
+BRANCH='master'
 
 apt-get update -y
 apt-get upgrade -y
