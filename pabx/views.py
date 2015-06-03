@@ -44,6 +44,8 @@ def pabx(request):
 
 	# FIM Gerar ligação entre ramais
 
+	
+
 	exten = rt_calls.objects.all()
 	
 	info = Info.objects.values_list('ativo')
@@ -59,9 +61,6 @@ def pabx(request):
 def editar_ramal(request,name):
 
 
-
-	
-	
 	sip = get_object_or_404(Sip, name=name)
 	secret_f = request.GET.get('secret', "")
 	codec_f = request.GET.get('allow', "")
