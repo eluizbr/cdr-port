@@ -12,6 +12,7 @@ from datetime import datetime, timedelta, time
 import asterisk_stats as asterisk
 import simplejson as json
 from django.db.models import F, Q
+import funcoes as funcao
 
 
 '''
@@ -33,10 +34,17 @@ http://www.voip-info.org/wiki/view/Asterisk+cmd+SetAMAFlags
 
 def pabx(request):
 
+	# Gerar ligação entre ramais
+
+	origem_f = request.GET.get('origem', "")
+	destino_f = request.GET.get('destino', "")
+
+	if request.GET.get('origem_f','destino_f'):
+		funcao.gerar_call(origem_f,destino_f)
+
+	# FIM Gerar ligação entre ramais
 
 	exten = rt_calls.objects.all()
-	#exten = rt_calls.objects.values('Channel','ChannelState','ChannelStateDesc','CallerIDNum','CallerIDName','ConnectedLineName',
-	#									'ConnectedLineNum','Exten','Uniqueid','Application','Duration','BridgeId','controle')
 	
 	info = Info.objects.values_list('ativo')
 	info = str(info)[2]
@@ -50,11 +58,14 @@ def pabx(request):
 	
 def editar_ramal(request,name):
 
-	'''
+
+
+	
+	
 	sip = get_object_or_404(Sip, name=name)
 	secret_f = request.GET.get('secret', "")
 	codec_f = request.GET.get('allow', "")
-	print request.method 
+	#print request.method 
 	
 	if request.method == 'POST':
 
@@ -93,7 +104,7 @@ def editar_ramal(request,name):
 
 	return render(request, 'editar_ramal.html', {'sip':sip, 'form':form})
 
-
+	'''
 	
 
 def editar_ramal_ok(request):
@@ -102,6 +113,4 @@ def editar_ramal_ok(request):
 
 	
 	return render_to_response("ok_ramal.html", {'sip':sip})
-
-
 

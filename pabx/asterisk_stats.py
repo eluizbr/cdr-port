@@ -1,6 +1,7 @@
 # coding:utf-8
 
 '''
+ORIGINATE = action=Originate&channel=SIP/300&CallerID=300&Exten=400&Context=saida&Priority=1
 action=hangup&Channel=SIP/x7065558529-99a0
 rawman?action=command&command=core%20show%20uptime
 core show sysinfo

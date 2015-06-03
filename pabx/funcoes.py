@@ -7,6 +7,8 @@ import asterisk_stats as asterisk
 import channel_status as canais
 import random
 import globais
+import urllib2
+import urllib
 
 
 ## Conexão ao banco MySQL
@@ -73,12 +75,12 @@ def upadate_status_ramal():
 		#print ramal_v, ipaddr, lastms
 
 		atualiza_ramal = "UPDATE pabx_rt_calls SET lastms = '%s', ipaddr = '%s' WHERE CallerIDNum = '%s'" % (lastms,ipaddr,ramal_v)
-		#print atualiza_ramal
+		print atualiza_ramal
 		atualiza_ramal = c.execute(atualiza_ramal)
 		atualiza_ramal = c.fetchone()
 		connection.commit()
-		#print atualiza_ramal
-
+		print atualiza_ramal
+#upadate_status_ramal()
 
 def checa_status_ramal(ramal):
 
@@ -154,3 +156,72 @@ def checa_status_id(uniqueid=None):
 	return sql
 
 #checa_status_id('1432928438.166091')
+
+def gerar_call(origem=None,destino=None):
+	
+	myrequesturl = ''
+	main_url = 'http://192.168.2.230:8088/rawman?'
+	cookie = ''
+
+	data = urllib.urlencode({'action': 'Login', 'username': 'asterisk','secret': 'senha',})
+	myrequesturlurl = main_url + data
+	print myrequesturlurl
+	req = urllib2.Request(myrequesturlurl)
+	response = urllib2.urlopen(req)
+	cookie = response.headers.get('Set-Cookie')
+	#print cookie
+	d = response.read()
+	liga = ("&channel=SIP/%s&CallerID=%s&Exten=%s&Context=saida&Priority=1") % (origem,origem,destino)
+	action = 'Originate'
+	data2 = urllib.urlencode({'action': action})
+	comando = urllib.urlencode({'liga':liga })
+	url2 = main_url + data2 + liga
+	req = urllib2.Request(url2)
+	req.add_header('cookie', cookie)
+	response = urllib2.urlopen(req)
+	#print response.read()
+	#return response.read()
+
+# ORIGINATE = action=Originate&channel=SIP/300&CallerID=300&Exten=400&Context=saida&Priority=1
+	
+	
+	#print liga
+
+#gerar_call(300,400)
+
+
+def drop_call(channel=None):
+	
+	myrequesturl = ''
+	main_url = 'http://192.168.2.230:8088/rawman?'
+	cookie = ''
+
+	data = urllib.urlencode({'action': 'Login', 'username': 'asterisk','secret': 'senha',})
+	myrequesturlurl = main_url + data
+	print myrequesturlurl
+	req = urllib2.Request(myrequesturlurl)
+	response = urllib2.urlopen(req)
+	cookie = response.headers.get('Set-Cookie')
+	#print cookie
+	d = response.read()
+	drop = ("&channel=%s") % (channel)
+	action = 'Hangup'
+	data2 = urllib.urlencode({'action': action})
+	comando = urllib.urlencode({'drop':drop })
+	url2 = main_url + data2 + drop
+	req = urllib2.Request(url2)
+	req.add_header('cookie', cookie)
+	response = urllib2.urlopen(req)
+	#print response.read()
+	#return response.read()
+
+# ORIGINATE = action=Originate&channel=SIP/300&CallerID=300&Exten=400&Context=saida&Priority=1
+	
+	
+	#print drop
+
+#drop_call('SIP/300-00000060')
+
+
+
+
