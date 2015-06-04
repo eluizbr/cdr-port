@@ -111,9 +111,6 @@ def insere_chamada():
 							connection.commit()
 
 
-
-
-
 				if state == '6':
 					print  'alterando o status para 6'
 

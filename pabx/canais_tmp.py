@@ -27,8 +27,8 @@ id_morto = "SELECT Uniqueid FROM TMP_canais"
 id_morto = c.execute(id_morto)
 id_morto = c.fetchall()
 id_morto = id_morto
-
 id_morto_v = []
+
 
 def insere_canais_tmp():
 
@@ -110,8 +110,6 @@ def insere_canais_tmp():
 					sql = c.fetchone()
 					connection.commit()
 
-
-
 			except MySQLdb.IntegrityError as e:
 				pass
 
@@ -121,13 +119,10 @@ def insere_canais_tmp():
 		pass
 
 
-
-
 def apaga_canais_tmp():
 	'''
 	Esta função remove do banco todos os Uniqueid's que não mais existem.
 	'''
-
 
 	sql = canais.validar_uniqueid()
 	if sql == canais.id_unico:
@@ -138,6 +133,7 @@ def apaga_canais_tmp():
 		connection.commit()
 		print 'Apagou o id %s' % sql
 
+
 def apaga_canais_RT():
 	'''
 	Esta função remove do banco todos os Uniqueid's que não mais existem na tabela pabx_rt_calls.
@@ -147,6 +143,7 @@ def apaga_canais_RT():
 	sql = c.execute(sql)
 	connection.commit()
 	print 'Apagou o id %s' % sql
+
 
 def main():
 

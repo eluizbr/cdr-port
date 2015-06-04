@@ -314,9 +314,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title text-align-center fw-bold mt" id="myModalLabel19">Editar o ramal {{rt.CallerIDNum}}</h4>
-
                     </div>
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-gray" data-dismiss="modal">Cancelar</button>
                         <button type="button" class="btn btn-success">Salvar</button>
@@ -326,46 +324,46 @@
     </div>
 
 
-<form method="GET" action="/pabx/" role="form">
-<div class="modal fade" id="ligacao_ramal" tabindex="-1" role="dialog" aria-labelledby="ligacao2" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-align-center fw-bold mt">Ligar a partir do ramal {{rt.CallerIDNum}} </h4>
-                <p class="text-align-center fs-mini text-muted mt-sm">
-                    Você irá gerar uma ligação que sera redirecional para o ramal {{rt.CallerIDNum}}. Quando o
-                    ramal {{rt.CallerIDNum}}, atender a ligação, o sistema irá ligar para o número de destino.
-                </p>
-            </div>
-            <div class="modal-body bg-gray-lighter">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="input-group">
-                             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input type="text" class="form-control"
-                                        id="origem" 
-                                       name="origem" value="{{rt.CallerIDNum}}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input type="text" class="form-control"
-                                       placeholder="Numero externo" name="destino">
-                            </div>
-                        </div>
+    <form method="GET" action="/pabx/" role="form">
+        <div class="modal fade" id="ligacao_ramal" tabindex="-1" role="dialog" aria-labelledby="ligacao2" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title text-align-center fw-bold mt">Ligar a partir do ramal {{rt.CallerIDNum}} </h4>
+                        <p class="text-align-center fs-mini text-muted mt-sm">
+                            Você irá gerar uma ligação que sera redirecional para o ramal {{rt.CallerIDNum}}. Quando o
+                            ramal {{rt.CallerIDNum}}, atender a ligação, o sistema irá ligar para o número de destino.
+                        </p>
                     </div>
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-gray" data-dismiss="modal">Fechar</button>
-                <button type="submit" class="btn btn-success">Gerar ligação</button>
+                    <div class="modal-body bg-gray-lighter">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input type="text" class="form-control"
+                                                id="origem" 
+                                               name="origem" value="{{rt.CallerIDNum}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input type="text" class="form-control"
+                                               placeholder="Numero externo" name="destino">
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-gray" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-success">Gerar ligação</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-</form>
+    </form>
 
     {% elif rt.ChannelState == 4 %}
         {% updateable %}       
@@ -704,7 +702,9 @@
                                 <td>{{calls.CallerIDNum}}</td>
                                 <td>{{calls.Exten}}</td>
                                 <td><span class="label label-primary">Falando</span></td>
-                                <td><a href="#" data-widgster="close"><i class="fa fa-remove text-danger fa-2x"></i></a></td>
+                                <form method="GET" action="/pabx/" role="form">
+                                <td> <button type="submit" name="canal" id="canal" value="{{calls.Channel}}"  data-widgster="close"><i class="fa fa-remove text-danger fa-2x"></i></button></td>
+                                </form>
                                 
                             </tr>
                         {% endif %}                            

@@ -74,13 +74,24 @@ def upadate_status_ramal():
 		lastms = c.fetchone()[0]
 		#print ramal_v, ipaddr, lastms
 
-		atualiza_ramal = "UPDATE pabx_rt_calls SET lastms = '%s', ipaddr = '%s' WHERE CallerIDNum = '%s'" % (lastms,ipaddr,ramal_v)
-		print atualiza_ramal
-		atualiza_ramal = c.execute(atualiza_ramal)
-		atualiza_ramal = c.fetchone()
-		connection.commit()
-		print atualiza_ramal
-#upadate_status_ramal()
+		if lastms == None:
+
+			atualiza_ramal = "UPDATE pabx_rt_calls SET lastms = '-1', ipaddr = '%s' WHERE CallerIDNum = '%s'" % (ipaddr,ramal_v)
+			print atualiza_ramal
+			atualiza_ramal = c.execute(atualiza_ramal)
+			atualiza_ramal = c.fetchone()
+			connection.commit()
+			print atualiza_ramal
+
+		else:
+
+			atualiza_ramal = "UPDATE pabx_rt_calls SET lastms = '%s', ipaddr = '%s' WHERE CallerIDNum = '%s'" % (lastms,ipaddr,ramal_v)
+			print atualiza_ramal
+			atualiza_ramal = c.execute(atualiza_ramal)
+			atualiza_ramal = c.fetchone()
+			connection.commit()
+			print atualiza_ramal
+
 
 def checa_status_ramal(ramal):
 
@@ -117,7 +128,6 @@ def checa_status_ramal(ramal):
 
 
 def altera_status_ramal(ramal,controle):
-
 
 
 	atualiza_ramal = "UPDATE pabx_rt_calls SET controle = %s WHERE CallerIDNum = %s" % (controle,ramal)
@@ -165,7 +175,7 @@ def gerar_call(origem=None,destino=None):
 
 	data = urllib.urlencode({'action': 'Login', 'username': 'asterisk','secret': 'senha',})
 	myrequesturlurl = main_url + data
-	print myrequesturlurl
+	#print myrequesturlurl
 	req = urllib2.Request(myrequesturlurl)
 	response = urllib2.urlopen(req)
 	cookie = response.headers.get('Set-Cookie')
@@ -198,13 +208,14 @@ def drop_call(channel=None):
 
 	data = urllib.urlencode({'action': 'Login', 'username': 'asterisk','secret': 'senha',})
 	myrequesturlurl = main_url + data
-	print myrequesturlurl
+	#print myrequesturlurl
 	req = urllib2.Request(myrequesturlurl)
 	response = urllib2.urlopen(req)
 	cookie = response.headers.get('Set-Cookie')
 	#print cookie
 	d = response.read()
 	drop = ("&channel=%s") % (channel)
+	print drop
 	action = 'Hangup'
 	data2 = urllib.urlencode({'action': action})
 	comando = urllib.urlencode({'drop':drop })
@@ -212,7 +223,7 @@ def drop_call(channel=None):
 	req = urllib2.Request(url2)
 	req.add_header('cookie', cookie)
 	response = urllib2.urlopen(req)
-	#print response.read()
+	print response.read()
 	#return response.read()
 
 # ORIGINATE = action=Originate&channel=SIP/300&CallerID=300&Exten=400&Context=saida&Priority=1

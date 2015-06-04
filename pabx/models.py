@@ -85,7 +85,7 @@ class Sip(models.Model):
     callgroup = models.CharField(max_length=40, blank=True)
     pickupgroup = models.CharField(max_length=40, blank=True)
     language = models.CharField(max_length=40, blank=True)
-    allow = models.CharField(max_length=40, blank=True, default='ulaw,alaw,gsm,g729')
+    allow = models.CharField(u'Codec',max_length=40, blank=True, default='ulaw,alaw,gsm,g729')
     disallow = models.CharField(max_length=40, blank=True)
     insecure = models.CharField(max_length=40, blank=True, default='port,invite')
     trustrpid = models.CharField(max_length=3, blank=True, choices=TRUSTRPID, default='no')

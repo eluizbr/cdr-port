@@ -44,7 +44,12 @@ def pabx(request):
 
 	# FIM Gerar ligação entre ramais
 
-	
+	canal_f = request.GET.get('canal', "")
+	print canal_f
+
+
+	if canal_f:
+		funcao.drop_call(canal_f)
 
 	exten = rt_calls.objects.all()
 	
