@@ -11,6 +11,7 @@ apt-get upgrade -y
 apt-get -y install lsb-release gawk
 
 #Instala o menu
+mkdir /etc/asterisk
 cd /usr/src/
 wget --no-check-certificate  https://raw.githubusercontent.com/eluizbr/cdr-port/$BRANCH/install/funcoes.sh
 wget --no-check-certificate  https://raw.githubusercontent.com/eluizbr/cdr-port/$BRANCH/install/menu.sh
