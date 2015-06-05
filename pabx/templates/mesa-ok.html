@@ -221,7 +221,7 @@
 
     {% if rt.lastms == -1 %}
         {% updateable %}   
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-4 col-md-4">
                 <section class="widget bg-danger text-white">
                 <div class="widget-controls">
                     <a class="bg-danger-transparent" data-toggle="modal" data-target="#ramal_off" href="{% url 'editar_ramal'%}{{rt.CallerIDNum}}/"><i class="glyphicon glyphicon-cog text-white"></i></a>
@@ -229,10 +229,29 @@
                 </div>
                     <div class="widget-body clearfix">
                         <div class="row">
-                            <div class="col-xs-8">
-                                <p class="h5 no-margin fw-normal">{{rt.CallerIDNum}} - {{rt.callerid}}</p>
+                            <div class="col-xs-2">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
                             </div>
-
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ramal</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
+                            </div>
+                            <div class="col-xs-4">
+                                <h6 class="no-margin"></h6>
+                                <p class="h4 no-margin fw-normal">Desligado</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Registro</h5>
+                                <p class="value5">Sem registro</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">IP</h5>
+                                <p class="value5">Desconhecido</p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -254,7 +273,7 @@
 
     {% elif rt.ChannelState == 9 %}
         {% updateable %}
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-4 col-md-4">
                 <section class="widget bg-gray text-white">
                 <div class="widget-controls">
                     <a class="bg-dnager-transparent" data-toggle="modal" data-target="#ligacao_ramal"  href="#"><i class="glyphicon glyphicon-phone text-white"></i></a>
@@ -263,10 +282,26 @@
                 </div>
                     <div class="widget-body clearfix">
                         <div class="row">
-                            <div class="col-xs-8">
-                                <p class="h5 no-margin fw-normal">{{rt.CallerIDNum}} - {{rt.callerid}}</p>
+                            <div class="col-xs-2">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                            </div>
+                            <div class="col-xs-4">
+                                <h6 class="no-margin">Ramal</h6>
+                                <p class="h3 no-margin fw-normal">{{rt.CallerIDNum}}</p>
                             </div>
 
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Disponivel</h5>
+                                <p class="value5">{{rt.lastms}} ms</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">IP</h5>
+                                <p class="value5">{{rt.ipaddr}}</p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -287,7 +322,6 @@
                 </div>
             </div>
     </div>
-
 
     <form method="GET" action="/pabx/" role="form">
         <div class="modal fade" id="ligacao_ramal" tabindex="-1" role="dialog" aria-labelledby="ligacao2" aria-hidden="true">
@@ -333,33 +367,50 @@
     {% elif rt.ChannelState == 4 %}
         {% updateable %}       
             <div class="col-lg-3 col-md-3">
-                <section class="widget bg-info text-white">
+                <section class="widget bg-success text-white">
                     <div class="widget-controls">
-                        <a class="bg-primari" href="#"><i class="glyphicon glyphicon-retweet text-white"></i></a>
+                        <a class="bg-primari" href="#"><i class="glyphicon glyphicon-random text-white"></i></a>
                         <a class="bg-primari" href="#"><i class="glyphicon glyphicon-remove text-white"></i></a>
+
                     </div>
                     <div class="widget-body clearfix">
                         <div class="row">
-                            <div class="col-xs-8">
-                                <p class="h5 no-margin fw-normal">{{rt.CallerIDNum}} - {{rt.CallerIDName}}</p>
+                            <div class="col-xs-2">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                            </div>
+                            <div class="col-xs-3">
+                                <h6 class="no-margin">Ramal</h6>
+                                <p class="h4 no-margin fw-normal">{{rt.CallerIDNum}}</p>
+                            </div>
+                            <div class="col-xs-5">
+                                <h6 class="no-margin">Ligando para:</h6>
+                                <p class="h4 no-margin fw-normal">{{rt.Exten}}</p>
                             </div>
                         </div>
-                        <p>
                         <div class="row">
                             <div class="col-xs-6">
-                            <p class="h5 no-margin fw-normal">{{rt.Exten}} - {{rt.ConnectedLineName}}</p>
-                            </div>   
-                            <div class="col-xs-6">
-                                <p class="value6">{{rt.Duration|time:"H:i:s"}}</p>
+                                <h5 class="no-margin">Tempo</h5>
+                                <p class="value5">{{rt.Duration|time:"H:i:s"}}</p>
                             </div>
-
+                        {% if rt.ChannelStateDesc == "Ring" %}
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Status</h5>
+                                <p class="value5">Chamando</p>
+                            </div>
+                        {% else %}
+                            <div class="col-xs-6">
+                                <h5 class="no-margin">Status</h5>
+                                <p class="value5">Ao Telefone</p>
+                            </div>
+                        {% endif %}
                         </div>
                     </div>
                 </section>
             </div>
         {% endupdateable %}
                
-
     {% elif rt.ChannelState == 6 and rt.Application == 'Dial' %}
         
         {% updateable %}
@@ -401,46 +452,46 @@
         {% endupdateable %}
 
 
-<form method="GET" action="/pabx/" role="form">
-<div class="modal fade" id="ligacao_drop" tabindex="-1" role="dialog" aria-labelledby="ligacao3" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-align-center fw-bold mt">Desligar {{rt.CallerIDNum}} </h4>
-                <p class="text-align-center fs-mini text-muted mt-sm">
-                    Você irá gerar uma ligação que sera redirecional para o ramal {{rt.CallerIDNum}}. Quando o
-                    ramal {{rt.CallerIDNum}}, atender a ligação, o sistema irá ligar para o número de destino.
-                </p>
-            </div>
-            <div class="modal-body bg-gray-lighter">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="input-group">
-                             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input type="text" class="form-control"
-                                        id="origem" 
-                                       name="origem" value="{{rt.CallerIDNum}}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input type="text" class="form-control"
-                                       placeholder="Numero externo" name="destino">
-                            </div>
-                        </div>
+        <form method="GET" action="/pabx/" role="form">
+        <div class="modal fade" id="ligacao_drop" tabindex="-1" role="dialog" aria-labelledby="ligacao3" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title text-align-center fw-bold mt">Desligar {{rt.CallerIDNum}} </h4>
+                        <p class="text-align-center fs-mini text-muted mt-sm">
+                            Você irá gerar uma ligação que sera redirecional para o ramal {{rt.CallerIDNum}}. Quando o
+                            ramal {{rt.CallerIDNum}}, atender a ligação, o sistema irá ligar para o número de destino.
+                        </p>
                     </div>
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-gray" data-dismiss="modal">Fechar</button>
-                <button type="submit" class="btn btn-success">Gerar ligação</button>
+                    <div class="modal-body bg-gray-lighter">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input type="text" class="form-control"
+                                                id="origem" 
+                                               name="origem" value="{{rt.CallerIDNum}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input type="text" class="form-control"
+                                               placeholder="Numero externo" name="destino">
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-gray" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-success">Gerar ligação</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-</form>
+        </form>
               
 
 
@@ -553,8 +604,64 @@
                         </section>
                     </div>
                 </div>
-    </div>
 
+
+
+
+    </div>
+    <!--
+        <div class="row mb-lg">
+            <div class="col-lg-8 col-md-8">
+                <div class="clearfix">
+                    <ul id="tabs1" class="nav nav-tabs pull-left">
+                        <li class="active"><a href="#tab1" data-toggle="tab">Ramais</a></li>
+                        <li class=""><a href="#tab2" data-toggle="tab">Filas de atendimento</a></li>
+                    </ul>
+                </div>
+                <div id="tabs1c" class="tab-content mb-lg">
+                    <div class="tab-pane active clearfix" id="tab1">
+                        <h2>Tabs-enabled widget</h2>
+                        <p>You will never know exactly how something will go until you try it.</p>
+                        <p>You can think three hundred times and still have no precise result. If you see
+                            attractive girl all you need to do is to go and ask her to give you her phone. You don’t
+                            need to think about HOW it can turn out. All you have to do is to GO and DO IT. It
+                            should be super-fast and easy. No hesitation. You ask me: “What to do with these
+                            fearful thoughts preventing me from doing that?” The answer is to ignore them, because
+                            they can’t disappear immediately.</p>
+                        <p>The same thing is for startups and ideas. If you have an idea right away after it appears in your mind you should go and make a first step to implement it. </p>
+                        <div class="pull-right">
+                            <button class="btn btn-inverse">Cancel</button>
+                            <button class="btn btn-primary">Some button</button>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <p>Why don't use Lore Ipsum? I think if some one says don't use lore ipsum it's very controversial
+                            point. I think the opposite actually. Everyone knows what is lore ipsum - it is easy to understand if text is lore ipsum.</p>
+                        <div class="clearfix">
+                            <div class="btn-toolbar">
+                                <a class="btn btn-default" href="#">&nbsp;&nbsp;Check&nbsp;&nbsp;</a>
+                                <a class="btn btn-primary" href="#">&nbsp;&nbsp;Dance?&nbsp;&nbsp;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab3">
+                        <p> If you will think too much it will sink in the swamp of never implemented plans and
+                            ideas or will just go away or will be implemented by someone else.</p>
+                        <p><strong>5 months of doing everything to achieve nothing.</strong></p>
+                        <p>You'll automatically skip - because you know - it's just non-informative stub. But what if there some text like this one?</p>
+                    </div>
+                    <div class="tab-pane" id="tab4">
+                        <blockquote class="blockquote-sm mb-xs">
+                            Plan it? Make it!
+                        </blockquote>
+                        <p>The same thing is for startups and ideas. If you have an idea right away after it appears
+                            in your mind you should go and make a first step to implement it.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    -->
 
 </div>
 
@@ -668,6 +775,8 @@
     </div>
 </div>
 
+
+
         
 <!-- common libraries. required for every page-->
 <!-- common libraries. required for every page-->
@@ -686,6 +795,9 @@
 <script src="{% static "vendor/widgster/widgster.js"%}"></script>
 <script src="{% static "vendor/pace.js/pace.min.js"%}"></script>
 <script src="{% static "vendor/jquery-touchswipe/jquery.touchSwipe.js"%}"></script>
+<!-- page specific libs -->
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/tab.js"%}"></script>
+<!-- page specific js -->
 
 
 <script src="{% static "js/settings.js"%}"></script>

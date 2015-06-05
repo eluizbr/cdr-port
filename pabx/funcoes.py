@@ -41,16 +41,21 @@ def insere_ramal():
 		lastms = "SELECT lastms FROM vw_sipregs WHERE name = " + str(ramal_v)
 		lastms = c.execute(lastms)
 		lastms = c.fetchone()[0]
+
+		callerid = "SELECT callerid FROM vw_sipregs WHERE name = " + str(ramal_v)
+		callerid = c.execute(callerid)
+		callerid = c.fetchone()[0]
+
 		#print lastms
 		numero = random.randint(7500000000.000, 8500000000.000)
 		#print numero
 		#print ramal_v, ipaddr, lastms
 
 		SQL_INSERE = ("INSERT INTO pabx_rt_calls"
-					"(CallerIDNum,ChannelState,ChannelStateDesc,Uniqueid,Duration,controle,ipaddr,lastms)"
-					"VALUES (%s,9,'Dead',%s,'00:00:00',8,%s,%s)")
+					"(CallerIDNum,ChannelState,ChannelStateDesc,Uniqueid,Duration,controle,ipaddr,lastms,callerid)"
+					"VALUES (%s,9,'Dead',%s,'00:00:00',8,%s,%s,%s)")
 
-		DADOS = (ramal_v,numero,ipaddr,lastms)
+		DADOS = (ramal_v,numero,ipaddr,lastms,callerid)
 		c.execute(SQL_INSERE, DADOS)
 		#connection.commit()	
 

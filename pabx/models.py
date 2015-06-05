@@ -52,6 +52,7 @@ class rt_calls(models.Model):
     controle = models.IntegerField(max_length=1, default=0, blank=True, null=True)
     ipaddr = models.CharField(max_length=15,blank=True, null=True)
     lastms = models.IntegerField(blank=True, null=True)
+    callerid = models.CharField(max_length=40,blank=True, null=True)
     
     def __unicode__(self):
        # return "%s %s %s" %(self.ChannelState, self.ChannelStateDesc, self.controle)

@@ -58,7 +58,7 @@ def pabx(request):
 	troncos = asterisk.stats_request('SIPshowregistry')
 	ramais_sip = VwSipregs.objects.all()
 
-	template = loader.get_template('mesa.html')
+	template = loader.get_template('mesa-full.html')
 	context = RequestContext(request, {'info':info,'exten':exten, 'ramais_sip':ramais_sip, 'troncos':troncos})
 	return HttpResponse(template.render(context))
 
