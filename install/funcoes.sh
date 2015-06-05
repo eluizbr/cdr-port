@@ -8,7 +8,7 @@ IFCONFIG=`which ifconfig 2>/dev/null||echo /sbin/ifconfig`
 IPADDR=`$IFCONFIG eth0|gawk '/inet addr/{print $2}'|gawk -F: '{print $2}'`
 INSTALL_DIR='/usr/share/cdrport'
 CONFIG_DIR='/usr/share/cdrport/cdr-port'
-BRANCH='devel'
+BRANCH='master'
 DB_PASSWORD=`</dev/urandom tr -dc A-Za-z0-9| (head -c $1 > /dev/null 2>&1 || head -c 20)`
 echo "$DB_PASSWORD" > /usr/src/mysql_senha.txt
 
