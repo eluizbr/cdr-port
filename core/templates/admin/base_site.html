@@ -1,7 +1,5 @@
 {% extends "admin/base.html" %}
-{% load i18n %}{% load admin_static bootstrapped_goodies_tags %}
-
-{% block title %}{% render_with_template_if_exist "admin/admin_title.html" "Django administration" %} | CDR-port {% endblock %}
+{% load i18n %}
 
 {% block branding %}
 <a class="navbar-brand" href="{% url 'admin:index' %}">CDR-port</a>
