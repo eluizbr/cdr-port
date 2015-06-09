@@ -102,7 +102,7 @@ class cdr(models.Model):
     amaflags = models.IntegerField()
     accountcode = models.CharField(max_length=20)
     uniqueid = models.CharField(unique=True, max_length=32)
-    userfield = models.CharField(max_length=255)
+    userfield = models.CharField(max_length=255, blank=True, null=True)
     prefix = models.CharField(max_length=80, blank=True, null=True)
     portado = models.CharField(max_length=3, default='Nao')
     
@@ -125,7 +125,7 @@ class Cdrport(models.Model):
     rn1_id = models.IntegerField(blank=True, null=True)
     portado = models.CharField(max_length=5, blank=True)
     uniqueid = models.CharField(unique=True, max_length=32, blank=True)
-    userfield = models.CharField(max_length=255, blank=True)
+    userfield = models.CharField(max_length=255, blank=True, null=True)
 
     def __unicode__(self):
         return unicode(self.numero)

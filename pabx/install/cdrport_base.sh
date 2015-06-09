@@ -13,7 +13,7 @@ NUM_WORKERS=1
 USER=www-data
 GROUP=www-data
 
-cd INSTALL_DIR
+cd INSTALLDIR
 source bin/activate
 
 test -d $LOGDIR || mkdir -p $LOGDIR
