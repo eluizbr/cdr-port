@@ -2,6 +2,7 @@ Django==1.7.5
 MySQL-python==1.2.5
 django_admin_bootstrapped==2.4.0
 gunicorn
+django-smart-selects-1.1.1
 django-updateable==0.2.1
 django-suit==0.2.13
 argparse==1.2.1
