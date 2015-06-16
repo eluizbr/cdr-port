@@ -69,7 +69,6 @@ def editar_ramal(request,name):
 	sip = get_object_or_404(Sip, name=name)
 	secret_f = request.GET.get('secret', "")
 	codec_f = request.GET.get('allow', "")
-	#print request.method 
 	
 	if request.method == 'POST':
 
@@ -81,8 +80,6 @@ def editar_ramal(request,name):
 		ramal = Sip.objects.get(name=name)
 		ramal.secret = secret_f
 		ramal.allow = codec_f
-		#ramal.secret = make_password(password=secret_f,hasher='md5')
-		#print secret_f
 		ramal.save()
 	
 
