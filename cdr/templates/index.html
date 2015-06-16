@@ -92,11 +92,11 @@
             </ul>
         -->
         {% elif info == "2" or "3" %}
-
+        <!--
         <h5 class="sidebar-nav-title">Premium<a class="action-link" href="#"><i class="glyphicon glyphicon-usd"></i></a></h5>         
             <ul class="sidebar-nav">
                 <li>
-                    <!-- an example of nested submenu. basic bootstrap collapse component -->
+                    
                     <a class="collapsed" href="#sidebar-forms" data-toggle="collapse" data-parent="#sidebar">
                         <span class="icon">
                             <i class="glyphicon glyphicon-retweet"></i>
@@ -105,10 +105,11 @@
                         <i class="toggle fa fa-angle-down"></i>
                     </a>
                     <ul id="sidebar-forms" class="collapse">
-                        <li><a href="form_elements.html">Resumo</a></li>
-                        <li><a href="form_validation.html">Consultas</a></li>
+                        <li><a href="{% url 'index'%}">Resumo</a></li>
+                        <li><a href="{% url 'index'%}">Consultas</a></li>
                     </ul>
                 </li>
+                
                 <li>
                     <a class="collapsed" href="#sidebar-ui" data-toggle="collapse" data-parent="#sidebar">
                         <span class="icon">
@@ -118,14 +119,16 @@
                         <i class="toggle fa fa-angle-down"></i>
                     </a>
                     <ul id="sidebar-ui" class="collapse">
-                        <li><a href="ui_components.html">Ramais</a></li>
-                        <li><a href="ui_notifications.html">Extensões</a></li>
-                        <li><a href="ui_icons.html">Troncos</a></li>
-                        <li><a href="ui_buttons.html">URA</a></li>
-                        <li><a href="ui_tabs_accordion.html">Filas</a></li>
+                        <li><a href="{% url 'index'%}">Ramais</a></li>
+                        <li><a href="{% url 'index'%}">Extensões</a></li>
+                        <li><a href="{% url 'index'%}">Troncos</a></li>
+                        <li><a href="{% url 'index'%}">URA</a></li>
+                        <li><a href="{% url 'index'%}">Filas</a></li>
                     </ul>
                 </li>       
+               
             </ul>
+         -->
         {% endif %}  
         <!-- some styled links in sidebar. ready to use as links to email folders, projects, groups, etc -->
 

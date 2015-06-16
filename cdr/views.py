@@ -57,7 +57,7 @@ def cdr_serach(request):
     info = str(info)[2]
     gravacao = Config_Local.objects.values_list('gravar')
     gravacao = str(gravacao)[4:-4]
-    print gravacao
+
 
     hora = datetime.now()
     hoje = hora.strftime("%Y-%m-%dT23:59:59") 
@@ -78,21 +78,19 @@ def cdr_serach(request):
     estado = VwEstados.objects.all()
     portado = VwCdr.objects.values_list('portado')
     pagina = 20,30,50,100,200
-   
-
     
-    numero_f = request.GET.get('numero', "")
-    src_f = request.GET.get('src', "0")
-    calldate1 = request.GET.get('calldate1', ontem)
-    calldate2 = request.GET.get('calldate2', hoje)
-    disposition_f = request.GET.get('disposition', "")
-    paginas_f = request.GET.get('pagina', "")
-    tipo_f = request.GET.get('tipo', "")
-    operadora_f = request.GET.get('operadora', "")
-    cidade_f = request.GET.get('cidade', "")
-    estado_f = request.GET.get('estado', "")
-    portado_f = request.GET.get('portado', "")
-    print src_f
+    numero_f = request.POST.get('numero', "")
+    src_f = request.POST.get('src', "0")
+    calldate1 = request.POST.get('calldate1', ontem)
+    calldate2 = request.POST.get('calldate2', hoje)
+    disposition_f = request.POST.get('disposition', "")
+    paginas_f = request.POST.get('pagina', "")
+    tipo_f = request.POST.get('tipo', "")
+    operadora_f = request.POST.get('operadora', "")
+    cidade_f = request.POST.get('cidade', "")
+    estado_f = request.POST.get('estado', "")
+    portado_f = request.POST.get('portado', "")
+
     if paginas_f == '':
         paginas_f = 15
     else:
@@ -318,7 +316,7 @@ def cdr_serach(request):
     if info == "1":
         if results:
             paginator = Paginator(results, int(paginas_f))
-            page = request.GET.get('page')
+            page = request.POST.get('page')
           
             try:
                 results = paginator.page(page)
@@ -352,7 +350,7 @@ def cdr_serach(request):
     elif info == "2" or "3":
         if results:
             paginator = Paginator(results, int(paginas_f))
-            page = request.GET.get('page')
+            page = request.POST.get('page')
           
             try:
                 results = paginator.page(page)

@@ -138,7 +138,7 @@ class Prefixo(models.Model):
     cidade = models.CharField(max_length=100, blank=True)
     estado = models.CharField(max_length=2, blank=True)
     operadora = models.CharField(max_length=30, blank=True)
-    tipo = models.CharField(max_length=5, blank=True)
+    tipo = models.CharField(max_length=20, blank=True)
     rn1 = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
