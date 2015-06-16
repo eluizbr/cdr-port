@@ -101,7 +101,7 @@ Temos um script para instalação automatizada do ***CDR-port***.
 
 ```
 cd /usr/src/
-wget https://github.com/eluizbr/cdr-port/raw/devel/install/install.sh
+wget https://github.com/eluizbr/cdr-port/raw/master/install/install.sh
 bash install.sh
 ```
 
