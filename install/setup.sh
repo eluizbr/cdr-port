@@ -33,7 +33,7 @@ mysql -u root -p"$DB_PASSWORD" -e "create database cdrport";
 
 mkdir -p /usr/share/cdrport
 cd /usr/share/cdrport
-git clone https://github.com/eluizbr/cdr-port.git
+git clone -b master https://github.com/eluizbr/cdr-port.git
 virtualenv --system-site-packages cdr-port
 cd cdr-port
 pip install -r install/requirements.txt
