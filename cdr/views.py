@@ -43,7 +43,7 @@ def index(request):
     ultimo = VwLast10.objects.values_list('dst','operadora', 'tipo','calldate','cidade', 'estado', 'portado')
     byDay = VwDayStats.objects.values_list('dia', 'mes', 'total')
     byMonth = VwMonthStats.objects.values_list('mes', 'total')
-    operadora = VwOperadoras.objects.values_list('operadora', 'total')
+    operadora = VwOperadoras.objects.values_list('operadora','tipo','total')
     cidade = VwCidades.objects.values_list('cidade').count()
     portados_s = Cdrport.objects.filter(portado='Sim').count()
     portados_n = Cdrport.objects.filter(portado='Nao').count()

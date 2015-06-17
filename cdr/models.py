@@ -179,22 +179,6 @@ class DispositionPercent(models.Model):
 
     def __unicode__(self):
         return unicode(self.disposition)
-'''
-class Stats_ANSWERED(models.Model):
-    d_total = models.IntegerField(unique=True, blank=True, null=True)
-    s_total = models.IntegerField(blank=True, null=True)
-    m_total = models.IntegerField(blank=True, null=True)
-
-class Stats_NOANSWER(models.Model):
-    d_total = models.IntegerField(unique=True, blank=True, null=True)
-    s_total = models.IntegerField(blank=True, null=True)
-    m_total = models.IntegerField(blank=True, null=True)
-
-class Stats_BUSY(models.Model):
-    d_total = models.IntegerField(unique=True, blank=True, null=True)
-    s_total = models.IntegerField(blank=True, null=True)
-    m_total = models.IntegerField(blank=True, null=True)
-'''
 
 class VwDayStats(models.Model):
     dia = models.IntegerField(blank=True, null=True)
@@ -230,8 +214,10 @@ class VwLast10(models.Model):
         managed = False
         db_table = 'vw_last_10'
 
+
 class VwOperadoras(models.Model):
-    operadora = models.CharField(max_length=64)
+    operadora = models.CharField(max_length=50)
+    tipo = models.CharField(max_length=20)
     total = models.BigIntegerField()
 
     def __unicode__(self):

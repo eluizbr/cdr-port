@@ -4,19 +4,21 @@ from models import Portados, NaoPortados,IpsPermitidos
 from ratelimit.decorators import ratelimit
 
 
-@ratelimit(key='ip', rate='30/m', block=True)
+@ratelimit(key='ip', rate='60/m', block=True)
 def consulta(request,numero):
 
 	rn1 = len(numero)
 
 	try:
 
-		ip_externo = request.META['REMOTE_ADDR']
+		key = request.GET['key']
+		print key
 
-		ipaddr = IpsPermitidos.objects.values_list('ipaddr').filter(ipaddr=ip_externo)[0]
-		ipaddr = ipaddr[0]
+		chave = IpsPermitidos.objects.values_list('key').filter(key=key)[0]
+		chave = chave[0]
+		print chave
 	
-		if ip_externo == ipaddr:
+		if key != chave:
 
 			if rn1 == 9:
 				print numero

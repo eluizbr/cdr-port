@@ -566,10 +566,11 @@
                             </thead>
                             <tbody>
                             <tr>
-                            {% for operadora, total  in operadora|slice:":8" %}
+                            {% for operadora,tipo, total  in operadora|slice:":8" %}
                                 <td>
                                 </td>
                                 <td>{{operadora}}</td>
+                                <td>{{tipo}}</td>
                                 <td class="text-align-right fw-semi-bold">{{total|intcomma}}</td>
                             </tr>
                             {% endfor %}

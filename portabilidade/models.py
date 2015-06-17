@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 
@@ -25,7 +26,8 @@ class Portados(models.Model):
 
 class IpsPermitidos(models.Model):
 
-    ipaddr = models.GenericIPAddressField()
+    nome = models.CharField(null=True,blank=True,max_length=255)
+    key = models.UUIDField(default=uuid.uuid4, editable=False)
 
     def __unicode__(self):
-        return unicode(self.ipaddr)
+        return unicode(self.key)

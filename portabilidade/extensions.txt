@@ -1,8 +1,17 @@
 # Pdrão Extensions para conculta de portabilidade.
 
 
+;CONSULTA PORTABILIDADE TRATAMENTO LOCAL POR CSP no EXEMPLO 20 = VIVO
 
-exten => _X.,1,Set(RN1=${CURL(http://consulta.cdr-port.net/portabilidade/${EXTEN})})
+exten => _X.,1,Set(RN1=${CURL(http://demo.cdr-port.net/portabilidade/${EXTEN})})
+exten => _X.,n,NooP(O CSP para o número ${EXTEN} é ${RN1})
+exten => _X.,n,GotoIf($["${RN1}" = "20"]?dial1)
+exten => _X.,n(dial1),Dial(dongle/vivo/${EXTEN:2},,rt)
+exten => _X.,n,Hangup()
+
+
+; EXEMPLO
+exten => _X.,1,Set(RN1=${CURL(http://demo.cdr-port.net/portabilidade/${EXTEN})})
 exten => _X.,n,NooP(O CSP para o número ${EXTEN} é ${RN1})
 exten => _X.,n,Dial(SIP/TRONCO/0${RN1}${EXTEN})
 

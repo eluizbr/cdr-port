@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.23)
 # Database: cdrport
-# Generation Time: 2015-06-17 00:09:46 +0000
+# Generation Time: 2015-06-17 15:53:06 +0000
 # ************************************************************
 
 
@@ -23,6 +23,8 @@
 # Dump of table nao_portados
 # ------------------------------------------------------------
 
+DROP VIEW IF EXISTS `nao_portados`;
+
 CREATE TABLE `nao_portados` (
    `id` INT(10) NOT NULL DEFAULT '0',
    `operadora` VARCHAR(64) NOT NULL,
@@ -36,6 +38,8 @@ CREATE TABLE `nao_portados` (
 # Dump of table portados
 # ------------------------------------------------------------
 
+DROP VIEW IF EXISTS `portados`;
+
 CREATE TABLE `portados` (
    `numero` BIGINT(11) NOT NULL,
    `rn1` INT(11) NOT NULL,
@@ -47,6 +51,8 @@ CREATE TABLE `portados` (
 
 # Dump of table vw_cdr
 # ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_cdr`;
 
 CREATE TABLE `vw_cdr` (
    `id` INT(11) NOT NULL DEFAULT '0',
@@ -73,6 +79,8 @@ CREATE TABLE `vw_cdr` (
 # Dump of table vw_cidades
 # ------------------------------------------------------------
 
+DROP VIEW IF EXISTS `vw_cidades`;
+
 CREATE TABLE `vw_cidades` (
    `id` INT(11) NOT NULL DEFAULT '0',
    `cidade` VARCHAR(100) NOT NULL,
@@ -83,6 +91,8 @@ CREATE TABLE `vw_cidades` (
 
 # Dump of table vw_day_stats
 # ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_day_stats`;
 
 CREATE TABLE `vw_day_stats` (
    `dia` DATE NULL DEFAULT NULL,
@@ -95,6 +105,8 @@ CREATE TABLE `vw_day_stats` (
 # Dump of table vw_disposition
 # ------------------------------------------------------------
 
+DROP VIEW IF EXISTS `vw_disposition`;
+
 CREATE TABLE `vw_disposition` (
    `id` INT(11) NOT NULL DEFAULT '0',
    `disposition` VARCHAR(20) NOT NULL,
@@ -106,6 +118,8 @@ CREATE TABLE `vw_disposition` (
 # Dump of table vw_estados
 # ------------------------------------------------------------
 
+DROP VIEW IF EXISTS `vw_estados`;
+
 CREATE TABLE `vw_estados` (
    `id` INT(11) NOT NULL DEFAULT '0',
    `estado` VARCHAR(2) NOT NULL,
@@ -116,6 +130,8 @@ CREATE TABLE `vw_estados` (
 
 # Dump of table vw_last_10
 # ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_last_10`;
 
 CREATE TABLE `vw_last_10` (
    `dst` BIGINT(20) NULL DEFAULT NULL,
@@ -134,6 +150,8 @@ CREATE TABLE `vw_last_10` (
 # Dump of table vw_month_stats
 # ------------------------------------------------------------
 
+DROP VIEW IF EXISTS `vw_month_stats`;
+
 CREATE TABLE `vw_month_stats` (
    `mes` VARCHAR(9) NULL DEFAULT NULL,
    `total` BIGINT(21) NOT NULL DEFAULT '0'
@@ -144,9 +162,12 @@ CREATE TABLE `vw_month_stats` (
 # Dump of table vw_operadoras
 # ------------------------------------------------------------
 
+DROP VIEW IF EXISTS `vw_operadoras`;
+
 CREATE TABLE `vw_operadoras` (
    `id` INT(11) NOT NULL DEFAULT '0',
    `operadora` VARCHAR(50) NOT NULL,
+   `tipo` VARCHAR(20) NOT NULL DEFAULT '',
    `total` BIGINT(21) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM;
 
@@ -154,6 +175,8 @@ CREATE TABLE `vw_operadoras` (
 
 # Dump of table vw_ramais
 # ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_ramais`;
 
 CREATE TABLE `vw_ramais` (
    `id` INT(11) NOT NULL DEFAULT '0',
@@ -166,6 +189,8 @@ CREATE TABLE `vw_ramais` (
 # Dump of table vw_stats_answered
 # ------------------------------------------------------------
 
+DROP VIEW IF EXISTS `vw_stats_answered`;
+
 CREATE TABLE `vw_stats_answered` (
    `dia` BIGINT(21) NULL DEFAULT NULL,
    `semana` BIGINT(21) NULL DEFAULT NULL,
@@ -177,6 +202,8 @@ CREATE TABLE `vw_stats_answered` (
 # Dump of table vw_stats_busy
 # ------------------------------------------------------------
 
+DROP VIEW IF EXISTS `vw_stats_busy`;
+
 CREATE TABLE `vw_stats_busy` (
    `dia` BIGINT(21) NULL DEFAULT NULL,
    `semana` BIGINT(21) NULL DEFAULT NULL,
@@ -187,6 +214,8 @@ CREATE TABLE `vw_stats_busy` (
 
 # Dump of table vw_stats_noanswer
 # ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `vw_stats_noanswer`;
 
 CREATE TABLE `vw_stats_noanswer` (
    `dia` BIGINT(21) NULL DEFAULT NULL,
@@ -360,8 +389,9 @@ DROP TABLE `vw_operadoras`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_operadoras`
 AS SELECT
    `vw_cdr`.`id` AS `id`,
-   `vw_cdr`.`operadora` AS `operadora`,count(`vw_cdr`.`operadora`) AS `total`
-FROM `vw_cdr` group by `vw_cdr`.`operadora` order by `total` desc;
+   `vw_cdr`.`operadora` AS `operadora`,
+   `vw_cdr`.`tipo` AS `tipo`,count(`vw_cdr`.`operadora`) AS `total`
+FROM `vw_cdr` group by `vw_cdr`.`operadora`,`vw_cdr`.`tipo` order by count(`vw_cdr`.`operadora`) desc;
 
 
 # Replace placeholder table for vw_cidades with correct view syntax
