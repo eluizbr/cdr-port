@@ -182,28 +182,35 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle dropdown-toggle-notifications" id="notifications-dropdown-toggle" data-toggle="dropdown">
+                    <a href="#" class="dropdown-toggle dropdown-toggle-notifications">
                         &nbsp;
-                        CDR-port <strong>        
-                    {% if info == "1"  %}
-                        Free</strong>
-                    {% elif info == "2"   %}
-                        Professional</strong>
-                    {% elif info == "3"   %}
-                        Premium</strong>
-                    {% endif %}                            
-                        </strong>&nbsp;
+                        Olá <strong>{{usuario}}</strong>&nbsp;
                     <div class="dropdown-menu animated fadeInUp" id="notifications-dropdown-menu">
                         <section class="panel notifications">
                             <!-- notification list with .thin-scroll which styles scrollbar for webkit -->
-                            <div id="notifications-list" class="list-group thin-scroll">
-
+                            <div>
                                 <a class="list-group-item" href="#">
                                 </a>
                             </div>
 
                         </section>
                     </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-cog fa-lg"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="glyphicon glyphicon-user"></i> &nbsp; Minha conta</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{% url 'consulta' %}">CDR</a></li>
+                        {% if user.is_staff %}
+                        <li><a href="/admin/">Admin</a></li>
+                        {% else %}
+                        {% endif %}
+                        <li class="divider"></li>
+                        <li><a href="{% url 'auth_logout' %}"><i class="fa fa-sign-out"></i> &nbsp; Sair</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>

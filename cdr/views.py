@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
 from .models import cdr, DispositionPercent, Info, Cdrport,Config_Local
 from .models import VwDayStats, VwMonthStats,VwLast10, VwOperadoras, VwStatsAnswered, VwStatsBusy, VwStatsNoanswer, VwRamais,\
@@ -11,10 +12,9 @@ from datetime import datetime, timedelta, time
 from django.db.models import Q
 from django.http import QueryDict
 
-def time_line(request):
-    pass
 
 
+@login_required
 def error(request):
     info = Info.objects.values_list('ativo')
     info = str(info)[2]
@@ -22,7 +22,7 @@ def error(request):
     context = RequestContext(request, {'info': info})
     return HttpResponse(template.render(context))
 
-
+@login_required
 def registro(request):
     info = Info.objects.values('uuid', 'system_number','system_name', 'mac','frequencia', 'data_ativacao', 'data_expira', 'ativo')
     template = loader.get_template('registro.html')
@@ -30,10 +30,11 @@ def registro(request):
     return HttpResponse(template.render(context))
 
 
-
+@login_required
 def index(request):
     info = Info.objects.values_list('ativo')
     info = str(info)[2]
+    usuario = request.user.username
     perc = DispositionPercent.objects.values_list('disposition', 'valor', 'perc')
     total = DispositionPercent.objects.aggregate(Sum('valor'))['valor__sum']
     stats_AN = VwStatsAnswered.objects.values_list('dia', 'semana', 'mes')
@@ -47,10 +48,11 @@ def index(request):
     portados_s = Cdrport.objects.filter(portado='Sim').count()
     portados_n = Cdrport.objects.filter(portado='Nao').count()
     template = loader.get_template('index.html')
-    context = RequestContext(request, { 'info':info, 'perc': perc, 'total': total, 'stats_AN':stats_AN, 'stats_NO':stats_NO,'cidade':cidade,'portados_s':portados_s,
+    context = RequestContext(request, { 'info':info,'usuario':usuario, 'perc': perc, 'total': total, 'stats_AN':stats_AN, 'stats_NO':stats_NO,'cidade':cidade,'portados_s':portados_s,
 								    	'portados_n':portados_n,'stats_BU':stats_BU, 'ultimo':ultimo, 'byDay':byDay, 'byMonth':byMonth, 'operadora':operadora })
     return HttpResponse(template.render(context))
 
+@login_required
 def cdr_serach(request):
 
     info = Info.objects.values_list('ativo')

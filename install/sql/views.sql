@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.23)
 # Database: cdrport
-# Generation Time: 2015-06-16 21:34:23 +0000
+# Generation Time: 2015-06-17 00:09:46 +0000
 # ************************************************************
 
 
@@ -18,6 +18,19 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+# Dump of table nao_portados
+# ------------------------------------------------------------
+
+CREATE TABLE `nao_portados` (
+   `id` INT(10) NOT NULL DEFAULT '0',
+   `operadora` VARCHAR(64) NOT NULL,
+   `tipo` VARCHAR(64) NOT NULL,
+   `prefixo` BIGINT(7) NOT NULL,
+   `rn1` INT(64) NOT NULL
+) ENGINE=MyISAM;
+
 
 
 # Dump of table portados
@@ -215,6 +228,21 @@ AS SELECT
 FROM `vw_cdr` where (`vw_cdr`.`disposition` = 'ANSWERED') order by `vw_cdr`.`calldate` desc limit 8;
 
 
+# Replace placeholder table for nao_portados with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `nao_portados`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `nao_portados`
+AS SELECT
+   `portabilidade`.`nao_portados`.`id` AS `id`,
+   `portabilidade`.`nao_portados`.`operadora` AS `operadora`,
+   `portabilidade`.`nao_portados`.`tipo` AS `tipo`,
+   `portabilidade`.`nao_portados`.`prefixo` AS `prefixo`,
+   `portabilidade`.`nao_portados`.`rn1` AS `rn1`
+FROM `portabilidade`.`nao_portados`;
+
+
 # Replace placeholder table for vw_ramais with correct view syntax
 # ------------------------------------------------------------
 
@@ -225,18 +253,6 @@ AS SELECT
    `cdr_cdrport`.`id` AS `id`,
    `cdr_cdrport`.`src` AS `ramais`,count(`cdr_cdrport`.`src`) AS `total`
 FROM `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'ANSWERED') and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate()))) group by `cdr_cdrport`.`src` order by `total` desc;
-
-
-# Replace placeholder table for vw_disposition with correct view syntax
-# ------------------------------------------------------------
-
-DROP TABLE `vw_disposition`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_disposition`
-AS SELECT
-   `cdr_cdrport`.`id` AS `id`,
-   `cdr_cdrport`.`disposition` AS `disposition`,count(`cdr_cdrport`.`disposition`) AS `Total`
-FROM `cdr_cdrport` group by `cdr_cdrport`.`disposition` order by `Total` desc;
 
 
 # Replace placeholder table for vw_month_stats with correct view syntax
@@ -259,6 +275,17 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 AS SELECT
    (select count(`cdr_cdrport`.`src`)
 FROM `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'ANSWERED') and (dayofmonth(`cdr_cdrport`.`calldate`) = dayofmonth(curdate())) and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate())))) AS `dia`,(select count(`cdr_cdrport`.`src`) from `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'ANSWERED') and (week(`cdr_cdrport`.`calldate`,0) = week(curdate(),0)) and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate())))) AS `semana`,(select count(`cdr_cdrport`.`src`) from `cdr_cdrport` where ((`cdr_cdrport`.`disposition` = 'ANSWERED') and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (month(`cdr_cdrport`.`calldate`) = month(curdate())) and (year(`cdr_cdrport`.`calldate`) = year(curdate())))) AS `mes`;
+
+
+# Replace placeholder table for vw_day_stats with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_day_stats`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_day_stats`
+AS SELECT
+   cast(`cdr_cdrport`.`calldate` as date) AS `dia`,month(cast(`cdr_cdrport`.`calldate` as date)) AS `mes`,count(0) AS `total`
+FROM `cdr_cdrport` where (`cdr_cdrport`.`calldate` between (curdate() - interval 6 month) and curdate()) group by `dia` order by `dia`;
 
 
 # Replace placeholder table for vw_cdr with correct view syntax
@@ -301,17 +328,6 @@ AS SELECT
 FROM `portabilidade`.`portados`;
 
 
-# Replace placeholder table for vw_day_stats with correct view syntax
-# ------------------------------------------------------------
-
-DROP TABLE `vw_day_stats`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_day_stats`
-AS SELECT
-   cast(`cdr_cdrport`.`calldate` as date) AS `dia`,month(cast(`cdr_cdrport`.`calldate` as date)) AS `mes`,count(0) AS `total`
-FROM `cdr_cdrport` where (`cdr_cdrport`.`calldate` between (curdate() - interval 6 month) and curdate()) group by `dia` order by `dia`;
-
-
 # Replace placeholder table for vw_estados with correct view syntax
 # ------------------------------------------------------------
 
@@ -322,6 +338,18 @@ AS SELECT
    `vw_cdr`.`id` AS `id`,
    `vw_cdr`.`estado` AS `estado`,count(`vw_cdr`.`estado`) AS `total`
 FROM `vw_cdr` group by `vw_cdr`.`estado` order by `vw_cdr`.`estado`;
+
+
+# Replace placeholder table for vw_disposition with correct view syntax
+# ------------------------------------------------------------
+
+DROP TABLE `vw_disposition`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_disposition`
+AS SELECT
+   `cdr_cdrport`.`id` AS `id`,
+   `cdr_cdrport`.`disposition` AS `disposition`,count(`cdr_cdrport`.`disposition`) AS `Total`
+FROM `cdr_cdrport` group by `cdr_cdrport`.`disposition` order by `Total` desc;
 
 
 # Replace placeholder table for vw_operadoras with correct view syntax
