@@ -1,3 +1,9 @@
 from django.contrib import admin
+from .models import IpsPermitidos
 
-# Register your models here.
+class IpsPermitidosAdmin(admin.ModelAdmin):
+	list_display = ['IP']
+
+
+admin.site.register(IpsPermitidos)
+

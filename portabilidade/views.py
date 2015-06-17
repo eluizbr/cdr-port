@@ -7,9 +7,6 @@ from ratelimit.decorators import ratelimit
 @ratelimit(key='ip', rate='30/m', block=True)
 def consulta(request,numero):
 
-	#rn1 = Portados.objects.values_list('rn1').filter(numero=numero)
-
-	#rn1 = str(rn1)[5:7]
 	rn1 = len(numero)
 
 	try:
@@ -20,7 +17,6 @@ def consulta(request,numero):
 		ipaddr = ipaddr[0]
 	
 		if ip_externo == ipaddr:
-
 
 			if rn1 == 9:
 				print numero
@@ -53,7 +49,6 @@ def consulta(request,numero):
 			response = HttpResponse(rn1, content_type='text/plain')
 			return response
 		else:
-
 
 			rn1 = 0
 			response = HttpResponse(rn1, content_type='text/plain')
