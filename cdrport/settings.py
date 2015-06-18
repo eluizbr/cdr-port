@@ -66,9 +66,9 @@ WSGI_APPLICATION = 'cdrport.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'BANCO',
-        'USER': 'USER',
-        'PASSWORD': 'SENHA',
+        'NAME': 'nome_banco',
+        'USER': 'user_banco',
+        'PASSWORD': 'pass_banco',
         'HOST': '192.168.2.85',
         'PORT': '3306',
     }
