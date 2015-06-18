@@ -60,7 +60,7 @@ class Config_Local(models.Model):
     estado = models.ForeignKey(State ,help_text=_("Selecione a estado"),verbose_name="Estado")
     cidade = ChainedForeignKey(City, chained_field="estado", chained_model_field="id_state", auto_choose=True,verbose_name="Cidade",help_text=_("Selecione a cidade"))
     cortar = models.IntegerField(help_text=_("Numero de digitos a serem cortados. Ex: Se voce envia 551120304050, digite 2 para remover o 55."),verbose_name="Cortar")
-    gravar = models.CharField(max_length=3,help_text=_("Selecione SIM, se voce grava ligacoes."),verbose_name="Audio",choices=AUDIO)
+    gravar = models.CharField(max_length=3,help_text=_("Selecione SIM, se voce grava ligacoes."),verbose_name="Audio",choices=AUDIO,default='Nao')
     custo_local = models.DecimalField(max_digits=10, decimal_places=2, blank=True, help_text=_("Custo Local"),default='0.00',verbose_name="Fixo")
     custo_ldn = models.DecimalField(max_digits=10, decimal_places=2, blank=True, help_text=_("Custo LDN"),default='0.00',verbose_name="Fixo LDN")
     custo_movel_local = models.DecimalField(max_digits=10, decimal_places=2, blank=True, help_text=_("Movel Local"),default='0.00',verbose_name="Movel Local")

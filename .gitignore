@@ -6,4 +6,5 @@
 ehthumbs.db
 Thumbs.db
 *.pyc
-settings.py
+
+cdrport/settings.py

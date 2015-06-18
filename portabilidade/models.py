@@ -24,7 +24,7 @@ class Portados(models.Model):
         db_table = 'portados'
 
 
-class IpsPermitidos(models.Model):
+class AuthKey(models.Model):
 
     nome = models.CharField(null=True,blank=True,max_length=255)
     key = models.UUIDField(default=uuid.uuid4, editable=False)

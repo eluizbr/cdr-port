@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from models import Portados, NaoPortados,IpsPermitidos
+from models import Portados, NaoPortados,AuthKey
 from ratelimit.decorators import ratelimit
 
 
@@ -12,13 +12,13 @@ def consulta(request,numero):
 	try:
 
 		key = request.GET['key']
-		print key
+		key = str(key)
 
-		chave = IpsPermitidos.objects.values_list('key').filter(key=key)[0]
+		chave = AuthKey.objects.values_list('key').filter(key=key)[0]
 		chave = chave[0]
-		print chave
-	
-		if key != chave:
+		chave = str(chave)
+
+		if key == chave:
 
 			if rn1 == 9:
 				print numero

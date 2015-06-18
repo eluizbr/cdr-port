@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import IpsPermitidos
+from .models import AuthKey
 
-class IpsPermitidosAdmin(admin.ModelAdmin):
+class AuthKeyAdmin(admin.ModelAdmin):
 	list_display = ['nome', 'key']
 
 
-admin.site.register(IpsPermitidos,IpsPermitidosAdmin)
+admin.site.register(AuthKey,AuthKeyAdmin)
 
