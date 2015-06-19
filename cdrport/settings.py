@@ -69,7 +69,7 @@ DATABASES = {
         'NAME': 'nome_banco',
         'USER': 'user_banco',
         'PASSWORD': 'pass_banco',
-        'HOST': '192.168.2.85',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
