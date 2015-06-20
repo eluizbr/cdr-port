@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = (
     'core',
-    'django_admin_bootstrapped',
+    # 'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.sites',
@@ -67,8 +67,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'nome_banco',
-        'USER': 'user_banco',
-        'PASSWORD': 'pass_banco',
+        'USER': 'root',
+        'PASSWORD': 'ferrari',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -84,7 +84,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-#USE_TZ = True
+# USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -98,7 +98,7 @@ TEMPLATES_LOADERS = ('django.template.loaders.filesystem.Loader')
 
 
 STATIC_ROOT = "/cdr/static/"
-                 
+
 TEMPLATE_DIRS = os.path.join(BASE_DIR, 'templates', 'static'),
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
@@ -109,10 +109,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = False
-REGISTRATION_OPEN = False
+REGISTRATION_OPEN = True
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL='/conta/login/'
+LOGIN_URL = '/conta/login/'
 
 # Rate Limit
 

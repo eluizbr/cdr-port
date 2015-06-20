@@ -33,7 +33,8 @@ def registro(request):
 @login_required
 def index(request):
     info = Info.objects.values_list('ativo')
-    info = str(info)[2]
+    if info:
+        info = str(info)[2]
     usuario = request.user.username
     perc = DispositionPercent.objects.values_list('disposition', 'valor', 'perc')
     total = DispositionPercent.objects.aggregate(Sum('valor'))['valor__sum']
@@ -62,7 +63,7 @@ def cdr_serach(request):
 
 
     hora = datetime.now()
-    hoje = hora.strftime("%Y-%m-%dT23:59:59") 
+    hoje = hora.strftime("%Y-%m-%dT23:59:59")
     ontem = hora - timedelta(days=1)
     ontem = ontem.strftime("%Y-%m-%dT00:00:00")
 
@@ -80,7 +81,7 @@ def cdr_serach(request):
     estado = VwEstados.objects.all()
     portado = VwCdr.objects.values_list('portado')
     pagina = 20,30,50,100,200
-    
+
     numero_f = request.POST.get('numero', "")
     src_f = request.POST.get('src', "0")
     calldate1 = request.POST.get('calldate1', ontem)
@@ -146,14 +147,14 @@ def cdr_serach(request):
 
     results = VwCdr.objects.filter(query).order_by('-calldate')
 
-            
+
     if info == "1":
         url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&cidade=%s&estado=%s"\
             % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, cidade_f, estado_f)
     else:
         url = "numero=%s&src=%s&calldate1=%s&calldate2=%s&disposition=%s&pagina=%s&tipo=%s&operadora=%s&cidade=%s&estado=%s&portado=%s"\
     % (numero_f, src_f, calldate1, calldate2, disposition_f, paginas_f, tipo_f, operadora_f, cidade_f, estado_f, portado_f)
- 
+
     tempo_medio = results.aggregate(Avg('billsec'))['billsec__avg']
     if tempo_medio == None:
         tempo_medio = '00:00:00'
@@ -194,40 +195,40 @@ def cdr_serach(request):
                 estado_sql = "AND estado = '%s'" %estado_f
 
             atendeu = """
-                        SELECT Count(disposition) 
-                            FROM vw_cdr 
-                            WHERE disposition = 'ANSWERED' 
+                        SELECT Count(disposition)
+                            FROM vw_cdr
+                            WHERE disposition = 'ANSWERED'
                             AND src = %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, cidade_sql, estado_sql, calldate1, calldate2)
             atendeu = cursor.execute(atendeu)
             atendeu = cursor.fetchone()[0]
 
-            n_atendeu = """         
-                        SELECT Count(disposition) 
-                            FROM vw_cdr 
-                            WHERE disposition = 'NO ANSWER' 
+            n_atendeu = """
+                        SELECT Count(disposition)
+                            FROM vw_cdr
+                            WHERE disposition = 'NO ANSWER'
                             AND src = %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, cidade_sql, estado_sql, calldate1, calldate2)
             n_atendeu = cursor.execute(n_atendeu)
             n_atendeu = cursor.fetchone()[0]
 
-            ocupado =  """         
-                        SELECT Count(disposition) 
-                            FROM vw_cdr 
-                            WHERE disposition = 'BUSY' 
+            ocupado =  """
+                        SELECT Count(disposition)
+                            FROM vw_cdr
+                            WHERE disposition = 'BUSY'
                             AND src = %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, cidade_sql, estado_sql, calldate1, calldate2)
             ocupado = cursor.execute(ocupado)
             ocupado = cursor.fetchone()[0]
 
-            falhou =  """         
-                        SELECT Count(disposition) 
-                            FROM vw_cdr 
+            falhou =  """
+                        SELECT Count(disposition)
+                            FROM vw_cdr
                             WHERE disposition = 'FAILED' AND src = %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, cidade_sql, estado_sql, calldate1, calldate2)
             falhou = cursor.execute(falhou)
             falhou = cursor.fetchone()[0]
- 
+
     elif info == "2" or "3":
             if cidade_f == "":
                 cidade_sql = "AND NOT cidade = '%s'" %cidade_f
@@ -255,59 +256,59 @@ def cdr_serach(request):
                 disposition_sql = "AND disposition = '%s'" %disposition_f
 
             atendeu = """
-                        SELECT Count(disposition) 
-                            FROM vw_cdr 
-                            WHERE disposition = 'ANSWERED' 
+                        SELECT Count(disposition)
+                            FROM vw_cdr
+                            WHERE disposition = 'ANSWERED'
                             AND src = %s %s %s %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, cidade_sql, estado_sql, operadora_sql, portado_sql, tipo_sql, calldate1, calldate2)
             atendeu = cursor.execute(atendeu)
             atendeu = cursor.fetchone()[0]
 
-            n_atendeu = """         
-                        SELECT Count(disposition) 
-                            FROM vw_cdr 
-                            WHERE disposition = 'NO ANSWER' 
+            n_atendeu = """
+                        SELECT Count(disposition)
+                            FROM vw_cdr
+                            WHERE disposition = 'NO ANSWER'
                             AND src = %s %s %s %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, cidade_sql, estado_sql, operadora_sql, portado_sql, tipo_sql, calldate1, calldate2)
             n_atendeu = cursor.execute(n_atendeu)
             n_atendeu = cursor.fetchone()[0]
 
-            ocupado =  """         
-                        SELECT Count(disposition) 
-                            FROM vw_cdr 
-                            WHERE disposition = 'BUSY' 
+            ocupado =  """
+                        SELECT Count(disposition)
+                            FROM vw_cdr
+                            WHERE disposition = 'BUSY'
                             AND src = %s %s %s %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, cidade_sql, estado_sql, operadora_sql, portado_sql, tipo_sql, calldate1, calldate2)
             ocupado = cursor.execute(ocupado)
             ocupado = cursor.fetchone()[0]
 
-            falhou =  """         
-                        SELECT Count(disposition) 
-                            FROM vw_cdr 
+            falhou =  """
+                        SELECT Count(disposition)
+                            FROM vw_cdr
                             WHERE disposition = 'FAILED' AND src = %s %s %s %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, cidade_sql, estado_sql, operadora_sql, portado_sql, tipo_sql, calldate1, calldate2)
             falhou = cursor.execute(falhou)
             falhou = cursor.fetchone()[0]
 
-            fixo =  """         
-                        SELECT Count(disposition) 
-                            FROM vw_cdr 
+            fixo =  """
+                        SELECT Count(disposition)
+                            FROM vw_cdr
                             WHERE tipo = 'FIXO' AND src = %s %s %s %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, disposition_sql, cidade_sql, estado_sql, operadora_sql, portado_sql, calldate1, calldate2)
             fixo = cursor.execute(fixo)
             fixo = cursor.fetchone()[0]
 
-            movel =  """         
-                        SELECT Count(disposition) 
-                            FROM vw_cdr 
+            movel =  """
+                        SELECT Count(disposition)
+                            FROM vw_cdr
                             WHERE tipo = 'MOVEL' AND src = %s %s %s %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, disposition_sql, cidade_sql, estado_sql, operadora_sql, portado_sql, calldate1, calldate2)
             movel = cursor.execute(movel)
             movel = cursor.fetchone()[0]
 
-            radio =  """         
-                        SELECT Count(disposition) 
-                            FROM vw_cdr 
+            radio =  """
+                        SELECT Count(disposition)
+                            FROM vw_cdr
                             WHERE tipo = 'RADIO' AND src = %s %s %s %s %s %s AND calldate BETWEEN ('%s') AND ('%s')
             """ % (src_f, disposition_sql, cidade_sql, estado_sql, operadora_sql, portado_sql, calldate1, calldate2)
             radio = cursor.execute(radio)
@@ -319,7 +320,7 @@ def cdr_serach(request):
         if results:
             paginator = Paginator(results, int(paginas_f))
             page = request.POST.get('page')
-          
+
             try:
                 results = paginator.page(page)
             except PageNotAnInteger:
@@ -329,7 +330,7 @@ def cdr_serach(request):
 
             template = loader.get_template('cdr.html')
             context = RequestContext(request, { 'info':info, 'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
-                                                'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
+                                                'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem,
                                                 'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                                 'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                                 'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
@@ -340,7 +341,7 @@ def cdr_serach(request):
         else:
             template = loader.get_template('cdr.html')
             context = RequestContext(request, { 'info':info, 'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
-                                            'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
+                                            'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem,
                                             'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                             'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                             'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
@@ -353,7 +354,7 @@ def cdr_serach(request):
         if results:
             paginator = Paginator(results, int(paginas_f))
             page = request.POST.get('page')
-          
+
             try:
                 results = paginator.page(page)
             except PageNotAnInteger:
@@ -363,7 +364,7 @@ def cdr_serach(request):
 
             template = loader.get_template('cdr.html')
             context = RequestContext(request, { 'info':info, 'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
-                                                'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
+                                                'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem,
                                                 'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                                 'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                                 'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
@@ -374,7 +375,7 @@ def cdr_serach(request):
         else:
                 template = loader.get_template('cdr.html')
                 context = RequestContext(request, { 'info':info, 'byDay':byDay, 'byMonth':byMonth, 'ultimo':ultimo, 'results':results,
-                                                'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem, 
+                                                'src':src, 'src_f':src_f ,'numero':numero, 'calldate':calldate, 'hoje':hoje, 'ontem':ontem,
                                                 'disposition':disposition, 'url':url, 'tempo_medio':tempo_medio, 'tempo':tempo, 'periodo_dia_1':periodo_dia_1,
                                                 'periodo_dia_2':periodo_dia_2, 'periodo_mes_1':periodo_mes_1, 'periodo_mes_2':periodo_mes_2,
                                                 'total':total, 'tempo_maior':tempo_maior, 'tempo_menor':tempo_menor, 'atendeu':atendeu,
