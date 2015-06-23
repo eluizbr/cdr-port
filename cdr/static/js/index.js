@@ -42,12 +42,12 @@ $(function(){
             },
       //        plots:{
        //         'MG' : {
-        //        latitude :-15.781682, 
+        //        latitude :-15.781682,
          //       longitude :-47.924195,
           //          tooltip: {content : "BH"}
           //      },
           //  }
-            
+
         });
 
         //ie svg height fix
@@ -138,7 +138,7 @@ $(function(){
 
     function pjaxPageLoad(){
         $('.widget').widgster();
-        initMap();
+        // initMap();
         initCalendar();
        // initRickshaw();
         initAnimations();

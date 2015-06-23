@@ -12,7 +12,11 @@
     <![endif]-->
     <link rel="shortcut icon" href="img/favicon.png">
     <!-- leaflet -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" /> -->
+    <link
+        rel="stylesheet"
+        href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -26,12 +30,12 @@
     </script>
 
     <style>
-        #map-wrapper {
+        /*#map-wrapper {
             width: 100%;
             height: 100%;
             position: relative;
             border: 1px solid black;
-        }
+        }*/
         #map {
             width: 760px;
             height: 500px;
@@ -251,6 +255,7 @@
                             <br />
                         </div>
                         <div id="map"></div>
+                        <!-- <div id="map" style="width: 600px; height: 400px"></div> -->
                     </div>
                 </section>
             </div>
@@ -650,7 +655,7 @@
 <script src="{% static "vendor/jquery.sparkline/index.js"%}"></script>
 <script src="{% static "vendor/d3/d3.min.js"%}"></script>
 <script src="{% static "vendor/rickshaw/rickshaw.min.js"%}"></script>
-<script src="{% static "vendor/raphael/raphael-min.js"%}"></script>
+<!-- <script src="{% static "vendor/raphael/raphael-min.js"%}"></script> -->
 <!-- <script src="{% static "vendor/jQuery-Mapael/js/jquery.mapael.js"%}"></script> -->
 <!-- <script src="{% static "vendor/jQuery-Mapael/js/maps/brazil.js"%}"></script> -->
 
@@ -667,63 +672,72 @@
 
 
 <script>
+    var maxBounds = L.latLngBounds(
+        L.latLng(-33.750702, -73.985527), //Southwest
+        L.latLng(5.264860, -28.839041)  //Northeast
+    );
 
-var map = new L.Map("map", {center: [-14.235, -51.925], zoom: 4})
-    .addLayer(new L.TileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png'));
+    var map = L.map('map').setView([-14.2429, -54.3877], 4);
+    map.setMaxBounds(maxBounds);
+    map.fitBounds(maxBounds);
 
-var svg = d3.select(map.getPanes().overlayPane).append("svg"),
-    g = svg.append("g").attr("class", "leaflet-zoom-hide");
+    mapLink =
+        '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+    L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; ' + mapLink + ' Contributors',
+        maxZoom: 18,
+        }).addTo(map);
 
-d3.json("{% static "json/BRA.geo.json" %}", function(collection) {
-  var transform = d3.geo.transform({point: projectPoint}),
-      path = d3.geo.path().projection(transform);
+    // Add an SVG element to Leaflet’s overlay pane
+    var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+        g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
-  var feature = g.selectAll("path")
-      .data(collection.features)
-    .enter().append("path");
+    d3.json("{% static "json/br.json"%}", function(geoShape) {
 
-  map.on("viewreset", reset);
-  reset();
+    //  create a d3.geo.path to convert GeoJSON to SVG
+    var transform = d3.geo.transform({point: projectPoint}),
+            path = d3.geo.path().projection(transform);
 
-  // Reposition the SVG to cover the features.
-  function reset() {
-    var bounds = path.bounds(collection),
-        topLeft = bounds[0],
-        bottomRight = bounds[1];
+    // create path elements for each of the features
+    d3_features = g.selectAll("path")
+        .data(geoShape.features)
+        .enter().append("path");
 
-    svg .attr("width", bottomRight[0] - topLeft[0])
-        .attr("height", bottomRight[1] - topLeft[1])
-        .style("left", topLeft[0] + "px")
-        .style("top", topLeft[1] + "px");
+    map.on("viewreset", reset);
 
-    g   .attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+    reset();
 
-    feature.attr("d", path);
-  }
+    // fit the SVG element to leaflet's map layer
+    function reset() {
 
-  // Use Leaflet to implement a D3 geometric transformation.
-  function projectPoint(x, y) {
-    var point = map.latLngToLayerPoint(new L.LatLng(y, x));
-    this.stream.point(point.x, point.y);
-  }
-});
+        bounds = path.bounds(geoShape);
+
+        var topLeft = bounds[0],
+            bottomRight = bounds[1];
+
+        svg .attr("width", bottomRight[0] - topLeft[0])
+            .attr("height", bottomRight[1] - topLeft[1])
+            .style("left", topLeft[0] + "px")
+            .style("top", topLeft[1] + "px");
+
+        g .attr("transform", "translate(" + -topLeft[0] + ","
+                                          + -topLeft[1] + ")");
+
+        // initialize the path data
+        d3_features.attr("d", path)
+            .style("fill-opacity", 0.7)
+            .attr('fill','black');
+    }
+
+    // Use Leaflet to implement a D3 geometric transformation.
+    function projectPoint(x, y) {
+        var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+        this.stream.point(point.x, point.y);
+    }
+})
 
 </script>
-
-//     $(document).ready(function(){
-//         // create a map in the "map" div, set the view to a given place and zoom
-//         var map = L.map('map').setView([-14.235, -51.925], 4);
-
-// // add an OpenStreetMap tile layer
-// L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-//     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-// }).addTo(map);
-
-// // add a marker in the given location, attach some popup content to it and open the popup
-// L.marker([-14.235, -51.925]).addTo(map)
-//     .bindPopup('A pretty CSS3 popup. <br> Easily customizable.')
-//     .openPopup();
-//     });
 
 {% include "include.html" %}
 
